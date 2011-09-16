@@ -22,7 +22,7 @@
 // See http://www.facebook.com/developers/createapp.php
 // Also, your application must bind to the fb[app_id]:// URL
 // scheme (substitute [app_id] for your real Facebook app id).
-static NSString* kAppId = nil;
+static NSString* kAppId = @"2";
 
 @implementation DemoAppViewController
 
