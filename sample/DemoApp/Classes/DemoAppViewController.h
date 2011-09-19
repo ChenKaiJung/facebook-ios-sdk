@@ -17,8 +17,9 @@
 
 #import <UIKit/UIKit.h>
 #import "FBConnect.h"
+#import "FTConnect.h"
 #import "FBLoginButton.h"
-
+#import "FTLoginButton.h"
 
 @interface DemoAppViewController : UIViewController
 <FBRequestDelegate,
@@ -29,14 +30,21 @@ FBSessionDelegate>{
   IBOutlet UIButton* _getUserInfoButton;
   IBOutlet UIButton* _getPublicInfoButton;
   IBOutlet UIButton* _publishButton;
-  IBOutlet UIButton* _uploadPhotoButton;
+  IBOutlet UIButton* _uploadPhotoButton;  
+  IBOutlet FTLoginButton* _ftButton;
   Facebook* _facebook;
+  Funtown* _funtown;    
   NSArray* _permissions;
+  bool _isFacebookLogin;
 }
 
 @property(nonatomic, retain) UILabel* label;
 
 @property(readonly) Facebook *facebook;
+
+@property(readonly) Funtown *funtown;
+
+@property(readonly) bool isFacebookLogin;
 
 -(IBAction)fbButtonClick:(id)sender;
 

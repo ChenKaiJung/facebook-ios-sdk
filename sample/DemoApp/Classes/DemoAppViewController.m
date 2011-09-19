@@ -22,11 +22,11 @@
 // See http://www.facebook.com/developers/createapp.php
 // Also, your application must bind to the fb[app_id]:// URL
 // scheme (substitute [app_id] for your real Facebook app id).
-static NSString* kAppId = @"2";
-
+static NSString* kAppId = @"246490885388325";
+static NSString* kCkientId = @"2";
 @implementation DemoAppViewController
 
-@synthesize label = _label, facebook = _facebook;
+@synthesize label = _label, facebook = _facebook, funtown = _funtown, isFacebookLogin=_isFacebookLogin;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // UIViewController
@@ -47,8 +47,11 @@ static NSString* kAppId = @"2";
                       @"read_stream", @"publish_stream", @"offline_access",nil] retain];
     _facebook = [[Facebook alloc] initWithAppId:kAppId
                                     andDelegate:self];
-  }
 
+    _funtown = [[Funtown alloc] initWithAppId:kCkientId
+                                      andDelegate:self];      
+  }
+  _isFacebookLogin = true;
   return self;
 }
 
@@ -62,7 +65,9 @@ static NSString* kAppId = @"2";
   _publishButton.hidden = YES;
   _uploadPhotoButton.hidden = YES;
   _fbButton.isLoggedIn = NO;
+  _ftButton.isLoggedIn = NO;    
   [_fbButton updateImage];
+  [_ftButton updateImage];    
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,6 +82,7 @@ static NSString* kAppId = @"2";
   [_uploadPhotoButton release];
   [_facebook release];
   [_permissions release];
+  [_ftButton release]; 
   [super dealloc];
 }
 
@@ -104,6 +110,7 @@ static NSString* kAppId = @"2";
  * Called on a login/logout button click.
  */
 - (IBAction)fbButtonClick:(id)sender {
+   _isFacebookLogin = true;    
   if (_fbButton.isLoggedIn) {
     [self logout];
   } else {
@@ -182,6 +189,34 @@ static NSString* kAppId = @"2";
 
   [img release];
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// private
+
+/**
+ * Show the authorization dialog.
+ */
+- (void)ftLogin {
+    [_funtown authorize:_permissions];
+}
+
+/**
+ * Invalidate the access token and clear the cookie.
+ */
+- (void)ftLogout {
+    [_funtown logout:self];
+}
+
+/**
+ * Called on a login/logout button click.
+ */
+- (IBAction)ftButtonClick:(id)sender {
+    _isFacebookLogin = false;
+    if (_ftButton.isLoggedIn) {
+        [self ftLogout];
+    } else {
+        [self ftLogin];
+    }
+}
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -200,6 +235,8 @@ static NSString* kAppId = @"2";
   _uploadPhotoButton.hidden = NO;
   _fbButton.isLoggedIn = YES;
   [_fbButton updateImage];
+   _ftButton.isLoggedIn = YES;
+  [_ftButton updateImage];    
 }
 
 /**
@@ -220,6 +257,8 @@ static NSString* kAppId = @"2";
   _uploadPhotoButton.hidden = YES;
   _fbButton.isLoggedIn         = NO;
   [_fbButton updateImage];
+   _ftButton.isLoggedIn         = NO;
+  [_ftButton updateImage];    
 }
 
 

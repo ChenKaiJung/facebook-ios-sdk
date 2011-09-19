@@ -19,7 +19,7 @@
 #import "FBRequest.h"
 
 //static NSString* kDialogBaseURL = @"https://m.facebook.com/dialog/";
-static NSString* kDialogBaseURL = @"http://61.67.137.181/oauth/";
+static NSString* kDialogBaseURL = @"http://weblogin.funtown.com.tw/oauth/";
 static NSString* kGraphBaseURL = @"https://graph.facebook.com/";
 static NSString* kRestserverBaseURL = @"https://api.facebook.com/method/";
 

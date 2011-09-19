@@ -18,8 +18,7 @@
 #import "FBLoginDialog.h"
 #import "FBRequest.h"
 
-//static NSString* kDialogBaseURL = @"https://m.facebook.com/dialog/";
-static NSString* kDialogBaseURL = @"http://61.67.137.181/oauth/";
+static NSString* kDialogBaseURL = @"https://m.facebook.com/dialog/";
 static NSString* kGraphBaseURL = @"https://graph.facebook.com/";
 static NSString* kRestserverBaseURL = @"https://api.facebook.com/method/";
 
@@ -27,8 +26,7 @@ static NSString* kFBAppAuthURLScheme = @"fbauth";
 static NSString* kFBAppAuthURLPath = @"authorize";
 static NSString* kRedirectURL = @"fbconnect://success";
 
-//static NSString* kLogin = @"oauth";
-static NSString* kLogin = @"oauth_mobile.php";
+static NSString* kLogin = @"oauth";
 static NSString* kSDK = @"ios";
 static NSString* kSDKVersion = @"2";
 
@@ -49,8 +47,9 @@ static NSString* kSDKVersion = @"2";
          expirationDate = _expirationDate,
         sessionDelegate = _sessionDelegate,
             permissions = _permissions,
-             localAppId = _localAppId,
-                   code = _code;    
+             localAppId = _localAppId;
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // private
 
@@ -122,14 +121,9 @@ static NSString* kSDKVersion = @"2";
  * A private function for getting the app's base url.
  */
 - (NSString *)getOwnBaseUrl {
-/*    
   return [NSString stringWithFormat:@"fb%@%@://authorize",
           _appId,
           _localAppId ? _localAppId : @""];
- */
-    return [NSString stringWithFormat:@"funtown%@%@://authorize",
-            _appId,
-            _localAppId ? _localAppId : @""];    
 }
 
 /**
@@ -137,7 +131,6 @@ static NSString* kSDKVersion = @"2";
  */
 - (void)authorizeWithFBAppAuth:(BOOL)tryFBAppAuth
                     safariAuth:(BOOL)trySafariAuth {
-/*    
   NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                  _appId, @"client_id",
                                  @"user_agent", @"type",
@@ -145,13 +138,7 @@ static NSString* kSDKVersion = @"2";
                                  @"touch", @"display",
                                  kSDKVersion, @"sdk",
                                  nil];
-*/
-  //For OAuth V2.0 Draft 13
-  NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   _appId, @"client_id",
-                                   @"code", @"response_type",
-                                   kRedirectURL, @"redirect_uri",
-                                   nil];    
+
   NSString *loginDialogURL = [kDialogBaseURL stringByAppendingString:kLogin];
 
   if (_permissions != nil) {
@@ -170,11 +157,7 @@ static NSString* kSDKVersion = @"2";
   // the fbauth:// URL scheme, fall back on Safari for obtaining the access token.
   // This minimizes the chance that the user will have to enter his or
   // her credentials in order to authorize the application.
- 
- 
   BOOL didOpenOtherApp = NO;
-  //Funtown didn't have other App
-  /*     
   UIDevice *device = [UIDevice currentDevice];
   if ([device respondsToSelector:@selector(isMultitaskingSupported)] && [device isMultitaskingSupported]) {
     if (tryFBAppAuth) {
@@ -195,14 +178,7 @@ static NSString* kSDKVersion = @"2";
       didOpenOtherApp = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:fbAppUrl]];
     }
   }
-  */
-  if (trySafariAuth && !didOpenOtherApp) {
-    NSString *nextUrl = [self getOwnBaseUrl];
-    [params setValue:nextUrl forKey:@"redirect_uri"];
-        
-    NSString *fbAppUrl = [FBRequest serializeURL:loginDialogURL params:params];
-    didOpenOtherApp = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:fbAppUrl]];
-  }    
+
   // If single sign-on failed, open an inline login dialog. This will require the user to
   // enter his or her credentials.
   if (!didOpenOtherApp) {
@@ -330,7 +306,6 @@ static NSString* kSDKVersion = @"2";
   }
 
   NSDictionary *params = [self parseURLParams:query];
-/*    
   NSString *accessToken = [params valueForKey:@"access_token"];
 
   // If the URL doesn't contain the access token, an error has occurred.
@@ -374,41 +349,6 @@ static NSString* kSDKVersion = @"2";
 
   [self fbDialogLogin:accessToken expirationDate:expirationDate];
   return YES;
-*/ 
-    NSString *code = [params valueForKey:@"code"];
-    
-    // If the URL doesn't contain the access token, an error has occurred.
-    if (!code) {
-        NSString *errorReason = [params valueForKey:@"error"];
-        
-        // If the error response indicates that we should try again using Safari, open
-        // the authorization dialog in Safari.
-        if (errorReason && [errorReason isEqualToString:@"service_disabled_use_browser"]) {
-            [self authorizeWithFBAppAuth:NO safariAuth:YES];
-            return YES;
-        }
-        
-        // If the error response indicates that we should try the authorization flow
-        // in an inline dialog, do that.
-        if (errorReason && [errorReason isEqualToString:@"service_disabled"]) {
-            [self authorizeWithFBAppAuth:NO safariAuth:NO];
-            return YES;
-        }
-        
-        // The facebook app may return an error_code parameter in case it
-        // encounters a UIWebViewDelegate error. This should not be treated
-        // as a cancel.
-        NSString *errorCode = [params valueForKey:@"error_code"];
-        
-        BOOL userDidCancel =
-        !errorCode && (!errorReason || [errorReason isEqualToString:@"access_denied"]);
-        [self fbDialogNotLogin:userDidCancel];
-        return YES;
-    }
-    
-    // We have an code    
-    [self fbDialogLogin:code ];
-    return YES;    
 }
 
 /**
@@ -684,16 +624,7 @@ static NSString* kSDKVersion = @"2";
   }
 
 }
-/**
- * Set the code after login succeed for OAuth 2.0 V13
- */
-- (void)fbDialogLogin:(NSString *)code {
-    self.code = code;
-    if ([self.sessionDelegate respondsToSelector:@selector(fbDidLogin)]) {
-        [_sessionDelegate fbDidLogin];
-    }
-    
-}
+
 /**
  * Did not login call the not login delegate
  */

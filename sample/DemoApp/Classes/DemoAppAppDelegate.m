@@ -35,7 +35,12 @@
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-  return [[controller facebook] handleOpenURL:url];
+    if([controller isFacebookLogin] == true){
+        return [[controller facebook] handleOpenURL:url];
+    }
+    else {
+        return [[controller funtown] handleOpenURL:url];        
+    }
 }
 
 - (void)dealloc {
