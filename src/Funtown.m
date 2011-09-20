@@ -19,7 +19,7 @@
 #import "FBRequest.h"
 
 //static NSString* kDialogBaseURL = @"https://m.facebook.com/dialog/";
-static NSString* kDialogBaseURL = @"http://weblogin.funtown.com.tw/oauth/";
+static NSString* kDialogBaseURL = @"https://weblogin.funtown.com.tw/oauth/";
 static NSString* kGraphBaseURL = @"https://graph.facebook.com/";
 static NSString* kRestserverBaseURL = @"https://api.facebook.com/method/";
 
@@ -431,12 +431,14 @@ static NSString* kSDKVersion = @"2";
   _accessToken = nil;
   [_expirationDate release];
   _expirationDate = nil;
-
+  [_code release];
+  _code = nil;
+    
   NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-  NSArray* facebookCookies = [cookies cookiesForURL:
-    [NSURL URLWithString:@"http://login.facebook.com"]];
+  NSArray* funtownCookies = [cookies cookiesForURL:
+    [NSURL URLWithString:@"https://weblogin.funtown.com.tw"]];
 
-  for (NSHTTPCookie* cookie in facebookCookies) {
+  for (NSHTTPCookie* cookie in funtownCookies) {
     [cookies deleteCookie:cookie];
   }
 
