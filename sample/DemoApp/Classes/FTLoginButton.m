@@ -25,9 +25,9 @@
  */
 - (UIImage*)buttonImage {
     if (_isLoggedIn) {
-        return [UIImage imageNamed:@"FBConnect.bundle/images/ftlogout.png"];
+        return [UIImage imageNamed:@"FBConnect.bundle/images/FTlogout.png"];
     } else {
-        return [UIImage imageNamed:@"FBConnect.bundle/images/fLogo.png"];
+        return [UIImage imageNamed:@"FBConnect.bundle/images/FTLogin.png"];
     }
 }
 
