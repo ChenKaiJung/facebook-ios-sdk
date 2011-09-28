@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74929751143317AA007251CE /* FTConnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 7492974B143317AA007251CE /* FTConnect.h */; };
+		74929752143317AA007251CE /* FTDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 7492974D143317AA007251CE /* FTDialog.h */; };
+		74929753143317AA007251CE /* FTDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7492974E143317AA007251CE /* FTDialog.m */; };
+		74929754143317AA007251CE /* FTLoginDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 7492974F143317AA007251CE /* FTLoginDialog.h */; };
+		74929755143317AA007251CE /* FTLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 74929750143317AA007251CE /* FTLoginDialog.m */; };
 		74E51F581427444C00156E2C /* Facebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 74E51F561427444C00156E2C /* Facebook.h */; };
 		74E51F591427444C00156E2C /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E51F571427444C00156E2C /* Facebook.m */; };
 		AA747D9F0F9514B9006C5449 /* facebook_ios_sdk_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* facebook_ios_sdk_Prefix.pch */; };
@@ -36,6 +41,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7492974B143317AA007251CE /* FTConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTConnect.h; sourceTree = "<group>"; };
+		7492974C143317AA007251CE /* FTDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FTDialog.bundle; sourceTree = "<group>"; };
+		7492974D143317AA007251CE /* FTDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTDialog.h; sourceTree = "<group>"; };
+		7492974E143317AA007251CE /* FTDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTDialog.m; sourceTree = "<group>"; };
+		7492974F143317AA007251CE /* FTLoginDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTLoginDialog.h; sourceTree = "<group>"; };
+		74929750143317AA007251CE /* FTLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTLoginDialog.m; sourceTree = "<group>"; };
 		74E51F561427444C00156E2C /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
 		74E51F571427444C00156E2C /* Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Facebook.m; sourceTree = "<group>"; };
 		AA747D9E0F9514B9006C5449 /* facebook_ios_sdk_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = facebook_ios_sdk_Prefix.pch; sourceTree = SOURCE_ROOT; };
@@ -135,6 +146,12 @@
 		74E51F541427430100156E2C /* FTConnect */ = {
 			isa = PBXGroup;
 			children = (
+				7492974C143317AA007251CE /* FTDialog.bundle */,
+				7492974B143317AA007251CE /* FTConnect.h */,
+				7492974D143317AA007251CE /* FTDialog.h */,
+				7492974E143317AA007251CE /* FTDialog.m */,
+				7492974F143317AA007251CE /* FTLoginDialog.h */,
+				74929750143317AA007251CE /* FTLoginDialog.m */,
 				AEA93B0511D5293B000A4545 /* Funtown.h */,
 				AEA93B0411D5293B000A4545 /* Funtown.m */,
 			);
@@ -182,6 +199,9 @@
 				AEA93B2A11D52959000A4545 /* SBJsonParser.h in Headers */,
 				AEA93B2C11D52959000A4545 /* SBJsonWriter.h in Headers */,
 				74E51F581427444C00156E2C /* Facebook.h in Headers */,
+				74929751143317AA007251CE /* FTConnect.h in Headers */,
+				74929752143317AA007251CE /* FTDialog.h in Headers */,
+				74929754143317AA007251CE /* FTLoginDialog.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +263,8 @@
 				AEA93B2B11D52959000A4545 /* SBJsonParser.m in Sources */,
 				AEA93B2D11D52959000A4545 /* SBJsonWriter.m in Sources */,
 				74E51F591427444C00156E2C /* Facebook.m in Sources */,
+				74929753143317AA007251CE /* FTDialog.m in Sources */,
+				74929755143317AA007251CE /* FTLoginDialog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
