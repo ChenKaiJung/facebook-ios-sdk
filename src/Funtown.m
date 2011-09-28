@@ -15,17 +15,17 @@
  */
 
 #import "Funtown.h"
-#import "FBLoginDialog.h"
+#import "FTLoginDialog.h"
 #import "FBRequest.h"
 
 //static NSString* kDialogBaseURL = @"https://m.facebook.com/dialog/";
-static NSString* kDialogBaseURL = @"https://weblogin.funtown.com.tw/oauth/";
+static NSString* kDialogBaseURL = @"http://weblogin.funtown.com.tw/oauth/";
 static NSString* kGraphBaseURL = @"https://graph.facebook.com/";
 static NSString* kRestserverBaseURL = @"https://api.facebook.com/method/";
 
-static NSString* kFBAppAuthURLScheme = @"fbauth";
-static NSString* kFBAppAuthURLPath = @"authorize";
-static NSString* kRedirectURL = @"fbconnect://success";
+static NSString* kFTAppAuthURLScheme = @"funtownauth";
+static NSString* kFTAppAuthURLPath = @"authorize";
+static NSString* kRedirectURL = @"ftconnect://success";
 
 //static NSString* kLogin = @"oauth";
 static NSString* kLogin = @"oauth_mobile.php";
@@ -59,7 +59,7 @@ static NSString* kSDKVersion = @"2";
  * Initialize the Facebook object with application ID.
  */
 - (id)initWithAppId:(NSString *)appId
-           andDelegate:(id<FBSessionDelegate>)delegate {
+           andDelegate:(id<FTSessionDelegate>)delegate {
   self = [super init];
   if (self) {
     [_appId release];
@@ -77,7 +77,7 @@ static NSString* kSDKVersion = @"2";
   [_expirationDate release];
   [_request release];
   [_loginDialog release];
-  [_fbDialog release];
+  [_ftDialog release];
   [_appId release];
   [_permissions release];
   [_localAppId release];
@@ -135,17 +135,8 @@ static NSString* kSDKVersion = @"2";
 /**
  * A private function for opening the authorization dialog.
  */
-- (void)authorizeWithFBAppAuth:(BOOL)tryFBAppAuth
-                    safariAuth:(BOOL)trySafariAuth {
-/*    
-  NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                 _appId, @"client_id",
-                                 @"user_agent", @"type",
-                                 kRedirectURL, @"redirect_uri",
-                                 @"touch", @"display",
-                                 kSDKVersion, @"sdk",
-                                 nil];
-*/
+- (void)safariAuth:(BOOL)trySafariAuth {
+
   //For OAuth V2.0 Draft 13
   NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    _appId, @"client_id",
@@ -174,19 +165,10 @@ static NSString* kSDKVersion = @"2";
  
   BOOL didOpenOtherApp = NO;
   //Funtown didn't have other App
-  /*     
+       
   UIDevice *device = [UIDevice currentDevice];
   if ([device respondsToSelector:@selector(isMultitaskingSupported)] && [device isMultitaskingSupported]) {
-    if (tryFBAppAuth) {
-      NSString *scheme = kFBAppAuthURLScheme;
-      if (_localAppId) {
-        scheme = [scheme stringByAppendingString:@"2"];
-      }
-      NSString *urlPrefix = [NSString stringWithFormat:@"%@://%@", scheme, kFBAppAuthURLPath];
-      NSString *fbAppUrl = [FBRequest serializeURL:urlPrefix params:params];
-      didOpenOtherApp = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:fbAppUrl]];
-    }
-
+      
     if (trySafariAuth && !didOpenOtherApp) {
       NSString *nextUrl = [self getOwnBaseUrl];
       [params setValue:nextUrl forKey:@"redirect_uri"];
@@ -195,7 +177,7 @@ static NSString* kSDKVersion = @"2";
       didOpenOtherApp = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:fbAppUrl]];
     }
   }
-  */
+
   if (trySafariAuth && !didOpenOtherApp) {
     NSString *nextUrl = [self getOwnBaseUrl];
     [params setValue:nextUrl forKey:@"redirect_uri"];
@@ -207,7 +189,7 @@ static NSString* kSDKVersion = @"2";
   // enter his or her credentials.
   if (!didOpenOtherApp) {
     [_loginDialog release];
-    _loginDialog = [[FBLoginDialog alloc] initWithURL:loginDialogURL
+    _loginDialog = [[FTLoginDialog alloc] initWithURL:loginDialogURL
                                           loginParams:params
                                              delegate:self];
     [_loginDialog show];
@@ -293,7 +275,7 @@ static NSString* kSDKVersion = @"2";
   self.localAppId = localAppId;
   self.permissions = permissions;
 
-  [self authorizeWithFBAppAuth:YES safariAuth:YES];
+  [self safariAuth:NO];
 }
 
 /**
@@ -402,12 +384,12 @@ static NSString* kSDKVersion = @"2";
         
         BOOL userDidCancel =
         !errorCode && (!errorReason || [errorReason isEqualToString:@"access_denied"]);
-        [self fbDialogNotLogin:userDidCancel];
+        [self ftDialogNotLogin:userDidCancel];
         return YES;
     }
     
     // We have an code    
-    [self fbDialogLogin:code ];
+    [self ftDialogLogin:code ];
     return YES;    
 }
 
@@ -424,7 +406,7 @@ static NSString* kSDKVersion = @"2";
  *            Callback interface for notifying the calling application when
  *            the application has logged out
  */
-- (void)logout:(id<FBSessionDelegate>)delegate {
+- (void)logout:(id<FTSessionDelegate>)delegate {
 
   self.sessionDelegate = delegate;
   [_accessToken release];
@@ -442,8 +424,8 @@ static NSString* kSDKVersion = @"2";
     [cookies deleteCookie:cookie];
   }
 
-  if ([self.sessionDelegate respondsToSelector:@selector(fbDidLogout)]) {
-    [_sessionDelegate fbDidLogout];
+  if ([self.sessionDelegate respondsToSelector:@selector(ftDidLogout)]) {
+    [_sessionDelegate ftDidLogout];
   }
 }
 
@@ -620,7 +602,7 @@ static NSString* kSDKVersion = @"2";
  *            dialog has completed.
  */
 - (void)dialog:(NSString *)action
-   andDelegate:(id<FBDialogDelegate>)delegate {
+   andDelegate:(id<FTDialogDelegate>)delegate {
   NSMutableDictionary * params = [NSMutableDictionary dictionary];
   [self dialog:action andParams:params andDelegate:delegate];
 }
@@ -639,9 +621,9 @@ static NSString* kSDKVersion = @"2";
  */
 - (void)dialog:(NSString *)action
      andParams:(NSMutableDictionary *)params
-   andDelegate:(id <FBDialogDelegate>)delegate {
+   andDelegate:(id <FTDialogDelegate>)delegate {
 
-  [_fbDialog release];
+  [_ftDialog release];
 
   NSString *dialogURL = [kDialogBaseURL stringByAppendingString:action];
   [params setObject:@"touch" forKey:@"display"];
@@ -650,17 +632,17 @@ static NSString* kSDKVersion = @"2";
 
   if (action == kLogin) {
     [params setObject:@"user_agent" forKey:@"type"];
-    _fbDialog = [[FBLoginDialog alloc] initWithURL:dialogURL loginParams:params delegate:self];
+    _ftDialog = [[FTLoginDialog alloc] initWithURL:dialogURL loginParams:params delegate:self];
   } else {
     [params setObject:_appId forKey:@"app_id"];
     if ([self isSessionValid]) {
       [params setValue:[self.accessToken stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
                 forKey:@"access_token"];
     }
-    _fbDialog = [[FBDialog alloc] initWithURL:dialogURL params:params delegate:delegate];
+    _ftDialog = [[FTDialog alloc] initWithURL:dialogURL params:params delegate:delegate];
   }
 
-  [_fbDialog show];
+  [_ftDialog show];
 }
 
 /**
@@ -678,30 +660,30 @@ static NSString* kSDKVersion = @"2";
 /**
  * Set the authToken and expirationDate after login succeed
  */
-- (void)fbDialogLogin:(NSString *)token expirationDate:(NSDate *)expirationDate {
+- (void)ftDialogLogin:(NSString *)token expirationDate:(NSDate *)expirationDate {
   self.accessToken = token;
   self.expirationDate = expirationDate;
-  if ([self.sessionDelegate respondsToSelector:@selector(fbDidLogin)]) {
-    [_sessionDelegate fbDidLogin];
+  if ([self.sessionDelegate respondsToSelector:@selector(ftDidLogin)]) {
+    [_sessionDelegate ftDidLogin];
   }
 
 }
 /**
  * Set the code after login succeed for OAuth 2.0 V13
  */
-- (void)fbDialogLogin:(NSString *)code {
+- (void)ftDialogLogin:(NSString *)code {
     self.code = code;
-    if ([self.sessionDelegate respondsToSelector:@selector(fbDidLogin)]) {
-        [_sessionDelegate fbDidLogin];
+    if ([self.sessionDelegate respondsToSelector:@selector(ftDidLogin)]) {
+        [_sessionDelegate ftDidLogin];
     }
     
 }
 /**
  * Did not login call the not login delegate
  */
-- (void)fbDialogNotLogin:(BOOL)cancelled {
-  if ([self.sessionDelegate respondsToSelector:@selector(fbDidNotLogin:)]) {
-    [_sessionDelegate fbDidNotLogin:cancelled];
+- (void)ftDialogNotLogin:(BOOL)cancelled {
+  if ([self.sessionDelegate respondsToSelector:@selector(ftDidNotLogin:)]) {
+    [_sessionDelegate ftDidNotLogin:cancelled];
   }
 }
 

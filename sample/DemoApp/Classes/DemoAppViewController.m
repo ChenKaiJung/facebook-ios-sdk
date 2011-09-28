@@ -234,9 +234,7 @@ static NSString* kCkientId = @"2";
   _publishButton.hidden = NO;
   _uploadPhotoButton.hidden = NO;
   _fbButton.isLoggedIn = YES;
-  [_fbButton updateImage];
-   _ftButton.isLoggedIn = YES;
-  [_ftButton updateImage];    
+  [_fbButton updateImage];   
 }
 
 /**
@@ -255,13 +253,44 @@ static NSString* kCkientId = @"2";
   _getPublicInfoButton.hidden   = YES;
   _publishButton.hidden        = YES;
   _uploadPhotoButton.hidden = YES;
-  _fbButton.isLoggedIn         = NO;
-  [_fbButton updateImage];
-   _ftButton.isLoggedIn         = NO;
-  [_ftButton updateImage];    
+   _fbButton.isLoggedIn         = NO;
+  [_fbButton updateImage];    
 }
 
+/**
+ * Called when the user has logged in successfully.
+ */
+- (void)ftDidLogin {
+    [self.label setText:@"logged in"];
+    _getUserInfoButton.hidden = YES;
+    _getPublicInfoButton.hidden = YES;
+    _publishButton.hidden = YES;
+    _uploadPhotoButton.hidden = YES;
+//    _fbButton.isLoggedIn = YES;
+    [_fbButton updateImage];
+    _ftButton.isLoggedIn = YES;
+    [_ftButton updateImage];    
+}
 
+/**
+ * Called when the user canceled the authorization dialog.
+ */
+-(void)ftDidNotLogin:(BOOL)cancelled {
+    NSLog(@"did not login");
+}
+
+/**
+ * Called when the request logout has succeeded.
+ */
+- (void)ftDidLogout {
+    [self.label setText:@"Please log in"];
+    _getUserInfoButton.hidden    = YES;
+    _getPublicInfoButton.hidden   = YES;
+    _publishButton.hidden        = YES;
+    _uploadPhotoButton.hidden = YES;
+    _ftButton.isLoggedIn         = NO;
+    [_ftButton updateImage];    
+}
 ////////////////////////////////////////////////////////////////////////////////
 // FBRequestDelegate
 

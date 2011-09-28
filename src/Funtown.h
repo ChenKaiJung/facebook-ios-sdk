@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#import "FBLoginDialog.h"
+#import "FTLoginDialog.h"
 #import "FBRequest.h"
 
-@protocol FBSessionDelegate;
+@protocol FTSessionDelegate;
 
 /**
  * Main Facebook interface for interacting with the Facebook developer API.
@@ -25,13 +25,13 @@
  * and Graph APIs, and start user interface interactions (such as
  * pop-ups promoting for credentials, permissions, stream posts, etc.)
  */
-@interface Funtown : NSObject<FBLoginDialogDelegate>{
+@interface Funtown : NSObject<FTLoginDialogDelegate>{
   NSString* _accessToken;
   NSDate* _expirationDate;
-  id<FBSessionDelegate> _sessionDelegate;
+  id<FTSessionDelegate> _sessionDelegate;
   FBRequest* _request;
-  FBDialog* _loginDialog;
-  FBDialog* _fbDialog;
+  FTDialog* _loginDialog;
+  FTDialog* _ftDialog;
   NSString* _appId;
   NSString* _localAppId;
   NSArray* _permissions;
@@ -40,12 +40,12 @@
 
 @property(nonatomic, copy) NSString* accessToken;
 @property(nonatomic, copy) NSDate* expirationDate;
-@property(nonatomic, assign) id<FBSessionDelegate> sessionDelegate;
+@property(nonatomic, assign) id<FTSessionDelegate> sessionDelegate;
 @property(nonatomic, copy) NSString* localAppId;
 @property(nonatomic, copy) NSString* code;
 
 - (id)initWithAppId:(NSString *)appId
-        andDelegate:(id<FBSessionDelegate>)delegate;
+        andDelegate:(id<FTSessionDelegate>)delegate;
 
 - (void)authorize:(NSArray *)permissions;
 
@@ -54,7 +54,7 @@
 
 - (BOOL)handleOpenURL:(NSURL *)url;
 
-- (void)logout:(id<FBSessionDelegate>)delegate;
+- (void)logout:(id<FTSessionDelegate>)delegate;
 
 - (FBRequest*)requestWithParams:(NSMutableDictionary *)params
                     andDelegate:(id <FBRequestDelegate>)delegate;
@@ -77,11 +77,11 @@
                        andDelegate:(id <FBRequestDelegate>)delegate;
 
 - (void)dialog:(NSString *)action
-   andDelegate:(id<FBDialogDelegate>)delegate;
+   andDelegate:(id<FTDialogDelegate>)delegate;
 
 - (void)dialog:(NSString *)action
      andParams:(NSMutableDictionary *)params
-   andDelegate:(id <FBDialogDelegate>)delegate;
+   andDelegate:(id <FTDialogDelegate>)delegate;
 
 - (BOOL)isSessionValid;
 
@@ -92,23 +92,23 @@
 /**
  * Your application should implement this delegate to receive session callbacks.
  */
-@protocol FBSessionDelegate <NSObject>
+@protocol FTSessionDelegate <NSObject>
 
 @optional
 
 /**
  * Called when the user successfully logged in.
  */
-- (void)fbDidLogin;
+- (void)ftDidLogin;
 
 /**
  * Called when the user dismissed the dialog without logging in.
  */
-- (void)fbDidNotLogin:(BOOL)cancelled;
+- (void)ftDidNotLogin:(BOOL)cancelled;
 
 /**
  * Called when the user logged out.
  */
-- (void)fbDidLogout;
+- (void)ftDidLogout;
 
 @end

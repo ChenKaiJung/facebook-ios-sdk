@@ -7,7 +7,7 @@
 //
 
 #include "Funtown.h"
-//#include "FBDialog.h"
-//#include "FBLoginDialog.h"
+#include "FTDialog.h"
+#include "FTLoginDialog.h"
 //#include "FBRequest.h"
 //#include "SBJSON.h"

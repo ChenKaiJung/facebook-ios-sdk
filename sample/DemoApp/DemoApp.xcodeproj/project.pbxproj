@@ -10,8 +10,11 @@
 		1D3623260D0F684500981E51 /* DemoAppAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* DemoAppAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		741E0B891431E36E0024F277 /* FTDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 741E0B881431E36E0024F277 /* FTDialog.bundle */; };
 		742AC4E81427524700078BCE /* FTLoginButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 742AC4E71427524700078BCE /* FTLoginButton.m */; };
 		74E51F601427453A00156E2C /* Funtown.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E51F5F1427453A00156E2C /* Funtown.m */; };
+		74EAE6D01431AE3D00E29652 /* FTDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 74EAE6CF1431AE3D00E29652 /* FTDialog.m */; };
+		74EAE6D31431AFA200E29652 /* FTLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 74EAE6D21431AFA200E29652 /* FTLoginDialog.m */; };
 		AE2AFB7E11E43A49005AE0C5 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2AFB6A11E43A49005AE0C5 /* NSObject+SBJSON.m */; };
 		AE2AFB7F11E43A49005AE0C5 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2AFB6C11E43A49005AE0C5 /* NSString+SBJSON.m */; };
 		AE2AFB8011E43A49005AE0C5 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2AFB6E11E43A49005AE0C5 /* SBJSON.m */; };
@@ -39,11 +42,16 @@
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* DemoApp_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoApp_Prefix.pch; sourceTree = "<group>"; };
+		741E0B881431E36E0024F277 /* FTDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FTDialog.bundle; path = ../../src/FTDialog.bundle; sourceTree = "<group>"; };
 		742AC4E61427524700078BCE /* FTLoginButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTLoginButton.h; sourceTree = "<group>"; };
 		742AC4E71427524700078BCE /* FTLoginButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTLoginButton.m; sourceTree = "<group>"; };
 		748FC2E31427B1100081FE1C /* FTConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FTConnect.h; path = ../../src/FTConnect.h; sourceTree = "<group>"; };
 		74E51F5E1427453A00156E2C /* Funtown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Funtown.h; path = ../../src/Funtown.h; sourceTree = "<group>"; };
 		74E51F5F1427453A00156E2C /* Funtown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Funtown.m; path = ../../src/Funtown.m; sourceTree = "<group>"; };
+		74EAE6CD1431ADF700E29652 /* FTDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FTDialog.h; path = ../../src/FTDialog.h; sourceTree = "<group>"; };
+		74EAE6CF1431AE3D00E29652 /* FTDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FTDialog.m; path = ../../src/FTDialog.m; sourceTree = "<group>"; };
+		74EAE6D11431AF7800E29652 /* FTLoginDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FTLoginDialog.h; path = ../../src/FTLoginDialog.h; sourceTree = "<group>"; };
+		74EAE6D21431AFA200E29652 /* FTLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FTLoginDialog.m; path = ../../src/FTLoginDialog.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* DemoApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DemoApp-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		AE2AFB6811E43A49005AE0C5 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		AE2AFB6911E43A49005AE0C5 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
@@ -163,9 +171,14 @@
 		74E51F4F1427427C00156E2C /* FTConnect */ = {
 			isa = PBXGroup;
 			children = (
+				741E0B881431E36E0024F277 /* FTDialog.bundle */,
 				74E51F5E1427453A00156E2C /* Funtown.h */,
 				74E51F5F1427453A00156E2C /* Funtown.m */,
 				748FC2E31427B1100081FE1C /* FTConnect.h */,
+				74EAE6CD1431ADF700E29652 /* FTDialog.h */,
+				74EAE6CF1431AE3D00E29652 /* FTDialog.m */,
+				74EAE6D11431AF7800E29652 /* FTLoginDialog.h */,
+				74EAE6D21431AFA200E29652 /* FTLoginDialog.m */,
 			);
 			name = FTConnect;
 			sourceTree = "<group>";
@@ -262,6 +275,7 @@
 				AEE8F65311CC8EB3008BF99E /* DemoAppViewController.xib in Resources */,
 				AE3FC2F611F19A6B001C05F3 /* FBConnect.bundle in Resources */,
 				AE3FC32A11F19C3F001C05F3 /* FBDialog.bundle in Resources */,
+				741E0B891431E36E0024F277 /* FTDialog.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +302,8 @@
 				AE2AFB8711E43A49005AE0C5 /* FBDialog.m in Sources */,
 				74E51F601427453A00156E2C /* Funtown.m in Sources */,
 				742AC4E81427524700078BCE /* FTLoginButton.m in Sources */,
+				74EAE6D01431AE3D00E29652 /* FTDialog.m in Sources */,
+				74EAE6D31431AFA200E29652 /* FTLoginDialog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
