@@ -502,18 +502,31 @@ params   = _params;
  */
 - (NSString *) getStringFromUrl: (NSString*) url needle:(NSString *) needle {
     NSString * str = nil;
-    NSRange start = [url rangeOfString:needle];
-    if (start.location != NSNotFound) {
-        NSRange end = [[url substringFromIndex:start.location+start.length] rangeOfString:@"&"];
-        NSUInteger offset = start.location+start.length;
-        str = end.location == NSNotFound
-        ? [url substringFromIndex:offset]
-        : [url substringWithRange:NSMakeRange(offset, end.location)];
-        str = [str stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *toUrl = [[NSURL alloc] autorelease];
+    [toUrl initWithString:url];
+    NSString *query = [toUrl fragment];
+    if (!query) {
+        query = [toUrl query];
     }
-    
+    NSArray *pairs = [query componentsSeparatedByString:@"&"];
+    NSMutableDictionary *params = [[[NSMutableDictionary alloc] init] autorelease];
+    for (NSString *pair in pairs) {
+        NSArray *kv = [pair componentsSeparatedByString:@"="];
+        NSString *val =
+        [[kv objectAtIndex:1]
+            stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            
+        [params setObject:val forKey:[kv objectAtIndex:0]];
+    }
+    NSString * needleStr = nil;    
+    NSArray *needlePairs = [needle componentsSeparatedByString:@"="];
+    needleStr=[needlePairs objectAtIndex:0];
+    if(! needleStr) return nil;
+    str=[params valueForKey: needleStr];
     return str;
 }
+
+
 
 - (id)initWithURL: (NSString *) serverURL
            params: (NSMutableDictionary *) params
