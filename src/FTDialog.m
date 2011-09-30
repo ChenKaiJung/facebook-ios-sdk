@@ -396,20 +396,21 @@ params   = _params;
     NSURL* url = request.URL;
     
     if ([url.scheme isEqualToString:@"ftconnect"]) {
-        if ([[url.resourceSpecifier substringToIndex:8] isEqualToString:@"//cancel"]) {
-            NSString * errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];
-            NSString * errorStr = [self getStringFromUrl:[url absoluteString] needle:@"error_msg="];
-            if (errorCode) {
-                NSDictionary * errorData = [NSDictionary dictionaryWithObject:errorStr forKey:@"error_msg"];
-                NSError * error = [NSError errorWithDomain:@"facebookErrDomain"
-                                                      code:[errorCode intValue]
-                                                  userInfo:errorData];
-                [self dismissWithError:error animated:YES];
-            } else {
-                [self dialogDidCancel:url];
-            }
+        NSString * error = [self getStringFromUrl:[url absoluteString] needle:@"error="];
+        NSString * errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];        
+        NSString * errorDes = [self getStringFromUrl:[url absoluteString] needle:@"error_description="];
+        NSString * code = [self getStringFromUrl:[url absoluteString] needle:@"code="];  
+        if (code) {
+            [self dialogDidSucceed:url];          
+        }
+        else if (error) {
+            NSDictionary * errorData = [NSDictionary dictionaryWithObject:errorDes forKey:@"error_description"];
+            NSError * errorStr = [NSError errorWithDomain:@"OAuthErrDomain"
+                                code:[errorCode intValue]
+                                userInfo:errorData];
+                [self dismissWithError:errorStr animated:YES];
         } else {
-            [self dialogDidSucceed:url];
+                [self dialogDidCancel:url];
         }
         return NO;
     } else if ([_loadingURL isEqual:url]) {
