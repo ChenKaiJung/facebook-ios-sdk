@@ -50,7 +50,8 @@ static NSString* kSDKVersion = @"2";
         sessionDelegate = _sessionDelegate,
             permissions = _permissions,
              localAppId = _localAppId,
-                   code = _code;    
+                   code = _code,
+                   error= _error;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // private
 
@@ -366,14 +367,14 @@ static NSString* kSDKVersion = @"2";
         // If the error response indicates that we should try again using Safari, open
         // the authorization dialog in Safari.
         if (errorReason && [errorReason isEqualToString:@"service_disabled_use_browser"]) {
-            [self authorizeWithFBAppAuth:NO safariAuth:YES];
+            [self safariAuth:YES];
             return YES;
         }
         
         // If the error response indicates that we should try the authorization flow
         // in an inline dialog, do that.
         if (errorReason && [errorReason isEqualToString:@"service_disabled"]) {
-            [self authorizeWithFBAppAuth:NO safariAuth:NO];
+            [self safariAuth:YES];
             return YES;
         }
         
@@ -655,7 +656,7 @@ static NSString* kSDKVersion = @"2";
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-//FBLoginDialogDelegate
+//FTLoginDialogDelegate
 
 /**
  * Set the authToken and expirationDate after login succeed
@@ -687,6 +688,16 @@ static NSString* kSDKVersion = @"2";
   }
 }
 
+
+/**
+ * Set the error after login error error  OAuth 2.0 V13
+ */
+- (void)ftDialogLoginError:(NSError *)error {
+    self.error = error;
+    if ([self.sessionDelegate respondsToSelector:@selector(ftDidLoginError:)]) {
+        [_sessionDelegate ftDidLoginError:error];
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

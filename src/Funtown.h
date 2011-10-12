@@ -35,7 +35,8 @@
   NSString* _appId;
   NSString* _localAppId;
   NSArray* _permissions;
-  NSString* _code;        
+  NSString* _code; 
+  NSError* _error;
 }
 
 @property(nonatomic, copy) NSString* accessToken;
@@ -43,6 +44,7 @@
 @property(nonatomic, assign) id<FTSessionDelegate> sessionDelegate;
 @property(nonatomic, copy) NSString* localAppId;
 @property(nonatomic, copy) NSString* code;
+@property(nonatomic, copy) NSError* error;
 
 - (id)initWithAppId:(NSString *)appId
         andDelegate:(id<FTSessionDelegate>)delegate;
@@ -105,6 +107,11 @@
  * Called when the user dismissed the dialog without logging in.
  */
 - (void)ftDidNotLogin:(BOOL)cancelled;
+
+/**
+ * Called when the user logged error.
+ */
+- (void)ftDidLoginError:(NSError *)error;
 
 /**
  * Called when the user logged out.

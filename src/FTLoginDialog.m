@@ -54,7 +54,7 @@
         [self dialogDidCancel:url];
         [self dismissWithSuccess:NO animated:YES];
     } else {    
-        if ([_loginDelegate respondsToSelector:@selector(ftDialogLogin:expirationDate:)]) {
+        if ([_loginDelegate respondsToSelector:@selector(ftDialogLogin:)]) {
             [_loginDelegate ftDialogLogin:code];
         }
         [self dismissWithSuccess:YES animated:YES];
@@ -67,16 +67,26 @@
  */
 - (void)dialogDidCancel:(NSURL *)url {
     [self dismissWithSuccess:NO animated:YES];
-    if ([_loginDelegate respondsToSelector:@selector(fbDialogNotLogin:)]) {
+    if ([_loginDelegate respondsToSelector:@selector(ftDialogNotLogin:)]) {
         [_loginDelegate ftDialogNotLogin:YES];
     }
 }
+
+
+- (void)dismissWithError:(NSError*)error animated:(BOOL)animated {
+    if ([_loginDelegate respondsToSelector:@selector(ftDialogLoginError:)]) {
+         [_loginDelegate ftDialogLoginError:error];
+    }
+    
+    [super dismissWithError:error animated:animated];
+}
+
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     if (!(([error.domain isEqualToString:@"NSURLErrorDomain"] && error.code == -999) ||
           ([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102))) {
         [super webView:webView didFailLoadWithError:error];
-        if ([_loginDelegate respondsToSelector:@selector(fbDialogNotLogin:)]) {
+        if ([_loginDelegate respondsToSelector:@selector(ftDialogNotLogin:)]) {
             [_loginDelegate ftDialogNotLogin:NO];
         }
     }

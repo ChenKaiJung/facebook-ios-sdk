@@ -280,6 +280,13 @@ static NSString* kCkientId = @"2";
 }
 
 /**
+ * Called when authorization error.
+ */
+- (void)ftDidLoginError:(NSError *)error {
+    NSLog(@"login error");
+}
+
+/**
  * Called when the request logout has succeeded.
  */
 - (void)ftDidLogout {

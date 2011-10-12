@@ -42,4 +42,6 @@
 
 - (void)ftDialogNotLogin:(BOOL)cancelled;
 
+- (void)ftDialogLoginError:(NSError*)error;
+
 @end

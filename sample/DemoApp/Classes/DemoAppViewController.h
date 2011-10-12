@@ -24,7 +24,8 @@
 @interface DemoAppViewController : UIViewController
 <FBRequestDelegate,
 FBDialogDelegate,
-FBSessionDelegate>{
+FBSessionDelegate,
+FTSessionDelegate>{
   IBOutlet UILabel* _label;
   IBOutlet FBLoginButton* _fbButton;
   IBOutlet UIButton* _getUserInfoButton;
