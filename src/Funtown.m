@@ -19,8 +19,8 @@
 #import "FTRequest.h"
 
 //static NSString* kDialogBaseURL = @"https://m.facebook.com/dialog/";
-static NSString* kDialogBaseURL = @"http://weblogin.funtown.com.tw/oauth/";
-static NSString* kMidBaseURL = @"http://61.67.137.181:8080/MIDGatewayWS/services/MIDGatewayService/";
+static NSString* kDialogBaseURL = @"https://weblogin.funtown.com.tw/oauth/";
+static NSString* kMidBaseURL = @"http://api.funtown.com.tw:8080/MIDGatewayWS/services/MIDGatewayService/";
 static NSString* kRestserverBaseURL = @"https://api.facebook.com/method/";
 
 static NSString* kFTAppAuthURLScheme = @"funtownauth";
