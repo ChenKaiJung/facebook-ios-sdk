@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		748FD771144D55AE004A0B6E /* FTRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 748FD76F144D55AE004A0B6E /* FTRequest.h */; };
+		748FD772144D55AE004A0B6E /* FTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 748FD770144D55AE004A0B6E /* FTRequest.m */; };
 		74929751143317AA007251CE /* FTConnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 7492974B143317AA007251CE /* FTConnect.h */; };
 		74929752143317AA007251CE /* FTDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 7492974D143317AA007251CE /* FTDialog.h */; };
 		74929753143317AA007251CE /* FTDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7492974E143317AA007251CE /* FTDialog.m */; };
@@ -41,6 +43,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		748FD76F144D55AE004A0B6E /* FTRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTRequest.h; sourceTree = "<group>"; };
+		748FD770144D55AE004A0B6E /* FTRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTRequest.m; sourceTree = "<group>"; };
 		7492974B143317AA007251CE /* FTConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTConnect.h; sourceTree = "<group>"; };
 		7492974C143317AA007251CE /* FTDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FTDialog.bundle; sourceTree = "<group>"; };
 		7492974D143317AA007251CE /* FTDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTDialog.h; sourceTree = "<group>"; };
@@ -148,6 +152,8 @@
 			children = (
 				7492974C143317AA007251CE /* FTDialog.bundle */,
 				7492974B143317AA007251CE /* FTConnect.h */,
+				748FD770144D55AE004A0B6E /* FTRequest.m */,
+				748FD76F144D55AE004A0B6E /* FTRequest.h */,
 				7492974D143317AA007251CE /* FTDialog.h */,
 				7492974E143317AA007251CE /* FTDialog.m */,
 				7492974F143317AA007251CE /* FTLoginDialog.h */,
@@ -202,6 +208,7 @@
 				74929751143317AA007251CE /* FTConnect.h in Headers */,
 				74929752143317AA007251CE /* FTDialog.h in Headers */,
 				74929754143317AA007251CE /* FTLoginDialog.h in Headers */,
+				748FD771144D55AE004A0B6E /* FTRequest.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +272,7 @@
 				74E51F591427444C00156E2C /* Facebook.m in Sources */,
 				74929753143317AA007251CE /* FTDialog.m in Sources */,
 				74929755143317AA007251CE /* FTLoginDialog.m in Sources */,
+				748FD772144D55AE004A0B6E /* FTRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
