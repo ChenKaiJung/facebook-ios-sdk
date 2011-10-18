@@ -23,6 +23,7 @@
 
 @interface DemoAppViewController : UIViewController
 <FBRequestDelegate,
+FTRequestDelegate,
 FBDialogDelegate,
 FBSessionDelegate,
 FTSessionDelegate>{
@@ -33,6 +34,7 @@ FTSessionDelegate>{
   IBOutlet UIButton* _publishButton;
   IBOutlet UIButton* _uploadPhotoButton;  
   IBOutlet FTLoginButton* _ftButton;
+  IBOutlet UIButton* _requestToken;    
   Facebook* _facebook;
   Funtown* _funtown;    
   NSArray* _permissions;

@@ -65,7 +65,8 @@ static NSString* kCkientId = @"2";
   _publishButton.hidden = YES;
   _uploadPhotoButton.hidden = YES;
   _fbButton.isLoggedIn = NO;
-  _ftButton.isLoggedIn = NO;    
+  _ftButton.isLoggedIn = NO;
+  _requestToken.hidden = YES;    
   [_fbButton updateImage];
   [_ftButton updateImage];    
 }
@@ -218,6 +219,22 @@ static NSString* kCkientId = @"2";
     }
 }
 
+/**
+ * Called on a login/logout button click.
+ */
+- (IBAction)requestTokenClick:(id)sender {
+    if (!_ftButton.isLoggedIn) return;        
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   _funtown.code, @"code",
+                                   kCkientId, @"clientID",
+                                   nil];
+    
+    [_funtown requestWithMidPath:@"RequestToken"
+                       andParams:params
+                   andHttpMethod:@"GET"     
+                     andDelegate:self];        
+}
+
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
   return YES;
@@ -255,6 +272,7 @@ static NSString* kCkientId = @"2";
   _uploadPhotoButton.hidden = YES;
    _fbButton.isLoggedIn         = NO;
   [_fbButton updateImage];    
+  _requestToken.hidden = YES;     
 }
 
 /**
@@ -266,10 +284,9 @@ static NSString* kCkientId = @"2";
     _getPublicInfoButton.hidden = YES;
     _publishButton.hidden = YES;
     _uploadPhotoButton.hidden = YES;
-//    _fbButton.isLoggedIn = YES;
-    [_fbButton updateImage];
     _ftButton.isLoggedIn = YES;
     [_ftButton updateImage];    
+  _requestToken.hidden = NO;      
 }
 
 /**
