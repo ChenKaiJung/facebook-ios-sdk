@@ -37,6 +37,11 @@
   NSArray* _permissions;
   NSString* _code; 
   NSError* _error;
+  /*
+  * Compatible functions for legacy funtown login, will be removed in the near future
+  */
+  NSString* _account;
+  NSString* _password;     
 }
 
 @property(nonatomic, copy) NSString* accessToken;
@@ -45,6 +50,8 @@
 @property(nonatomic, copy) NSString* localAppId;
 @property(nonatomic, copy) NSString* code;
 @property(nonatomic, copy) NSError* error;
+@property(nonatomic, copy) NSString* account;
+@property(nonatomic, copy) NSString* password;
 
 - (id)initWithAppId:(NSString *)appId
         andDelegate:(id<FTSessionDelegate>)delegate;

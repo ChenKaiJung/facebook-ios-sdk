@@ -92,4 +92,12 @@
     }
 }
 
+/*
+ * Compatible functions for legacy funtown login, will be removed in the near future
+ */
+- (void)dialogwillPost:(NSString *)body {
+    if ([_loginDelegate respondsToSelector:@selector(ftDialogWillPost:)]) {
+        [_loginDelegate ftDialogWillPost:body];        
+    }      
+}
 @end

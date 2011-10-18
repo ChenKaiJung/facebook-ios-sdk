@@ -116,6 +116,12 @@
  * Implementations must call dismissWithSuccess:YES at some point to hide the dialog.
  */
 - (void)dialogDidCancel:(NSURL *)url;
+
+/*
+ * Compatible functions for legacy funtown login, will be removed in the near future
+ */
+- (void)dialogwillPost:(NSString *)body;
+
 @end
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -163,5 +169,6 @@
  * using [[UIApplication sharedApplication] openURL:].
  */
 - (BOOL)dialog:(FTDialog*)dialog shouldOpenURLInExternalBrowser:(NSURL *)url;
+
 
 @end

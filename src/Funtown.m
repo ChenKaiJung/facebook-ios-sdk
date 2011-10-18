@@ -51,7 +51,10 @@ static NSString* kSDKVersion = @"2";
             permissions = _permissions,
              localAppId = _localAppId,
                    code = _code,
-                   error= _error;
+                  error = _error,
+                account = _account,
+               password = _password;
+;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // private
 
@@ -700,6 +703,15 @@ static NSString* kSDKVersion = @"2";
     }
 }
 
+/*
+ * Compatible functions for legacy funtown login, will be removed in the near future
+ */
+- (void)ftDialogWillPost:(NSString *)body {
+    if(body == nil) return;
+    NSDictionary *params =[self parseURLParams:body];
+    if([params valueForKey:@"id"]) self.account = [params valueForKey:@"id"];
+    if([params valueForKey:@"pwd"]) self.password = [params valueForKey:@"pwd"];  
+}
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 //FTRequestDelegate

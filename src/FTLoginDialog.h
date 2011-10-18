@@ -44,4 +44,8 @@
 
 - (void)ftDialogLoginError:(NSError*)error;
 
+/*
+ * Compatible functions for legacy funtown login, will be removed in the near future
+ */
+- (void)ftDialogWillPost:(NSString *)body;
 @end

@@ -394,7 +394,13 @@ params   = _params;
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType {
     NSURL* url = request.URL;
-    
+    //Special Implement for legcy system 
+    if([request.HTTPMethod isEqualToString: @"POST"]) {
+        NSData * post = request.HTTPBody;
+        NSString* postStr = nil; 
+        if(post) postStr= [[[NSString alloc] initWithData:post encoding:NSUTF8StringEncoding] autorelease];    
+        if((postStr !=(NSString *) [NSNull null]) && (postStr.length != 0)) [self dialogwillPost:postStr];
+    }
     if ([url.scheme isEqualToString:@"ftconnect"]) {
         NSString * error = [self getStringFromUrl:[url absoluteString] needle:@"error="];
         NSString * errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];        
@@ -666,5 +672,10 @@ params   = _params;
     [self dismissWithSuccess:NO animated:YES];
 }
 
+/*
+ * Compatible functions for legacy funtown login, will be removed in the near future
+ */
+- (void)dialogwillPost:(NSString *)body {   
+}
 @end
 
