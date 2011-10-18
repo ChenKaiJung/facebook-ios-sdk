@@ -235,8 +235,8 @@ responseText = _responseText;
  *                          fails with error
  */
 - (void)failWithError:(NSError *)error {
-    if ([_delegate respondsToSelector:@selector(request:didFailWithError:)]) {
-        [_delegate request:self didFailWithError:error];
+    if ([_delegate respondsToSelector:@selector(ftRequest:didFailWithError:)]) {
+        [_delegate ftRequest:self didFailWithError:error];
     }
 }
 
@@ -245,8 +245,8 @@ responseText = _responseText;
  */
 - (void)handleResponseData:(NSData *)data {
     if ([_delegate respondsToSelector:
-         @selector(request:didLoadRawResponse:)]) {
-        [_delegate request:self didLoadRawResponse:data];
+         @selector(ftRequest:didLoadRawResponse:)]) {
+        [_delegate ftRequest:self didLoadRawResponse:data];
     }
     
     if ([_delegate respondsToSelector:@selector(request:didLoad:)] ||
@@ -258,8 +258,8 @@ responseText = _responseText;
             if (error) {
                 [self failWithError:error];
             } else if ([_delegate respondsToSelector:
-                        @selector(request:didLoad:)]) {
-                [_delegate request:self didLoad:(result == nil ? data : result)];
+                        @selector(ftRequest:didLoad:)]) {
+                [_delegate ftRequest:self didLoad:(result == nil ? data : result)];
             }
             
         }
@@ -283,8 +283,8 @@ responseText = _responseText;
  */
 - (void)connect {
     
-    if ([_delegate respondsToSelector:@selector(requestLoading:)]) {
-        [_delegate requestLoading:self];
+    if ([_delegate respondsToSelector:@selector(ftRequestLoading:)]) {
+        [_delegate ftRequestLoading:self];
     }
     
     NSString* url = [[self class] serializeURL:_url params:_params httpMethod:_httpMethod];
@@ -329,8 +329,8 @@ responseText = _responseText;
     
     NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
     if ([_delegate respondsToSelector:
-         @selector(request:didReceiveResponse:)]) {
-        [_delegate request:self didReceiveResponse:httpResponse];
+         @selector(ftRequest:didReceiveResponse:)]) {
+        [_delegate ftRequest:self didReceiveResponse:httpResponse];
     }
 }
 
