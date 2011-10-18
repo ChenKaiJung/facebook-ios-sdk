@@ -17,5 +17,5 @@
 #include "Funtown.h"
 #include "FTDialog.h"
 #include "FTLoginDialog.h"
-//#include "FBRequest.h"
+#include "FTRequest.h"
 //#include "SBJSON.h"
