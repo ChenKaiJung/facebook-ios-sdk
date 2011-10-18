@@ -16,11 +16,11 @@
 
 #import "Funtown.h"
 #import "FTLoginDialog.h"
-#import "FBRequest.h"
+#import "FTRequest.h"
 
 //static NSString* kDialogBaseURL = @"https://m.facebook.com/dialog/";
-static NSString* kDialogBaseURL = @"https://weblogin.funtown.com.tw/oauth/";
-static NSString* kGraphBaseURL = @"https://graph.facebook.com/";
+static NSString* kDialogBaseURL = @"http://weblogin.funtown.com.tw/oauth/";
+static NSString* kMidBaseURL = @"http://61.67.137.181:8080/MIDGatewayWS/services/MIDGatewayService/";
 static NSString* kRestserverBaseURL = @"https://api.facebook.com/method/";
 
 static NSString* kFTAppAuthURLScheme = @"funtownauth";
@@ -98,20 +98,21 @@ static NSString* kSDKVersion = @"2";
  *            Callback interface for notifying the calling application when
  *            the request has received response
  */
-- (FBRequest*)openUrl:(NSString *)url
+- (FTRequest*)openUrl:(NSString *)url
                params:(NSMutableDictionary *)params
            httpMethod:(NSString *)httpMethod
-             delegate:(id<FBRequestDelegate>)delegate {
+             delegate:(id<FTRequestDelegate>)delegate {
 
   [params setValue:@"json" forKey:@"format"];
   [params setValue:kSDK forKey:@"sdk"];
   [params setValue:kSDKVersion forKey:@"sdk_version"];
+  [params setValue:@"application/json" forKey:@"response"];   
   if ([self isSessionValid]) {
     [params setValue:self.accessToken forKey:@"access_token"];
   }
 
   [_request release];
-  _request = [[FBRequest getRequestWithParams:params
+  _request = [[FTRequest getRequestWithParams:params
                                    httpMethod:httpMethod
                                      delegate:delegate
                                    requestURL:url] retain];
@@ -174,7 +175,7 @@ static NSString* kSDKVersion = @"2";
       NSString *nextUrl = [self getOwnBaseUrl];
       [params setValue:nextUrl forKey:@"redirect_uri"];
 
-      NSString *fbAppUrl = [FBRequest serializeURL:loginDialogURL params:params];
+      NSString *fbAppUrl = [FTRequest serializeURL:loginDialogURL params:params];
       didOpenOtherApp = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:fbAppUrl]];
     }
   }
@@ -183,7 +184,7 @@ static NSString* kSDKVersion = @"2";
     NSString *nextUrl = [self getOwnBaseUrl];
     [params setValue:nextUrl forKey:@"redirect_uri"];
         
-    NSString *fbAppUrl = [FBRequest serializeURL:loginDialogURL params:params];
+    NSString *fbAppUrl = [FTRequest serializeURL:loginDialogURL params:params];
     didOpenOtherApp = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:fbAppUrl]];
   }    
   // If single sign-on failed, open an inline login dialog. This will require the user to
@@ -443,11 +444,11 @@ static NSString* kSDKVersion = @"2";
  * @param delegate
  *            Callback interface for notifying the calling application when
  *            the request has received response
- * @return FBRequest*
- *            Returns a pointer to the FBRequest object.
+ * @return FTRequest*
+ *            Returns a pointer to the FTRequest object.
  */
-- (FBRequest*)requestWithParams:(NSMutableDictionary *)params
-                    andDelegate:(id <FBRequestDelegate>)delegate {
+- (FTRequest*)requestWithParams:(NSMutableDictionary *)params
+                    andDelegate:(id <FTRequestDelegate>)delegate {
   if ([params objectForKey:@"method"] == nil) {
     NSLog(@"API Method must be specified");
     return nil;
@@ -481,13 +482,13 @@ static NSString* kSDKVersion = @"2";
  * @param delegate
  *            Callback interface for notifying the calling application when
  *            the request has received response
- * @return FBRequest*
- *            Returns a pointer to the FBRequest object.
+ * @return FTRequest*
+ *            Returns a pointer to the FTRequest object.
  */
-- (FBRequest*)requestWithMethodName:(NSString *)methodName
+- (FTRequest*)requestWithMethodName:(NSString *)methodName
                     andParams:(NSMutableDictionary *)params
                 andHttpMethod:(NSString *)httpMethod
-                  andDelegate:(id <FBRequestDelegate>)delegate {
+                  andDelegate:(id <FTRequestDelegate>)delegate {
   NSString * fullURL = [kRestserverBaseURL stringByAppendingString:methodName];
   return [self openUrl:fullURL
                 params:params
@@ -507,13 +508,13 @@ static NSString* kSDKVersion = @"2";
  * @param delegate
  *            Callback interface for notifying the calling application when
  *            the request has received response
- * @return FBRequest*
- *            Returns a pointer to the FBRequest object.
+ * @return FTRequest*
+ *            Returns a pointer to the FTRequest object.
  */
-- (FBRequest*)requestWithGraphPath:(NSString *)graphPath
-                 andDelegate:(id <FBRequestDelegate>)delegate {
+- (FTRequest*)requestWithMidPath:(NSString *)midPath
+                 andDelegate:(id <FTRequestDelegate>)delegate {
 
-  return [self requestWithGraphPath:graphPath
+  return [self requestWithMidPath:midPath
                           andParams:[NSMutableDictionary dictionary]
                       andHttpMethod:@"GET"
                         andDelegate:delegate];
@@ -538,14 +539,14 @@ static NSString* kSDKVersion = @"2";
  * @param delegate
  *            Callback interface for notifying the calling application when
  *            the request has received response
- * @return FBRequest*
- *            Returns a pointer to the FBRequest object.
+ * @return FTRequest*
+ *            Returns a pointer to the FTRequest object.
  */
-- (FBRequest*)requestWithGraphPath:(NSString *)graphPath
+- (FTRequest*)requestWithMidPath:(NSString *)midPath
                    andParams:(NSMutableDictionary *)params
-                 andDelegate:(id <FBRequestDelegate>)delegate {
+                 andDelegate:(id <FTRequestDelegate>)delegate {
 
-  return [self requestWithGraphPath:graphPath
+  return [self requestWithMidPath:midPath
                           andParams:params
                       andHttpMethod:@"GET"
                         andDelegate:delegate];
@@ -577,15 +578,15 @@ static NSString* kSDKVersion = @"2";
  * @param delegate
  *            Callback interface for notifying the calling application when
  *            the request has received response
- * @return FBRequest*
- *            Returns a pointer to the FBRequest object.
+ * @return FTRequest*
+ *            Returns a pointer to the FTRequest object.
  */
-- (FBRequest*)requestWithGraphPath:(NSString *)graphPath
+- (FTRequest*)requestWithMidPath:(NSString *)midPath
                    andParams:(NSMutableDictionary *)params
                andHttpMethod:(NSString *)httpMethod
-                 andDelegate:(id <FBRequestDelegate>)delegate {
+                 andDelegate:(id <FTRequestDelegate>)delegate {
 
-  NSString * fullURL = [kGraphBaseURL stringByAppendingString:graphPath];
+  NSString * fullURL = [kMidBaseURL stringByAppendingString:midPath];
   return [self openUrl:fullURL
                 params:params
             httpMethod:httpMethod
@@ -701,12 +702,12 @@ static NSString* kSDKVersion = @"2";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-//FBRequestDelegate
+//FTRequestDelegate
 
 /**
  * Handle the auth.ExpireSession api call failure
  */
-- (void)request:(FBRequest*)request didFailWithError:(NSError*)error{
+- (void)request:(FTRequest*)request didFailWithError:(NSError*)error{
   NSLog(@"Failed to expire the session");
 }
 

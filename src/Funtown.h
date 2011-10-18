@@ -15,7 +15,7 @@
  */
 
 #import "FTLoginDialog.h"
-#import "FBRequest.h"
+#import "FTRequest.h"
 
 @protocol FTSessionDelegate;
 
@@ -29,7 +29,7 @@
   NSString* _accessToken;
   NSDate* _expirationDate;
   id<FTSessionDelegate> _sessionDelegate;
-  FBRequest* _request;
+  FTRequest* _request;
   FTDialog* _loginDialog;
   FTDialog* _ftDialog;
   NSString* _appId;
@@ -58,25 +58,25 @@
 
 - (void)logout:(id<FTSessionDelegate>)delegate;
 
-- (FBRequest*)requestWithParams:(NSMutableDictionary *)params
-                    andDelegate:(id <FBRequestDelegate>)delegate;
+- (FTRequest*)requestWithParams:(NSMutableDictionary *)params
+                    andDelegate:(id <FTRequestDelegate>)delegate;
 
-- (FBRequest*)requestWithMethodName:(NSString *)methodName
+- (FTRequest*)requestWithMethodName:(NSString *)methodName
                           andParams:(NSMutableDictionary *)params
                       andHttpMethod:(NSString *)httpMethod
-                        andDelegate:(id <FBRequestDelegate>)delegate;
+                        andDelegate:(id <FTRequestDelegate>)delegate;
 
-- (FBRequest*)requestWithGraphPath:(NSString *)graphPath
-                       andDelegate:(id <FBRequestDelegate>)delegate;
+- (FTRequest*)requestWithMidPath:(NSString *)midPath
+                       andDelegate:(id <FTRequestDelegate>)delegate;
 
-- (FBRequest*)requestWithGraphPath:(NSString *)graphPath
+- (FTRequest*)requestWithMidPath:(NSString *)midPath
                          andParams:(NSMutableDictionary *)params
-                       andDelegate:(id <FBRequestDelegate>)delegate;
+                       andDelegate:(id <FTRequestDelegate>)delegate;
 
-- (FBRequest*)requestWithGraphPath:(NSString *)graphPath
+- (FTRequest*)requestWithMidPath:(NSString *)midPath
                          andParams:(NSMutableDictionary *)params
                      andHttpMethod:(NSString *)httpMethod
-                       andDelegate:(id <FBRequestDelegate>)delegate;
+                       andDelegate:(id <FTRequestDelegate>)delegate;
 
 - (void)dialog:(NSString *)action
    andDelegate:(id<FTDialogDelegate>)delegate;
