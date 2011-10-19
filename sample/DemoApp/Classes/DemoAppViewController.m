@@ -271,8 +271,7 @@ static NSString* kCkientId = @"2";
   _publishButton.hidden        = YES;
   _uploadPhotoButton.hidden = YES;
    _fbButton.isLoggedIn         = NO;
-  [_fbButton updateImage];    
-  _requestToken.hidden = YES;     
+  [_fbButton updateImage];       
 }
 
 /**
@@ -313,7 +312,8 @@ static NSString* kCkientId = @"2";
     _publishButton.hidden        = YES;
     _uploadPhotoButton.hidden = YES;
     _ftButton.isLoggedIn         = NO;
-    [_ftButton updateImage];    
+    [_ftButton updateImage];      
+    _requestToken.hidden = YES;      
 }
 ////////////////////////////////////////////////////////////////////////////////
 // FBRequestDelegate
@@ -346,6 +346,50 @@ static NSString* kCkientId = @"2";
   } else {
     [self.label setText:[result objectForKey:@"name"]];
   }
+};
+
+////////////////////////////////////////////////////////////////////////////////
+// FTRequestDelegate
+
+/**
+ * Called when a request returns and its response has been parsed into
+ * an object. The resulting object may be a dictionary, an array, a string,
+ * or a number, depending on the format of the API response. If you need access
+ * to the raw response, use:
+ *
+ * (void)request:(FTRequest *)request
+ *      didReceiveResponse:(NSURLResponse *)response
+ */
+
+- (void)ftRequest:(FTRequest *)request didReceiveResponse:(NSURLResponse *)response {
+    NSLog(@"received response");
+}
+
+
+/**
+ * Called when the Funtown Mid API request has returned a response. This callback
+ * gives you access to the raw response. It's called before
+ * (void)request:(FTRequest *)request didLoad:(id)result,
+ * which is passed the parsed response object.
+ */
+- (void)ftRequest:(FTRequest *)request didLoad:(id)result {
+    
+/*
+ return =     {
+  "@type" = "ax21:RequestTokenResult";
+  accessToken = cytfostjbisbnyawpvxumyvet7te2wbokvaklzyk6r2p4epwo7mqwxikezgxihiyose;
+  errorCode = 100;
+  message =         {
+  "@nil" = true;
+  };
+ }; 
+ */
+    NSDictionary *jsonreturn = [result objectForKey:@"return"];    
+    if(jsonreturn == nil) return;
+    
+    if ([jsonreturn objectForKey:@"accessToken"]) {
+        [self.label setText:[jsonreturn objectForKey:@"accessToken"]];
+    } 
 };
 
 /**
