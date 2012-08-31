@@ -421,6 +421,8 @@ params   = _params;
         return NO;
     } else if ([_loadingURL isEqual:url]) {
         return YES;
+    } else if ([[_loadingURL host] isEqualToString:[url host]] ) {
+        return YES;
     } else if (navigationType == UIWebViewNavigationTypeLinkClicked) {
         if ([_delegate respondsToSelector:@selector(dialog:shouldOpenURLInExternalBrowser:)]) {
             if (![_delegate dialog:self shouldOpenURLInExternalBrowser:url]) {
