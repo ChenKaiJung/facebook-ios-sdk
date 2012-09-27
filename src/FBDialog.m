@@ -464,7 +464,12 @@ BOOL FBIsDeviceIPad() {
 // UIKeyboardNotifications
 
 - (void)keyboardWillShow:(NSNotification*)notification {
-
+  
+  if(_showingKeyboard == YES) {
+        //Prevent reentering this function
+        return;
+  }    
+    
   _showingKeyboard = YES;
 
   if (FBIsDeviceIPad()) {
