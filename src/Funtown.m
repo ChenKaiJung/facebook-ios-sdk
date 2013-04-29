@@ -25,7 +25,8 @@ static NSString* kRestserverBaseURL = @"https://api.facebook.com/method/";
 
 static NSString* kFTAppAuthURLScheme = @"funtownauth";
 static NSString* kFTAppAuthURLPath = @"authorize";
-static NSString* kRedirectURL = @"ftconnect://success";
+//static NSString* kRedirectURL = @"ftconnect://success";
+static NSString* kRedirectURL = @"http://newpartner.funtown.com.tw/mappingpage/index.php%3Fprovider%3Dfuntown%26client_id%3D2%26game_uri%3D687474703a2f2f66626d6a312e676967612e6867632e636f6d2e74772f72656469726563745f73657373696f6e2f72642e7068703f73657373696f6e5f6b65793d";
 
 //static NSString* kLogin = @"oauth";
 static NSString* kLogin = @"oauth_mobile.php";
@@ -46,6 +47,7 @@ static NSString* kSDKVersion = @"2";
 @implementation Funtown
 
 @synthesize accessToken = _accessToken,
+         sessionKey = _sessionKey,
          expirationDate = _expirationDate,
         sessionDelegate = _sessionDelegate,
             permissions = _permissions,
@@ -147,6 +149,8 @@ static NSString* kSDKVersion = @"2";
                                    _appId, @"client_id",
                                    @"code", @"response_type",
                                    kRedirectURL, @"redirect_uri",
+                                   @"reg_mobile", @"view",
+                                   @"zh_TW", @"intl",
                                    nil];    
   NSString *loginDialogURL = [kDialogBaseURL stringByAppendingString:kLogin];
 
@@ -420,6 +424,8 @@ static NSString* kSDKVersion = @"2";
   _expirationDate = nil;
   [_code release];
   _code = nil;
+  [_sessionKey release];
+   _sessionKey = nil;
     
   NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
   NSArray* funtownCookies = [cookies cookiesForURL:
@@ -711,6 +717,15 @@ static NSString* kSDKVersion = @"2";
     NSDictionary *params =[self parseURLParams:body];
     if([params valueForKey:@"id"]) self.account = [params valueForKey:@"id"];
     if([params valueForKey:@"pwd"]) self.password = [params valueForKey:@"pwd"];  
+}
+
+- (void)ftDialogLogin:(NSString *)token sessionKey:(NSString *)sessionKey {
+    self.accessToken = token;
+    self.sessionKey = sessionKey;
+    if ([self.sessionDelegate respondsToSelector:@selector(ftDidLogin)]) {
+        [_sessionDelegate ftDidLogin];
+    }
+    
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

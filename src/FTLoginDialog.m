@@ -47,15 +47,23 @@
 - (void) dialogDidSucceed:(NSURL*)url {
     NSString *q = [url absoluteString];
     NSString *code = [self getStringFromUrl:q needle:@"code="];
-
+    NSString * access_token = [self getStringFromUrl:[url absoluteString] needle:@"access_token="];
+    NSString * session_key = [self getStringFromUrl:[url absoluteString] needle:@"session_key="];
     
     
-    if ((code == (NSString *) [NSNull null]) || (code.length == 0)) {
+    if (((code == (NSString *) [NSNull null]) || (code.length == 0))
+        && ((access_token == (NSString *) [NSNull null]) || (access_token.length == 0))
+        && ((session_key == (NSString *) [NSNull null]) || (session_key.length == 0))) {
         [self dialogDidCancel:url];
         [self dismissWithSuccess:NO animated:YES];
     } else {    
         if ([_loginDelegate respondsToSelector:@selector(ftDialogLogin:)]) {
-            [_loginDelegate ftDialogLogin:code];
+            if ( code != (NSString *) [NSNull null] && code.length != 0) {
+               [_loginDelegate ftDialogLogin:code];
+            }
+            else {
+               [_loginDelegate ftDialogLogin:access_token  sessionKey:session_key];
+            }
         }
         [self dismissWithSuccess:YES animated:YES];
     }
