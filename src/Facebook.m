@@ -24,7 +24,7 @@ static NSString* kRestserverBaseURL = @"https://api.facebook.com/method/";
 
 static NSString* kFBAppAuthURLScheme = @"fbauth";
 static NSString* kFBAppAuthURLPath = @"authorize";
-static NSString* kRedirectURL = @"fbconnect://success";
+static NSString* kRedirectURL = @"http://newpartner.funtown.com.tw/mappingpage/index.php?provider=facebook&client_id=%@&game_uri=68747470733a2f2f7765626c6f67696e2e66756e746f776e2e636f6d2e74772f6f617574682f6c6f67696e5f737563636573732e68746d6c3f73657373696f6e5f6b65793d";
 
 static NSString* kLogin = @"oauth";
 static NSString* kSDK = @"ios";
@@ -44,6 +44,7 @@ static NSString* kSDKVersion = @"2";
 @implementation Facebook
 
 @synthesize accessToken = _accessToken,
+             sessionKey = _sessionKey,
          expirationDate = _expirationDate,
         sessionDelegate = _sessionDelegate,
             permissions = _permissions,
@@ -269,7 +270,7 @@ static NSString* kSDKVersion = @"2";
   self.localAppId = localAppId;
   self.permissions = permissions;
 
-  [self authorizeWithFBAppAuth:YES safariAuth:YES];
+  [self authorizeWithFBAppAuth:NO safariAuth:NO];
 }
 
 /**
@@ -367,6 +368,13 @@ static NSString* kSDKVersion = @"2";
 - (void)logout:(id<FBSessionDelegate>)delegate {
 
   self.sessionDelegate = delegate;
+  NSMutableDictionary * params = [[NSMutableDictionary alloc] init];
+  [self requestWithMethodName:@"auth.expireSession"
+        andParams:params andHttpMethod:@"GET"
+        andDelegate:nil];
+    
+    [params release];
+    
   [_accessToken release];
   _accessToken = nil;
   [_expirationDate release];
@@ -634,7 +642,13 @@ static NSString* kSDKVersion = @"2";
   }
 }
 
-
+- (void)fbDialogLogin:(NSString *)token sessionKey:(NSString *)sessionKey {
+    self.accessToken = token;
+    self.sessionKey = sessionKey;
+    if ([self.sessionDelegate respondsToSelector:@selector(fbDidLogin)]) {
+        [_sessionDelegate fbDidLogin];
+    }    
+}
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 //FBRequestDelegate

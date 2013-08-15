@@ -49,7 +49,14 @@
   NSString *token = [self getStringFromUrl:q needle:@"access_token="];
   NSString *expTime = [self getStringFromUrl:q needle:@"expires_in="];
   NSDate *expirationDate =nil;
-  
+    
+  NSString * access_token = [self getStringFromUrl:[url absoluteString] needle:@"access_token="];
+  NSString * session_key = [self getStringFromUrl:[url absoluteString] needle:@"session_key="];
+
+#ifdef DEBUG
+  NSLog(@"dialogDidSucceed : sessionkey = %@, accessToken = %@",session_key, access_token);
+#endif
+    
   if (expTime != nil) {
     int expVal = [expTime intValue];
     if (expVal == 0) {

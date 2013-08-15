@@ -35,12 +35,14 @@
   NSString* _appId;
   NSString* _localAppId;
   NSArray* _permissions;
+  NSString* _sessionKey;    
 }
 
 @property(nonatomic, copy) NSString* accessToken;
 @property(nonatomic, copy) NSDate* expirationDate;
 @property(nonatomic, assign) id<FBSessionDelegate> sessionDelegate;
 @property(nonatomic, copy) NSString* localAppId;
+@property(nonatomic, copy) NSString* sessionKey;
 
 - (id)initWithAppId:(NSString *)appId
         andDelegate:(id<FBSessionDelegate>)delegate;
