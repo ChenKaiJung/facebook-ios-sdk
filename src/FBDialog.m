@@ -410,7 +410,11 @@ BOOL FBIsDeviceIPad() {
     if ([[url.resourceSpecifier substringToIndex:8] isEqualToString:@"//cancel"]) {
       NSString * errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];
       NSString * errorStr = [self getStringFromUrl:[url absoluteString] needle:@"error_msg="];
-      if (errorCode) {
+      NSString * code = [self getStringFromUrl:[url absoluteString] needle:@"code="];
+      if (code) {
+        [self dialogDidSucceed:url];
+      }
+      else if (errorCode) {
         NSDictionary * errorData = [NSDictionary dictionaryWithObject:errorStr forKey:@"error_msg"];
         NSError * error = [NSError errorWithDomain:@"facebookErrDomain"
                                               code:[errorCode intValue]
