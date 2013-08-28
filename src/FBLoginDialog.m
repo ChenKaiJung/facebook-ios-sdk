@@ -52,7 +52,8 @@
     
   NSString * access_token = [self getStringFromUrl:[url absoluteString] needle:@"access_token="];
   NSString * session_key = [self getStringFromUrl:[url absoluteString] needle:@"session_key="];
-
+  NSString *code = [self getStringFromUrl:q needle:@"code="];
+    
 #ifdef DEBUG
   NSLog(@"dialogDidSucceed : sessionkey = %@, accessToken = %@",session_key, access_token);
 #endif
@@ -72,7 +73,15 @@
   } else {
     if ([_loginDelegate respondsToSelector:@selector(fbDialogLogin:expirationDate:)]) {
       //[_loginDelegate fbDialogLogin:token expirationDate:expirationDate];
-      [_loginDelegate fbDialogLogin:access_token  sessionKey:session_key];
+        if ( code != (NSString *) [NSNull null] && code.length != 0) {
+            [_loginDelegate fbDialogLogin:code];
+        }
+        else if (session_key == (NSString *) [NSNull null]){
+            [_loginDelegate fbDialogLogin:token expirationDate:expirationDate];
+        }
+        else {
+            [_loginDelegate fbDialogLogin:access_token  sessionKey:session_key];
+        }
     }
     [self dismissWithSuccess:YES animated:YES];
   }

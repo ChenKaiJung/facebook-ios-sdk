@@ -25,7 +25,7 @@ static NSString* kRestserverBaseURL = @"https://api.facebook.com/method/";
 static NSString* kFBAppAuthURLScheme = @"fbauth";
 static NSString* kFBAppAuthURLPath = @"authorize";
 static NSString* kRedirectURL = @"http://newpartner.funtown.com.tw/mappingpage/index.php?provider=facebook&client_id=%@&game_uri=68747470733a2f2f7765626c6f67696e2e66756e746f776e2e636f6d2e74772f6f617574682f6c6f67696e5f737563636573732e68746d6c3f73657373696f6e5f6b65793d";
-
+//static NSString* kRedirectURL = @"https://weblogin.funtown.com.tw/oauth/login_success.html?provider=facebook&client_id=%@";
 static NSString* kLogin = @"oauth";
 static NSString* kSDK = @"ios";
 static NSString* kSDKVersion = @"2";
@@ -48,8 +48,8 @@ static NSString* kSDKVersion = @"2";
          expirationDate = _expirationDate,
         sessionDelegate = _sessionDelegate,
             permissions = _permissions,
-             localAppId = _localAppId;
-
+             localAppId = _localAppId,
+                   code = _code;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // private
@@ -381,15 +381,28 @@ static NSString* kSDKVersion = @"2";
   _accessToken = nil;
   [_expirationDate release];
   _expirationDate = nil;
+  [_code release];
+  _code = nil;
+    
+//  NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+//  NSArray* facebookCookies = [cookies cookiesForURL:
+//    [NSURL URLWithString:@".facebook.com"]];
 
-  NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-  NSArray* facebookCookies = [cookies cookiesForURL:
-    [NSURL URLWithString:@"http://login.facebook.com"]];
-
-  for (NSHTTPCookie* cookie in facebookCookies) {
-    [cookies deleteCookie:cookie];
-  }
-
+//  for (NSHTTPCookie* cookie in facebookCookies) {
+//    [cookies deleteCookie:cookie];
+//  }
+    NSHTTPCookie *cookie;
+    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (cookie in [storage cookies])
+    {
+        NSString* domainName = [cookie domain];
+        NSRange domainRange = [domainName rangeOfString:@"facebook"];
+        if(domainRange.length > 0)
+        {
+            [storage deleteCookie:cookie];
+        }
+    }
+    
   if ([self.sessionDelegate respondsToSelector:@selector(fbDidLogout)]) {
     [_sessionDelegate fbDidLogout];
   }
@@ -643,6 +656,18 @@ static NSString* kSDKVersion = @"2";
     [_sessionDelegate fbDidNotLogin:cancelled];
   }
 }
+
+/**
+ * Set the code after login succeed for OAuth 2.0 
+ */
+- (void)fbDialogLogin:(NSString *)code {
+    self.code = code;
+    if ([self.sessionDelegate respondsToSelector:@selector(fbDidLogin)]) {
+        [_sessionDelegate fbDidLogin];
+    }
+    
+}
+
 
 - (void)fbDialogLogin:(NSString *)token sessionKey:(NSString *)sessionKey {
     self.accessToken = token;
