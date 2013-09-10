@@ -395,12 +395,26 @@ BOOL FBIsDeviceIPad() {
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
     navigationType:(UIWebViewNavigationType)navigationType {
   NSURL* url = request.URL;
-
+#ifdef DEBUG
+  NSLog(@"Scheme: %@", [url scheme]);
+  NSLog(@"Host: %@", [url host]);
+  NSLog(@"Port: %@", [url port]);
+  NSLog(@"Path: %@", [url path]);
+  NSLog(@"Relative path: %@", [url relativePath]);
+  NSLog(@"Path components as array: %@", [url pathComponents]);
+  NSLog(@"Parameter string: %@", [url parameterString]);
+  NSLog(@"Query: %@", [url query]);
+  NSLog(@"Fragment: %@", [url fragment]);
+#endif
   if ([url.scheme isEqualToString:@"fbconnect"]) {
     if ([[url.resourceSpecifier substringToIndex:8] isEqualToString:@"//cancel"]) {
       NSString * errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];
       NSString * errorStr = [self getStringFromUrl:[url absoluteString] needle:@"error_msg="];
-      if (errorCode) {
+      NSString * code = [self getStringFromUrl:[url absoluteString] needle:@"code="];
+      if (code) {
+        [self dialogDidSucceed:url];
+      }
+      else if (errorCode) {
         NSDictionary * errorData = [NSDictionary dictionaryWithObject:errorStr forKey:@"error_msg"];
         NSError * error = [NSError errorWithDomain:@"facebookErrDomain"
                                               code:[errorCode intValue]
@@ -413,6 +427,30 @@ BOOL FBIsDeviceIPad() {
       [self dialogDidSucceed:url];
     }
     return NO;
+  
+  }else if ([url.path isEqualToString:@"/oauth/login_success.html"]) {
+#ifdef DEBUG      
+      NSLog(@"url.path EqualToString : /oauth/login_success.html");
+#endif
+      NSString * error = [self getStringFromUrl:[url absoluteString] needle:@"error="];
+      NSString * errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];
+      NSString * errorDes = [self getStringFromUrl:[url absoluteString] needle:@"error_description="];
+      NSString * access_token = [self getStringFromUrl:[url absoluteString] needle:@"access_token="];
+      NSString * session_key = [self getStringFromUrl:[url absoluteString] needle:@"session_key="];
+      if (session_key!=(NSString *) [NSNull null] && access_token!=(NSString *) [NSNull null]) {
+          [self dialogDidSucceed:url];
+      }
+      else if (error) {
+          NSDictionary * errorData = [NSDictionary dictionaryWithObject:errorDes forKey:@"error_description"];
+          NSError * errorStr = [NSError errorWithDomain:@"OAuthErrDomain"
+                                                   code:[errorCode intValue]
+                                               userInfo:errorData];
+          [self dismissWithError:errorStr animated:YES];
+      } else {
+          [self dialogDidCancel:url];
+      }
+      return NO;
+      
   } else if ([_loadingURL isEqual:url]) {
     return YES;
   } else if (navigationType == UIWebViewNavigationTypeLinkClicked) {

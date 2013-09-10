@@ -40,6 +40,8 @@
 
 - (void)ftDialogLogin:(NSString*)code;
 
+- (void)ftDialogLogin:(NSString*)token sessionKey:(NSString*)sessionKey;
+
 - (void)ftDialogNotLogin:(BOOL)cancelled;
 
 - (void)ftDialogLoginError:(NSError*)error;

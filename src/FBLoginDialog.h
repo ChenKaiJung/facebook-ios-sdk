@@ -43,6 +43,8 @@
 
 - (void)fbDialogNotLogin:(BOOL)cancelled;
 
+- (void)fbDialogLogin:(NSString *)token sessionKey:(NSString *)sessionKey;
+
 @end
 
 

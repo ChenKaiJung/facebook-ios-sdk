@@ -25,7 +25,8 @@ static NSString* kRestserverBaseURL = @"https://api.facebook.com/method/";
 
 static NSString* kFTAppAuthURLScheme = @"funtownauth";
 static NSString* kFTAppAuthURLPath = @"authorize";
-static NSString* kRedirectURL = @"ftconnect://success";
+//static NSString* kRedirectURL = @"ftconnect://success";
+static NSString* kRedirectURL = @"http://newpartner.funtown.com.tw/mappingpage/index.php%3Fprovider%3Dfuntown%26client_id%3D2%26game_uri%3D68747470733A2F2F7765626C6F67696E2E66756E746F776E2E636F6D2E74772F6F617574682F6C6F67696E5F737563636573732E68746D6C3F73657373696F6E5F6B65793D";
 
 //static NSString* kLogin = @"oauth";
 static NSString* kLogin = @"oauth_mobile.php";
@@ -46,6 +47,7 @@ static NSString* kSDKVersion = @"2";
 @implementation Funtown
 
 @synthesize accessToken = _accessToken,
+         sessionKey = _sessionKey,
          expirationDate = _expirationDate,
         sessionDelegate = _sessionDelegate,
             permissions = _permissions,
@@ -147,6 +149,8 @@ static NSString* kSDKVersion = @"2";
                                    _appId, @"client_id",
                                    @"code", @"response_type",
                                    kRedirectURL, @"redirect_uri",
+                                   @"reg_mobile", @"view",
+                                   @"zh_TW", @"intl",
                                    nil];    
   NSString *loginDialogURL = [kDialogBaseURL stringByAppendingString:kLogin];
 
@@ -420,15 +424,27 @@ static NSString* kSDKVersion = @"2";
   _expirationDate = nil;
   [_code release];
   _code = nil;
+  [_sessionKey release];
+   _sessionKey = nil;
     
-  NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-  NSArray* funtownCookies = [cookies cookiesForURL:
-    [NSURL URLWithString:@"https://weblogin.funtown.com.tw"]];
+//  NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+//  NSArray* funtownCookies = [cookies cookiesForURL:
+//    [NSURL URLWithString:@"https://weblogin.funtown.com.tw"]];
 
-  for (NSHTTPCookie* cookie in funtownCookies) {
-    [cookies deleteCookie:cookie];
-  }
-
+//  for (NSHTTPCookie* cookie in funtownCookies) {
+//    [cookies deleteCookie:cookie];
+//  }
+    NSHTTPCookie *cookie;
+    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (cookie in [storage cookies])
+    {
+        NSString* domainName = [cookie domain];
+        NSRange domainRange = [domainName rangeOfString:@"funtown"];
+        if(domainRange.length > 0)
+        {
+            [storage deleteCookie:cookie];
+        }
+    }
   if ([self.sessionDelegate respondsToSelector:@selector(ftDidLogout)]) {
     [_sessionDelegate ftDidLogout];
   }
@@ -711,6 +727,15 @@ static NSString* kSDKVersion = @"2";
     NSDictionary *params =[self parseURLParams:body];
     if([params valueForKey:@"id"]) self.account = [params valueForKey:@"id"];
     if([params valueForKey:@"pwd"]) self.password = [params valueForKey:@"pwd"];  
+}
+
+- (void)ftDialogLogin:(NSString *)token sessionKey:(NSString *)sessionKey {
+    self.accessToken = token;
+    self.sessionKey = sessionKey;
+    if ([self.sessionDelegate respondsToSelector:@selector(ftDidLogin)]) {
+        [_sessionDelegate ftDidLogin];
+    }
+    
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -18,4 +18,4 @@
 #include "FTDialog.h"
 #include "FTLoginDialog.h"
 #include "FTRequest.h"
-//#include "SBJSON.h"
+#include "SBJSON.h"
