@@ -49,7 +49,8 @@ static NSString* kSDKVersion = @"2";
         sessionDelegate = _sessionDelegate,
             permissions = _permissions,
              localAppId = _localAppId,
-                   code = _code;
+                   code = _code,
+                  error = _error;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // private
@@ -655,6 +656,16 @@ static NSString* kSDKVersion = @"2";
   if ([self.sessionDelegate respondsToSelector:@selector(fbDidNotLogin:)]) {
     [_sessionDelegate fbDidNotLogin:cancelled];
   }
+}
+
+/**
+ * Set the error after login error error  OAuth 2.0 V13
+ */
+- (void)fbDialogLoginError:(NSError *)error {
+    self.error = error;
+    if ([self.sessionDelegate respondsToSelector:@selector(fbDidLoginError:)]) {
+        [_sessionDelegate fbDidLoginError:error];
+    }
 }
 
 /**
