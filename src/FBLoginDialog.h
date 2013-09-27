@@ -45,6 +45,7 @@
 
 - (void)fbDialogLogin:(NSString *)token sessionKey:(NSString *)sessionKey;
 
+- (void)fbDialogLoginError:(NSError*)error;
 @end
 
 

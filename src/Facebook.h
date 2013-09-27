@@ -36,15 +36,17 @@
   NSString* _localAppId;
   NSArray* _permissions;
   NSString* _code;
-  NSString* _sessionKey;    
+  NSError* _error;     
+  NSString* _sessionKey;
 }
 
 @property(nonatomic, copy) NSString* accessToken;
 @property(nonatomic, copy) NSDate* expirationDate;
 @property(nonatomic, assign) id<FBSessionDelegate> sessionDelegate;
 @property(nonatomic, copy) NSString* localAppId;
-@property(nonatomic, copy) NSString* sessionKey;
 @property(nonatomic, copy) NSString* code;
+@property(nonatomic, copy) NSError* error;
+@property(nonatomic, copy) NSString* sessionKey;
 
 - (id)initWithAppId:(NSString *)appId
         andDelegate:(id<FBSessionDelegate>)delegate;
@@ -107,6 +109,11 @@
  * Called when the user dismissed the dialog without logging in.
  */
 - (void)fbDidNotLogin:(BOOL)cancelled;
+
+/**
+ * Called when the user logged error.
+ */
+- (void)fbDidLoginError:(NSError *)error;
 
 /**
  * Called when the user logged out.

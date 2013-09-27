@@ -98,6 +98,16 @@
   }
 }
 
+
+- (void)dismissWithError:(NSError*)error animated:(BOOL)animated {
+    if ([_loginDelegate respondsToSelector:@selector(fbDialogNotLogin:)]) {
+        [_loginDelegate fbDialogLoginError:error];
+    }
+    
+    [super dismissWithError:error animated:animated];
+}
+
+
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
   if (!(([error.domain isEqualToString:@"NSURLErrorDomain"] && error.code == -999) ||
         ([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102))) {
