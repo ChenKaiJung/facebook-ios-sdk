@@ -144,11 +144,14 @@ static NSString* kSDKVersion = @"2";
  */
 - (void)safariAuth:(BOOL)trySafariAuth {
 
+  NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+  NSString *redirectURI = [infoDict objectForKey:@"FuntownRedirectUri"];
+    
   //For OAuth V2.0 Draft 13
   NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    _appId, @"client_id",
                                    @"code", @"response_type",
-                                   kRedirectURL, @"redirect_uri",
+                                   redirectURI, @"redirect_uri",
                                    @"reg_mobile", @"view",
                                    @"zh_TW", @"intl",
                                    nil];    
@@ -646,10 +649,13 @@ static NSString* kSDKVersion = @"2";
 
   [_ftDialog release];
 
+  NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+  NSString *redirectURI = [infoDict objectForKey:@"FuntownRedirectUri"];
+    
   NSString *dialogURL = [kDialogBaseURL stringByAppendingString:action];
   [params setObject:@"touch" forKey:@"display"];
   [params setObject:kSDKVersion forKey:@"sdk"];
-  [params setObject:kRedirectURL forKey:@"redirect_uri"];
+  [params setObject:redirectURI forKey:@"redirect_uri"];
 
   if (action == kLogin) {
     [params setObject:@"user_agent" forKey:@"type"];

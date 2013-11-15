@@ -133,7 +133,9 @@ static NSString* kSDKVersion = @"2";
  */
 - (void)authorizeWithFBAppAuth:(BOOL)tryFBAppAuth
                     safariAuth:(BOOL)trySafariAuth {
-  NSString *redirectURI = [NSString stringWithFormat:kRedirectURL,_appId];
+
+  NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+  NSString *redirectURI = [infoDict objectForKey:@"FacebookRedirectUri"];
     
   NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                  _appId, @"client_id",
@@ -604,11 +606,14 @@ static NSString* kSDKVersion = @"2";
    andDelegate:(id <FBDialogDelegate>)delegate {
 
   [_fbDialog release];
-
+    
+  NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+  NSString *redirectURI = [infoDict objectForKey:@"FacebookRedirectUri"];
+    
   NSString *dialogURL = [kDialogBaseURL stringByAppendingString:action];
   [params setObject:@"touch" forKey:@"display"];
   [params setObject:kSDKVersion forKey:@"sdk"];
-  [params setObject:kRedirectURL forKey:@"redirect_uri"];
+  [params setObject:redirectURI forKey:@"redirect_uri"];
 
   if (action == kLogin) {
     [params setObject:@"user_agent" forKey:@"type"];
