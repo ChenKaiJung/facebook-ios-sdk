@@ -553,12 +553,16 @@ params   = _params;
     NSArray *pairs = [query componentsSeparatedByString:@"&"];
     NSMutableDictionary *params = [[[NSMutableDictionary alloc] init] autorelease];
     for (NSString *pair in pairs) {
-        NSArray *kv = [pair componentsSeparatedByString:@"="];
-        NSString *val =
-        [[kv objectAtIndex:1]
-            stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            
-        [params setObject:val forKey:[kv objectAtIndex:0]];
+        //NSArray *kv = [pair componentsSeparatedByString:@"="];
+        //NSString *val =
+        //[[kv objectAtIndex:1]
+        //    stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSRange where=[pair rangeOfString:@"="];
+        if(where.length==0) continue;
+        NSString *key=[pair substringToIndex:where.location];
+        NSString *val=[pair substringFromIndex:where.location+where.length];
+        [params setObject:val forKey:key];        
+        //[params setObject:val forKey:[kv objectAtIndex:0]];
     }
     NSString * needleStr = nil;    
     NSArray *needlePairs = [needle componentsSeparatedByString:@"="];
