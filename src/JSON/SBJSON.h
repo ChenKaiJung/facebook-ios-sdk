@@ -26,6 +26,8 @@
  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#ifndef __SBJSON_H__
+#define __SBJSON_H__
 
 #import <Foundation/Foundation.h>
 #import "SBJsonParser.h"
@@ -73,3 +75,4 @@
 
 
 @end
+#endif
