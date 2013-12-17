@@ -14,6 +14,18 @@
 		74929753143317AA007251CE /* FTDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7492974E143317AA007251CE /* FTDialog.m */; };
 		74929754143317AA007251CE /* FTLoginDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 7492974F143317AA007251CE /* FTLoginDialog.h */; };
 		74929755143317AA007251CE /* FTLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 74929750143317AA007251CE /* FTLoginDialog.m */; };
+		74DE63CE184DFA0C002EEED5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		74DE63D3184DFA0C002EEED5 /* funtown_ios_sdk.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 74DE63D2184DFA0C002EEED5 /* funtown_ios_sdk.h */; };
+		74DE63DA184DFAD5002EEED5 /* FTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 748FD770144D55AE004A0B6E /* FTRequest.m */; };
+		74DE63DD184DFAD5002EEED5 /* FTDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7492974E143317AA007251CE /* FTDialog.m */; };
+		74DE63DF184DFAD5002EEED5 /* FTLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 74929750143317AA007251CE /* FTLoginDialog.m */; };
+		74DE63E1184DFAD5002EEED5 /* Funtown.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA93B0411D5293B000A4545 /* Funtown.m */; };
+		74DE63E4184DFAE0002EEED5 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA93B1611D52959000A4545 /* NSObject+SBJSON.m */; };
+		74DE63E6184DFAE0002EEED5 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA93B1811D52959000A4545 /* NSString+SBJSON.m */; };
+		74DE63E8184DFAE0002EEED5 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA93B1A11D52959000A4545 /* SBJSON.m */; };
+		74DE63EA184DFAE0002EEED5 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA93B1C11D52959000A4545 /* SBJsonBase.m */; };
+		74DE63EC184DFAE0002EEED5 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA93B1E11D52959000A4545 /* SBJsonParser.m */; };
+		74DE63EE184DFAE0002EEED5 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA93B2011D52959000A4545 /* SBJsonWriter.m */; };
 		74E51F581427444C00156E2C /* Facebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 74E51F561427444C00156E2C /* Facebook.h */; };
 		74E51F591427444C00156E2C /* Facebook.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E51F571427444C00156E2C /* Facebook.m */; };
 		AA747D9F0F9514B9006C5449 /* facebook_ios_sdk_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* facebook_ios_sdk_Prefix.pch */; };
@@ -42,6 +54,19 @@
 		AEA93B2D11D52959000A4545 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = AEA93B2011D52959000A4545 /* SBJsonWriter.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		74DE63CB184DFA0C002EEED5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+				74DE63D3184DFA0C002EEED5 /* funtown_ios_sdk.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		748FD76F144D55AE004A0B6E /* FTRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTRequest.h; sourceTree = "<group>"; };
 		748FD770144D55AE004A0B6E /* FTRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTRequest.m; sourceTree = "<group>"; };
@@ -51,6 +76,10 @@
 		7492974E143317AA007251CE /* FTDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTDialog.m; sourceTree = "<group>"; };
 		7492974F143317AA007251CE /* FTLoginDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTLoginDialog.h; sourceTree = "<group>"; };
 		74929750143317AA007251CE /* FTLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTLoginDialog.m; sourceTree = "<group>"; };
+		74DE63CD184DFA0C002EEED5 /* libfuntown_ios_sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfuntown_ios_sdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		74DE63D1184DFA0C002EEED5 /* funtown-ios-sdk-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "funtown-ios-sdk-Prefix.pch"; sourceTree = "<group>"; };
+		74DE63D2184DFA0C002EEED5 /* funtown_ios_sdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = funtown_ios_sdk.h; sourceTree = "<group>"; };
+		74DE63D4184DFA0C002EEED5 /* funtown_ios_sdk.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = funtown_ios_sdk.m; sourceTree = "<group>"; };
 		74E51F561427444C00156E2C /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Facebook.h; sourceTree = "<group>"; };
 		74E51F571427444C00156E2C /* Facebook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Facebook.m; sourceTree = "<group>"; };
 		AA747D9E0F9514B9006C5449 /* facebook_ios_sdk_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = facebook_ios_sdk_Prefix.pch; sourceTree = SOURCE_ROOT; };
@@ -82,6 +111,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		74DE63CA184DFA0C002EEED5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74DE63CE184DFA0C002EEED5 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D2AAC07C0554694100DB518D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -97,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				D2AAC07E0554694100DB518D /* libfacebook_ios_sdk.a */,
+				74DE63CD184DFA0C002EEED5 /* libfuntown_ios_sdk.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -107,6 +145,7 @@
 				74E51F541427430100156E2C /* FTConnect */,
 				08FB77AEFE84172EC02AAC07 /* FBConnect */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
+				74DE63CF184DFA0C002EEED5 /* funtown-ios-sdk */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
 			);
@@ -145,6 +184,24 @@
 				AA747D9E0F9514B9006C5449 /* facebook_ios_sdk_Prefix.pch */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		74DE63CF184DFA0C002EEED5 /* funtown-ios-sdk */ = {
+			isa = PBXGroup;
+			children = (
+				74DE63D2184DFA0C002EEED5 /* funtown_ios_sdk.h */,
+				74DE63D4184DFA0C002EEED5 /* funtown_ios_sdk.m */,
+				74DE63D0184DFA0C002EEED5 /* Supporting Files */,
+			);
+			path = "funtown-ios-sdk";
+			sourceTree = "<group>";
+		};
+		74DE63D0184DFA0C002EEED5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				74DE63D1184DFA0C002EEED5 /* funtown-ios-sdk-Prefix.pch */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		74E51F541427430100156E2C /* FTConnect */ = {
@@ -215,6 +272,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		74DE63CC184DFA0C002EEED5 /* funtown-ios-sdk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74DE63D6184DFA0C002EEED5 /* Build configuration list for PBXNativeTarget "funtown-ios-sdk" */;
+			buildPhases = (
+				74DE63C9184DFA0C002EEED5 /* Sources */,
+				74DE63CA184DFA0C002EEED5 /* Frameworks */,
+				74DE63CB184DFA0C002EEED5 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "funtown-ios-sdk";
+			productName = "funtown-ios-sdk";
+			productReference = 74DE63CD184DFA0C002EEED5 /* libfuntown_ios_sdk.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		D2AAC07D0554694100DB518D /* facebook-ios-sdk */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "facebook-ios-sdk" */;
@@ -250,11 +324,29 @@
 			projectRoot = "";
 			targets = (
 				D2AAC07D0554694100DB518D /* facebook-ios-sdk */,
+				74DE63CC184DFA0C002EEED5 /* funtown-ios-sdk */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		74DE63C9184DFA0C002EEED5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74DE63E4184DFAE0002EEED5 /* NSObject+SBJSON.m in Sources */,
+				74DE63E6184DFAE0002EEED5 /* NSString+SBJSON.m in Sources */,
+				74DE63E8184DFAE0002EEED5 /* SBJSON.m in Sources */,
+				74DE63EA184DFAE0002EEED5 /* SBJsonBase.m in Sources */,
+				74DE63EC184DFAE0002EEED5 /* SBJsonParser.m in Sources */,
+				74DE63EE184DFAE0002EEED5 /* SBJsonWriter.m in Sources */,
+				74DE63DA184DFAD5002EEED5 /* FTRequest.m in Sources */,
+				74DE63DD184DFAD5002EEED5 /* FTDialog.m in Sources */,
+				74DE63DF184DFAD5002EEED5 /* FTLoginDialog.m in Sources */,
+				74DE63E1184DFAD5002EEED5 /* Funtown.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D2AAC07B0554694100DB518D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -338,6 +430,64 @@
 			};
 			name = Release;
 		};
+		74DE63D7184DFA0C002EEED5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/funtown_ios_sdk.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "funtown-ios-sdk/funtown-ios-sdk-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = funtown_ios_sdk;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		74DE63D8184DFA0C002EEED5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/funtown_ios_sdk.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "funtown-ios-sdk/funtown-ios-sdk-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = funtown_ios_sdk;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -355,6 +505,15 @@
 			buildConfigurations = (
 				1DEB922308733DC00010E9CD /* Debug */,
 				1DEB922408733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74DE63D6184DFA0C002EEED5 /* Build configuration list for PBXNativeTarget "funtown-ios-sdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74DE63D7184DFA0C002EEED5 /* Debug */,
+				74DE63D8184DFA0C002EEED5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
