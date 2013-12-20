@@ -1,23 +1,24 @@
 /*
- * Copyright 2010 Facebook
+ * Copyright 2010-present Facebook.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *    http://www.apache.org/licenses/LICENSE-2.0
-
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-*/
+ */
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
 @protocol FBDialogDelegate;
+@class FBFrictionlessRequestSettings;
 
 /**
  * Do not use this interface directly, instead, use dialog in Facebook.h
@@ -26,41 +27,38 @@
  */
 
 @interface FBDialog : UIView <UIWebViewDelegate> {
-  id<FBDialogDelegate> _delegate;
-  NSMutableDictionary *_params;
-  NSString * _serverURL;
-  NSURL* _loadingURL;
-  UIWebView* _webView;
-  UIActivityIndicatorView* _spinner;
-  UIImageView* _iconView;
-  UILabel* _titleLabel;
-  UIButton* _closeButton;
-  UIDeviceOrientation _orientation;
-  BOOL _showingKeyboard;
+    id<FBDialogDelegate> _delegate;
+    NSMutableDictionary *_params;
+    NSString * _serverURL;
+    NSURL* _loadingURL;
+    UIWebView* _webView;
+    UIActivityIndicatorView* _spinner;
+    UIButton* _closeButton;
+    UIInterfaceOrientation _orientation;
+    BOOL _showingKeyboard;
+    BOOL _isViewInvisible;
+    FBFrictionlessRequestSettings* _frictionlessSettings;
 
-  // Ensures that UI elements behind the dialog are disabled.
-  UIView* _modalBackgroundView;
+    // Ensures that UI elements behind the dialog are disabled.
+    UIView* _modalBackgroundView;
 }
 
 /**
  * The delegate.
  */
-@property(nonatomic,assign) id<FBDialogDelegate> delegate;
+@property (nonatomic, assign) id<FBDialogDelegate> delegate;
 
 /**
  * The parameters.
  */
-@property(nonatomic, retain) NSMutableDictionary* params;
-
-/**
- * The title that is shown in the header atop the view.
- */
-@property(nonatomic,copy) NSString* title;
+@property (nonatomic, retain) NSMutableDictionary* params;
 
 - (NSString *) getStringFromUrl: (NSString*) url needle:(NSString *) needle;
 
 - (id)initWithURL: (NSString *) loadingURL
            params: (NSMutableDictionary *) params
+  isViewInvisible: (BOOL) isViewInvisible
+    frictionlessSettings: (FBFrictionlessRequestSettings *) frictionlessSettings
          delegate: (id <FBDialogDelegate>) delegate;
 
 /**
