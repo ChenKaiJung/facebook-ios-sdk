@@ -23,6 +23,36 @@
 		5FC7ABA9178C7D1900829DD1 /* FBInsights.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC7ABA7178C7A8E00829DD1 /* FBInsights.m */; };
 		5FC7ABAA178C7D1A00829DD1 /* FBInsights.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC7ABA7178C7A8E00829DD1 /* FBInsights.m */; };
 		5FC7ABAB178C7D2500829DD1 /* FBInsights.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FC7ABA1178C7A4900829DD1 /* FBInsights.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		742110241863FB61007611E4 /* Funtown.h in Headers */ = {isa = PBXBuildFile; fileRef = 742110161863FB61007611E4 /* Funtown.h */; };
+		742110291863FB61007611E4 /* FTRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 7421101C1863FB61007611E4 /* FTRequest.h */; };
+		7421102B1863FB61007611E4 /* FTLoginDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 7421101E1863FB61007611E4 /* FTLoginDialog.h */; };
+		7421102D1863FB61007611E4 /* FTDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 742110201863FB61007611E4 /* FTDialog.h */; };
+		7421102E1863FB61007611E4 /* FTConnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 742110221863FB61007611E4 /* FTConnect.h */; };
+		7421103E1863FD48007611E4 /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 742110301863FD48007611E4 /* JSON.h */; };
+		7421103F1863FD48007611E4 /* JSON_.h in Headers */ = {isa = PBXBuildFile; fileRef = 742110311863FD48007611E4 /* JSON_.h */; };
+		742110401863FD48007611E4 /* NSObject+SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 742110321863FD48007611E4 /* NSObject+SBJSON.h */; };
+		742110421863FD48007611E4 /* NSString+SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 742110341863FD48007611E4 /* NSString+SBJSON.h */; };
+		742110441863FD48007611E4 /* SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 742110361863FD48007611E4 /* SBJSON.h */; };
+		742110461863FD48007611E4 /* SBJsonBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 742110381863FD48007611E4 /* SBJsonBase.h */; };
+		742110481863FD48007611E4 /* SBJsonParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 7421103A1863FD48007611E4 /* SBJsonParser.h */; };
+		7421104A1863FD48007611E4 /* SBJsonWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 7421103C1863FD48007611E4 /* SBJsonWriter.h */; };
+		74211051186404A2007611E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		7421105F186404A2007611E4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7421105E186404A2007611E4 /* XCTest.framework */; };
+		74211060186404A2007611E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		74211061186404A2007611E4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8446FDB3151D2674000BE007 /* UIKit.framework */; };
+		74211064186404A2007611E4 /* libfuntown-ios-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74211050186404A2007611E4 /* libfuntown-ios-sdk.a */; };
+		7421106A186404A2007611E4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74211068186404A2007611E4 /* InfoPlist.strings */; };
+		7421106C186404A2007611E4 /* FuntownSdkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7421106B186404A2007611E4 /* FuntownSdkTests.m */; };
+		7421107718640587007611E4 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 742110331863FD48007611E4 /* NSObject+SBJSON.m */; };
+		7421107818640587007611E4 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 742110351863FD48007611E4 /* NSString+SBJSON.m */; };
+		7421107918640587007611E4 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 742110371863FD48007611E4 /* SBJSON.m */; };
+		7421107A18640587007611E4 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 742110391863FD48007611E4 /* SBJsonBase.m */; };
+		7421107B18640587007611E4 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 7421103B1863FD48007611E4 /* SBJsonParser.m */; };
+		7421107C18640587007611E4 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7421103D1863FD48007611E4 /* SBJsonWriter.m */; };
+		7421107D18640587007611E4 /* Funtown.m in Sources */ = {isa = PBXBuildFile; fileRef = 742110151863FB61007611E4 /* Funtown.m */; };
+		7421107E18640587007611E4 /* FTRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7421101B1863FB61007611E4 /* FTRequest.m */; };
+		7421107F18640587007611E4 /* FTLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7421101D1863FB61007611E4 /* FTLoginDialog.m */; };
+		7421108018640587007611E4 /* FTDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7421101F1863FB61007611E4 /* FTDialog.m */; };
 		7E2AFFE216E01720007367C1 /* FBShareDialogParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2A6E016DE7D15009C2BA4 /* FBShareDialogParams.m */; };
 		7E2AFFE316E01721007367C1 /* FBShareDialogParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2A6E016DE7D15009C2BA4 /* FBShareDialogParams.m */; };
 		7EBC39BD171CF1E400574F4E /* FBSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC39BC171CF1E400574F4E /* FBSettingsTests.m */; };
@@ -42,7 +72,6 @@
 		841FA0C616DFF95F002A51EA /* FBFrictionlessRecipientCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 841FA0C516DFF95F002A51EA /* FBFrictionlessRecipientCache.m */; };
 		841FA0C816E1236F002A51EA /* FBFrictionlessDialogSupportDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 841FA0C716E1236F002A51EA /* FBFrictionlessDialogSupportDelegate.h */; };
 		8425CFA81639914800472F98 /* NSError+FBError.h in Resources */ = {isa = PBXBuildFile; fileRef = 8425CFA71639914800472F98 /* NSError+FBError.h */; };
-		8425CFAB1639AF5000472F98 /* NSError+FBError.m in Sources */ = {isa = PBXBuildFile; fileRef = 8425CFAA1639AF5000472F98 /* NSError+FBError.m */; };
 		8425CFAC1639AF5000472F98 /* NSError+FBError.m in Sources */ = {isa = PBXBuildFile; fileRef = 8425CFAA1639AF5000472F98 /* NSError+FBError.m */; };
 		8425CFAD1639BB2600472F98 /* NSError+FBError.h in Headers */ = {isa = PBXBuildFile; fileRef = 8425CFA71639914800472F98 /* NSError+FBError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		843D2DD81547C33000873F7C /* FBUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 843D2DD61547C33000873F7C /* FBUtility.h */; };
@@ -399,6 +428,13 @@
 /* End PBXBuildRule section */
 
 /* Begin PBXContainerItemProxy section */
+		74211062186404A2007611E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7421104F186404A2007611E4;
+			remoteInfo = "funtown-ios-sdk";
+		};
 		85A44BC116A8CE59007BE80E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
@@ -450,6 +486,18 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		7421104E186404A2007611E4 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		2A68590515C1E37E001D4EDD /* FBSettings+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FBSettings+Internal.h"; sourceTree = "<group>"; };
 		5F0572B716156625008B54E6 /* FBAppEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBAppEvents.h; sourceTree = "<group>"; };
@@ -463,6 +511,36 @@
 		5F8BE21C164A30FD006329D6 /* FBSessionAppEventsState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBSessionAppEventsState.m; sourceTree = "<group>"; };
 		5FC7ABA1178C7A4900829DD1 /* FBInsights.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBInsights.h; sourceTree = "<group>"; };
 		5FC7ABA7178C7A8E00829DD1 /* FBInsights.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBInsights.m; sourceTree = "<group>"; };
+		742110151863FB61007611E4 /* Funtown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Funtown.m; sourceTree = "<group>"; };
+		742110161863FB61007611E4 /* Funtown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Funtown.h; sourceTree = "<group>"; };
+		7421101B1863FB61007611E4 /* FTRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTRequest.m; sourceTree = "<group>"; };
+		7421101C1863FB61007611E4 /* FTRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTRequest.h; sourceTree = "<group>"; };
+		7421101D1863FB61007611E4 /* FTLoginDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTLoginDialog.m; sourceTree = "<group>"; };
+		7421101E1863FB61007611E4 /* FTLoginDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTLoginDialog.h; sourceTree = "<group>"; };
+		7421101F1863FB61007611E4 /* FTDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTDialog.m; sourceTree = "<group>"; };
+		742110201863FB61007611E4 /* FTDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTDialog.h; sourceTree = "<group>"; };
+		742110211863FB61007611E4 /* FTDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FTDialog.bundle; sourceTree = "<group>"; };
+		742110221863FB61007611E4 /* FTConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTConnect.h; sourceTree = "<group>"; };
+		742110301863FD48007611E4 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		742110311863FD48007611E4 /* JSON_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON_.h; sourceTree = "<group>"; };
+		742110321863FD48007611E4 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		742110331863FD48007611E4 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		742110341863FD48007611E4 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		742110351863FD48007611E4 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		742110361863FD48007611E4 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		742110371863FD48007611E4 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		742110381863FD48007611E4 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		742110391863FD48007611E4 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		7421103A1863FD48007611E4 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		7421103B1863FD48007611E4 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		7421103C1863FD48007611E4 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		7421103D1863FD48007611E4 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		74211050186404A2007611E4 /* libfuntown-ios-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libfuntown-ios-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7421105D186404A2007611E4 /* funtown-ios-sdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "funtown-ios-sdkTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7421105E186404A2007611E4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		74211067186404A2007611E4 /* FuntownSdkTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FuntownSdkTests-Info.plist"; sourceTree = "<group>"; };
+		74211069186404A2007611E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7421106B186404A2007611E4 /* FuntownSdkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FuntownSdkTests.m; sourceTree = "<group>"; };
 		7EBC39BB171CF1E400574F4E /* FBSettingsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBSettingsTests.h; path = tests/FBSettingsTests.h; sourceTree = "<group>"; };
 		7EBC39BC171CF1E400574F4E /* FBSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBSettingsTests.m; path = tests/FBSettingsTests.m; sourceTree = "<group>"; };
 		7EE2A6DF16DE7D15009C2BA4 /* FBShareDialogParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBShareDialogParams.h; sourceTree = "<group>"; };
@@ -716,6 +794,25 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		7421104D186404A2007611E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74211051186404A2007611E4 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7421105A186404A2007611E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7421105F186404A2007611E4 /* XCTest.framework in Frameworks */,
+				74211061186404A2007611E4 /* UIKit.framework in Frameworks */,
+				74211064186404A2007611E4 /* libfuntown-ios-sdk.a in Frameworks */,
+				74211060186404A2007611E4 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		85A44B9B16A8CE05007BE80E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -764,6 +861,8 @@
 				D2AAC07E0554694100DB518D /* libfacebook_ios_sdk.a */,
 				B9CBC519152537270036AA71 /* FacebookSDKTests.octest */,
 				85A44B9F16A8CE05007BE80E /* FacebookSDKIntegrationTests.octest */,
+				74211050186404A2007611E4 /* libfuntown-ios-sdk.a */,
+				7421105D186404A2007611E4 /* funtown-ios-sdkTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -771,11 +870,13 @@
 		0867D691FE84028FC02AAC07 /* facebook-ios-sdk */ = {
 			isa = PBXGroup;
 			children = (
+				742110141863FB37007611E4 /* FTConnect */,
 				08FB77AEFE84172EC02AAC07 /* FacebookSDK */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
 				B9CBC54015254CAE0036AA71 /* FacebookSDKTests */,
 				85A44BA316A8CE05007BE80E /* FacebookSDKIntegrationTests */,
 				85ADA8B5169F898500145328 /* Submodules */,
+				74211065186404A2007611E4 /* FuntownSdkTests */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
 			);
@@ -793,6 +894,7 @@
 				B96F15E2152B927E00A52896 /* CoreLocation.framework */,
 				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
 				8446FDB3151D2674000BE007 /* UIKit.framework */,
+				7421105E186404A2007611E4 /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -965,6 +1067,64 @@
 				AA747D9E0F9514B9006C5449 /* facebook_ios_sdk_Prefix.pch */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		742110141863FB37007611E4 /* FTConnect */ = {
+			isa = PBXGroup;
+			children = (
+				7421102F1863FD48007611E4 /* JSON */,
+				742110151863FB61007611E4 /* Funtown.m */,
+				742110161863FB61007611E4 /* Funtown.h */,
+				7421101B1863FB61007611E4 /* FTRequest.m */,
+				7421101C1863FB61007611E4 /* FTRequest.h */,
+				7421101D1863FB61007611E4 /* FTLoginDialog.m */,
+				7421101E1863FB61007611E4 /* FTLoginDialog.h */,
+				7421101F1863FB61007611E4 /* FTDialog.m */,
+				742110201863FB61007611E4 /* FTDialog.h */,
+				742110211863FB61007611E4 /* FTDialog.bundle */,
+				742110221863FB61007611E4 /* FTConnect.h */,
+			);
+			name = FTConnect;
+			sourceTree = "<group>";
+		};
+		7421102F1863FD48007611E4 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				742110301863FD48007611E4 /* JSON.h */,
+				742110311863FD48007611E4 /* JSON_.h */,
+				742110321863FD48007611E4 /* NSObject+SBJSON.h */,
+				742110331863FD48007611E4 /* NSObject+SBJSON.m */,
+				742110341863FD48007611E4 /* NSString+SBJSON.h */,
+				742110351863FD48007611E4 /* NSString+SBJSON.m */,
+				742110361863FD48007611E4 /* SBJSON.h */,
+				742110371863FD48007611E4 /* SBJSON.m */,
+				742110381863FD48007611E4 /* SBJsonBase.h */,
+				742110391863FD48007611E4 /* SBJsonBase.m */,
+				7421103A1863FD48007611E4 /* SBJsonParser.h */,
+				7421103B1863FD48007611E4 /* SBJsonParser.m */,
+				7421103C1863FD48007611E4 /* SBJsonWriter.h */,
+				7421103D1863FD48007611E4 /* SBJsonWriter.m */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+		74211065186404A2007611E4 /* FuntownSdkTests */ = {
+			isa = PBXGroup;
+			children = (
+				7421106B186404A2007611E4 /* FuntownSdkTests.m */,
+				74211066186404A2007611E4 /* Supporting Files */,
+			);
+			name = FuntownSdkTests;
+			path = "funtown-ios-sdkTests";
+			sourceTree = "<group>";
+		};
+		74211066186404A2007611E4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				74211067186404A2007611E4 /* FuntownSdkTests-Info.plist */,
+				74211068186404A2007611E4 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		85A44BA316A8CE05007BE80E /* FacebookSDKIntegrationTests */ = {
@@ -1240,17 +1400,21 @@
 				84B2F69E1525096B00E93C17 /* FBSession.h in Headers */,
 				840FDCBD152B5D9200F9C927 /* FBFrictionlessRequestSettings.h in Headers */,
 				B9C6E1341525219600E46808 /* FBCacheIndex.h in Headers */,
+				7421103E1863FD48007611E4 /* JSON.h in Headers */,
 				84137158152B94B000B2C0E1 /* FBSessionManualTokenCachingStrategy.h in Headers */,
 				B966ADFC152D020E005FC07B /* FBGraphObjectTableCell.h in Headers */,
 				84AE5DA3152EA02500C4DE54 /* FBGraphObject.h in Headers */,
 				84E2DA28153492DE007F886C /* FBGraphPlace.h in Headers */,
 				84E2DA2C15353430007F886C /* FBGraphLocation.h in Headers */,
 				84E0C9F91535ED5A00778DA4 /* FBGraphUser.h in Headers */,
+				742110401863FD48007611E4 /* NSObject+SBJSON.h in Headers */,
 				84E0CA04153618E500778DA4 /* FacebookSDK.h in Headers */,
 				7EE2A6E116DE7D15009C2BA4 /* FBShareDialogParams.h in Headers */,
 				84E0CA061536198400778DA4 /* FBConnect.h in Headers */,
+				742110291863FB61007611E4 /* FTRequest.h in Headers */,
 				9D3D36AE17CBE6C500B9B049 /* FBTaskCompletionSource.h in Headers */,
 				84E0CA0A153619D500778DA4 /* Facebook.h in Headers */,
+				7421103F1863FD48007611E4 /* JSON_.h in Headers */,
 				84E0CA0C153619D500778DA4 /* FBDataDiskCache.h in Headers */,
 				85AA4B8F1545C54800E5352E /* FBSession+Internal.h in Headers */,
 				8409694C1541F41100479AD9 /* FBOpenGraphAction.h in Headers */,
@@ -1271,7 +1435,9 @@
 				840F6595159B441D005D41AA /* FBLoginView.h in Headers */,
 				DDB7C34C15A6181100C8DCE6 /* FBSettings.h in Headers */,
 				85E4AC7715B63CB600F17346 /* FBUserSettingsViewController.h in Headers */,
+				7421102E1863FB61007611E4 /* FTConnect.h in Headers */,
 				9D3D36B317CBE6C500B9B049 /* FBTask+Private.h in Headers */,
+				7421102B1863FB61007611E4 /* FTLoginDialog.h in Headers */,
 				85E4AC7D15B63CC500F17346 /* FBViewController.h in Headers */,
 				2A68590615C1E37E001D4EDD /* FBSettings+Internal.h in Headers */,
 				85F99E3F15C3751100D807A5 /* FBViewController+Internal.h in Headers */,
@@ -1280,10 +1446,13 @@
 				8425CFAD1639BB2600472F98 /* NSError+FBError.h in Headers */,
 				84D0F15116653D9900466CD1 /* FBErrorUtility+Internal.h in Headers */,
 				9D17A8DD1671774B00AB1148 /* FBSystemAccountStoreAdapter.h in Headers */,
+				742110421863FD48007611E4 /* NSString+SBJSON.h in Headers */,
+				742110461863FD48007611E4 /* SBJsonBase.h in Headers */,
 				5F0572B916156625008B54E6 /* FBAppEvents.h in Headers */,
 				5F8BE21D164A30FD006329D6 /* FBSessionAppEventsState.h in Headers */,
 				9DF9B317168AD98A008B6CC0 /* FBAccessTokenData+Internal.h in Headers */,
 				5F5F7E6616B21A500031AA95 /* FBFetchedAppSettings.h in Headers */,
+				7421102D1863FB61007611E4 /* FTDialog.h in Headers */,
 				84AD5AAB169602490026E6C3 /* FBWebDialogs.h in Headers */,
 				B58DFD8B168402B30030A947 /* FBAppBridge.h in Headers */,
 				B5B7702B16C30EA500729340 /* FBBase64.h in Headers */,
@@ -1296,7 +1465,10 @@
 				B5B4C1C516F7AAA1006FF55B /* FBLoginDialogParams.h in Headers */,
 				B5B4C1D016F7AC28006FF55B /* FBDialogsParams.h in Headers */,
 				B5B4C1D516F7D3D7006FF55B /* FBDialogsParams+Internal.h in Headers */,
+				7421104A1863FD48007611E4 /* SBJsonWriter.h in Headers */,
 				B5E8DC26170C22DA009A4590 /* FBAppCall.h in Headers */,
+				742110441863FD48007611E4 /* SBJSON.h in Headers */,
+				742110241863FB61007611E4 /* Funtown.h in Headers */,
 				B5E8DC2A170C22DA009A4590 /* FBAppCall+Internal.h in Headers */,
 				B5E8DC33170C22FC009A4590 /* FBDialogsData.h in Headers */,
 				B5E8DC37170C22FC009A4590 /* FBDialogsData+Internal.h in Headers */,
@@ -1312,6 +1484,7 @@
 				9D366B15178C7468007B4CEC /* FBRequestMetadata.h in Headers */,
 				9D366B20178C7798007B4CEC /* FBRequestHandlerFactory.h in Headers */,
 				9D366B26178DC002007B4CEC /* FBRequestConnectionRetryManager.h in Headers */,
+				742110481863FD48007611E4 /* SBJsonParser.h in Headers */,
 				B549647517A8703E002C9284 /* FBSessionAuthLogger.h in Headers */,
 				9D3FC9AB17BA971C0072D6BC /* FBSessionUtility.h in Headers */,
 				9D393AE717BAEE5B00658BC5 /* FBSessionLoginStrategy.h in Headers */,
@@ -1330,6 +1503,41 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		7421104F186404A2007611E4 /* funtown-ios-sdk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7421106D186404A2007611E4 /* Build configuration list for PBXNativeTarget "funtown-ios-sdk" */;
+			buildPhases = (
+				7421104C186404A2007611E4 /* Sources */,
+				7421104D186404A2007611E4 /* Frameworks */,
+				7421104E186404A2007611E4 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "funtown-ios-sdk";
+			productName = "funtown-ios-sdk";
+			productReference = 74211050186404A2007611E4 /* libfuntown-ios-sdk.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		7421105C186404A2007611E4 /* FuntownSdkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74211072186404A2007611E4 /* Build configuration list for PBXNativeTarget "FuntownSdkTests" */;
+			buildPhases = (
+				74211059186404A2007611E4 /* Sources */,
+				7421105A186404A2007611E4 /* Frameworks */,
+				7421105B186404A2007611E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				74211063186404A2007611E4 /* PBXTargetDependency */,
+			);
+			name = FuntownSdkTests;
+			productName = "funtown-ios-sdkTests";
+			productReference = 7421105D186404A2007611E4 /* funtown-ios-sdkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		85A44B9E16A8CE05007BE80E /* FacebookSDKIntegrationTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 85A44BAD16A8CE05007BE80E /* Build configuration list for PBXNativeTarget "FacebookSDKIntegrationTests" */;
@@ -1421,6 +1629,8 @@
 				D2AAC07D0554694100DB518D /* facebook-ios-sdk */,
 				B9CBC518152537270036AA71 /* FacebookSDKTests */,
 				85A44B9E16A8CE05007BE80E /* FacebookSDKIntegrationTests */,
+				7421104F186404A2007611E4 /* funtown-ios-sdk */,
+				7421105C186404A2007611E4 /* FuntownSdkTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1464,6 +1674,14 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		7421105B186404A2007611E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7421106A186404A2007611E4 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		85A44B9C16A8CE05007BE80E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1508,6 +1726,31 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		7421104C186404A2007611E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7421107718640587007611E4 /* NSObject+SBJSON.m in Sources */,
+				7421107818640587007611E4 /* NSString+SBJSON.m in Sources */,
+				7421107918640587007611E4 /* SBJSON.m in Sources */,
+				7421107A18640587007611E4 /* SBJsonBase.m in Sources */,
+				7421107B18640587007611E4 /* SBJsonParser.m in Sources */,
+				7421107C18640587007611E4 /* SBJsonWriter.m in Sources */,
+				7421107D18640587007611E4 /* Funtown.m in Sources */,
+				7421107E18640587007611E4 /* FTRequest.m in Sources */,
+				7421107F18640587007611E4 /* FTLoginDialog.m in Sources */,
+				7421108018640587007611E4 /* FTDialog.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74211059186404A2007611E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7421106C186404A2007611E4 /* FuntownSdkTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		85A44B9A16A8CE05007BE80E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1737,7 +1980,6 @@
 				85E4AC7815B63CB600F17346 /* FBUserSettingsViewController.m in Sources */,
 				85E4AC7E15B63CC500F17346 /* FBViewController.m in Sources */,
 				85A928911611187F008699F1 /* FBNativeDialogs.m in Sources */,
-				8425CFAB1639AF5000472F98 /* NSError+FBError.m in Sources */,
 				84D0F15416653F1000466CD1 /* FBErrorUtility.m in Sources */,
 				9D17A8DE1671774B00AB1148 /* FBSystemAccountStoreAdapter.m in Sources */,
 				5F0572BA16156625008B54E6 /* FBAppEvents.m in Sources */,
@@ -1781,6 +2023,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		74211063186404A2007611E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7421104F186404A2007611E4 /* funtown-ios-sdk */;
+			targetProxy = 74211062186404A2007611E4 /* PBXContainerItemProxy */;
+		};
 		85A44BC216A8CE59007BE80E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D2AAC07D0554694100DB518D /* facebook-ios-sdk */;
@@ -1794,6 +2041,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		74211068186404A2007611E4 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				74211069186404A2007611E4 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		85A44BA616A8CE05007BE80E /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1892,6 +2147,326 @@
 				SDKROOT = iphoneos;
 			};
 			name = Release;
+		};
+		7421106E186404A2007611E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/funtown_ios_sdk.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "funtown-ios-sdk/funtown-ios-sdk-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		7421106F186404A2007611E4 /* Debug64 */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/funtown_ios_sdk.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "funtown-ios-sdk/funtown-ios-sdk-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug64;
+		};
+		74211070186404A2007611E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/funtown_ios_sdk.dst;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "funtown-ios-sdk/funtown-ios-sdk-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		74211071186404A2007611E4 /* Release64 */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/funtown_ios_sdk.dst;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "funtown-ios-sdk/funtown-ios-sdk-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release64;
+		};
+		74211073186404A2007611E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "funtown-ios-sdk/funtown-ios-sdk-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "funtown-ios-sdkTests/funtown-ios-sdkTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		74211074186404A2007611E4 /* Debug64 */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "funtown-ios-sdk/funtown-ios-sdk-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "funtown-ios-sdkTests/funtown-ios-sdkTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug64;
+		};
+		74211075186404A2007611E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "funtown-ios-sdk/funtown-ios-sdk-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "funtown-ios-sdkTests/funtown-ios-sdkTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+		74211076186404A2007611E4 /* Release64 */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "funtown-ios-sdk/funtown-ios-sdk-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "funtown-ios-sdkTests/funtown-ios-sdkTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release64;
 		};
 		85A44BAE16A8CE05007BE80E /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -2273,6 +2848,26 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		7421106D186404A2007611E4 /* Build configuration list for PBXNativeTarget "funtown-ios-sdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7421106E186404A2007611E4 /* Debug */,
+				7421106F186404A2007611E4 /* Debug64 */,
+				74211070186404A2007611E4 /* Release */,
+				74211071186404A2007611E4 /* Release64 */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		74211072186404A2007611E4 /* Build configuration list for PBXNativeTarget "FuntownSdkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74211073186404A2007611E4 /* Debug */,
+				74211074186404A2007611E4 /* Debug64 */,
+				74211075186404A2007611E4 /* Release */,
+				74211076186404A2007611E4 /* Release64 */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		85A44BAD16A8CE05007BE80E /* Build configuration list for PBXNativeTarget "FacebookSDKIntegrationTests" */ = {
 			isa = XCConfigurationList;

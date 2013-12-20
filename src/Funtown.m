@@ -23,10 +23,10 @@ static NSString* kDialogBaseURL = @"https://weblogin.funtown.com.tw/oauth/";
 static NSString* kMidBaseURL = @"http://api.funtown.com.tw:8080/MIDGatewayWS/services/MIDGatewayService/";
 static NSString* kRestserverBaseURL = @"https://api.facebook.com/method/";
 
-static NSString* kFTAppAuthURLScheme = @"funtownauth";
-static NSString* kFTAppAuthURLPath = @"authorize";
+//static NSString* kFTAppAuthURLScheme = @"funtownauth";
+//static NSString* kFTAppAuthURLPath = @"authorize";
 //static NSString* kRedirectURL = @"ftconnect://success";
-static NSString* kRedirectURL = @"http://newpartner.funtown.com.tw/mappingpage/index.php%3Fprovider%3Dfuntown%26client_id%3D2%26game_uri%3D68747470733A2F2F7765626C6F67696E2E66756E746F776E2E636F6D2E74772F6F617574682F6C6F67696E5F737563636573732E68746D6C3F73657373696F6E5F6B65793D";
+//static NSString* kRedirectURL = @"http://newpartner.funtown.com.tw/mappingpage/index.php%3Fprovider%3Dfuntown%26client_id%3D2%26game_uri%3D68747470733A2F2F7765626C6F67696E2E66756E746F776E2E636F6D2E74772F6F617574682F6C6F67696E5F737563636573732E68746D6C3F73657373696F6E5F6B65793D";
 
 //static NSString* kLogin = @"oauth";
 static NSString* kLogin = @"oauth_mobile.php";
