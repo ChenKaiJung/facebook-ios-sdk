@@ -1540,7 +1540,7 @@ static FBSession *g_activeSession = nil;
                                     shouldCache:NO];
     }   else if(code) {
         [self.authLogger logEndAuthMethodWithResult:FBSessionAuthLoggerResultSuccess error:nil];
-        
+        self.code=code;
         // set token and date, state transition, and call the handler if there is one
         [self transitionAndCallHandlerWithState:FBSessionStateOpen
                                           error:nil
