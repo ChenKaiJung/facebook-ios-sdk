@@ -251,9 +251,9 @@ responseText = _responseText;
         [_delegate ftRequest:self didLoadRawResponse:data];
     }
     
-    if ([_delegate respondsToSelector:@selector(request:didLoad:)] ||
+    if ([_delegate respondsToSelector:@selector(ftRequest:didLoad:)] ||
         [_delegate respondsToSelector:
-         @selector(request:didFailWithError:)]) {
+         @selector(ftRequest:didFailWithError:)]) {
             NSError* error = nil;
             id result = [self parseJsonResponse:data error:&error];
             
