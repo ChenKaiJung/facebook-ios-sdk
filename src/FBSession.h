@@ -352,6 +352,11 @@ __attribute__((deprecated));
 /*! @abstract Gets the FBAccessTokenData for the session */
 @property (readonly, copy) FBAccessTokenData *accessTokenData;
 
+/*! @abstract Gets the code for the session */
+@property (readonly, copy) NSString *code;
+/*! @abstract Gets the sessionKey for the session */
+@property (readonly, copy) NSString *sessionKey;
+
 /*!
  @methodgroup Instance methods
  */

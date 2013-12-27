@@ -536,7 +536,7 @@
 		7421103C1863FD48007611E4 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		7421103D1863FD48007611E4 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		74211050186404A2007611E4 /* libfuntown-ios-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libfuntown-ios-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7421105D186404A2007611E4 /* funtown-ios-sdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "funtown-ios-sdkTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7421105D186404A2007611E4 /* FuntownSdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FuntownSdkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7421105E186404A2007611E4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		74211067186404A2007611E4 /* FuntownSdkTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FuntownSdkTests-Info.plist"; sourceTree = "<group>"; };
 		74211069186404A2007611E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -862,7 +862,7 @@
 				B9CBC519152537270036AA71 /* FacebookSDKTests.octest */,
 				85A44B9F16A8CE05007BE80E /* FacebookSDKIntegrationTests.octest */,
 				74211050186404A2007611E4 /* libfuntown-ios-sdk.a */,
-				7421105D186404A2007611E4 /* funtown-ios-sdkTests.xctest */,
+				7421105D186404A2007611E4 /* FuntownSdkTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1535,7 +1535,7 @@
 			);
 			name = FuntownSdkTests;
 			productName = "funtown-ios-sdkTests";
-			productReference = 7421105D186404A2007611E4 /* funtown-ios-sdkTests.xctest */;
+			productReference = 7421105D186404A2007611E4 /* FuntownSdkTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		85A44B9E16A8CE05007BE80E /* FacebookSDKIntegrationTests */ = {
@@ -2858,6 +2858,7 @@
 				74211071186404A2007611E4 /* Release64 */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		74211072186404A2007611E4 /* Build configuration list for PBXNativeTarget "FuntownSdkTests" */ = {
 			isa = XCConfigurationList;
@@ -2868,6 +2869,7 @@
 				74211076186404A2007611E4 /* Release64 */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		85A44BAD16A8CE05007BE80E /* Build configuration list for PBXNativeTarget "FacebookSDKIntegrationTests" */ = {
 			isa = XCConfigurationList;

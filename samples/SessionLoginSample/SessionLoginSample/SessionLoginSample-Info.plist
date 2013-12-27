@@ -52,9 +52,11 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>FacebookAppID</key>
-	<string>380615018626574</string>
+	<string>1399675216916323</string>
 	<key>FacebookDisplayName</key>
 	<string>SessionLoginSample</string>
+	<key>FacebookRedirectUri</key>
+	<string>http://newpartner.funtown.com.tw/mappingpage/index.php?provider=facebook&amp;client_id=1399675216916323&amp;game_uri=68747470733a2f2f7765626c6f67696e2e66756e746f776e2e636f6d2e74772f6f617574682f6c6f67696e5f737563636573732e68746d6c3f73657373696f6e5f6b65793d</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>

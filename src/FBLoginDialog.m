@@ -74,7 +74,7 @@
     [self dialogDidCancel:url];
     [self dismissWithSuccess:NO animated:YES];
   } else {
-    if ([_loginDelegate respondsToSelector:@selector(fbDialogLogin:expirationDate:)]) {
+      if ([_loginDelegate respondsToSelector:@selector(fbDialogLogin:expirationDate:params:)]) {
       //[_loginDelegate fbDialogLogin:token expirationDate:expirationDate];
         NSDictionary *params = [FBUtility queryParamsDictionaryFromFBURL:url];
         if ( code != (NSString *) [NSNull null] && code.length != 0) {
