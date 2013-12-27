@@ -2297,7 +2297,9 @@ static FBSession *g_activeSession = nil;
 
     [[FBDataDiskCache sharedCache] removeDataForSession:self];
     [self.tokenCachingStrategy clearToken];
-
+    
+    [FBUtility deleteFacebookCookies];
+    
     // If we are not already in a terminal state, go to Closed.
     if (!FB_ISSESSIONSTATETERMINAL(self.state)) {
         [self transitionAndCallHandlerWithState:FBSessionStateClosed
