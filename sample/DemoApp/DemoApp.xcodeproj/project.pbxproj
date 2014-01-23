@@ -23,6 +23,7 @@
 		74E4E156189115AC00A083AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74E4E154189115AC00A083AD /* InfoPlist.strings */; };
 		74E4E158189115AC00A083AD /* DemoAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E4E157189115AC00A083AD /* DemoAppTests.m */; };
 		74E4E1631891211900A083AD /* libfuntown_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E4E16118911D7500A083AD /* libfuntown_ios_sdk.a */; };
+		74E4E17E189156D100A083AD /* FTDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 74E4E17D189156D100A083AD /* FTDialog.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		74E4E155189115AC00A083AD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		74E4E157189115AC00A083AD /* DemoAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoAppTests.m; sourceTree = "<group>"; };
 		74E4E16118911D7500A083AD /* libfuntown_ios_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfuntown_ios_sdk.a; path = ../../bin/libfuntown_ios_sdk.a; sourceTree = "<group>"; };
+		74E4E17D189156D100A083AD /* FTDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FTDialog.bundle; path = ../FTDialog.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				74E4E13E189115AC00A083AD /* Main_iPad.storyboard */,
 				74E4E141189115AC00A083AD /* ViewController.h */,
 				74E4E142189115AC00A083AD /* ViewController.m */,
+				74E4E17D189156D100A083AD /* FTDialog.bundle */,
 				74E4E144189115AC00A083AD /* Images.xcassets */,
 				74E4E130189115AC00A083AD /* Supporting Files */,
 			);
@@ -235,6 +238,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74E4E17E189156D100A083AD /* FTDialog.bundle in Resources */,
 				74E4E140189115AC00A083AD /* Main_iPad.storyboard in Resources */,
 				74E4E145189115AC00A083AD /* Images.xcassets in Resources */,
 				74E4E13D189115AC00A083AD /* Main_iPhone.storyboard in Resources */,
@@ -496,6 +500,7 @@
 				74E4E15D189115AC00A083AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		74E4E15E189115AC00A083AD /* Build configuration list for PBXNativeTarget "DemoAppTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +509,7 @@
 				74E4E160189115AC00A083AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
