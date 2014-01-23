@@ -57,6 +57,7 @@
 		74D15D311890B06D00CB50B2 /* FTUUID.h in Headers */ = {isa = PBXBuildFile; fileRef = 74D15D2F1890B06D00CB50B2 /* FTUUID.h */; };
 		74D15D321890B06D00CB50B2 /* FTUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 74D15D301890B06D00CB50B2 /* FTUUID.m */; };
 		74D15D331890CBDC00CB50B2 /* FTUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 74D15D301890B06D00CB50B2 /* FTUUID.m */; };
+		74E4E1661891530500A083AD /* FTDialog.bundle in Sources */ = {isa = PBXBuildFile; fileRef = 742110211863FB61007611E4 /* FTDialog.bundle */; };
 		7E2AFFE216E01720007367C1 /* FBShareDialogParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2A6E016DE7D15009C2BA4 /* FBShareDialogParams.m */; };
 		7E2AFFE316E01721007367C1 /* FBShareDialogParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2A6E016DE7D15009C2BA4 /* FBShareDialogParams.m */; };
 		7EBC39BD171CF1E400574F4E /* FBSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBC39BC171CF1E400574F4E /* FBSettingsTests.m */; };
@@ -1742,6 +1743,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74E4E1661891530500A083AD /* FTDialog.bundle in Sources */,
 				74D15D331890CBDC00CB50B2 /* FTUUID.m in Sources */,
 				7421107718640587007611E4 /* NSObject+SBJSON.m in Sources */,
 				7421107818640587007611E4 /* NSString+SBJSON.m in Sources */,
