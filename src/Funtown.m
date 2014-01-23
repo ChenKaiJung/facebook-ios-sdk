@@ -76,6 +76,21 @@ static NSString* kSDKVersion = @"2";
 }
 
 /**
+ * Initialize the Facebook object with application ID.
+ */
+- (id)init:(id<FTSessionDelegate>)delegate {
+    self = [super init];
+    if (self) {
+        NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+        NSString* ftClientid = [infoDict objectForKey:@"FuntownClientID"];
+        [_appId release];
+        _appId = [ftClientid copy];
+        self.sessionDelegate = delegate;
+    }
+    return self;
+}
+
+/**
  * Override NSObject : free the space
  */
 - (void)dealloc {

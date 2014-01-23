@@ -58,6 +58,8 @@
 - (id)initWithAppId:(NSString *)appId
         andDelegate:(id<FTSessionDelegate>)delegate;
 
+- (id)init:(id<FTSessionDelegate>)delegate;
+
 - (void)authorize:(NSArray *)permissions;
 
 - (void)authorize:(NSArray *)permissions
