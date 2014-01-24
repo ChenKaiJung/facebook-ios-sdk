@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		74326A4C18920E0C00766128 /* FTDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 74326A4B18920E0C00766128 /* FTDialog.bundle */; };
+		74326A4E18920ED400766128 /* libfuntown_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74326A4D18920ED400766128 /* libfuntown_ios_sdk.a */; };
 		74E4E12A189115AC00A083AD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E4E129189115AC00A083AD /* Foundation.framework */; };
 		74E4E12C189115AC00A083AD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E4E12B189115AC00A083AD /* CoreGraphics.framework */; };
 		74E4E12E189115AC00A083AD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E4E12D189115AC00A083AD /* UIKit.framework */; };
@@ -22,8 +24,6 @@
 		74E4E14E189115AC00A083AD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E4E12D189115AC00A083AD /* UIKit.framework */; };
 		74E4E156189115AC00A083AD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74E4E154189115AC00A083AD /* InfoPlist.strings */; };
 		74E4E158189115AC00A083AD /* DemoAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 74E4E157189115AC00A083AD /* DemoAppTests.m */; };
-		74E4E1631891211900A083AD /* libfuntown_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E4E16118911D7500A083AD /* libfuntown_ios_sdk.a */; };
-		74E4E17E189156D100A083AD /* FTDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 74E4E17D189156D100A083AD /* FTDialog.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		74326A4B18920E0C00766128 /* FTDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FTDialog.bundle; sourceTree = "<group>"; };
+		74326A4D18920ED400766128 /* libfuntown_ios_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfuntown_ios_sdk.a; path = ../libfuntown_ios_sdk.a; sourceTree = "<group>"; };
 		74E4E126189115AC00A083AD /* DemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74E4E129189115AC00A083AD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		74E4E12B189115AC00A083AD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -57,8 +59,6 @@
 		74E4E153189115AC00A083AD /* DemoAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DemoAppTests-Info.plist"; sourceTree = "<group>"; };
 		74E4E155189115AC00A083AD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		74E4E157189115AC00A083AD /* DemoAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoAppTests.m; sourceTree = "<group>"; };
-		74E4E16118911D7500A083AD /* libfuntown_ios_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfuntown_ios_sdk.a; path = ../../bin/libfuntown_ios_sdk.a; sourceTree = "<group>"; };
-		74E4E17D189156D100A083AD /* FTDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FTDialog.bundle; path = ../FTDialog.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,7 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74E4E1631891211900A083AD /* libfuntown_ios_sdk.a in Frameworks */,
+				74326A4E18920ED400766128 /* libfuntown_ios_sdk.a in Frameworks */,
 				74E4E12C189115AC00A083AD /* CoreGraphics.framework in Frameworks */,
 				74E4E12E189115AC00A083AD /* UIKit.framework in Frameworks */,
 				74E4E12A189115AC00A083AD /* Foundation.framework in Frameworks */,
@@ -108,7 +108,7 @@
 		74E4E128189115AC00A083AD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				74E4E16118911D7500A083AD /* libfuntown_ios_sdk.a */,
+				74326A4D18920ED400766128 /* libfuntown_ios_sdk.a */,
 				74E4E129189115AC00A083AD /* Foundation.framework */,
 				74E4E12B189115AC00A083AD /* CoreGraphics.framework */,
 				74E4E12D189115AC00A083AD /* UIKit.framework */,
@@ -126,7 +126,6 @@
 				74E4E13E189115AC00A083AD /* Main_iPad.storyboard */,
 				74E4E141189115AC00A083AD /* ViewController.h */,
 				74E4E142189115AC00A083AD /* ViewController.m */,
-				74E4E17D189156D100A083AD /* FTDialog.bundle */,
 				74E4E144189115AC00A083AD /* Images.xcassets */,
 				74E4E130189115AC00A083AD /* Supporting Files */,
 			);
@@ -136,6 +135,7 @@
 		74E4E130189115AC00A083AD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				74326A4B18920E0C00766128 /* FTDialog.bundle */,
 				74E4E131189115AC00A083AD /* DemoApp-Info.plist */,
 				74E4E132189115AC00A083AD /* InfoPlist.strings */,
 				74E4E135189115AC00A083AD /* main.m */,
@@ -238,11 +238,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74E4E17E189156D100A083AD /* FTDialog.bundle in Resources */,
 				74E4E140189115AC00A083AD /* Main_iPad.storyboard in Resources */,
 				74E4E145189115AC00A083AD /* Images.xcassets in Resources */,
 				74E4E13D189115AC00A083AD /* Main_iPhone.storyboard in Resources */,
 				74E4E134189115AC00A083AD /* InfoPlist.strings in Resources */,
+				74326A4C18920E0C00766128 /* FTDialog.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +360,7 @@
 					../../src,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = ../;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -399,6 +400,7 @@
 					../../src,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = ../;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -413,9 +415,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DemoApp/DemoApp-Prefix.pch";
 				INFOPLIST_FILE = "DemoApp/DemoApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/kaijung/MyProject/facebook-ios-sdk-funtown/bin",
+					../,
+					"/Users/kaijung/MyProject/facebook-ios-sdk-funtown/sample",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -430,9 +434,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DemoApp/DemoApp-Prefix.pch";
 				INFOPLIST_FILE = "DemoApp/DemoApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/kaijung/MyProject/facebook-ios-sdk-funtown/bin",
+					../,
+					"/Users/kaijung/MyProject/facebook-ios-sdk-funtown/sample",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
