@@ -15,7 +15,10 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FTUUID.h>
 
-@interface SLViewController : UIViewController
+@interface SLViewController : UIViewController <FTUUIDDelegate> {
+}
+
 
 @end
