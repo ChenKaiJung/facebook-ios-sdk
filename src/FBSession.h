@@ -354,9 +354,11 @@ __attribute__((deprecated));
 
 /*! @abstract Gets the code for the session */
 @property (readonly, copy) NSString *code;
-/*! @abstract Gets the sessionKey for the session */
-@property (readonly, copy) NSString *sessionKey;
-
+/*! @abstract Gets the parameter for the session */
+//@property (readonly, copy) NSString *sessionKey;
+@property (readonly, copy) NSDictionary *parameters;
+/*! @abstract Gets the redirectUri for the session */
+@property (readonly, copy) NSString *redirectUri;
 /*!
  @methodgroup Instance methods
  */
@@ -381,6 +383,18 @@ __attribute__((deprecated));
  @param handler A block to call with the state changes. The default is nil.
 */
 - (void)openWithCompletionHandler:(FBSessionStateHandler)handler;
+
+/*!
+ @method
+ 
+ @abstract Opens a session for the Facebook.
+ 
+ @discussion
+ 
+ @param handler A block to call with the state changes. The default is nil.
+ */
+- (void)openWithRedirectUri:(NSString*)redirectUri
+          completionHandler:(FBSessionStateHandler)handler;
 
 /*!
  @method
