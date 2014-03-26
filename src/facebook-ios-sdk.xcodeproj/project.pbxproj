@@ -54,9 +54,10 @@
 		7421107F18640587007611E4 /* FTLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7421101D1863FB61007611E4 /* FTLoginDialog.m */; };
 		7421108018640587007611E4 /* FTDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7421101F1863FB61007611E4 /* FTDialog.m */; };
 		74D15D2E1890ABFC00CB50B2 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74D15D2D1890ABFC00CB50B2 /* AdSupport.framework */; };
-		74D15D311890B06D00CB50B2 /* FTUUID.h in Headers */ = {isa = PBXBuildFile; fileRef = 74D15D2F1890B06D00CB50B2 /* FTUUID.h */; };
+		74D15D311890B06D00CB50B2 /* FTUUID.h in Headers */ = {isa = PBXBuildFile; fileRef = 74D15D2F1890B06D00CB50B2 /* FTUUID.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		74D15D321890B06D00CB50B2 /* FTUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 74D15D301890B06D00CB50B2 /* FTUUID.m */; };
 		74D15D331890CBDC00CB50B2 /* FTUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 74D15D301890B06D00CB50B2 /* FTUUID.m */; };
+		74D30F3518E125CC00AD2AED /* FTUUID.m in Headers */ = {isa = PBXBuildFile; fileRef = 74D15D301890B06D00CB50B2 /* FTUUID.m */; };
 		74E4E1661891530500A083AD /* FTDialog.bundle in Sources */ = {isa = PBXBuildFile; fileRef = 742110211863FB61007611E4 /* FTDialog.bundle */; };
 		7E2AFFE216E01720007367C1 /* FBShareDialogParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2A6E016DE7D15009C2BA4 /* FBShareDialogParams.m */; };
 		7E2AFFE316E01721007367C1 /* FBShareDialogParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2A6E016DE7D15009C2BA4 /* FBShareDialogParams.m */; };
@@ -568,7 +569,7 @@
 		843D2DD61547C33000873F7C /* FBUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBUtility.h; sourceTree = "<group>"; };
 		843D2DD71547C33000873F7C /* FBUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBUtility.m; sourceTree = "<group>"; };
 		8440A81515E3F2B800565452 /* FBSDKVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBSDKVersion.h; sourceTree = "<group>"; };
-		8446FDA5151BC5C2000BE007 /* FBSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FBSession.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		8446FDA5151BC5C2000BE007 /* FBSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = FBSession.m; sourceTree = "<group>"; };
 		8446FDAB151CDB0B000BE007 /* FBSessionTokenCachingStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBSessionTokenCachingStrategy.h; sourceTree = "<group>"; };
 		8446FDAC151CDB0B000BE007 /* FBSessionTokenCachingStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBSessionTokenCachingStrategy.m; sourceTree = "<group>"; };
 		8446FDB3151D2674000BE007 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -1428,11 +1429,12 @@
 				84E0CA0A153619D500778DA4 /* Facebook.h in Headers */,
 				7421103F1863FD48007611E4 /* JSON_.h in Headers */,
 				84E0CA0C153619D500778DA4 /* FBDataDiskCache.h in Headers */,
-				74D15D311890B06D00CB50B2 /* FTUUID.h in Headers */,
 				85AA4B8F1545C54800E5352E /* FBSession+Internal.h in Headers */,
 				8409694C1541F41100479AD9 /* FBOpenGraphAction.h in Headers */,
 				843D2DD81547C33000873F7C /* FBUtility.h in Headers */,
+				74D15D311890B06D00CB50B2 /* FTUUID.h in Headers */,
 				E28B75541547D85A002E30C0 /* FBFriendPickerViewController.h in Headers */,
+				74D30F3518E125CC00AD2AED /* FTUUID.m in Headers */,
 				E2B99CF11549CD7F002AEA86 /* FBGraphObjectTableDataSource.h in Headers */,
 				E2B99CF51549E02A002AEA86 /* FBGraphObjectTableSelection.h in Headers */,
 				5F7CB4201553ACC600C183CF /* FBLogger.h in Headers */,
@@ -2140,7 +2142,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_THUMB_SUPPORT = NO;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -2159,7 +2161,7 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_THUMB_SUPPORT = NO;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -2559,7 +2561,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_THUMB_SUPPORT = NO;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -2658,7 +2660,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_THUMB_SUPPORT = NO;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
