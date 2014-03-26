@@ -138,7 +138,9 @@ static FBSession *g_activeSession = nil;
 @property (readwrite, retain) FBSessionAuthLogger *authLogger;
 
 @property (readwrite, copy) NSString *code;
-@property (readwrite, copy) NSString *sessionKey;
+//@property (readwrite, copy) NSString *sessionKey;
+@property (readwrite, copy) NSDictionary *parameters;
+@property (readwrite, copy) NSString *redirectUri;
 @end
 
 @implementation FBSession : NSObject
@@ -266,7 +268,9 @@ static FBSession *g_activeSession = nil;
     [_affinitizedThread release];
     [_appEventsState release];
     [_authLogger release];
-
+    [_code release];
+    [_parameters release];
+    [_redirectUri release];
     [super dealloc];
 }
 
@@ -301,6 +305,19 @@ static FBSession *g_activeSession = nil;
 }
 
 #pragma mark - Public Members
+
+- (void)openWithRedirectUri:(NSString*)redirectUri
+        completionHandler:(FBSessionStateHandler)handler {
+    //[self openWithBehavior:FBSessionLoginBehaviorWithFallbackToWebView completionHandler:handler];
+    if(!redirectUri) {
+        NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];        
+        _redirectUri=[infoDict objectForKey:@"FacebookRedirectUri"];
+    }
+    else {
+        _redirectUri=[redirectUri copy];
+    }
+    [self openWithBehavior:FBSessionLoginBehaviorForcingWebView completionHandler:handler];
+}
 
 - (void)openWithCompletionHandler:(FBSessionStateHandler)handler {
     //[self openWithBehavior:FBSessionLoginBehaviorWithFallbackToWebView completionHandler:handler];
@@ -1048,7 +1065,14 @@ static FBSession *g_activeSession = nil;
                       canFetchAppSettings:(BOOL)canFetchAppSettings {
     
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
-    NSString *redirectURI = [infoDict objectForKey:@"FacebookRedirectUri"];
+    NSString *redirectURI =nil;
+    
+    if(!_redirectUri) {
+        redirectURI=[infoDict objectForKey:@"FacebookRedirectUri"];
+    }
+    else {
+        redirectURI=_redirectUri;
+    }
     
     // setup parameters for either the safari or inline login
     //NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -1456,7 +1480,8 @@ static FBSession *g_activeSession = nil;
                     accessToken:(NSString*)accessToken
                       loginType:(FBSessionLoginType)loginType {
     NSString *code = [parameters objectForKey:@"code"];
-    NSString *sessionKey = [parameters objectForKey:@"session_key"];
+    if(parameters) self.parameters = [parameters copy];
+    //NSString *sessionKey = [parameters objectForKey:@"session_key"];
     
     // if the URL doesn't contain the access token, an error has occurred.
     if (!accessToken && !code) {
@@ -1575,7 +1600,6 @@ static FBSession *g_activeSession = nil;
                                       tokenData:tokenData
                                     shouldCache:YES];
         
-        if(sessionKey) self.sessionKey =sessionKey;
     }
     return YES;
 }
