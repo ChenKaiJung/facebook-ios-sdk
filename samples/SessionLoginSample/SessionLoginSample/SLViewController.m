@@ -100,7 +100,10 @@
 
     } else {
         // create a fresh session object
-        //    appDelegate.session = [[FBSession alloc] init];
+        if (appDelegate.session.state != FBSessionStateCreated) {
+            // Create a new, logged out session.
+            appDelegate.session = [[FBSession alloc] init];
+        }
         
         // if we don't have a cached token, a call to open here would cause UX for login to
         // occur; we don't want that to happen unless the user clicks the login button, and so
