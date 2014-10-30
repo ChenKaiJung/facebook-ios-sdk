@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		74326A4C18920E0C00766128 /* FTDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 74326A4B18920E0C00766128 /* FTDialog.bundle */; };
-		74326A4E18920ED400766128 /* libfuntown_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74326A4D18920ED400766128 /* libfuntown_ios_sdk.a */; };
+		74D3661F189756C9001AA813 /* libfuntown_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74D3661E189756C9001AA813 /* libfuntown_ios_sdk.a */; };
 		74E4E12A189115AC00A083AD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E4E129189115AC00A083AD /* Foundation.framework */; };
 		74E4E12C189115AC00A083AD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E4E12B189115AC00A083AD /* CoreGraphics.framework */; };
 		74E4E12E189115AC00A083AD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E4E12D189115AC00A083AD /* UIKit.framework */; };
@@ -38,7 +38,7 @@
 
 /* Begin PBXFileReference section */
 		74326A4B18920E0C00766128 /* FTDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FTDialog.bundle; sourceTree = "<group>"; };
-		74326A4D18920ED400766128 /* libfuntown_ios_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfuntown_ios_sdk.a; path = ../libfuntown_ios_sdk.a; sourceTree = "<group>"; };
+		74D3661E189756C9001AA813 /* libfuntown_ios_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfuntown_ios_sdk.a; path = ../libfuntown_ios_sdk.a; sourceTree = "<group>"; };
 		74E4E126189115AC00A083AD /* DemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74E4E129189115AC00A083AD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		74E4E12B189115AC00A083AD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -66,7 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74326A4E18920ED400766128 /* libfuntown_ios_sdk.a in Frameworks */,
+				74D3661F189756C9001AA813 /* libfuntown_ios_sdk.a in Frameworks */,
 				74E4E12C189115AC00A083AD /* CoreGraphics.framework in Frameworks */,
 				74E4E12E189115AC00A083AD /* UIKit.framework in Frameworks */,
 				74E4E12A189115AC00A083AD /* Foundation.framework in Frameworks */,
@@ -108,7 +108,7 @@
 		74E4E128189115AC00A083AD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				74326A4D18920ED400766128 /* libfuntown_ios_sdk.a */,
+				74D3661E189756C9001AA813 /* libfuntown_ios_sdk.a */,
 				74E4E129189115AC00A083AD /* Foundation.framework */,
 				74E4E12B189115AC00A083AD /* CoreGraphics.framework */,
 				74E4E12D189115AC00A083AD /* UIKit.framework */,
