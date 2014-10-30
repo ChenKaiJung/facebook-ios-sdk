@@ -463,9 +463,6 @@
 		5FC7ABA1178C7A4900829DD1 /* FBInsights.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBInsights.h; sourceTree = "<group>"; };
 		5FC7ABA7178C7A8E00829DD1 /* FBInsights.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBInsights.m; sourceTree = "<group>"; };
 		7421105E186404A2007611E4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		74211067186404A2007611E4 /* FuntownSdkTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FuntownSdkTests-Info.plist"; sourceTree = "<group>"; };
-		74211069186404A2007611E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7421106B186404A2007611E4 /* FuntownSdkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FuntownSdkTests.m; sourceTree = "<group>"; };
 		74D15D2D1890ABFC00CB50B2 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		7EBC39BB171CF1E400574F4E /* FBSettingsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBSettingsTests.h; path = tests/FBSettingsTests.h; sourceTree = "<group>"; };
 		7EBC39BC171CF1E400574F4E /* FBSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBSettingsTests.m; path = tests/FBSettingsTests.m; sourceTree = "<group>"; };
@@ -780,7 +777,6 @@
 				B9CBC54015254CAE0036AA71 /* FacebookSDKTests */,
 				85A44BA316A8CE05007BE80E /* FacebookSDKIntegrationTests */,
 				85ADA8B5169F898500145328 /* Submodules */,
-				74211065186404A2007611E4 /* FuntownSdkTests */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
 			);
@@ -970,25 +966,6 @@
 				AA747D9E0F9514B9006C5449 /* facebook_ios_sdk_Prefix.pch */,
 			);
 			name = "Other Sources";
-			sourceTree = "<group>";
-		};
-		74211065186404A2007611E4 /* FuntownSdkTests */ = {
-			isa = PBXGroup;
-			children = (
-				7421106B186404A2007611E4 /* FuntownSdkTests.m */,
-				74211066186404A2007611E4 /* Supporting Files */,
-			);
-			name = FuntownSdkTests;
-			path = "funtown-ios-sdkTests";
-			sourceTree = "<group>";
-		};
-		74211066186404A2007611E4 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				74211067186404A2007611E4 /* FuntownSdkTests-Info.plist */,
-				74211068186404A2007611E4 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		85A44BA316A8CE05007BE80E /* FacebookSDKIntegrationTests */ = {
@@ -1817,14 +1794,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		74211068186404A2007611E4 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				74211069186404A2007611E4 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		85A44BA616A8CE05007BE80E /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
