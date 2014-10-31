@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-#import "FBSessionTokenCachingStrategy.h"
+#import "GBSessionTokenCachingStrategy.h"
 
-#import "FBAccessTokenData+Internal.h"
+#import "GBAccessTokenData+Internal.h"
 
 // const strings
-static NSString *const FBAccessTokenInformationKeyName = @"FBAccessTokenInformationKey";
+static NSString *const GBAccessTokenInformationKeyName = @"GBAccessTokenInformationKey";
 
-NSString *const FBTokenInformationTokenKey = @"com.facebook.sdk:TokenInformationTokenKey";
-NSString *const FBTokenInformationExpirationDateKey = @"com.facebook.sdk:TokenInformationExpirationDateKey";
-NSString *const FBTokenInformationRefreshDateKey = @"com.facebook.sdk:TokenInformationRefreshDateKey";
-NSString *const FBTokenInformationUserFBIDKey = @"com.facebook.sdk:TokenInformationUserFBIDKey";
-NSString *const FBTokenInformationIsFacebookLoginKey = @"com.facebook.sdk:TokenInformationIsFacebookLoginKey";
-NSString *const FBTokenInformationLoginTypeLoginKey = @"com.facebook.sdk:TokenInformationLoginTypeLoginKey";
-NSString *const FBTokenInformationPermissionsKey = @"com.facebook.sdk:TokenInformationPermissionsKey";
-NSString *const FBTokenInformationPermissionsRefreshDateKey = @"com.facebook.sdk:TokenInformationPermissionsRefreshDateKey";
+NSString *const GBTokenInformationTokenKey = @"com.facebook.sdk:TokenInformationTokenKey";
+NSString *const GBTokenInformationExpirationDateKey = @"com.facebook.sdk:TokenInformationExpirationDateKey";
+NSString *const GBTokenInformationRefreshDateKey = @"com.facebook.sdk:TokenInformationRefreshDateKey";
+NSString *const GBTokenInformationUserGBIDKey = @"com.facebook.sdk:TokenInformationUserGBIDKey";
+NSString *const GBTokenInformationIsFacebookLoginKey = @"com.facebook.sdk:TokenInformationIsFacebookLoginKey";
+NSString *const GBTokenInformationLoginTypeLoginKey = @"com.facebook.sdk:TokenInformationLoginTypeLoginKey";
+NSString *const GBTokenInformationPermissionsKey = @"com.facebook.sdk:TokenInformationPermissionsKey";
+NSString *const GBTokenInformationPermissionsRefreshDateKey = @"com.facebook.sdk:TokenInformationPermissionsRefreshDateKey";
 
-#pragma mark - private FBSessionTokenCachingStrategyNoOpInstance class
+#pragma mark - private GBSessionTokenCachingStrategyNoOpInstance class
 
-@interface FBSessionTokenCachingStrategyNoOpInstance : FBSessionTokenCachingStrategy
+@interface GBSessionTokenCachingStrategyNoOpInstance : GBSessionTokenCachingStrategy
 
 @end
-@implementation FBSessionTokenCachingStrategyNoOpInstance
+@implementation GBSessionTokenCachingStrategyNoOpInstance
 
 - (void)cacheTokenInformation:(NSDictionary*)tokenInformation {
 }
@@ -50,7 +50,7 @@ NSString *const FBTokenInformationPermissionsRefreshDateKey = @"com.facebook.sdk
 @end
 
 
-@implementation FBSessionTokenCachingStrategy {
+@implementation GBSessionTokenCachingStrategy {
     NSString *_accessTokenInformationKeyName;
 }
 
@@ -65,7 +65,7 @@ NSString *const FBTokenInformationPermissionsRefreshDateKey = @"com.facebook.sdk
     self = [super init];
     if (self) {
         // get-em
-        _accessTokenInformationKeyName = tokenInformationKeyName ? tokenInformationKeyName : FBAccessTokenInformationKeyName;
+        _accessTokenInformationKeyName = tokenInformationKeyName ? tokenInformationKeyName : GBAccessTokenInformationKeyName;
 
         // keep-em
         [_accessTokenInformationKeyName retain];
@@ -101,49 +101,49 @@ NSString *const FBTokenInformationPermissionsRefreshDateKey = @"com.facebook.sdk
 }
 
 
-- (void)cacheFBAccessTokenData:(FBAccessTokenData *)accessToken {
+- (void)cacheGBAccessTokenData:(GBAccessTokenData *)accessToken {
     // For backwards compatibility, we must call into existing dictionary-based APIs.
     [self cacheTokenInformation:[accessToken dictionary]];
 }
 
-- (FBAccessTokenData *)fetchFBAccessTokenData {
+- (GBAccessTokenData *)fetchGBAccessTokenData {
     // For backwards compatibility, we must call into existing dictionary-based APIs.
     NSDictionary *dictionary = [self fetchTokenInformation];
-    if (![FBSessionTokenCachingStrategy isValidTokenInformation:dictionary]) {
+    if (![GBSessionTokenCachingStrategy isValidTokenInformation:dictionary]) {
         return nil;
     }
-    FBAccessTokenData *fbAccessToken = [FBAccessTokenData createTokenFromDictionary:dictionary];
+    GBAccessTokenData *fbAccessToken = [GBAccessTokenData createTokenFromDictionary:dictionary];
     return fbAccessToken;
 }
 
 + (BOOL)isValidTokenInformation:(NSDictionary*)tokenInformation {
-    id token = [tokenInformation objectForKey:FBTokenInformationTokenKey];
-    id expirationDate = [tokenInformation objectForKey:FBTokenInformationExpirationDateKey];
+    id token = [tokenInformation objectForKey:GBTokenInformationTokenKey];
+    id expirationDate = [tokenInformation objectForKey:GBTokenInformationExpirationDateKey];
     return  [token isKindOfClass:[NSString class]] &&
             ([token length] > 0) &&
             [expirationDate isKindOfClass:[NSDate class]];
 }
 
-+ (FBSessionTokenCachingStrategy*)defaultInstance {
++ (GBSessionTokenCachingStrategy*)defaultInstance {
     // static state to assure a single default instance here
-    static FBSessionTokenCachingStrategy *sharedDefaultInstance = nil;
+    static GBSessionTokenCachingStrategy *sharedDefaultInstance = nil;
     static dispatch_once_t onceToken;
 
     // assign once to the static, if called
     dispatch_once(&onceToken, ^{
-        sharedDefaultInstance = [[FBSessionTokenCachingStrategy alloc] init];
+        sharedDefaultInstance = [[GBSessionTokenCachingStrategy alloc] init];
     });
     return sharedDefaultInstance;
 }
 
-+ (FBSessionTokenCachingStrategy*)nullCacheInstance {
++ (GBSessionTokenCachingStrategy*)nullCacheInstance {
     // static state to assure a single instance here
-    static FBSessionTokenCachingStrategyNoOpInstance *noOpInstance = nil;
+    static GBSessionTokenCachingStrategyNoOpInstance *noOpInstance = nil;
     static dispatch_once_t onceToken;
 
     // assign once to the static, if called
     dispatch_once(&onceToken, ^{
-        noOpInstance = [[FBSessionTokenCachingStrategyNoOpInstance alloc] init];
+        noOpInstance = [[GBSessionTokenCachingStrategyNoOpInstance alloc] init];
     });
     return noOpInstance;
 }

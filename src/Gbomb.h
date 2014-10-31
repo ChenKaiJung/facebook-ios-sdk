@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-#import "FBFrictionlessRequestSettings.h"
-#import "FBLoginDialog.h"
-#import "FBRequest.h"
-#import "FBSessionManualTokenCachingStrategy.h"
-#import "FacebookSDK.h"
+#import "GBFrictionlessRequestSettings.h"
+#import "GBLoginDialog.h"
+#import "GBRequest.h"
+#import "GBSessionManualTokenCachingStrategy.h"
+#import "GbombSDK.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // deprecated API
@@ -31,9 +31,9 @@
 // whenever possible
 
 // up-front decl's
-@class FBFrictionlessRequestSettings;
-@protocol FBRequestDelegate;
-@protocol FBSessionDelegate;
+@class GBFrictionlessRequestSettings;
+@protocol GBRequestDelegate;
+@protocol GBSessionDelegate;
 
 /**
  * Main Facebook interface for interacting with the Facebook developer API.
@@ -41,18 +41,18 @@
  * and Graph APIs, and start user interface interactions (such as
  * pop-ups promoting for credentials, permissions, stream posts, etc.)
  */
-@interface Facebook : NSObject<FBLoginDialogDelegate>{
-    id<FBSessionDelegate> _sessionDelegate;
+@interface Facebook : NSObject<GBLoginDialogDelegate>{
+    id<GBSessionDelegate> _sessionDelegate;
     NSMutableSet* _requests;
-    FBSession* _session;
-    FBSessionManualTokenCachingStrategy *_tokenCaching;
-    FBDialog* _fbDialog;
+    GBSession* _session;
+    GBSessionManualTokenCachingStrategy *_tokenCaching;
+    GBDialog* _gbDialog;
     NSString* _appId;
     NSString* _urlSchemeSuffix;
     BOOL _isExtendingAccessToken;
-    FBRequest *_requestExtendingAccessToken;
+    GBRequest *_requestExtendingAccessToken;
     NSDate* _lastAccessTokenUpdate;
-    FBFrictionlessRequestSettings* _frictionlessRequestSettings;
+    GBFrictionlessRequestSettings* _frictionlessRequestSettings;
     NSString* _code;
     NSError* _error;
     NSString* _sessionKey;
@@ -60,20 +60,20 @@
 
 @property (nonatomic, copy) NSString* accessToken;
 @property (nonatomic, copy) NSDate* expirationDate;
-@property (nonatomic, assign) id<FBSessionDelegate> sessionDelegate;
+@property (nonatomic, assign) id<GBSessionDelegate> sessionDelegate;
 @property (nonatomic, copy) NSString* urlSchemeSuffix;
 @property (nonatomic, readonly) BOOL isFrictionlessRequestsEnabled;
-@property (nonatomic, readonly, retain) FBSession *session;
+@property (nonatomic, readonly, retain) GBSession *session;
 @property(nonatomic, copy) NSString* code;
 @property(nonatomic, copy) NSError* error;
 @property(nonatomic, copy) NSString* sessionKey;
 
 - (id)initWithAppId:(NSString *)appId
-        andDelegate:(id<FBSessionDelegate>)delegate;
+        andDelegate:(id<GBSessionDelegate>)delegate;
 
 - (id)initWithAppId:(NSString *)appId
     urlSchemeSuffix:(NSString *)urlSchemeSuffix
-        andDelegate:(id<FBSessionDelegate>)delegate;
+        andDelegate:(id<GBSessionDelegate>)delegate;
 
 - (void)authorize:(NSArray *)permissions;
 
@@ -87,34 +87,34 @@
 
 - (void)logout;
 
-- (void)logout:(id<FBSessionDelegate>)delegate;
+- (void)logout:(id<GBSessionDelegate>)delegate;
 
-- (FBRequest*)requestWithParams:(NSMutableDictionary *)params
-                    andDelegate:(id <FBRequestDelegate>)delegate;
+- (GBRequest*)requestWithParams:(NSMutableDictionary *)params
+                    andDelegate:(id <GBRequestDelegate>)delegate;
 
-- (FBRequest*)requestWithMethodName:(NSString *)methodName
+- (GBRequest*)requestWithMethodName:(NSString *)methodName
                           andParams:(NSMutableDictionary *)params
                       andHttpMethod:(NSString *)httpMethod
-                        andDelegate:(id <FBRequestDelegate>)delegate;
+                        andDelegate:(id <GBRequestDelegate>)delegate;
 
-- (FBRequest*)requestWithGraphPath:(NSString *)graphPath
-                       andDelegate:(id <FBRequestDelegate>)delegate;
+- (GBRequest*)requestWithGraphPath:(NSString *)graphPath
+                       andDelegate:(id <GBRequestDelegate>)delegate;
 
-- (FBRequest*)requestWithGraphPath:(NSString *)graphPath
+- (GBRequest*)requestWithGraphPath:(NSString *)graphPath
                          andParams:(NSMutableDictionary *)params
-                       andDelegate:(id <FBRequestDelegate>)delegate;
+                       andDelegate:(id <GBRequestDelegate>)delegate;
 
-- (FBRequest*)requestWithGraphPath:(NSString *)graphPath
+- (GBRequest*)requestWithGraphPath:(NSString *)graphPath
                          andParams:(NSMutableDictionary *)params
                      andHttpMethod:(NSString *)httpMethod
-                       andDelegate:(id <FBRequestDelegate>)delegate;
+                       andDelegate:(id <GBRequestDelegate>)delegate;
 
 - (void)dialog:(NSString *)action
-   andDelegate:(id<FBDialogDelegate>)delegate;
+   andDelegate:(id<GBDialogDelegate>)delegate;
 
 - (void)dialog:(NSString *)action
      andParams:(NSMutableDictionary *)params
-   andDelegate:(id <FBDialogDelegate>)delegate;
+   andDelegate:(id <GBDialogDelegate>)delegate;
 
 - (BOOL)isSessionValid;
 
@@ -122,9 +122,9 @@
 
 - (void)reloadFrictionlessRecipientCache;
 
-- (BOOL)isFrictionlessEnabledForRecipient:(id)fbid;
+- (BOOL)isFrictionlessEnabledForRecipient:(id)gbid;
 
-- (BOOL)isFrictionlessEnabledForRecipients:(NSArray*)fbids;
+- (BOOL)isFrictionlessEnabledForRecipients:(NSArray*)gbids;
 
 @end
 
@@ -133,23 +133,23 @@
 /**
  * Your application should implement this delegate to receive session callbacks.
  */
-@protocol FBSessionDelegate <NSObject>
+@protocol GBSessionDelegate <NSObject>
 
 /**
  * Called when the user successfully logged in.
  */
-- (void)fbDidLogin;
+- (void)gbDidLogin;
 
 /**
  * Called when the user dismissed the dialog without logging in.
  */
-- (void)fbDidNotLogin:(BOOL)cancelled;
+- (void)gbDidNotLogin:(BOOL)cancelled;
 
 /**
  * Called when the user logged error.
  */
 
-- (void)fbDidLoginError:(NSError *)error;
+- (void)gbDidLoginError:(NSError *)error;
 
 /**
  * Called after the access token was extended. If your application has any
@@ -158,13 +158,13 @@
  * should overwrite the old access token with the new one in this method.
  * See extendAccessToken for more details.
  */
-- (void)fbDidExtendToken:(NSString*)accessToken
+- (void)gbDidExtendToken:(NSString*)accessToken
                expiresAt:(NSDate*)expiresAt;
 
 /**
  * Called when the user logged out.
  */
-- (void)fbDidLogout;
+- (void)gbDidLogout;
 
 /**
  * Called when the current session has expired. This might happen when:
@@ -173,20 +173,20 @@
  *  - the user revoked the app's permissions
  *  - the user changed his or her password
  */
-- (void)fbSessionInvalidated;
+- (void)gbSessionInvalidated;
 
 @end
 
-@protocol FBRequestDelegate;
+@protocol GBRequestDelegate;
 
 enum {
-    kFBRequestStateReady,
-    kFBRequestStateLoading,
-    kFBRequestStateComplete,
-    kFBRequestStateError
+    kGBRequestStateReady,
+    kGBRequestStateLoading,
+    kGBRequestStateComplete,
+    kGBRequestStateError
 };
 
-// FBRequest(Deprecated)
+// GBRequest(Deprecated)
 //
 // Summary
 // The deprecated category is used to maintain back compat and ease migration
@@ -195,9 +195,9 @@ enum {
 /**
  * Do not use this interface directly, instead, use method in Facebook.h
  */
-@interface FBRequest(Deprecated)
+@interface GBRequest(Deprecated)
 
-@property (nonatomic, assign) id<FBRequestDelegate> delegate;
+@property (nonatomic, assign) id<GBRequestDelegate> delegate;
 
 /**
  * The URL which will be contacted to execute the request.
@@ -220,7 +220,7 @@ enum {
 @property (nonatomic, retain) NSMutableData* responseText;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-@property (nonatomic) FBRequestState state;
+@property (nonatomic) GBRequestState state;
 #pragma GCC diagnostic pop
 @property (nonatomic) BOOL sessionDidExpire;
 
@@ -245,28 +245,28 @@ enum {
 /*
  *Your application should implement this delegate
  */
-@protocol FBRequestDelegate <NSObject>
+@protocol GBRequestDelegate <NSObject>
 
 @optional
 
 /**
  * Called just before the request is sent to the server.
  */
-- (void)requestLoading:(FBRequest *)request;
+- (void)requestLoading:(GBRequest *)request;
 
 /**
  * Called when the Facebook API request has returned a response.
  *
  * This callback gives you access to the raw response. It's called before
- * (void)request:(FBRequest *)request didLoad:(id)result,
+ * (void)request:(GBRequest *)request didLoad:(id)result,
  * which is passed the parsed response object.
  */
-- (void)request:(FBRequest *)request didReceiveResponse:(NSURLResponse *)response;
+- (void)request:(GBRequest *)request didReceiveResponse:(NSURLResponse *)response;
 
 /**
  * Called when an error prevents the request from completing successfully.
  */
-- (void)request:(FBRequest *)request didFailWithError:(NSError *)error;
+- (void)request:(GBRequest *)request didFailWithError:(NSError *)error;
 
 /**
  * Called when a request returns and its response has been parsed into
@@ -276,17 +276,17 @@ enum {
  * on the format of the API response. If you need access to the raw response,
  * use:
  *
- * (void)request:(FBRequest *)request
+ * (void)request:(GBRequest *)request
  *      didReceiveResponse:(NSURLResponse *)response
  */
-- (void)request:(FBRequest *)request didLoad:(id)result;
+- (void)request:(GBRequest *)request didLoad:(id)result;
 
 /**
  * Called when a request returns a response.
  *
  * The result object is the raw response from the server of type NSData
  */
-- (void)request:(FBRequest *)request didLoadRawResponse:(NSData *)data;
+- (void)request:(GBRequest *)request didLoadRawResponse:(NSData *)data;
 
 @end
 

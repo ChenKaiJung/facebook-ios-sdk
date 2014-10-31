@@ -17,32 +17,32 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "FBFetchedAppSettings.h"
+#import "GBFetchedAppSettings.h"
 
-@class FBRequest;
-@class FBSession;
+@class GBRequest;
+@class GBSession;
 
-@protocol FBGraphObject;
+@protocol GBGraphObject;
 
-typedef enum FBAdvertisingTrackingStatus {
+typedef enum GBAdvertisingTrackingStatus {
     AdvertisingTrackingAllowed,
     AdvertisingTrackingDisallowed,
     AdvertisingTrackingUnspecified
-} FBAdvertisingTrackingStatus;
+} GBAdvertisingTrackingStatus;
 
-@interface FBUtility : NSObject
+@interface GBUtility : NSObject
 
-+ (NSDictionary*)queryParamsDictionaryFromFBURL:(NSURL*)url;
++ (NSDictionary*)queryParamsDictionaryFromGBURL:(NSURL*)url;
 + (NSDictionary*)dictionaryByParsingURLQueryPart:(NSString *)encodedString;
 + (NSString *)stringBySerializingQueryParameters:(NSDictionary *)queryParameters;
 + (NSString *)stringByURLDecodingString:(NSString*)escapedString;
 + (NSString*)stringByURLEncodingString:(NSString*)unescapedString;
-+ (id<FBGraphObject>)graphObjectInArray:(NSArray*)array withSameIDAs:(id<FBGraphObject>)item;
++ (id<GBGraphObject>)graphObjectInArray:(NSArray*)array withSameIDAs:(id<GBGraphObject>)item;
 
 + (unsigned long)currentTimeInMilliseconds;
 + (NSTimeInterval)randomTimeInterval:(NSTimeInterval)minValue withMaxValue:(NSTimeInterval)maxValue;
 + (void)centerView:(UIView*)view tableView:(UITableView*)tableView;
-+ (NSString *)stringFBIDFromObject:(id)object;
++ (NSString *)stringGBIDFromObject:(id)object;
 + (NSString *)stringAppBaseUrlFromAppId:(NSString *)appID urlSchemeSuffix:(NSString *)urlSchemeSuffix;
 + (NSDate*)expirationDateFromExpirationTimeIntervalString:(NSString*)expirationTime;
 + (NSDate*)expirationDateFromExpirationUnixTimeString:(NSString*)expirationTime;
@@ -59,13 +59,13 @@ typedef enum FBAdvertisingTrackingStatus {
 + (BOOL)areAllPermissionsReadPermissions:(NSArray*)permissions;
 + (NSArray*)addBasicInfoPermission:(NSArray*)permissions;
 + (void)fetchAppSettings:(NSString *)appID
-                callback:(void (^)(FBFetchedAppSettings *, NSError *))callback;
+                callback:(void (^)(GBFetchedAppSettings *, NSError *))callback;
 // Only returns nil if no settings have been fetched; otherwise it returns the last fetched settings.
 // If the settings are stale, an async request will be issued to fetch them.
-+ (FBFetchedAppSettings *)fetchedAppSettings;
++ (GBFetchedAppSettings *)fetchedAppSettings;
 + (NSString *)attributionID;
 + (NSString *)advertiserID;
-+ (FBAdvertisingTrackingStatus)advertisingTrackingStatus;
++ (GBAdvertisingTrackingStatus)advertisingTrackingStatus;
 + (void)updateParametersWithEventUsageLimitsAndBundleInfo:(NSMutableDictionary *)parameters;
 
 // Encode a data structure in JSON, any errors will just be logged.
@@ -90,12 +90,12 @@ typedef enum FBAdvertisingTrackingStatus {
 
 @end
 
-#define FBConditionalLog(condition, desc, ...) \
+#define GBConditionalLog(condition, desc, ...) \
 do { \
     if (!(condition)) { \
         NSString *msg = [NSString stringWithFormat:(desc), ##__VA_ARGS__]; \
-        NSLog(@"FBConditionalLog: %@", msg); \
+        NSLog(@"GBConditionalLog: %@", msg); \
     } \
 } while(NO)
 
-#define FB_BASE_URL @"facebook.com"
+#define GB_BASE_URL @"facebook.com"

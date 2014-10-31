@@ -17,9 +17,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIImage.h>
 
-#import "FBLogger.h"
+#import "GBLogger.h"
 
-@interface FBRequestBody : NSObject
+@interface GBRequestBody : NSObject
 
 @property (nonatomic, retain, readonly) NSData *data;
 
@@ -27,15 +27,15 @@
 
 - (void)appendWithKey:(NSString *)key
             formValue:(NSString *)value
-               logger:(FBLogger *)logger;
+               logger:(GBLogger *)logger;
 
 - (void)appendWithKey:(NSString *)key
            imageValue:(UIImage *)image
-               logger:(FBLogger *)logger;
+               logger:(GBLogger *)logger;
 
 - (void)appendWithKey:(NSString *)key
             dataValue:(NSData *)data
-               logger:(FBLogger *)logger;
+               logger:(GBLogger *)logger;
 
 + (NSString *)mimeContentType;
 

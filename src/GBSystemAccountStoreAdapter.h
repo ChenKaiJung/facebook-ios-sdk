@@ -17,11 +17,11 @@
 #import <Accounts/Accounts.h>
 #import <Foundation/Foundation.h>
 
-#import "FBSession+Internal.h"
-#import "FBTask.h"
-#import "FBTaskCompletionSource.h"
+#import "GBSession+Internal.h"
+#import "GBTask.h"
+#import "GBTaskCompletionSource.h"
 
-typedef void (^FBRequestAccessToAccountsHandler)(NSString* oauthToken, NSError *accountStoreError);
+typedef void (^GBRequestAccessToAccountsHandler)(NSString* oauthToken, NSError *accountStoreError);
 
 /*
  @class
@@ -29,14 +29,14 @@ typedef void (^FBRequestAccessToAccountsHandler)(NSString* oauthToken, NSError *
  @abstract Adapter around system account store APIs. Note this is only intended for internal
   consumption. If publicized, consider moving declarations to an internal only header.
 */
-@interface FBSystemAccountStoreAdapter : NSObject
+@interface GBSystemAccountStoreAdapter : NSObject
 
 /*
  @abstract A convenience overload to default various parameters based on the provided session,
   typically only for requesting a new token for the provided session.
 */
-- (void)requestAccessToFacebookAccountStore:(FBSession *)session
-                                    handler:(FBRequestAccessToAccountsHandler)handler;
+- (void)requestAccessToFacebookAccountStore:(GBSession *)session
+                                    handler:(GBRequestAccessToAccountsHandler)handler;
 
 /*
  @abstract
@@ -49,20 +49,20 @@ typedef void (^FBRequestAccessToAccountsHandler)(NSString* oauthToken, NSError *
  @param handler the handler that will be invoked on completion (dispatched to the main thread). the oauthToken is nil on failure.
 */
 - (void)requestAccessToFacebookAccountStore:(NSArray *)permissions
-                            defaultAudience:(FBSessionDefaultAudience)defaultAudience
+                            defaultAudience:(GBSessionDefaultAudience)defaultAudience
                               isReauthorize:(BOOL)isReauthorize
                                       appID:(NSString *)appID
-                                    session:(FBSession *)session
-                                    handler:(FBRequestAccessToAccountsHandler)handler;
+                                    session:(GBSession *)session
+                                    handler:(GBRequestAccessToAccountsHandler)handler;
 /*!
- @abstract Same as `renewSystemAuthorization:` but represented as `FBTask`.
+ @abstract Same as `renewSystemAuthorization:` but represented as `GBTask`.
 */
-- (FBTask *)renewSystemAuthorizationAsTask;
+- (GBTask *)renewSystemAuthorizationAsTask;
 
 /*!
- @abstract Same as `requestAccessToFacebookAccountStore:handler:` but represented as `FBTask`
+ @abstract Same as `requestAccessToFacebookAccountStore:handler:` but represented as `GBTask`
 */
-- (FBTask *)requestAccessToFacebookAccountStoreAsTask:(FBSession *)session;
+- (GBTask *)requestAccessToFacebookAccountStoreAsTask:(GBSession *)session;
 /*
  @abstract Sends a message to the device account store to renew the Facebook account credentials
 
@@ -73,12 +73,12 @@ typedef void (^FBRequestAccessToAccountsHandler)(NSString* oauthToken, NSError *
 /*
  @abstract Gets the singleton instance.
 */
-+ (FBSystemAccountStoreAdapter*) sharedInstance;
++ (GBSystemAccountStoreAdapter*) sharedInstance;
 
 /*
  @abstract Sets the singleton instance, typically only for unit tests
 */
-+ (void) setSharedInstance:(FBSystemAccountStoreAdapter *) instance;
++ (void) setSharedInstance:(GBSystemAccountStoreAdapter *) instance;
 
 /*
  @abstract Gets or sets the flag indicating if the next requestAccess call should block

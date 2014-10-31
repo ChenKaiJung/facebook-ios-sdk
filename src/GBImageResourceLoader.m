@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-#import "FBImageResourceLoader.h"
+#import "GBImageResourceLoader.h"
 
-#import "FBSettings.h"
-#import "FBUtility.h"
+#import "GBSettings.h"
+#import "GBUtility.h"
 
-@implementation FBImageResourceLoader
+@implementation GBImageResourceLoader
 
 + (UIImage*) loadImageFromBytes:(const Byte*)bytes
                          length:(NSUInteger)length
@@ -33,10 +33,10 @@
                      length:(NSUInteger)length
             fromRetinaBytes:(const Byte *)retinaBytes
                retinaLength:(NSUInteger)retinaLength {
-    if ([FBUtility isRetinaDisplay]) {
-        return [FBImageResourceLoader loadImageFromBytes:retinaBytes length:retinaLength scale:2.0];
+    if ([GBUtility isRetinaDisplay]) {
+        return [GBImageResourceLoader loadImageFromBytes:retinaBytes length:retinaLength scale:2.0];
     } else {
-        return [FBImageResourceLoader loadImageFromBytes:bytes length:length scale:1.0];
+        return [GBImageResourceLoader loadImageFromBytes:bytes length:length scale:1.0];
     }
 }
 
@@ -45,14 +45,14 @@
                  length:(NSUInteger)length
         fromRetinaBytes:(const Byte *)retinaBytes
            retinaLength:(NSUInteger)retinaLength {
-    NSString *bundleName = [FBSettings resourceBundleName];
+    NSString *bundleName = [GBSettings resourceBundleName];
     if (bundleName) {
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.bundle/%@", bundleName, imageName]];
         if (image) {
             return image;
         }
     }
-    return [FBImageResourceLoader imageFromBytes:bytes
+    return [GBImageResourceLoader imageFromBytes:bytes
                                           length:length
                                  fromRetinaBytes:retinaBytes
                                     retinaLength:retinaLength];

@@ -14,32 +14,32 @@
  * limitations under the License.
  */
 
-#import "FBUserSettingsViewController.h"
+#import "GBUserSettingsViewController.h"
 
-#import "FBAppEvents+Internal.h"
-#import "FBGraphUser.h"
-#import "FBProfilePictureView.h"
-#import "FBRequest.h"
-#import "FBSession+Internal.h"
-#import "FBSession.h"
-#import "FBUtility.h"
-#import "FBViewController+Internal.h"
+#import "GBAppEvents+Internal.h"
+#import "GBGraphUser.h"
+#import "GBProfilePictureView.h"
+#import "GBRequest.h"
+#import "GBSession+Internal.h"
+#import "GBSession.h"
+#import "GBUtility.h"
+#import "GBViewController+Internal.h"
 
-@interface FBUserSettingsViewController ()
+@interface GBUserSettingsViewController ()
 
-@property (nonatomic, retain) FBProfilePictureView *profilePicture;
+@property (nonatomic, retain) GBProfilePictureView *profilePicture;
 @property (nonatomic, retain) UIImageView *backgroundImageView;
 @property (nonatomic, retain) UILabel *connectedStateLabel;
-@property (nonatomic, retain) id<FBGraphUser> me;
+@property (nonatomic, retain) id<GBGraphUser> me;
 @property (nonatomic, retain) UIButton *loginLogoutButton;
 @property (nonatomic) BOOL attemptingLogin;
 @property (nonatomic, retain) NSBundle *bundle;
-@property (copy, nonatomic) FBSessionStateHandler sessionStateHandler;
-@property (copy, nonatomic) FBRequestHandler requestHandler;
+@property (copy, nonatomic) GBSessionStateHandler sessionStateHandler;
+@property (copy, nonatomic) GBRequestHandler requestHandler;
 
 - (void)loginLogoutButtonPressed:(id)sender;
-- (void)sessionStateChanged:(FBSession *)session
-                      state:(FBSessionState)state
+- (void)sessionStateChanged:(GBSession *)session
+                      state:(GBSessionState)state
                       error:(NSError *)error;
 - (void)openSession;
 - (void)updateControls;
@@ -47,7 +47,7 @@
 
 @end
 
-@implementation FBUserSettingsViewController
+@implementation GBUserSettingsViewController
 
 @synthesize profilePicture = _profilePicture;
 @synthesize connectedStateLabel = _connectedStateLabel;
@@ -67,11 +67,11 @@
 
 - (void)initializeBlocks {
     // Set up our block handlers in a way that supports nil'ing out the weak self reference to
-    // prevent EXC_BAD_ACCESS errors if the session invokes the handler after the FBUserSettingsViewController
+    // prevent EXC_BAD_ACCESS errors if the session invokes the handler after the GBUserSettingsViewController
     // has been deallocated. Note the handlers are declared as a `copy` property so that
     // the block lives on the heap.
-    __block FBUserSettingsViewController *weakSelf = self;
-    self.sessionStateHandler = ^(FBSession *session, FBSessionState status, NSError *error) {
+    __block GBUserSettingsViewController *weakSelf = self;
+    self.sessionStateHandler = ^(GBSession *session, GBSessionState status, NSError *error) {
         if (session == nil) {
             // The nil sentinel value for session indicates both blocks should no-op thereafter.
             weakSelf = nil;
@@ -79,7 +79,7 @@
             [weakSelf sessionStateChanged:session state:status error:error];
         }
     };
-    self.requestHandler = ^(FBRequestConnection *connection, id result, NSError *error) {
+    self.requestHandler = ^(GBRequestConnection *connection, id result, NSError *error) {
         if (result) {
             weakSelf.me = result;
             [weakSelf updateControls];
@@ -106,11 +106,11 @@
         self.cancelButton = nil;
         self.attemptingLogin = NO;
 
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"FBUserSettingsViewResources"
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"GBUserSettingsViewResources"
                                                          ofType:@"bundle"];
         self.bundle = [NSBundle bundleWithPath:path];
         if (self.bundle == nil) {
-            NSLog(@"WARNING: FBUserSettingsViewController could not find FBUserSettingsViewResources.bundle");
+            NSLog(@"WARNING: GBUserSettingsViewController could not find GBUserSettingsViewResources.bundle");
         }
         [self initializeBlocks];
     }
@@ -122,7 +122,7 @@
     // As noted in `initializeBlocks`, if we are being dealloc'ed, we
     // need to let our handlers know with the sentinel value of nil
     // to prevent EXC_BAD_ACCESS errors.
-    self.sessionStateHandler(nil, FBSessionStateClosed, nil);
+    self.sessionStateHandler(nil, GBSessionStateClosed, nil);
     [_sessionStateHandler release];
     [_requestHandler release];
 
@@ -164,7 +164,7 @@
     [self updateBackgroundImage];
 
     UIImageView *logo = [[[UIImageView alloc]
-                         initWithImage:[UIImage imageNamed:@"FBUserSettingsViewResources.bundle/images/facebook-logo.png"]] autorelease];
+                         initWithImage:[UIImage imageNamed:@"GBUserSettingsViewResources.bundle/images/facebook-logo.png"]] autorelease];
     CGPoint center = CGPointMake(CGRectGetMidX(usableBounds), 68);
     logo.center = center;
     logo.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
@@ -180,8 +180,8 @@
     containerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
 
     // Add profile picture control
-    self.profilePicture = [[[FBProfilePictureView alloc] initWithProfileID:nil
-                                                        pictureCropping:FBProfilePictureCroppingSquare]
+    self.profilePicture = [[[GBProfilePictureView alloc] initWithProfileID:nil
+                                                        pictureCropping:GBProfilePictureCroppingSquare]
                            autorelease];
     self.profilePicture.frame = CGRectMake(containerView.frame.size.width / 2 - 32, 0, 64, 64);
     [containerView addSubview:self.profilePicture];
@@ -207,9 +207,9 @@
 
     // Add the login/logout button
     self.loginLogoutButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *image = [UIImage imageNamed:@"FBUserSettingsViewResources.bundle/images/silver-button-normal.png"];
+    UIImage *image = [UIImage imageNamed:@"GBUserSettingsViewResources.bundle/images/silver-button-normal.png"];
     [self.loginLogoutButton setBackgroundImage:image forState:UIControlStateNormal];
-    image = [UIImage imageNamed:@"FBUserSettingsViewResources.bundle/images/silver-button-pressed.png"];
+    image = [UIImage imageNamed:@"GBUserSettingsViewResources.bundle/images/silver-button-pressed.png"];
     [self.loginLogoutButton setBackgroundImage:image forState:UIControlStateHighlighted];
     self.loginLogoutButton.frame = CGRectMake((int)((usableBounds.size.width - image.size.width) / 2),
                                               285,
@@ -238,11 +238,11 @@
     // We use the same handler for both, because we don't actually care about distinguishing between them.
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleActiveSessionStateChanged:)
-                                                 name:FBSessionDidBecomeOpenActiveSessionNotification
+                                                 name:GBSessionDidBecomeOpenActiveSessionNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleActiveSessionStateChanged:)
-                                                 name:FBSessionDidBecomeClosedActiveSessionNotification
+                                                 name:GBSessionDidBecomeClosedActiveSessionNotification
                                                object:nil];
 
     [self updateControls];
@@ -251,7 +251,7 @@
 - (void)updateBackgroundImage {
     NSString *orientation = UIInterfaceOrientationIsPortrait(self.interfaceOrientation) ? @"Portrait" : @"Landscape";
     NSString *idiom = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? @"IPhone" : @"IPad";
-    NSString *imagePath = [NSString stringWithFormat:@"FBUserSettingsViewResources.bundle/images/loginBackground%@%@.jpg", idiom, orientation];
+    NSString *imagePath = [NSString stringWithFormat:@"GBUserSettingsViewResources.bundle/images/loginBackground%@%@.jpg", idiom, orientation];
     self.backgroundImageView.image = [UIImage imageNamed:imagePath];
 }
 
@@ -279,16 +279,16 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [FBAppEvents logImplicitEvent:FBAppEventNameUserSettingsUsage
+    [GBAppEvents logImplicitEvent:GBAppEventNameUserSettingsUsage
                        valueToSum:nil
                        parameters:@{ @"view_will_appear" : [NSNumber numberWithBool:YES] }
-                          session:FBSession.activeSessionIfExists];
+                          session:GBSession.activeSessionIfExists];
 }
 #pragma mark Implementation
 
 - (void)updateControls {
-    if (FBSession.activeSession.isOpen) {
-        NSString *loginLogoutText = [FBUtility localizedStringForKey:@"FBUSVC:LogOut"
+    if (GBSession.activeSession.isOpen) {
+        NSString *loginLogoutText = [GBUtility localizedStringForKey:@"GBUSVC:LogOut"
                                                          withDefault:@"Log Out"
                                                             inBundle:self.bundle];
         [self.loginLogoutButton setTitle:loginLogoutText forState:UIControlStateNormal];
@@ -309,12 +309,12 @@
             self.connectedStateLabel.text = self.me.name;
             self.profilePicture.profileID = [self.me objectForKey:@"id"];
         } else {
-            self.connectedStateLabel.text = [FBUtility localizedStringForKey:@"FBUSVC:LoggedIn"
+            self.connectedStateLabel.text = [GBUtility localizedStringForKey:@"GBUSVC:LoggedIn"
                                                                  withDefault:@"Logged in"
                                                                     inBundle:self.bundle];
             self.profilePicture.profileID = nil;
 
-            [[FBRequest requestForMe] startWithCompletionHandler:self.requestHandler];
+            [[GBRequest requestForMe] startWithCompletionHandler:self.requestHandler];
         }
     } else {
         self.me = nil;
@@ -331,19 +331,19 @@
                                                       CGRectGetMidY(parentBounds));
         self.profilePicture.hidden = YES;
 
-        self.connectedStateLabel.text = [FBUtility localizedStringForKey:@"FBUSVC:NotLoggedIn"
+        self.connectedStateLabel.text = [GBUtility localizedStringForKey:@"GBUSVC:NotLoggedIn"
                                                              withDefault:@"Not logged in"
                                                                 inBundle:self.bundle];
         self.profilePicture.profileID = nil;
-        NSString *loginLogoutText = [FBUtility localizedStringForKey:@"FBUSVC:LogIn"
+        NSString *loginLogoutText = [GBUtility localizedStringForKey:@"GBUSVC:LogIn"
                                                          withDefault:@"Log In..."
                                                             inBundle:self.bundle];
         [self.loginLogoutButton setTitle:loginLogoutText forState:UIControlStateNormal];
     }
 }
 
-- (void)sessionStateChanged:(FBSession *)session
-                      state:(FBSessionState)state
+- (void)sessionStateChanged:(GBSession *)session
+                      state:(GBSessionState)state
                       error:(NSError *)error
 {
     if (error &&
@@ -352,13 +352,13 @@
     }
 
     if (self.attemptingLogin) {
-        if (FB_ISSESSIONOPENWITHSTATE(state)) {
+        if (GB_ISSESSIONOPENWITHSTATE(state)) {
             self.attemptingLogin = NO;
 
             if ([self.delegate respondsToSelector:@selector(loginViewControllerDidLogUserIn:)]) {
                 [(id)self.delegate loginViewControllerDidLogUserIn:self];
             }
-        } else if (FB_ISSESSIONSTATETERMINAL(state)) {
+        } else if (GB_ISSESSIONSTATETERMINAL(state)) {
             self.attemptingLogin = NO;
         }
     }
@@ -380,12 +380,12 @@
     // 4) if you provide any publish permissions, and don't specify a valid audience, the control will throw an exception
     //    when the user presses login
     if (self.permissions) {
-        [FBSession openActiveSessionWithPermissions:self.permissions
+        [GBSession openActiveSessionWithPermissions:self.permissions
                                        allowLoginUI:YES
                                     defaultAudience:self.defaultAudience
                                   completionHandler:self.sessionStateHandler];
     } else if (![self.publishPermissions count]) {
-        [FBSession openActiveSessionWithReadPermissions:self.readPermissions
+        [GBSession openActiveSessionWithReadPermissions:self.readPermissions
                                            allowLoginUI:YES
                                       completionHandler:self.sessionStateHandler];
     } else {
@@ -397,7 +397,7 @@
             [set addObjectsFromArray:self.readPermissions];
             permissions = [set allObjects];
         }
-        [FBSession openActiveSessionWithPublishPermissions:permissions
+        [GBSession openActiveSessionWithPublishPermissions:permissions
                                            defaultAudience:self.defaultAudience
                                               allowLoginUI:YES
                                          completionHandler:self.sessionStateHandler];
@@ -408,25 +408,25 @@
 #pragma mark Handlers
 
 - (void)loginLogoutButtonPressed:(id)sender {
-    if (FBSession.activeSession.isOpen) {
-        [FBAppEvents logImplicitEvent:FBAppEventNameUserSettingsUsage
+    if (GBSession.activeSession.isOpen) {
+        [GBAppEvents logImplicitEvent:GBAppEventNameUserSettingsUsage
                            valueToSum:nil
                            parameters:@{ @"logging_in" : @NO }
-                              session:FBSession.activeSessionIfExists];
+                              session:GBSession.activeSessionIfExists];
         if ([self.delegate respondsToSelector:@selector(loginViewControllerWillLogUserOut:)]) {
             [(id)self.delegate loginViewControllerWillLogUserOut:self];
         }
 
-        [FBSession.activeSession closeAndClearTokenInformation];
+        [GBSession.activeSession closeAndClearTokenInformation];
 
         if ([self.delegate respondsToSelector:@selector(loginViewControllerDidLogUserOut:)]) {
             [(id)self.delegate loginViewControllerDidLogUserOut:self];
         }
     } else {
-        [FBAppEvents logImplicitEvent:FBAppEventNameUserSettingsUsage
+        [GBAppEvents logImplicitEvent:GBAppEventNameUserSettingsUsage
                            valueToSum:nil
                            parameters:@{ @"logging_in" : @YES }
-                              session:FBSession.activeSessionIfExists];
+                              session:GBSession.activeSessionIfExists];
         [self openSession];
     }
 }

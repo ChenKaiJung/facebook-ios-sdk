@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-#import "FacebookSDK.h"
+#import "GbombSDK.h"
 
 // An internal only utility class for logic related
-// to FBSession but are not directly related to a session instance.
-@interface FBSessionUtility : NSObject
+// to GBSession but are not directly related to a session instance.
+@interface GBSessionUtility : NSObject
 
 + (BOOL)isOpenSessionResponseURL:(NSURL *)url;
 + (NSDictionary *)clientStateFromQueryParams:(NSDictionary *)params;
 + (NSDictionary *)queryParamsFromLoginURL:(NSURL *)url
                                     appID:(NSString *)appID
                           urlSchemeSuffix:(NSString *)urlSchemeSuffix;
-+ (NSString *)sessionStateDescription:(FBSessionState)sessionState;
++ (NSString *)sessionStateDescription:(GBSessionState)sessionState;
 + (void)addWebLoginStartTimeToParams:(NSMutableDictionary *)params;
 + (NSDate *)expirationDateFromResponseParams:(NSDictionary *)parameters;
 + (BOOL)areRequiredPermissions:(NSArray*)requiredPermissions
           aSubsetOfPermissions:(NSArray*)cachedPermissions;
 + (void)validateRequestForPermissions:(NSArray*)permissions
-                      defaultAudience:(FBSessionDefaultAudience)defaultAudience
+                      defaultAudience:(GBSessionDefaultAudience)defaultAudience
                    allowSystemAccount:(BOOL)allowSystemAccount
                                isRead:(BOOL)isRead;
 @end

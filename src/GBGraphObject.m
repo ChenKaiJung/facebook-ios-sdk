@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-#import "FBGraphObject.h"
+#import "GBGraphObject.h"
 
 #import <objc/runtime.h>
 
-#import "FBOpenGraphActionShareDialogParams.h"
-#import "FBOpenGraphObject.h"
+#import "GBOpenGraphActionShareDialogParams.h"
+#import "GBOpenGraphObject.h"
 
 // Module Summary:
 // this is the module that does the heavy lifting to implement the public-facing
-// developer-model described in FBGraphObject.h, namely typed protocol
+// developer-model described in GBGraphObject.h, namely typed protocol
 // accessors over "duck-typed" dictionaries, for interating with Facebook Graph and
 // Open Graph objects and actions
 //
@@ -45,7 +45,7 @@
 // implementations for common methods such as respondsToSelector and conformsToProtocol, as
 // suggested in the previously referenced documentation
 
-static NSString *const FBIsGraphObjectKey = @"com.facebook.FBIsGraphObjectKey";
+static NSString *const GBIsGraphObjectKey = @"com.facebook.GBIsGraphObjectKey";
 
 // used internally by the category impl
 typedef enum _SelectorInferredImplType {
@@ -56,7 +56,7 @@ typedef enum _SelectorInferredImplType {
 
 
 // internal-only wrapper
-@interface FBGraphObjectArray : NSMutableArray
+@interface GBGraphObjectArray : NSMutableArray
 
 - (id)initWrappingArray:(NSArray *)otherArray;
 - (id)graphObjectifyAtIndex:(NSUInteger)index;
@@ -65,7 +65,7 @@ typedef enum _SelectorInferredImplType {
 @end
 
 
-@interface FBGraphObject ()
+@interface GBGraphObject ()
 
 - (id)initWrappingDictionary:(NSDictionary *)otherDictionary;
 - (void)graphObjectifyAll;
@@ -73,11 +73,11 @@ typedef enum _SelectorInferredImplType {
 
 + (id)graphObjectWrappingObject:(id)originalObject;
 + (SelectorInferredImplType)inferredImplTypeForSelector:(SEL)sel;
-+ (BOOL)isProtocolImplementationInferable:(Protocol *)protocol checkFBGraphObjectAdoption:(BOOL)checkAdoption;
++ (BOOL)isProtocolImplementationInferable:(Protocol *)protocol checkGBGraphObjectAdoption:(BOOL)checkAdoption;
 
 @end
 
-@implementation FBGraphObject {
+@implementation GBGraphObject {
     NSMutableDictionary *_jsonObject;
 }
 
@@ -86,7 +86,7 @@ typedef enum _SelectorInferredImplType {
 - (id)initWrappingDictionary:(NSDictionary *)jsonObject {
     self = [super init];
     if (self) {
-        if ([jsonObject isKindOfClass:[FBGraphObject class]]) {
+        if ([jsonObject isKindOfClass:[GBGraphObject class]]) {
             // in this case, we prefer to return the original object,
             // rather than allocate a wrapper
 
@@ -97,7 +97,7 @@ typedef enum _SelectorInferredImplType {
             [self release];
 
             // no wrapper needed, returning the object that was provided
-            return (FBGraphObject*)jsonObject;
+            return (GBGraphObject*)jsonObject;
         } else {
             _jsonObject = [[NSMutableDictionary dictionaryWithDictionary:jsonObject] retain];
         }
@@ -106,14 +106,14 @@ typedef enum _SelectorInferredImplType {
 }
 
 - (BOOL)provisionedForPost {
-    return ((NSNumber *)_jsonObject[FBPostObject]).boolValue;
+    return ((NSNumber *)_jsonObject[GBPostObject]).boolValue;
 }
 
 - (void)setProvisionedForPost:(BOOL)provisionedForPost {
     if (provisionedForPost) {
-        _jsonObject[FBPostObject] = [NSNumber numberWithBool:YES];
+        _jsonObject[GBPostObject] = [NSNumber numberWithBool:YES];
     } else {
-        [_jsonObject removeObjectForKey:FBPostObject];
+        [_jsonObject removeObjectForKey:GBPostObject];
     }
 }
 
@@ -125,34 +125,34 @@ typedef enum _SelectorInferredImplType {
 #pragma mark -
 #pragma mark Public Members
 
-+ (NSMutableDictionary<FBGraphObject>*)graphObject {
-    return [FBGraphObject graphObjectWrappingDictionary:[NSMutableDictionary dictionary]];
++ (NSMutableDictionary<GBGraphObject>*)graphObject {
+    return [GBGraphObject graphObjectWrappingDictionary:[NSMutableDictionary dictionary]];
 }
 
-+ (NSMutableDictionary<FBGraphObject>*)graphObjectWrappingDictionary:(NSDictionary*)jsonDictionary {
-    return [FBGraphObject graphObjectWrappingObject:jsonDictionary];
++ (NSMutableDictionary<GBGraphObject>*)graphObjectWrappingDictionary:(NSDictionary*)jsonDictionary {
+    return [GBGraphObject graphObjectWrappingObject:jsonDictionary];
 }
 
-+ (NSMutableDictionary<FBOpenGraphAction>*)openGraphActionForPost {
-    return (NSMutableDictionary<FBOpenGraphAction>*)[FBGraphObject graphObject];
++ (NSMutableDictionary<GBOpenGraphAction>*)openGraphActionForPost {
+    return (NSMutableDictionary<GBOpenGraphAction>*)[GBGraphObject graphObject];
 }
 
-+ (NSMutableDictionary<FBGraphObject>*)openGraphObjectForPost {
-    return [FBGraphObject openGraphObjectForPostWithType:nil
++ (NSMutableDictionary<GBGraphObject>*)openGraphObjectForPost {
+    return [GBGraphObject openGraphObjectForPostWithType:nil
                                                    title:nil
                                                    image:nil
                                                      url:nil
                                              description:nil];
 }
 
-+ (NSMutableDictionary<FBOpenGraphObject>*)openGraphObjectForPostWithType:(NSString *)type
++ (NSMutableDictionary<GBOpenGraphObject>*)openGraphObjectForPostWithType:(NSString *)type
                                                                     title:(NSString *)title
                                                                     image:(id)image
                                                                       url:(id)url
                                                               description:(NSString *)description {
-    NSMutableDictionary<FBOpenGraphObject> *ogo = (NSMutableDictionary<FBOpenGraphObject> *)[self graphObject];
+    NSMutableDictionary<GBOpenGraphObject> *ogo = (NSMutableDictionary<GBOpenGraphObject> *)[self graphObject];
     ogo.provisionedForPost = YES;
-    ogo.data = [FBGraphObject graphObject];
+    ogo.data = [GBGraphObject graphObject];
     if (type) {
         ogo.type = type;
     }
@@ -171,7 +171,7 @@ typedef enum _SelectorInferredImplType {
     return ogo;
 }
 
-+ (BOOL)isGraphObjectID:(id<FBGraphObject>)anObject sameAs:(id<FBGraphObject>)anotherObject {
++ (BOOL)isGraphObjectID:(id<GBGraphObject>)anObject sameAs:(id<GBGraphObject>)anotherObject {
     if (anObject != nil &&
         anObject == anotherObject) {
         return YES;
@@ -192,13 +192,13 @@ typedef enum _SelectorInferredImplType {
 - (BOOL)respondsToSelector:(SEL)sel
 {
     return  [super respondsToSelector:sel] ||
-    ([FBGraphObject inferredImplTypeForSelector:sel] != SelectorInferredImplTypeNone);
+    ([GBGraphObject inferredImplTypeForSelector:sel] != SelectorInferredImplTypeNone);
 }
 
 - (BOOL)conformsToProtocol:(Protocol *)protocol {
     return  [super conformsToProtocol:protocol] ||
-    ([FBGraphObject isProtocolImplementationInferable:protocol
-                           checkFBGraphObjectAdoption:YES]);
+    ([GBGraphObject isProtocolImplementationInferable:protocol
+                           checkGBGraphObjectAdoption:YES]);
 }
 
 // returns the signature for the method that we will actually invoke
@@ -206,7 +206,7 @@ typedef enum _SelectorInferredImplType {
     SEL alternateSelector = sel;
 
     // if we should forward, to where?
-    switch ([FBGraphObject inferredImplTypeForSelector:sel]) {
+    switch ([GBGraphObject inferredImplTypeForSelector:sel]) {
         case SelectorInferredImplTypeGet:
             alternateSelector = @selector(objectForKey:);
             break;
@@ -221,10 +221,10 @@ typedef enum _SelectorInferredImplType {
     return [super methodSignatureForSelector:alternateSelector];
 }
 
-// forwards otherwise missing selectors that match the FBGraphObject convention
+// forwards otherwise missing selectors that match the GBGraphObject convention
 - (void)forwardInvocation:(NSInvocation *)invocation {
     // if we should forward, to where?
-    switch ([FBGraphObject inferredImplTypeForSelector:[invocation selector]]) {
+    switch ([GBGraphObject inferredImplTypeForSelector:[invocation selector]]) {
         case SelectorInferredImplTypeGet: {
             // property getter impl uses the selector name as an argument...
             NSString *propertyName = NSStringFromSelector([invocation selector]);
@@ -259,8 +259,8 @@ typedef enum _SelectorInferredImplType {
 
 - (id)graphObjectifyAtKey:(id)key {
     id object = [_jsonObject objectForKey:key];
-    // make certain it is FBObjectGraph-ified
-    id possibleReplacement = [FBGraphObject graphObjectWrappingObject:object];
+    // make certain it is GBObjectGraph-ified
+    id possibleReplacement = [GBGraphObject graphObjectWrappingObject:object];
     if (object != possibleReplacement) {
         // and if not-yet, replace the original with the wrapped object
         [_jsonObject setObject:possibleReplacement forKey:key];
@@ -314,9 +314,9 @@ typedef enum _SelectorInferredImplType {
 
     // array and dictionary wrap
     if ([originalObject isKindOfClass:[NSDictionary class]]) {
-        result = [[[FBGraphObject alloc] initWrappingDictionary:originalObject] autorelease];
+        result = [[[GBGraphObject alloc] initWrappingDictionary:originalObject] autorelease];
     } else if ([originalObject isKindOfClass:[NSArray class]]) {
-        result = [[[FBGraphObjectArray alloc] initWrappingArray:originalObject] autorelease];
+        result = [[[GBGraphObjectArray alloc] initWrappingArray:originalObject] autorelease];
     }
 
     // return our object
@@ -344,13 +344,13 @@ typedef enum _SelectorInferredImplType {
     return SelectorInferredImplTypeNone;
 }
 
-+ (BOOL)isProtocolImplementationInferable:(Protocol*)protocol checkFBGraphObjectAdoption:(BOOL)checkAdoption {
++ (BOOL)isProtocolImplementationInferable:(Protocol*)protocol checkGBGraphObjectAdoption:(BOOL)checkAdoption {
     // first handle base protocol questions
-    if (checkAdoption && !protocol_conformsToProtocol(protocol, @protocol(FBGraphObject))) {
+    if (checkAdoption && !protocol_conformsToProtocol(protocol, @protocol(GBGraphObject))) {
         return NO;
     }
 
-    if ([protocol isEqual:@protocol(FBGraphObject)]) {
+    if ([protocol isEqual:@protocol(GBGraphObject)]) {
         return YES; // by definition
     }
 
@@ -374,7 +374,7 @@ typedef enum _SelectorInferredImplType {
                                                      YES,   // instance
                                                      &count);
         for (int index = 0; index < count; index++) {
-            if ([FBGraphObject inferredImplTypeForSelector:methods[index].name] == SelectorInferredImplTypeNone) {
+            if ([GBGraphObject inferredImplTypeForSelector:methods[index].name] == SelectorInferredImplTypeNone) {
                 // we have a bad actor, short circuit
                 return NO;
             }
@@ -391,8 +391,8 @@ typedef enum _SelectorInferredImplType {
         adopted = protocol_copyProtocolList(protocol, &count);
         for (int index = 0; index < count; index++) {
             // here we go again...
-            if (![FBGraphObject isProtocolImplementationInferable:adopted[index]
-                                       checkFBGraphObjectAdoption:NO]) {
+            if (![GBGraphObject isProtocolImplementationInferable:adopted[index]
+                                       checkGBGraphObjectAdoption:NO]) {
                 return NO;
             }
         }
@@ -412,14 +412,14 @@ typedef enum _SelectorInferredImplType {
 
 #pragma mark internal classes
 
-@implementation FBGraphObjectArray {
+@implementation GBGraphObjectArray {
     NSMutableArray *_jsonArray;
 }
 
 - (id)initWrappingArray:(NSArray *)jsonArray {
     self = [super init];
     if (self) {
-        if ([jsonArray isKindOfClass:[FBGraphObjectArray class]]) {
+        if ([jsonArray isKindOfClass:[GBGraphObjectArray class]]) {
             // in this case, we prefer to return the original object,
             // rather than allocate a wrapper
 
@@ -430,7 +430,7 @@ typedef enum _SelectorInferredImplType {
             [self release];
 
             // no wrapper needed, returning the object that was provided
-            return (FBGraphObjectArray*)jsonArray;
+            return (GBGraphObjectArray*)jsonArray;
         } else {
             _jsonArray = [[NSMutableArray arrayWithArray:jsonArray] retain];
         }
@@ -449,8 +449,8 @@ typedef enum _SelectorInferredImplType {
 
 - (id)graphObjectifyAtIndex:(NSUInteger)index {
     id object = [_jsonArray objectAtIndex:index];
-    // make certain it is FBObjectGraph-ified
-    id possibleReplacement = [FBGraphObject graphObjectWrappingObject:object];
+    // make certain it is GBObjectGraph-ified
+    id possibleReplacement = [GBGraphObject graphObjectWrappingObject:object];
     if (object != possibleReplacement) {
         // and if not-yet, replace the original with the wrapped object
         [_jsonArray replaceObjectAtIndex:index withObject:possibleReplacement];

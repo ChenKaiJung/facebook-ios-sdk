@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-#import "FBSession.h"
+#import "GBSession.h"
 
-// Methods here are meant to be used only by internal subclasses of FBSession
+// Methods here are meant to be used only by internal subclasses of GBSession
 // and not by any other classes, external or internal.
-@interface FBSession (Protected)
+@interface GBSession (Protected)
 
-// Permissions are technically associated with a FBAccessTokenData instance
-// but we support initializing an FBSession before acquiring a token. This property
+// Permissions are technically associated with a GBAccessTokenData instance
+// but we support initializing an GBSession before acquiring a token. This property
 // tracks that initialized array so that the pass-through permissions property
-// can essentially return self.FBAccessTokenData.permissions ?: self.initializedPermissions
+// can essentially return self.GBAccessTokenData.permissions ?: self.initializedPermissions
 @property (readonly, copy) NSArray *initializedPermissions;
 
-- (BOOL)transitionToState:(FBSessionState)state
-      withAccessTokenData:(FBAccessTokenData *)tokenData
+- (BOOL)transitionToState:(GBSessionState)state
+      withAccessTokenData:(GBAccessTokenData *)tokenData
               shouldCache:(BOOL)shouldCache;
-- (void)transitionAndCallHandlerWithState:(FBSessionState)status
+- (void)transitionAndCallHandlerWithState:(GBSessionState)status
                                     error:(NSError*)error
-                                tokenData:(FBAccessTokenData *)tokenData
+                                tokenData:(GBAccessTokenData *)tokenData
                               shouldCache:(BOOL)shouldCache;
 - (void)authorizeWithPermissions:(NSArray*)permissions
-                        behavior:(FBSessionLoginBehavior)behavior
-                 defaultAudience:(FBSessionDefaultAudience)audience
+                        behavior:(GBSessionLoginBehavior)behavior
+                 defaultAudience:(GBSessionDefaultAudience)audience
                    isReauthorize:(BOOL)isReauthorize;
 - (BOOL)handleReauthorize:(NSDictionary*)parameters
               accessToken:(NSString*)accessToken;

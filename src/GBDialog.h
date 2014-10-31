@@ -17,8 +17,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@protocol FBDialogDelegate;
-@class FBFrictionlessRequestSettings;
+@protocol GBDialogDelegate;
+@class GBFrictionlessRequestSettings;
 
 /**
  * Do not use this interface directly, instead, use dialog in Facebook.h
@@ -26,8 +26,8 @@
  * Facebook dialog interface for start the facebook webView UIServer Dialog.
  */
 
-@interface FBDialog : UIView <UIWebViewDelegate> {
-    id<FBDialogDelegate> _delegate;
+@interface GBDialog : UIView <UIWebViewDelegate> {
+    id<GBDialogDelegate> _delegate;
     NSMutableDictionary *_params;
     NSString * _serverURL;
     NSURL* _loadingURL;
@@ -37,7 +37,7 @@
     UIInterfaceOrientation _orientation;
     BOOL _showingKeyboard;
     BOOL _isViewInvisible;
-    FBFrictionlessRequestSettings* _frictionlessSettings;
+    GBFrictionlessRequestSettings* _frictionlessSettings;
 
     // Ensures that UI elements behind the dialog are disabled.
     UIView* _modalBackgroundView;
@@ -46,7 +46,7 @@
 /**
  * The delegate.
  */
-@property (nonatomic, assign) id<FBDialogDelegate> delegate;
+@property (nonatomic, assign) id<GBDialogDelegate> delegate;
 
 /**
  * The parameters.
@@ -58,8 +58,8 @@
 - (id)initWithURL: (NSString *) loadingURL
            params: (NSMutableDictionary *) params
   isViewInvisible: (BOOL) isViewInvisible
-    frictionlessSettings: (FBFrictionlessRequestSettings *) frictionlessSettings
-         delegate: (id <FBDialogDelegate>) delegate;
+    frictionlessSettings: (GBFrictionlessRequestSettings *) frictionlessSettings
+         delegate: (id <GBDialogDelegate>) delegate;
 
 /**
  * Displays the view with an animation.
@@ -102,14 +102,14 @@
 - (void)dialogWillDisappear;
 
 /**
- * Subclasses should override to process data returned from the server in a 'fbconnect' url.
+ * Subclasses should override to process data returned from the server in a 'gbconnect' url.
  *
  * Implementations must call dismissWithSuccess:YES at some point to hide the dialog.
  */
 - (void)dialogDidSucceed:(NSURL *)url;
 
 /**
- * Subclasses should override to process data returned from the server in a 'fbconnect' url.
+ * Subclasses should override to process data returned from the server in a 'gbconnect' url.
  *
  * Implementations must call dismissWithSuccess:YES at some point to hide the dialog.
  */
@@ -121,14 +121,14 @@
 /*
  *Your application should implement this delegate
  */
-@protocol FBDialogDelegate <NSObject>
+@protocol GBDialogDelegate <NSObject>
 
 @optional
 
 /**
  * Called when the dialog succeeds and is about to be dismissed.
  */
-- (void)dialogDidComplete:(FBDialog *)dialog;
+- (void)dialogDidComplete:(GBDialog *)dialog;
 
 /**
  * Called when the dialog succeeds with a returning url.
@@ -143,12 +143,12 @@
 /**
  * Called when the dialog is cancelled and is about to be dismissed.
  */
-- (void)dialogDidNotComplete:(FBDialog *)dialog;
+- (void)dialogDidNotComplete:(GBDialog *)dialog;
 
 /**
  * Called when dialog failed to load due to an error.
  */
-- (void)dialog:(FBDialog*)dialog didFailWithError:(NSError *)error;
+- (void)dialog:(GBDialog*)dialog didFailWithError:(NSError *)error;
 
 /**
  * Asks if a link touched by a user should be opened in an external browser.
@@ -160,6 +160,6 @@
  * should hold onto the URL and once you have received their acknowledgement open the URL yourself
  * using [[UIApplication sharedApplication] openURL:].
  */
-- (BOOL)dialog:(FBDialog*)dialog shouldOpenURLInExternalBrowser:(NSURL *)url;
+- (BOOL)dialog:(GBDialog*)dialog shouldOpenURLInExternalBrowser:(NSURL *)url;
 
 @end

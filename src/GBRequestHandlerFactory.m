@@ -15,21 +15,21 @@
  */
 
 
-#import "FBRequestHandlerFactory.h"
+#import "GBRequestHandlerFactory.h"
 
 #import <UIKit/UIKit.h>
 
-#import "FBAccessTokenData.h"
-#import "FBError.h"
-#import "FBErrorUtility+Internal.h"
-#import "FBRequest+Internal.h"
-#import "FBRequestConnection+Internal.h"
-#import "FBRequestConnectionRetryManager.h"
-#import "FBRequestMetadata.h"
-#import "FBSession+Internal.h"
-#import "FBSystemAccountStoreAdapter.h"
+#import "GBAccessTokenData.h"
+#import "GBError.h"
+#import "GBErrorUtility+Internal.h"
+#import "GBRequest+Internal.h"
+#import "GBRequestConnection+Internal.h"
+#import "GBRequestConnectionRetryManager.h"
+#import "GBRequestMetadata.h"
+#import "GBSession+Internal.h"
+#import "GBSystemAccountStoreAdapter.h"
 
-@implementation FBRequestHandlerFactory
+@implementation GBRequestHandlerFactory
 
 // These handlers should generally conform to the following pattern:
 // 1. Save any original errors/results to the metadata.
@@ -37,19 +37,19 @@
 // 3. Invoking the original handler if the retry condition is not met.
 // We (ab)use the retryManager to maintain any necessary state between handlers
 //  (such as an optional user facing alert message).
-+(FBRequestHandler) handlerThatRetries:(FBRequestHandler )handler forRequest:(FBRequest* )request {
-    return [[^(FBRequestConnection *connection,
++(GBRequestHandler) handlerThatRetries:(GBRequestHandler )handler forRequest:(GBRequest* )request {
+    return [[^(GBRequestConnection *connection,
                id result,
                NSError *error){
-        FBRequestMetadata *metadata = [connection getRequestMetadata:request];
+        GBRequestMetadata *metadata = [connection getRequestMetadata:request];
         metadata.originalError = metadata.originalError ?: error;
         metadata.originalResult = metadata.originalResult ?: result;
 
-        if (connection.retryManager.state != FBRequestConnectionRetryManagerStateAbortRetries
+        if (connection.retryManager.state != GBRequestConnectionRetryManagerStateAbortRetries
             && error
-            && [FBErrorUtility errorCategoryForError:error] == FBErrorCategoryRetry) {
+            && [GBErrorUtility errorCategoryForError:error] == GBErrorCategoryRetry) {
 
-            if (metadata.retryCount < FBREQUEST_DEFAULT_MAX_RETRY_LIMIT) {
+            if (metadata.retryCount < GBREQUEST_DEFAULT_MAX_RETRY_LIMIT) {
                 metadata.retryCount++;
                 [connection.retryManager addRequestMetadata:metadata];
                 return;
@@ -63,15 +63,15 @@
     } copy] autorelease];
 }
 
-+(FBRequestHandler) handlerThatAlertsUser:(FBRequestHandler )handler forRequest:(FBRequest* )request {
-    return [[^(FBRequestConnection *connection,
++(GBRequestHandler) handlerThatAlertsUser:(GBRequestHandler )handler forRequest:(GBRequest* )request {
+    return [[^(GBRequestConnection *connection,
                id result,
                NSError *error){
-        FBRequestMetadata *metadata = [connection getRequestMetadata:request];
+        GBRequestMetadata *metadata = [connection getRequestMetadata:request];
         metadata.originalError = metadata.originalError ?: error;
         metadata.originalResult = metadata.originalResult ?: result;
-        NSString *message = [FBErrorUtility userMessageForError:error];
-        if (connection.retryManager.state != FBRequestConnectionRetryManagerStateAbortRetries
+        NSString *message = [GBErrorUtility userMessageForError:error];
+        if (connection.retryManager.state != GBRequestConnectionRetryManagerStateAbortRetries
             && message.length > 0) {
 
             connection.retryManager.alertMessage = message;
@@ -85,22 +85,22 @@
     } copy] autorelease];
 }
 
-+(FBRequestHandler) handlerThatReconnects:(FBRequestHandler )handler forRequest:(FBRequest* )request {
++(GBRequestHandler) handlerThatReconnects:(GBRequestHandler )handler forRequest:(GBRequest* )request {
     // Defer closing of sessions for these kinds of requests.
     request.canCloseSessionOnError = NO;
-    return [[^(FBRequestConnection *connection,
+    return [[^(GBRequestConnection *connection,
                id result,
                NSError *error){
-        FBRequestMetadata *metadata = [connection getRequestMetadata:request];
+        GBRequestMetadata *metadata = [connection getRequestMetadata:request];
         metadata.originalError = metadata.originalError ?: error;
         metadata.originalResult = metadata.originalResult ?: result;
 
-        FBErrorCategory errorCategory = error ? [FBErrorUtility errorCategoryForError:error] : FBErrorCategoryInvalid;
-        if (connection.retryManager.state != FBRequestConnectionRetryManagerStateAbortRetries
+        GBErrorCategory errorCategory = error ? [GBErrorUtility errorCategoryForError:error] : GBErrorCategoryInvalid;
+        if (connection.retryManager.state != GBRequestConnectionRetryManagerStateAbortRetries
             && error
-            && errorCategory  == FBErrorCategoryAuthenticationReopenSession){
+            && errorCategory  == GBErrorCategoryAuthenticationReopenSession){
             int code, subcode;
-            [FBErrorUtility fberrorGetCodeValueForError:error
+            [GBErrorUtility fberrorGetCodeValueForError:error
                                                   index:0
                                                    code:&code
                                                 subcode:&subcode];
@@ -108,8 +108,8 @@
             // If the session has already been closed, we cannot repair.
             BOOL canRepair = request.session.isOpen;
             switch (subcode) {
-                case FBAuthSubcodeAppNotInstalled :
-                case FBAuthSubcodeUnconfirmedUser : canRepair = NO; break;
+                case GBAuthSubcodeAppNotInstalled :
+                case GBAuthSubcodeUnconfirmedUser : canRepair = NO; break;
             }
 
             if (canRepair) {
@@ -117,13 +117,13 @@
                     connection.retryManager.sessionToReconnect = request.session;
                 }
 
-                if (request.session.accessTokenData.loginType == FBSessionLoginTypeSystemAccount) {
+                if (request.session.accessTokenData.loginType == GBSessionLoginTypeSystemAccount) {
                     // For iOS 6, we also cannot reconnect disabled app sliders.
                     // This has the side effect of not repairing sessions on a device
                     // that has since removed the Facebook device account since we cannot distinguish
                     // between a disabled slider versus no account set up (in the former, we do not
-                    // want to attempt FB App/Safari SSO).
-                    canRepair = [FBSystemAccountStoreAdapter sharedInstance].canRequestAccessWithoutUI;
+                    // want to attempt GB App/Safari SSO).
+                    canRepair = [GBSystemAccountStoreAdapter sharedInstance].canRequestAccessWithoutUI;
                 }
 
                 if (canRepair) {
@@ -137,7 +137,7 @@
                         connection.retryManager.sessionToReconnect = request.session;
                         [connection.retryManager addRequestMetadata:metadata];
 
-                        connection.retryManager.state = FBRequestConnectionRetryManagerStateRepairSession;
+                        connection.retryManager.state = GBRequestConnectionRetryManagerStateRepairSession;
                         return;
                     }
                 }
@@ -146,10 +146,10 @@
 
         // Otherwise, invoke the supplied handler
         if (handler){
-            // Since FBRequestConnection typically closes invalid sessions before invoking the supplied handler,
+            // Since GBRequestConnection typically closes invalid sessions before invoking the supplied handler,
             // we have to manually mimic that behavior here.
             request.canCloseSessionOnError = YES;
-            if (errorCategory == FBErrorCategoryAuthenticationReopenSession){
+            if (errorCategory == GBErrorCategoryAuthenticationReopenSession){
                 [request.session closeAndClearTokenInformation:error];
             }
 

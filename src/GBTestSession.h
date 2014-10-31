@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-#import "FBSession.h"
+#import "GBSession.h"
 
 #if defined (DEBUG)
-    #define SAFE_TO_USE_FBTESTSESSION
+    #define SAFE_TO_USE_GBTESTSESSION
 #endif
 
-#if !defined(SAFE_TO_USE_FBTESTSESSION)
-    #pragma message ("warning: using FBTestSession, which is designed for unit-testing uses only, in non-DEBUG code -- ensure this is what you really want")
+#if !defined(SAFE_TO_USE_GBTESTSESSION)
+    #pragma message ("warning: using GBTestSession, which is designed for unit-testing uses only, in non-DEBUG code -- ensure this is what you really want")
 #endif
 
 /*!
@@ -38,10 +38,10 @@ extern NSString *kSecondTestUserTag;
 extern NSString *kThirdTestUserTag;
 
 /*!
- @class FBTestSession
+ @class GBTestSession
 
  @abstract
- Implements an FBSession subclass that knows about test users for a particular
+ Implements an GBSession subclass that knows about test users for a particular
  application. This should never be used from a real application, but may be useful
  for writing unit tests, etc.
 
@@ -54,10 +54,10 @@ extern NSString *kThirdTestUserTag;
  The main use case for this class is using sessionForUnitTestingWithPermissions:mode:
  to create a session for a test user. Two modes are supported. In "shared" mode, an attempt
  is made to find an existing test user that has the required permissions and, if it is not
- currently in use by another FBTestSession, just use that user. If no such user is available,
+ currently in use by another GBTestSession, just use that user. If no such user is available,
  a new one is created with the required permissions. In "private" mode, designed for
  scenarios which require a new user in a known clean state, a new test user will always be
- created, and it will be automatically deleted when the FBTestSession is closed.
+ created, and it will be automatically deleted when the GBTestSession is closed.
 
  Note that the shared test user functionality depends on a naming convention for the test users.
  It is important that any testing of functionality which will mutate the permissions for a
@@ -65,7 +65,7 @@ extern NSString *kThirdTestUserTag;
  seems to be in an invalid state, it can be deleted manually via the Web interface at
  https://developers.facebook.com/apps/APP_ID/permissions?role=test+users.
  */
-@interface FBTestSession : FBSession
+@interface GBTestSession : GBSession
 
 /// The app access token (composed of app ID and secret) to use for accessing test users.
 @property (readonly, copy) NSString *appAccessToken;

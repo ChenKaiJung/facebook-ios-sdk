@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-#import "FBSettings.h"
+#import "GBSettings.h"
 
-extern NSString *const FBPLISTUrlSchemeSuffixKey;
+extern NSString *const GBPLISTUrlSchemeSuffixKey;
 
-@interface FBSettings (Internal)
+@interface GBSettings (Internal)
 
 + (void)autoPublishInstall:(NSString *)appID;
 
@@ -27,8 +27,8 @@ extern NSString *const FBPLISTUrlSchemeSuffixKey;
 
  @abstract Get the default url scheme used for the session. This is generated based
  on the url scheme suffix and the app id.
- @param appID If nil, defaults to [FBSettings defaultAppID]
- @param urlSchemeSuffix If nil, defaults to [FBSettings defaultUrlSchemeSuffix]
+ @param appID If nil, defaults to [GBSettings defaultAppID]
+ @param urlSchemeSuffix If nil, defaults to [GBSettings defaultUrlSchemeSuffix]
  */
 + (NSString*)defaultURLSchemeWithAppID:(NSString *)appID urlSchemeSuffix:(NSString *)urlSchemeSuffix;
 

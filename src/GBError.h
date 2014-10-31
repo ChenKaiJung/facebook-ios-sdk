@@ -19,7 +19,7 @@
 /*!
  The NSError domain of all errors returned by the Facebook SDK.
 */
-extern NSString *const FacebookSDKDomain;
+extern NSString *const GbombSDKDomain;
 
 /*!
  The NSError domain of all errors surfaced by the Facebook SDK that
@@ -31,19 +31,19 @@ extern NSString *const FacebookNativeApplicationDomain;
  The key in the userInfo NSDictionary of NSError where you can find
  the inner NSError (if any).
 */
-extern NSString *const FBErrorInnerErrorKey;
+extern NSString *const GBErrorInnerErrorKey;
 
 /*!
  The key in the userInfo NSDictionary of NSError for the parsed JSON response
- from the server. In case of a batch, includes the JSON for a single FBRequest.
+ from the server. In case of a batch, includes the JSON for a single GBRequest.
 */
-extern NSString *const FBErrorParsedJSONResponseKey;
+extern NSString *const GBErrorParsedJSONResponseKey;
 
 /*!
  The key in the userInfo NSDictionary of NSError indicating
  the HTTP status code of the response (if any).
 */
-extern NSString *const FBErrorHTTPStatusCodeKey;
+extern NSString *const GBErrorHTTPStatusCodeKey;
 
 /*!
  @abstract Error codes returned by the Facebook SDK in NSError.
@@ -51,21 +51,21 @@ extern NSString *const FBErrorHTTPStatusCodeKey;
  @discussion
  These are valid only in the scope of FacebookSDKDomain.
  */
-typedef enum FBErrorCode {
+typedef enum GBErrorCode {
     /*!
-     Like nil for FBErrorCode values, represents an error code that
+     Like nil for GBErrorCode values, represents an error code that
      has not been initialized yet.
      */
-    FBErrorInvalid = 0,
+    GBErrorInvalid = 0,
 
     /// The operation failed because it was cancelled.
-    FBErrorOperationCancelled,
+    GBErrorOperationCancelled,
 
     /// A login attempt failed
-    FBErrorLoginFailedOrCancelled,
+    GBErrorLoginFailedOrCancelled,
 
     /// The graph API returned an error for this operation.
-    FBErrorRequestConnectionApi,
+    GBErrorRequestConnectionApi,
 
     /*!
      The operation failed because the server returned an unexpected
@@ -76,49 +76,49 @@ typedef enum FBErrorCode {
      If this occurs on the current SDK with proper app migration
      settings, you may need to try changing to one request per batch.
      */
-    FBErrorProtocolMismatch,
+    GBErrorProtocolMismatch,
 
     /// Non-success HTTP status code was returned from the operation.
-    FBErrorHTTPError,
+    GBErrorHTTPError,
 
-    /// An endpoint that returns a binary response was used with FBRequestConnection;
+    /// An endpoint that returns a binary response was used with GBRequestConnection;
     /// endpoints that return image/jpg, etc. should be accessed using NSURLRequest
-    FBErrorNonTextMimeTypeReturned,
+    GBErrorNonTextMimeTypeReturned,
 
     /// An error occurred while trying to display a native dialog
-    FBErrorDialog,
+    GBErrorDialog,
 
-    /// An error occurred using the FBAppEvents class
-    FBErrorAppEvents,
+    /// An error occurred using the GBAppEvents class
+    GBErrorAppEvents,
 
     /// An error occurred related to an iOS API call
-    FBErrorSystemAPI,
+    GBErrorSystemAPI,
 
     /// An error occurred while trying to fetch publish install response data
-    FBErrorPublishInstallResponse,
+    GBErrorPublishInstallResponse,
 
     /*!
      The application had its applicationDidBecomeActive: method called while waiting
-     on a response from the native Facebook app for a pending FBAppCall.
+     on a response from the native Facebook app for a pending GBAppCall.
      */
-    FBErrorAppActivatedWhilePendingAppCall,
+    GBErrorAppActivatedWhilePendingAppCall,
 
     /*!
      The application had its openURL: method called from a source that was not a
      Facebook app and with a URL that was intended for the AppBridge
      */
-    FBErrorUntrustedURL,
+    GBErrorUntrustedURL,
 
     /*!
-     The URL passed to FBAppCall, was not able to be parsed
+     The URL passed to GBAppCall, was not able to be parsed
      */
-    FBErrorMalformedURL,
+    GBErrorMalformedURL,
 
     /*!
      The operation failed because the session is currently busy reconnecting.
     */
-    FBErrorSessionReconnectInProgess,
-} FBErrorCode;
+    GBErrorSessionReconnectInProgess,
+} GBErrorCode;
 
 /*!
  @abstract Error codes returned by the Facebook SDK in NSError.
@@ -126,35 +126,35 @@ typedef enum FBErrorCode {
  @discussion
  These are valid only in the scope of FacebookNativeApplicationDomain.
  */
-typedef enum FBNativeApplicationErrorCode {
-    // A general error in processing an FBAppCall, without a known cause. Unhandled exceptions are a good example
-    FBAppCallErrorUnknown = 1,
+typedef enum GBNativeApplicationErrorCode {
+    // A general error in processing an GBAppCall, without a known cause. Unhandled exceptions are a good example
+    GBAppCallErrorUnknown = 1,
 
-    // The FBAppCall cannot be processed for some reason
-    FBAppCallErrorUnsupported = 2,
+    // The GBAppCall cannot be processed for some reason
+    GBAppCallErrorUnsupported = 2,
 
-    // The FBAppCall is for a method that does not exist (or is turned off)
-    FBAppCallErrorUnknownMethod = 3,
+    // The GBAppCall is for a method that does not exist (or is turned off)
+    GBAppCallErrorUnknownMethod = 3,
 
-    // The FBAppCall cannot be processed at the moment, but can be retried at a later time.
-    FBAppCallErrorServiceBusy = 4,
+    // The GBAppCall cannot be processed at the moment, but can be retried at a later time.
+    GBAppCallErrorServiceBusy = 4,
 
     // Share was called in the native Facebook app with incomplete or incorrect arguments
-    FBShareErrorInvalidParam = 100,
+    GBShareErrorInvalidParam = 100,
 
     // A server error occurred while calling Share in the native Facebook app.
-    FBShareErrorServer = 102,
+    GBShareErrorServer = 102,
 
     // An unknown error occurred while calling Share in the native Facebook app.
-    FBShareErrorUnknown = 103,
+    GBShareErrorUnknown = 103,
 
     // Disallowed from calling Share in the native Facebook app.
-    FBShareErrorDenied = 104,
+    GBShareErrorDenied = 104,
 
-} FBNativeApplicationErrorCode;
+} GBNativeApplicationErrorCode;
 
 /*!
- @typedef FBErrorCategory enum
+ @typedef GBErrorCategory enum
 
  @abstract Indicates the Facebook SDK classification for the error
 
@@ -163,196 +163,196 @@ typedef enum FBNativeApplicationErrorCode {
 typedef enum {
     /*! Indicates that the error category is invalid and likely represents an error that
      is unrelated to Facebook or the Facebook SDK */
-    FBErrorCategoryInvalid                      = 0,
+    GBErrorCategoryInvalid                      = 0,
     /*! Indicates that the error may be authentication related but the application should retry the operation.
      This case may involve user action that must be taken, and so the application should also test
-     the fberrorShouldNotifyUser property and if YES display fberrorUserMessage to the user before retrying.*/
-    FBErrorCategoryRetry          = 1,
+     the GBerrorShouldNotifyUser property and if YES display GBerrorUserMessage to the user before retrying.*/
+    GBErrorCategoryRetry          = 1,
     /*! Indicates that the error is authentication related and the application should reopen the session*/
-    FBErrorCategoryAuthenticationReopenSession  = 2,
+    GBErrorCategoryAuthenticationReopenSession  = 2,
     /*! Indicates that the error is permission related */
-    FBErrorCategoryPermissions                  = 3,
+    GBErrorCategoryPermissions                  = 3,
     /*! Indicates that the error implies that the server had an unexpected failure or may be temporarily down */
-    FBErrorCategoryServer                       = 4,
+    GBErrorCategoryServer                       = 4,
     /*! Indicates that the error results from the server throttling the client */
-    FBErrorCategoryThrottling                   = 5,
+    GBErrorCategoryThrottling                   = 5,
     /*! Indicates the user cancelled the operation */
-    FBErrorCategoryUserCancelled                = 6,
+    GBErrorCategoryUserCancelled                = 6,
     /*! Indicates that the error is Facebook-related but is uncategorizable, and likely newer than the
      current version of the SDK */
-    FBErrorCategoryFacebookOther                = -1,
+    GBErrorCategoryFacebookOther                = -1,
     /*! Indicates that the error is an application error resulting in a bad or malformed request to the server. */
-    FBErrorCategoryBadRequest                   = -2,
-} FBErrorCategory;
+    GBErrorCategoryBadRequest                   = -2,
+} GBErrorCategory;
 
 /*!
  The key in the userInfo NSDictionary of NSError where you can find
  the inner NSError (if any).
  */
-extern NSString *const FBErrorInnerErrorKey;
+extern NSString *const GBErrorInnerErrorKey;
 
 /*!
  The key in the userInfo NSDictionary of NSError where you can find
  the session associated with the error (if any).
 */
-extern NSString *const FBErrorSessionKey;
+extern NSString *const GBErrorSessionKey;
 
 /*!
  The key in the userInfo NSDictionary of NSError that points to the URL
- that caused an error, in its processing by FBAppCall.
+ that caused an error, in its processing by GBAppCall.
  */
-extern NSString *const FBErrorUnprocessedURLKey;
+extern NSString *const GBErrorUnprocessedURLKey;
 
 /*!
  The key in the userInfo NSDictionary of NSError for unsuccessful
- logins (error.code equals FBErrorLoginFailedOrCancelled). If present,
- the value will be one of the constants prefixed by FBErrorLoginFailedReason*.
+ logins (error.code equals GBErrorLoginFailedOrCancelled). If present,
+ the value will be one of the constants prefixed by GBErrorLoginFailedReason*.
 */
-extern NSString *const FBErrorLoginFailedReason;
+extern NSString *const GBErrorLoginFailedReason;
 
 /*!
  The key in the userInfo NSDictionary of NSError for unsuccessful
- logins (error.code equals FBErrorLoginFailedOrCancelled). If present,
+ logins (error.code equals GBErrorLoginFailedOrCancelled). If present,
  the value indicates an original login error code wrapped by this error.
  This is only used in the web dialog login flow.
  */
-extern NSString *const FBErrorLoginFailedOriginalErrorCode;
+extern NSString *const GBErrorLoginFailedOriginalErrorCode;
 
 /*!
  A value that may appear in an NSError userInfo dictionary under the
- `FBErrorLoginFailedReason` key for login failures. Indicates the user
+ `GBErrorLoginFailedReason` key for login failures. Indicates the user
  cancelled a web dialog auth.
 */
-extern NSString *const FBErrorLoginFailedReasonInlineCancelledValue;
+extern NSString *const GBErrorLoginFailedReasonInlineCancelledValue;
 
 /*!
  A value that may appear in an NSError userInfo dictionary under the
- `FBErrorLoginFailedReason` key for login failures. Indicates the user
+ `GBErrorLoginFailedReason` key for login failures. Indicates the user
  did not cancel a web dialog auth.
  */
-extern NSString *const FBErrorLoginFailedReasonInlineNotCancelledValue;
+extern NSString *const GBErrorLoginFailedReasonInlineNotCancelledValue;
 
 /*!
  A value that may appear in an NSError userInfo dictionary under the
- `FBErrorLoginFailedReason` key for login failures. Indicates the user
+ `GBErrorLoginFailedReason` key for login failures. Indicates the user
  cancelled a non-iOS 6 SSO (either Safari or Facebook App) login.
  */
-extern NSString *const FBErrorLoginFailedReasonUserCancelledValue;
+extern NSString *const GBErrorLoginFailedReasonUserCancelledValue;
 
 /*!
  A value that may appear in an NSError userInfo dictionary under the
- `FBErrorLoginFailedReason` key for login failures. Indicates the user
+ `GBErrorLoginFailedReason` key for login failures. Indicates the user
  cancelled an iOS system login.
  */
-extern NSString *const FBErrorLoginFailedReasonUserCancelledSystemValue;
+extern NSString *const GBErrorLoginFailedReasonUserCancelledSystemValue;
 
 /*!
  A value that may appear in an NSError userInfo dictionary under the
- `FBErrorLoginFailedReason` key for login failures. Indicates an error
+ `GBErrorLoginFailedReason` key for login failures. Indicates an error
  condition. You may inspect the rest of userInfo for other data.
  */
-extern NSString *const FBErrorLoginFailedReasonOtherError;
+extern NSString *const GBErrorLoginFailedReasonOtherError;
 
 /*!
  A value that may appear in an NSError userInfo dictionary under the
- `FBErrorLoginFailedReason` key for login failures. Indicates the app's
+ `GBErrorLoginFailedReason` key for login failures. Indicates the app's
  slider in iOS 6 (device Settings -> Privacy -> Facebook {app} ) has
  been disabled.
  */
-extern NSString *const FBErrorLoginFailedReasonSystemDisallowedWithoutErrorValue;
+extern NSString *const GBErrorLoginFailedReasonSystemDisallowedWithoutErrorValue;
 
 /*!
  A value that may appear in an NSError userInfo dictionary under the
- `FBErrorLoginFailedReason` key for login failures. Indicates an error
+ `GBErrorLoginFailedReason` key for login failures. Indicates an error
  has occurred when requesting Facebook account acccess in iOS 6 that was
- not `FBErrorLoginFailedReasonSystemDisallowedWithoutErrorValue` nor
+ not `GBErrorLoginFailedReasonSystemDisallowedWithoutErrorValue` nor
  a user cancellation.
  */
-extern NSString *const FBErrorLoginFailedReasonSystemError;
-extern NSString *const FBErrorLoginFailedReasonUnitTestResponseUnrecognized;
+extern NSString *const GBErrorLoginFailedReasonSystemError;
+extern NSString *const GBErrorLoginFailedReasonUnitTestResponseUnrecognized;
 
 /*!
  A value that may appear in the NSError userInfo dictionary under the
- `FBErrorLoginFailedReason` key when requesting new permissions fails. Indicates
+ `GBErrorLoginFailedReason` key when requesting new permissions fails. Indicates
  the request for new permissions has failed because the session was closed.
  */
-extern NSString *const FBErrorReauthorizeFailedReasonSessionClosed;
+extern NSString *const GBErrorReauthorizeFailedReasonSessionClosed;
 
 /*!
  A value that may appear in the NSError userInfo dictionary under the
- `FBErrorLoginFailedReason` key when requesting new permissions fails. Indicates
+ `GBErrorLoginFailedReason` key when requesting new permissions fails. Indicates
  the request for new permissions has failed because the user cancelled.
  */
-extern NSString *const FBErrorReauthorizeFailedReasonUserCancelled;
+extern NSString *const GBErrorReauthorizeFailedReasonUserCancelled;
 
 /*!
  A value that may appear in the NSError userInfo dictionary under the
- `FBErrorLoginFailedReason` key when requesting new permissions fails on
+ `GBErrorLoginFailedReason` key when requesting new permissions fails on
  iOS 6 with the Facebook account. Indicates the request for new permissions has
  failed because the user cancelled.
  */
-extern NSString *const FBErrorReauthorizeFailedReasonUserCancelledSystem;
+extern NSString *const GBErrorReauthorizeFailedReasonUserCancelledSystem;
 
 /*!
  A value that may appear in the NSError userInfo dictionary under the
- `FBErrorLoginFailedReason` key when requesting new permissions fails. Indicates
+ `GBErrorLoginFailedReason` key when requesting new permissions fails. Indicates
  the request for new permissions has failed because the request was
  for a different user than the original permission set.
  */
-extern NSString *const FBErrorReauthorizeFailedReasonWrongUser;
+extern NSString *const GBErrorReauthorizeFailedReasonWrongUser;
 
 /*!
  The key in the userInfo NSDictionary of NSError for errors
- encountered with `FBDialogs` operations. (error.code equals FBErrorDialog).
- If present, the value will be one of the constants prefixed by FBErrorDialog*.
+ encountered with `GBDialogs` operations. (error.code equals GBErrorDialog).
+ If present, the value will be one of the constants prefixed by GBErrorDialog*.
 */
-extern NSString *const FBErrorDialogReasonKey;
+extern NSString *const GBErrorDialogReasonKey;
 
 /*!
  A value that may appear in the NSError userInfo dictionary under the
-`FBErrorDialogReasonKey` key. Indicates that a native dialog is not supported
+`GBErrorDialogReasonKey` key. Indicates that a native dialog is not supported
  in the current OS.
 */
-extern NSString *const FBErrorDialogNotSupported;
+extern NSString *const GBErrorDialogNotSupported;
 
 /*!
  A value that may appear in the NSError userInfo dictionary under the
- `FBErrorDialogReasonKey` key. Indicates that a native dialog cannot be
+ `GBErrorDialogReasonKey` key. Indicates that a native dialog cannot be
  displayed because it is not appropriate for the current session.
 */
-extern NSString *const FBErrorDialogInvalidForSession;
+extern NSString *const GBErrorDialogInvalidForSession;
 
 /*!
  A value that may appear in the NSError userInfo dictionary under the
- `FBErrorDialogReasonKey` key. Indicates that a native dialog cannot be
+ `GBErrorDialogReasonKey` key. Indicates that a native dialog cannot be
  displayed for some other reason.
  */
-extern NSString *const FBErrorDialogCantBeDisplayed;
+extern NSString *const GBErrorDialogCantBeDisplayed;
 
 /*!
  A value that may appear in the NSError userInfo ditionary under the
- `FBErrorDialogReasonKey` key. Indicates that a native dialog cannot be
+ `GBErrorDialogReasonKey` key. Indicates that a native dialog cannot be
  displayed because an Open Graph object that was passed was not configured
  correctly. The object must either (a) exist by having an 'id' or 'url' value;
  or, (b) configured for creation (by setting the 'type' value and
  provisionedForPost property)
 */
-extern NSString *const FBErrorDialogInvalidOpenGraphObject;
+extern NSString *const GBErrorDialogInvalidOpenGraphObject;
 
 /*!
  A value that may appear in the NSError userInfo ditionary under the
- `FBErrorDialogReasonKey` key. Indicates that a native dialog cannot be
+ `GBErrorDialogReasonKey` key. Indicates that a native dialog cannot be
  displayed because the parameters for sharing an Open Graph action were
  not configured. The parameters must include an 'action', 'actionType', and
  'previewPropertyName'.
  */
-extern NSString *const FBErrorDialogInvalidOpenGraphActionParameters;
+extern NSString *const GBErrorDialogInvalidOpenGraphActionParameters;
 
 /*!
  The key in the userInfo NSDictionary of NSError for errors
- encountered with `FBAppEvents` operations (error.code equals FBErrorAppEvents).
+ encountered with `GBAppEvents` operations (error.code equals GBErrorAppEvents).
 */
-extern NSString *const FBErrorAppEventsReasonKey;
+extern NSString *const GBErrorAppEventsReasonKey;
 
 // Exception strings raised by the Facebook SDK
 
@@ -360,7 +360,7 @@ extern NSString *const FBErrorAppEventsReasonKey;
  This exception is raised by methods in the Facebook SDK to indicate
  that an attempted operation is invalid
  */
-extern NSString *const FBInvalidOperationException;
+extern NSString *const GBInvalidOperationException;
 
 // Facebook SDK also raises exceptions the following common exceptions:
 //  NSInvalidArgumentException

@@ -16,19 +16,19 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBFriendPickerViewController.h"
-#import "FBGraphObjectTableDataSource.h"
-#import "FBRequest.h"
-#import "FBSession.h"
+#import "GBFriendPickerViewController.h"
+#import "GBGraphObjectTableDataSource.h"
+#import "GBRequest.h"
+#import "GBSession.h"
 
 // This is the cache identity used by both the view controller and cache descriptor objects
-extern NSString *const FBFriendPickerCacheIdentity;
+extern NSString *const GBFriendPickerCacheIdentity;
 
-@interface FBFriendPickerViewController (Internal)
+@interface GBFriendPickerViewController (Internal)
 
-+ (FBRequest*)requestWithUserID:(NSString*)userID
++ (GBRequest*)requestWithUserID:(NSString*)userID
                          fields:(NSSet*)fields
-                     dataSource:(FBGraphObjectTableDataSource*)datasource
-                        session:(FBSession*)session;
+                     dataSource:(GBGraphObjectTableDataSource*)datasource
+                        session:(GBSession*)session;
 
 @end

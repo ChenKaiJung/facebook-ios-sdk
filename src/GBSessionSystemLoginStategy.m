@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-#import "FBSessionSystemLoginStategy.h"
+#import "GBSessionSystemLoginStategy.h"
 
-#import "FBLogger.h"
-#import "FBSession+Internal.h"
-#import "FBSessionAuthLogger.h"
-#import "FBSessionLoginStrategy.h"
-#import "FBUtility.h"
+#import "GBLogger.h"
+#import "GBSession+Internal.h"
+#import "GBSessionAuthLogger.h"
+#import "GBSessionLoginStrategy.h"
+#import "GBUtility.h"
 
-@implementation FBSessionSystemLoginStategy
+@implementation GBSessionSystemLoginStategy
 
-- (BOOL)tryPerformAuthorizeWithParams:(FBSessionLoginStrategyParams *)params session:(FBSession *)session logger:(FBSessionAuthLogger *)logger {
+- (BOOL)tryPerformAuthorizeWithParams:(GBSessionLoginStrategyParams *)params session:(GBSession *)session logger:(GBSessionAuthLogger *)logger {
 
-    BOOL systemAccountStoreAvailable = [FBUtility isSystemAccountStoreAvailable];
+    BOOL systemAccountStoreAvailable = [GBUtility isSystemAccountStoreAvailable];
     [logger addExtrasForNextEvent:@{
      @"systemAccountStoreAvailable":@(systemAccountStoreAvailable)
      }];
 
     if (params.tryIntegratedAuth &&
-        (!params.isReauthorize || session.accessTokenData.loginType == FBSessionLoginTypeSystemAccount) &&
+        (!params.isReauthorize || session.accessTokenData.loginType == GBSessionLoginTypeSystemAccount) &&
         systemAccountStoreAvailable) {
 
         [session authorizeUsingSystemAccountStore:params.permissions
@@ -44,7 +44,7 @@
 }
 
 - (NSString *)methodName {
-    return FBSessionAuthLoggerAuthMethodIntegrated;
+    return GBSessionAuthLoggerAuthMethodIntegrated;
 }
 
 @end

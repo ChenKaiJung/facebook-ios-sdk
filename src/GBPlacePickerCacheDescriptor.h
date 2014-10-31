@@ -17,9 +17,9 @@
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
 
-#import "FBCacheDescriptor.h"
+#import "GBCacheDescriptor.h"
 
-@interface FBPlacePickerCacheDescriptor : FBCacheDescriptor
+@interface GBPlacePickerCacheDescriptor : GBCacheDescriptor
 
 - (id)initWithLocationCoordinate:(CLLocationCoordinate2D)locationCoordinate
                   radiusInMeters:(NSInteger)radiusInMeters

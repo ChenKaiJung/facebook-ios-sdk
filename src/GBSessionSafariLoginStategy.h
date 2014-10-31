@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#import "FBSessionLoginStrategy.h"
+#import "GBSessionLoginStrategy.h"
 
-@interface FBSessionSafariLoginStategy : NSObject<FBSessionLoginStrategy>
+@interface GBSessionSafariLoginStategy : NSObject<GBSessionLoginStrategy>
 @end

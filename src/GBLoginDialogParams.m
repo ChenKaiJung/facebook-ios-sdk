@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-#import "FBLoginDialogParams.h"
+#import "GBLoginDialogParams.h"
 
-#import "FBAppBridge.h"
-#import "FBDialogsParams+Internal.h"
-#import "FBSession+Internal.h"
-#import "FBSettings+Internal.h"
+#import "GBAppBridge.h"
+#import "GBDialogsParams+Internal.h"
+#import "GBSession+Internal.h"
+#import "GBSettings+Internal.h"
 
 static NSString *const SSOWritePrivacyPublic = @"EVERYONE";
 static NSString *const SSOWritePrivacyFriends = @"ALL_FRIENDS";
 static NSString *const SSOWritePrivacyOnlyMe = @"SELF";
 
-static NSString *const kFBNativeLoginMinVersion = @"20131010";
+static NSString *const kGBNativeLoginMinVersion = @"20131010";
 
-@implementation FBLoginDialogParams
+@implementation GBLoginDialogParams
 
 - (void)dealloc
 {
@@ -51,15 +51,15 @@ static NSString *const kFBNativeLoginMinVersion = @"20131010";
     if (self.writePrivacy) {
         NSString *writePrivacyString = nil;
         switch (self.writePrivacy) {
-            case FBSessionDefaultAudienceOnlyMe:
+            case GBSessionDefaultAudienceOnlyMe:
                 writePrivacyString = SSOWritePrivacyOnlyMe;
                 break;
 
-            case FBSessionDefaultAudienceFriends:
+            case GBSessionDefaultAudienceFriends:
                 writePrivacyString = SSOWritePrivacyFriends;
                 break;
 
-            case FBSessionDefaultAudienceEveryone:
+            case GBSessionDefaultAudienceEveryone:
                 writePrivacyString = SSOWritePrivacyPublic;
                 break;
 
@@ -82,10 +82,10 @@ static NSString *const kFBNativeLoginMinVersion = @"20131010";
 - (NSString *)appBridgeVersion
 {
     // Select the right minimum version for the passed in combination of params.
-    NSString *version = [FBAppBridge installedFBNativeAppVersionForMethod:@"auth3"
-                                                               minVersion:kFBNativeLoginMinVersion];
+    NSString *version = [GBAppBridge installedGBNativeAppVersionForMethod:@"auth3"
+                                                               minVersion:kGBNativeLoginMinVersion];
 
-    if (![FBSettings defaultDisplayName] && [version isEqualToString:kFBNativeLoginMinVersion]) {
+    if (![GBSettings defaultDisplayName] && [version isEqualToString:kGBNativeLoginMinVersion]) {
         // We have the first version of Native Login that does not look up the app's display
         // name from the Facebook App with a server request. So we can't proceed.
 

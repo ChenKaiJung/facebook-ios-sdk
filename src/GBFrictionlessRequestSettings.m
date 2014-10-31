@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-#import "FBFrictionlessRequestSettings.h"
+#import "GBFrictionlessRequestSettings.h"
 
-#import "Facebook.h"
+#import "Gbomb.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // private interface
 //
-@interface FBFrictionlessRequestSettings () <FBRequestDelegate>
+@interface GBFrictionlessRequestSettings () <GBRequestDelegate>
 
 @property (readwrite, retain) NSArray *allowedRecipients;
-@property (readwrite, retain) FBRequest *activeRequest;
+@property (readwrite, retain) GBRequest *activeRequest;
 
 @end
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation FBFrictionlessRequestSettings
+@implementation GBFrictionlessRequestSettings
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // public
@@ -136,13 +136,13 @@
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// FBRequestDelegate
-- (void)request:(FBRequest *)request
+// GBRequestDelegate
+- (void)request:(GBRequest *)request
         didLoad:(id)result {
     [self updateRecipientCacheWithRequestResult:result];
 }
 
-- (void)request:(FBRequest *)request didFailWithError:(NSError *)error {
+- (void)request:(GBRequest *)request didFailWithError:(NSError *)error {
     // if the request to load the frictionless recipients fails, proceed without updating
     // the recipients cache; the cache may become invalid due to a failed update or other reasons
     // (e.g. simultaneous use of the same app from multiple devices), in the case of an invalid

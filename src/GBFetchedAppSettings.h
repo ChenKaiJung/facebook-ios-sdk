@@ -18,7 +18,7 @@
 // Internal class holding server side Facebook app settings we fetch once from the
 // server per process lifetime.
 
-@interface FBFetchedAppSettings : NSObject
+@interface GBFetchedAppSettings : NSObject
 
 @property (copy, nonatomic) NSString *serverAppName;
 @property (readwrite) BOOL      supportsAttribution;

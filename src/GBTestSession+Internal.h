@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-#import "FBSession.h"
+#import "GBSession.h"
 
-@interface FBTestSession (Internal)
+@interface GBTestSession (Internal)
 
 // Can be used during testing to force a request for an access token refresh. This affects only the next
 // connection, when this flag is reset.

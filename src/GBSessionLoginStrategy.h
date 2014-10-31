@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-#import "FBSession+FBSessionLoginStrategy.h"
-#import "FBSessionAuthLogger.h"
-#import "FBSessionLoginStrategyParams.h"
+#import "GBSession+GBSessionLoginStrategy.h"
+#import "GBSessionAuthLogger.h"
+#import "GBSessionLoginStrategyParams.h"
 #import "FacebookSDK.h"
 
 // these are helpful macros for testing various login methods, should always checkin as NO/NO
@@ -25,8 +25,8 @@
 #define TEST_DISABLE_FACEBOOKNATIVELOGIN NO
 
 // Internal protocol that describes a type that can perform authorization.
-// It's possible for a strategy to compose over other strategies. See `FBSessionAppSwitchingLoginStategy`.
-@protocol FBSessionLoginStrategy <NSObject>
+// It's possible for a strategy to compose over other strategies. See `GBSessionAppSwitchingLoginStategy`.
+@protocol GBSessionLoginStrategy <NSObject>
 
 @required
 
@@ -44,7 +44,7 @@
  another login strategy should be tried. A value of 'YES' means the strategy has handled the login flow
  and no other strategies should be tried (note this does not necessarily mean the login was successful).
 */
-- (BOOL)tryPerformAuthorizeWithParams:(FBSessionLoginStrategyParams *)params session:(FBSession *)session logger:(FBSessionAuthLogger *)logger;
+- (BOOL)tryPerformAuthorizeWithParams:(GBSessionLoginStrategyParams *)params session:(GBSession *)session logger:(GBSessionAuthLogger *)logger;
 
 /*! @
  abstract Gets the methodName describing this login strategy, typically for external logging.

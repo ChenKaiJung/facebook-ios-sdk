@@ -16,7 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBSession.h"
+#import "GBSession.h"
 
 /*!
  @class
@@ -26,18 +26,18 @@
 
  @discussion
  Cache descriptors allow your application to specify the arguments that will be
- later used with another object, such as the FBFriendPickerViewController. By using a cache descriptor
+ later used with another object, such as the GBFriendPickerViewController. By using a cache descriptor
  instance, an application can choose to fetch data ahead of the point in time where the data is needed.
  */
-@interface FBCacheDescriptor : NSObject
+@interface GBCacheDescriptor : NSObject
 
 /*!
  @method
  @abstract
  Fetches and caches the data described by the cache descriptor instance, for the given session.
 
- @param session     the <FBSession> to use for fetching data
+ @param session     the <GBSession> to use for fetching data
  */
-- (void)prefetchAndCacheForSession:(FBSession*)session;
+- (void)prefetchAndCacheForSession:(GBSession*)session;
 
 @end

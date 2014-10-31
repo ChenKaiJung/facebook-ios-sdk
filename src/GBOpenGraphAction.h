@@ -16,24 +16,24 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBGraphObject.h"
+#import "GBGraphObject.h"
 
-@protocol FBGraphPlace;
-@protocol FBGraphUser;
+@protocol GBGraphPlace;
+@protocol GBGraphUser;
 
 /*!
  @protocol
 
  @abstract
- The `FBOpenGraphAction` protocol is the base protocol for use in posting and retrieving Open Graph actions.
- It inherits from the `FBGraphObject` protocol; you may derive custome protocols from `FBOpenGraphAction` in order
+ The `GBOpenGraphAction` protocol is the base protocol for use in posting and retrieving Open Graph actions.
+ It inherits from the `GBGraphObject` protocol; you may derive custome protocols from `GBOpenGraphAction` in order
  implement typed access to your application's custom actions.
 
  @discussion
  Represents an Open Graph custom action, to be used directly, or from which to
  derive custom action protocols with custom properties.
  */
-@protocol FBOpenGraphAction<FBGraphObject>
+@protocol GBOpenGraphAction<GBGraphObject>
 
 /*!
  @property
@@ -87,7 +87,7 @@
  @property
  @abstract Typed access to action's place
  */
-@property (retain, nonatomic) id<FBGraphPlace>      place;
+@property (retain, nonatomic) id<GBGraphPlace>      place;
 
 /*!
  @property
@@ -105,7 +105,7 @@
  @property
  @abstract Typed access to action's from-user
  */
-@property (retain, nonatomic) id<FBGraphUser>       from;
+@property (retain, nonatomic) id<GBGraphUser>       from;
 
 /*!
  @property
@@ -117,7 +117,7 @@
  @property
  @abstract Typed access to action's application
  */
-@property (retain, nonatomic) id<FBGraphObject>     application;
+@property (retain, nonatomic) id<GBGraphObject>     application;
 
 /*!
  @property

@@ -16,20 +16,20 @@
 
 #include <Foundation/Foundation.h>
 
-@class FBURLConnection;
-typedef void (^FBURLConnectionHandler)(FBURLConnection *connection,
+@class GBURLConnection;
+typedef void (^GBURLConnectionHandler)(GBURLConnection *connection,
                                        NSError *error,
                                        NSURLResponse *response,
                                        NSData *responseData);
 
-@interface FBURLConnection : NSObject
+@interface GBURLConnection : NSObject
 
-- (FBURLConnection *)initWithURL:(NSURL *)url
-               completionHandler:(FBURLConnectionHandler)handler;
+- (GBURLConnection *)initWithURL:(NSURL *)url
+               completionHandler:(GBURLConnectionHandler)handler;
 
-- (FBURLConnection *)initWithRequest:(NSURLRequest *)request
+- (GBURLConnection *)initWithRequest:(NSURLRequest *)request
                skipRoundTripIfCached:(BOOL)skipRoundtripIfCached
-                   completionHandler:(FBURLConnectionHandler)handler;
+                   completionHandler:(GBURLConnectionHandler)handler;
 
 - (void)cancel;
 

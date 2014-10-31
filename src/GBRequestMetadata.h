@@ -14,32 +14,32 @@
  * limitations under the License.
  */
 
-#import "FBRequestConnection.h"
+#import "GBRequestConnection.h"
 
-// Defines the maximum number of retries for the FBRequestConnectionErrorBehaviorRetry.
-extern const int FBREQUEST_DEFAULT_MAX_RETRY_LIMIT;
+// Defines the maximum number of retries for the GBRequestConnectionErrorBehaviorRetry.
+extern const int GBREQUEST_DEFAULT_MAX_RETRY_LIMIT;
 
-// Internal only class to facilitate FBRequest processing, specifically
-// associating FBRequest and FBRequestHandler instances and necessary
+// Internal only class to facilitate GBRequest processing, specifically
+// associating GBRequest and GBRequestHandler instances and necessary
 // data for retry processing.
-@interface FBRequestMetadata : NSObject
+@interface GBRequestMetadata : NSObject
 
-@property (nonatomic, retain) FBRequest *request;
-@property (nonatomic, copy) FBRequestHandler completionHandler;
+@property (nonatomic, retain) GBRequest *request;
+@property (nonatomic, copy) GBRequestHandler completionHandler;
 @property (nonatomic, copy) NSDictionary *batchParameters;
-@property (nonatomic, assign) FBRequestConnectionErrorBehavior behavior;
-@property (nonatomic, copy) FBRequestHandler originalCompletionHandler;
+@property (nonatomic, assign) GBRequestConnectionErrorBehavior behavior;
+@property (nonatomic, copy) GBRequestHandler originalCompletionHandler;
 
 @property (nonatomic, assign) int retryCount;
 @property (nonatomic, retain) id originalResult;
 @property (nonatomic, retain) NSError* originalError;
 
-- (id) initWithRequest:(FBRequest *)request
-     completionHandler:(FBRequestHandler)handler
+- (id) initWithRequest:(GBRequest *)request
+     completionHandler:(GBRequestHandler)handler
        batchParameters:(NSDictionary *)batchParameters
-              behavior:(FBRequestConnectionErrorBehavior) behavior;
+              behavior:(GBRequestConnectionErrorBehavior) behavior;
 
-- (void)invokeCompletionHandlerForConnection:(FBRequestConnection *)connection
+- (void)invokeCompletionHandlerForConnection:(GBRequestConnection *)connection
                                  withResults:(id)results
                                        error:(NSError *)error;
 @end

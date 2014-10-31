@@ -20,7 +20,7 @@
 #import <Security/Security.h>
 
 /*!
- @class FBDynamicFrameworkLoader
+ @class GBDynamicFrameworkLoader
 
  @abstract
  This class provides a way to load constants and methods from Apple Frameworks in a dynamic
@@ -30,7 +30,7 @@
  This class is a generic class for loading Classes, NSStrings, and SecRandomRef.
  As new types are needed, they should be added and strongly typed.
  */
-@interface FBDynamicFrameworkLoader : NSObject
+@interface GBDynamicFrameworkLoader : NSObject
 
 /*!
  @abstract
@@ -107,23 +107,23 @@
 
 // Security c-style APIs
 // These are local wrappers around the corresponding methods in Security/SecRandom.h
-int fbdfl_SecRandomCopyBytes(SecRandomRef rnd, size_t count, uint8_t *bytes);
+int gbdfl_SecRandomCopyBytes(SecRandomRef rnd, size_t count, uint8_t *bytes);
 
 // SQLITE3 c-style APIs
 // These are local wrappers around the corresponding sqlite3 method from /usr/include/sqlite3.h
-SQLITE_API const char *fbdfl_sqlite3_errmsg(sqlite3 *db);
-SQLITE_API int fbdfl_sqlite3_prepare_v2(sqlite3 *db, const char *zSql, int nByte, sqlite3_stmt **ppStmt, const char **pzTail);
-SQLITE_API int fbdfl_sqlite3_reset(sqlite3_stmt *pStmt);
-SQLITE_API int fbdfl_sqlite3_finalize(sqlite3_stmt *pStmt);
-SQLITE_API int fbdfl_sqlite3_open_v2(const char *filename, sqlite3 **ppDb, int flags, const char *zVfs);
-SQLITE_API int fbdfl_sqlite3_exec(sqlite3 *db, const char *sql, int (*callback)(void*,int,char**,char**), void * arg, char **errmsg);
-SQLITE_API int fbdfl_sqlite3_close(sqlite3 *db);
-SQLITE_API int fbdfl_sqlite3_bind_double(sqlite3_stmt *stmt, int index, double value);
-SQLITE_API int fbdfl_sqlite3_bind_int(sqlite3_stmt *stmt, int index, int value);
-SQLITE_API int fbdfl_sqlite3_bind_text(sqlite3_stmt *stmt, int index, const char* value, int n, void(*callback)(void*));
-SQLITE_API int fbdfl_sqlite3_step(sqlite3_stmt *stmt);
-SQLITE_API double fbdfl_sqlite3_column_double(sqlite3_stmt *stmt, int iCol);
-SQLITE_API int fbdfl_sqlite3_column_int(sqlite3_stmt *stmt, int iCol);
-SQLITE_API const unsigned char *fbdfl_sqlite3_column_text(sqlite3_stmt *stmt, int iCol);
+SQLITE_API const char *gbdfl_sqlite3_errmsg(sqlite3 *db);
+SQLITE_API int gbdfl_sqlite3_prepare_v2(sqlite3 *db, const char *zSql, int nByte, sqlite3_stmt **ppStmt, const char **pzTail);
+SQLITE_API int gbdfl_sqlite3_reset(sqlite3_stmt *pStmt);
+SQLITE_API int gbdfl_sqlite3_finalize(sqlite3_stmt *pStmt);
+SQLITE_API int gbdfl_sqlite3_open_v2(const char *filename, sqlite3 **ppDb, int flags, const char *zVfs);
+SQLITE_API int gbdfl_sqlite3_exec(sqlite3 *db, const char *sql, int (*callback)(void*,int,char**,char**), void * arg, char **errmsg);
+SQLITE_API int gbdfl_sqlite3_close(sqlite3 *db);
+SQLITE_API int gbdfl_sqlite3_bind_double(sqlite3_stmt *stmt, int index, double value);
+SQLITE_API int gbdfl_sqlite3_bind_int(sqlite3_stmt *stmt, int index, int value);
+SQLITE_API int gbdfl_sqlite3_bind_text(sqlite3_stmt *stmt, int index, const char* value, int n, void(*callback)(void*));
+SQLITE_API int gbdfl_sqlite3_step(sqlite3_stmt *stmt);
+SQLITE_API double gbdfl_sqlite3_column_double(sqlite3_stmt *stmt, int iCol);
+SQLITE_API int gbdfl_sqlite3_column_int(sqlite3_stmt *stmt, int iCol);
+SQLITE_API const unsigned char *gbdfl_sqlite3_column_text(sqlite3_stmt *stmt, int iCol);
 
 

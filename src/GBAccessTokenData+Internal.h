@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-#import "FBAccessTokenData.h"
+#import "GBAccessTokenData.h"
 
 /*
- @abstract Internal API to FBAccessTokenData
+ @abstract Internal API to GBAccessTokenData
  @discussion
-   Note even though FBAccessTokenData should be treated as immutable
+   Note even though GBAccessTokenData should be treated as immutable
  with respect to the public surface area, we provide internal
  read-write fields to support backwards compatibility with
  older logic.
 */
-@interface FBAccessTokenData (Internal)
+@interface GBAccessTokenData (Internal)
 
 @property (nonatomic, readwrite, copy) NSDate *refreshDate;
 @property (nonatomic, readwrite, copy) NSArray *permissions;

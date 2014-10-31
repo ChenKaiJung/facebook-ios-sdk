@@ -16,10 +16,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBDialogsParams.h"
-#import "FBSession.h"
+#import "GBDialogsParams.h"
+#import "GBSession.h"
 
-@interface FBLoginDialogParams : FBDialogsParams
+@interface GBLoginDialogParams : GBDialogsParams
 
 /*!
  Permissions being requested. Ex "basic_info,email"
@@ -27,10 +27,10 @@
 @property (nonatomic, copy) NSArray *permissions;
 
 /*!
- When requesting publish permissions, this must be set to a value other than FBSessionDefaultAudienceNone.
+ When requesting publish permissions, this must be set to a value other than GBSessionDefaultAudienceNone.
  If not requesting publish permissions, leave this property unset.
  */
-@property (nonatomic, assign) FBSessionDefaultAudience writePrivacy;
+@property (nonatomic, assign) GBSessionDefaultAudience writePrivacy;
 
 /*!
  When requesting for the access token to be renewed, set this property to YES.
@@ -40,6 +40,6 @@
 /*!
  Optional session instance whose overrides (e.g., urlSchemeSuffix) will be used.
 */
-@property (nonatomic, retain) FBSession *session;
+@property (nonatomic, retain) GBSession *session;
 
 @end

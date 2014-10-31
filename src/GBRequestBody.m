@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-#import "FBRequestBody.h"
+#import "GBRequestBody.h"
 
-#import "FBSettings+Internal.h"
+#import "GBSettings+Internal.h"
 
 static NSString *kStringBoundary = @"3i2ndDfv2rTHiSisAbouNdArYfORhtTPEefj3q2f";
 
-@interface FBRequestBody ()
+@interface GBRequestBody ()
 @property (nonatomic, retain, readonly) NSMutableData *mutableData;
 - (void)appendUTF8:(NSString *)utf8;
 @end
 
-@implementation FBRequestBody
+@implementation GBRequestBody
 
 @synthesize mutableData = _mutableData;
 
@@ -68,7 +68,7 @@ static NSString *kStringBoundary = @"3i2ndDfv2rTHiSisAbouNdArYfORhtTPEefj3q2f";
 
 - (void)appendWithKey:(NSString *)key
             formValue:(NSString *)value
-               logger:(FBLogger *)logger
+               logger:(GBLogger *)logger
 {
     NSString *disposition =
         [NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key];
@@ -80,13 +80,13 @@ static NSString *kStringBoundary = @"3i2ndDfv2rTHiSisAbouNdArYfORhtTPEefj3q2f";
 
 - (void)appendWithKey:(NSString *)key
                  imageValue:(UIImage *)image
-               logger:(FBLogger *)logger
+               logger:(GBLogger *)logger
 {
     NSString *disposition =
         [NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", key, key];
     [self appendUTF8:disposition];
     [self appendUTF8:@"Content-Type: image/jpeg\r\n\r\n"];
-    NSData *data = UIImageJPEGRepresentation(image, [FBSettings defaultJPEGCompressionQuality]);
+    NSData *data = UIImageJPEGRepresentation(image, [GBSettings defaultJPEGCompressionQuality]);
     [self.mutableData appendData:data];
     [self appendRecordBoundary];
     [logger appendFormat:@"\n    %@:\t<Image - %lu kB>", key, (unsigned long)([data length] / 1024)];
@@ -94,7 +94,7 @@ static NSString *kStringBoundary = @"3i2ndDfv2rTHiSisAbouNdArYfORhtTPEefj3q2f";
 
 - (void)appendWithKey:(NSString *)key
             dataValue:(NSData *)data
-               logger:(FBLogger *)logger
+               logger:(GBLogger *)logger
 {
     NSString *disposition =
         [NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", key, key];

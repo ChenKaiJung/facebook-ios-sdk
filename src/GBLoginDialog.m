@@ -14,24 +14,24 @@
  * limitations under the License.
  */
 
-#import "FBLoginDialog.h"
+#import "GBLoginDialog.h"
 
-#import "FBDialog.h"
-#import "FBUtility.h"
+#import "GBDialog.h"
+#import "GBUtility.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation FBLoginDialog
+@implementation GBLoginDialog
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // public
 
 /*
- * initialize the FBLoginDialog with url and parameters
+ * initialize the GBLoginDialog with url and parameters
  */
 - (id)initWithURL:(NSString*) loginURL
       loginParams:(NSMutableDictionary*) params
-         delegate:(id <FBLoginDialogDelegate>) delegate{
+         delegate:(id <GBLoginDialogDelegate>) delegate{
 
     self = [super init];
     _serverURL = [loginURL retain];
@@ -41,10 +41,10 @@
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// FBDialog
+// GBDialog
 
 /**
- * Override FBDialog : to call when the webView Dialog did succeed
+ * Override GBDialog : to call when the webView Dialog did succeed
  */
 - (void) dialogDidSucceed:(NSURL*)url {
 
@@ -76,7 +76,7 @@
   } else {
       if ([_loginDelegate respondsToSelector:@selector(fbDialogLogin:expirationDate:params:)]) {
       //[_loginDelegate fbDialogLogin:token expirationDate:expirationDate];
-        NSDictionary *params = [FBUtility queryParamsDictionaryFromFBURL:url];
+        NSDictionary *params = [GBUtility queryParamsDictionaryFromGBURL:url];
         if ( code != (NSString *) [NSNull null] && code.length != 0) {
             [_loginDelegate fbDialogLogin:access_token expirationDate:expirationDate params:params];
         }
@@ -93,7 +93,7 @@
 }
 
 /**
- * Override FBDialog : to call with the login dialog get canceled
+ * Override GBDialog : to call with the login dialog get canceled
  */
 - (void)dialogDidCancel:(NSURL *)url {
     [self dismissWithSuccess:NO animated:YES];

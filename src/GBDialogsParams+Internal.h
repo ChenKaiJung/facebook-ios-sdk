@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-#import "FBDialogsParams.h"
+#import "GBDialogsParams.h"
 
-@interface FBDialogsParams ()
+@interface GBDialogsParams ()
 
 /*!
  @abstract
- This method is abstract and must be defined by all classes that derive from `FBDialogParams`
+ This method is abstract and must be defined by all classes that derive from `GBDialogParams`
  */
 - (NSDictionary *)dictionaryMethodArgs;
 
 /*!
  @abstract
- This method is abstract and must be defined by all classes that derive from 'FBDialogParams'.
+ This method is abstract and must be defined by all classes that derive from 'GBDialogParams'.
  It validates the parameters and returns the app bridge version they should be used on.
  */
 - (NSString *)appBridgeVersion;

@@ -16,8 +16,8 @@
 
 #import <Foundation/Foundation.h>
 
-@class FBRequest;
-@class Facebook;
+@class GBRequest;
+@class Gbomb;
 
 /**
  * Do not use this interface directly, instead, use methods in Facebook.h
@@ -25,10 +25,10 @@
  * Handles frictionless interaction and recipient-caching by the SDK,
  * see https://developers.facebook.com/docs/reference/dialogs/requests/
  */
-@interface FBFrictionlessRequestSettings : NSObject {
+@interface GBFrictionlessRequestSettings : NSObject {
 @private
     NSArray*            _allowedRecipients;
-    FBRequest*          _activeRequest;
+    GBRequest*          _activeRequest;
     BOOL                _enabled;
 }
 

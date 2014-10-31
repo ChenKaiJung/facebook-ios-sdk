@@ -16,24 +16,24 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBGraphObjectTableDataSource.h"
-#import "FBPlacePickerViewController.h"
-#import "FBRequest.h"
-#import "FBSession.h"
+#import "GBGraphObjectTableDataSource.h"
+#import "GBPlacePickerViewController.h"
+#import "GBRequest.h"
+#import "GBSession.h"
 
 // This is the cache identity used by both the view controller and cache descriptor objects
-extern NSString *const FBPlacePickerCacheIdentity;
+extern NSString *const GBPlacePickerCacheIdentity;
 
 extern const NSInteger defaultResultsLimit;
 extern const NSInteger defaultRadius;
 
-@interface FBPlacePickerViewController (Internal)
+@interface GBPlacePickerViewController (Internal)
 
-+ (FBRequest*)requestForPlacesSearchAtCoordinate:(CLLocationCoordinate2D)coordinate
++ (GBRequest*)requestForPlacesSearchAtCoordinate:(CLLocationCoordinate2D)coordinate
                                   radiusInMeters:(NSInteger)radius
                                     resultsLimit:(NSInteger)resultsLimit
                                       searchText:(NSString*)searchText
                                           fields:(NSSet*)fieldsForRequest
-                                      datasource:(FBGraphObjectTableDataSource*)datasource
-                                         session:(FBSession*)session;
+                                      datasource:(GBGraphObjectTableDataSource*)datasource
+                                         session:(GBSession*)session;
 @end

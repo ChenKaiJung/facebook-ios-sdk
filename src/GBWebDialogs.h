@@ -16,12 +16,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class FBFrictionlessRecipientCache;
-@class FBSession;
-@protocol FBWebDialogsDelegate;
+@class GBFrictionlessRecipientCache;
+@class GBSession;
+@protocol GBWebDialogsDelegate;
 
 /*!
- @typedef FBWebDialogResult enum
+ @typedef GBWebDialogResult enum
 
  @abstract
  Passed to a handler to indicate the result of a dialog being displayed to the user.
@@ -29,10 +29,10 @@
 typedef enum {
     /*! Indicates that the dialog action completed successfully. Note, that cancel operations represent completed dialog operations.
      The url argument may be used to distinguish between success and user-cancelled cases */
-    FBWebDialogResultDialogCompleted,
+    GBWebDialogResultDialogCompleted,
     /*! Indicates that the dialog operation was not completed. This occurs in cases such as the closure of the web-view using the X in the upper left corner. */
-    FBWebDialogResultDialogNotCompleted
-} FBWebDialogResult;
+    GBWebDialogResultDialogNotCompleted
+} GBWebDialogResult;
 
 /*!
  @typedef
@@ -40,18 +40,18 @@ typedef enum {
  @abstract Defines a handler that will be called in response to the web dialog
  being dismissed
  */
-typedef void (^FBWebDialogHandler)(
-    FBWebDialogResult result,
+typedef void (^GBWebDialogHandler)(
+    GBWebDialogResult result,
     NSURL *resultURL,
     NSError *error);
 
 /*!
- @class FBWebDialogs
+ @class GBWebDialogs
 
  @abstract
  Provides methods to display web based dialogs to the user.
 */
-@interface FBWebDialogs : NSObject
+@interface GBWebDialogs : NSObject
 
 /*!
  @abstract
@@ -68,10 +68,10 @@ typedef void (^FBWebDialogHandler)(
  @param handler An optional handler that will be called when the dialog is dismissed. Note,
  that if the method returns NO, the handler is not called. May be nil.
  */
-+ (void)presentDialogModallyWithSession:(FBSession *)session
++ (void)presentDialogModallyWithSession:(GBSession *)session
                                  dialog:(NSString *)dialog
                              parameters:(NSDictionary *)parameters
-                                handler:(FBWebDialogHandler)handler;
+                                handler:(GBWebDialogHandler)handler;
 
 /*!
  @abstract
@@ -89,13 +89,13 @@ typedef void (^FBWebDialogHandler)(
  that if the method returns NO, the handler is not called. May be nil.
 
  @param delegate An optional delegate to allow for advanced processing of web based
- dialogs. See 'FBWebDialogsDelegate' for more details.
+ dialogs. See 'GBWebDialogsDelegate' for more details.
  */
-+ (void)presentDialogModallyWithSession:(FBSession *)session
++ (void)presentDialogModallyWithSession:(GBSession *)session
                                  dialog:(NSString *)dialog
                              parameters:(NSDictionary *)parameters
-                                handler:(FBWebDialogHandler)handler
-                               delegate:(id<FBWebDialogsDelegate>)delegate;
+                                handler:(GBWebDialogHandler)handler
+                               delegate:(id<GBWebDialogsDelegate>)delegate;
 
 /*!
  @abstract
@@ -112,11 +112,11 @@ typedef void (^FBWebDialogHandler)(
 
  @param handler An optional handler that will be called when the dialog is dismissed. May be nil.
  */
-+ (void)presentRequestsDialogModallyWithSession:(FBSession *)session
++ (void)presentRequestsDialogModallyWithSession:(GBSession *)session
                                         message:(NSString *)message
                                           title:(NSString *)title
                                      parameters:(NSDictionary *)parameters
-                                        handler:(FBWebDialogHandler)handler;
+                                        handler:(GBWebDialogHandler)handler;
 
 /*!
  @abstract
@@ -137,12 +137,12 @@ typedef void (^FBWebDialogHandler)(
  cache instance should be preserved for the life of the session and reused for multiple calls to the present method.
  As the users set of friends enabled for frictionless sharing changes, this method auto-updates the cache.
  */
-+ (void)presentRequestsDialogModallyWithSession:(FBSession *)session
++ (void)presentRequestsDialogModallyWithSession:(GBSession *)session
                                         message:(NSString *)message
                                           title:(NSString *)title
                                      parameters:(NSDictionary *)parameters
-                                        handler:(FBWebDialogHandler)handler
-                                    friendCache:(FBFrictionlessRecipientCache *)friendCache;
+                                        handler:(GBWebDialogHandler)handler
+                                    friendCache:(GBFrictionlessRecipientCache *)friendCache;
 
 /*!
  @abstract
@@ -155,9 +155,9 @@ typedef void (^FBWebDialogHandler)(
 
  @param handler An optional handler that will be called when the dialog is dismissed. May be nil.
  */
-+ (void)presentFeedDialogModallyWithSession:(FBSession *)session
++ (void)presentFeedDialogModallyWithSession:(GBSession *)session
                                  parameters:(NSDictionary *)parameters
-                                    handler:(FBWebDialogHandler)handler;
+                                    handler:(GBWebDialogHandler)handler;
 
 @end
 
@@ -165,13 +165,13 @@ typedef void (^FBWebDialogHandler)(
  @protocol
 
  @abstract
- The `FBWebDialogsDelegate` protocol enables the plugging of advanced behaviors into
+ The `GBWebDialogsDelegate` protocol enables the plugging of advanced behaviors into
  the presentation flow of a Facebook web dialog. Advanced uses include modification
  of parameters and application-level handling of links on the dialog. The
- `FBFrictionlessRequestFriendCache` class implements this protocol to add frictionless
+ `GBFrictionlessRequestFriendCache` class implements this protocol to add frictionless
  behaviors to a presentation of the request dialog.
  */
-@protocol FBWebDialogsDelegate<NSObject>
+@protocol GBWebDialogsDelegate<NSObject>
 
 @optional
 
@@ -187,7 +187,7 @@ typedef void (^FBWebDialogHandler)(
  */
 - (void)webDialogsWillPresentDialog:(NSString *)dialog
                          parameters:(NSMutableDictionary *)parameters
-                            session:(FBSession *)session;
+                            session:(GBSession *)session;
 
 /*!
  @abstract
@@ -204,7 +204,7 @@ typedef void (^FBWebDialogHandler)(
  */
 - (BOOL)webDialogsDialog:(NSString *)dialog
               parameters:(NSDictionary *)parameters
-                 session:(FBSession *)session
+                 session:(GBSession *)session
      shouldAutoHandleURL:(NSURL *)url;
 
 /*!
@@ -225,8 +225,8 @@ typedef void (^FBWebDialogHandler)(
  */
 - (void)webDialogsWillDismissDialog:(NSString *)dialog
                          parameters:(NSDictionary *)parameters
-                            session:(FBSession *)session
-                             result:(FBWebDialogResult *)result
+                            session:(GBSession *)session
+                             result:(GBWebDialogResult *)result
                                 url:(NSURL **)url
                               error:(NSError **)error;
 

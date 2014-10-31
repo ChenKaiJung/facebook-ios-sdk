@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-#import "FBCacheDescriptor.h"
+#import "GBCacheDescriptor.h"
 
-@implementation FBCacheDescriptor
+@implementation GBCacheDescriptor
 
-- (void)prefetchAndCacheForSession:(FBSession *)session {
+- (void)prefetchAndCacheForSession:(GBSession *)session {
     // we are treating this method as abstract virtual here
     [self doesNotRecognizeSelector:_cmd];
 }

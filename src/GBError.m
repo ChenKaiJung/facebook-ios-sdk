@@ -14,40 +14,40 @@
  * limitations under the License.
  */
 
-#import "FBError.h"
+#import "GBError.h"
 
-NSString *const FacebookSDKDomain = @"com.facebook.sdk";
-NSString *const FacebookNativeApplicationDomain = @"com.facebook.Facebook.platform";
+NSString *const GbombSDKDomain = @"com.gbombgames.sdk";
+NSString *const FacebookNativeApplicationDomain = @"com.gbombgames.Gbomb.platform";
 
-NSString *const FBErrorInnerErrorKey = @"com.facebook.sdk:ErrorInnerErrorKey";
-NSString *const FBErrorParsedJSONResponseKey = @"com.facebook.sdk:ParsedJSONResponseKey";
-NSString *const FBErrorHTTPStatusCodeKey = @"com.facebook.sdk:HTTPStatusCode";
-NSString *const FBErrorSessionKey = @"com.facebook.sdk:ErrorSessionKey";
-NSString *const FBErrorUnprocessedURLKey = @"com.facebook.sdk:UnprocessedURLKey";
+NSString *const GBErrorInnerErrorKey = @"com.gbombgames.sdk:ErrorInnerErrorKey";
+NSString *const GBErrorParsedJSONResponseKey = @"com.gbombgames.sdk:ParsedJSONResponseKey";
+NSString *const GBErrorHTTPStatusCodeKey = @"com.gbombgames.sdk:HTTPStatusCode";
+NSString *const GBErrorSessionKey = @"com.gbombgames.sdk:ErrorSessionKey";
+NSString *const GBErrorUnprocessedURLKey = @"com.gbombgames.sdk:UnprocessedURLKey";
 
-NSString *const FBErrorLoginFailedReason = @"com.facebook.sdk:ErrorLoginFailedReason";
-NSString *const FBErrorLoginFailedOriginalErrorCode = @"com.facebook.sdk:ErrorLoginFailedOriginalErrorCode";
+NSString *const GBErrorLoginFailedReason = @"com.gbombgames.sdk:ErrorLoginFailedReason";
+NSString *const GBErrorLoginFailedOriginalErrorCode = @"com.gbombgames.sdk:ErrorLoginFailedOriginalErrorCode";
 
-NSString *const FBErrorLoginFailedReasonInlineCancelledValue = @"com.facebook.sdk:InlineLoginCancelled";
-NSString *const FBErrorLoginFailedReasonInlineNotCancelledValue = @"com.facebook.sdk:ErrorLoginNotCancelled";
-NSString *const FBErrorLoginFailedReasonUserCancelledValue = @"com.facebook.sdk:UserLoginCancelled";
-NSString *const FBErrorLoginFailedReasonUserCancelledSystemValue = @"com.facebook.sdk:SystemLoginCancelled";
-NSString *const FBErrorLoginFailedReasonOtherError = @"com.facebook.sdk:UserLoginOtherError";
-NSString *const FBErrorLoginFailedReasonSystemDisallowedWithoutErrorValue = @"com.facebook.sdk:SystemLoginDisallowedWithoutError";
-NSString *const FBErrorLoginFailedReasonSystemError = @"com.facebook.sdk:SystemLoginError";
+NSString *const GBErrorLoginFailedReasonInlineCancelledValue = @"com.gbombgames.sdk:InlineLoginCancelled";
+NSString *const GBErrorLoginFailedReasonInlineNotCancelledValue = @"com.gbombgames.sdk:ErrorLoginNotCancelled";
+NSString *const GBErrorLoginFailedReasonUserCancelledValue = @"com.gbombgames.sdk:UserLoginCancelled";
+NSString *const GBErrorLoginFailedReasonUserCancelledSystemValue = @"com.gbombgames.sdk:SystemLoginCancelled";
+NSString *const GBErrorLoginFailedReasonOtherError = @"com.gbombgames.sdk:UserLoginOtherError";
+NSString *const GBErrorLoginFailedReasonSystemDisallowedWithoutErrorValue = @"com.gbombgames.sdk:SystemLoginDisallowedWithoutError";
+NSString *const GBErrorLoginFailedReasonSystemError = @"com.gbombgames.sdk:SystemLoginError";
 
-NSString *const FBErrorReauthorizeFailedReasonSessionClosed = @"com.facebook.sdk:ErrorReauthorizeFailedReasonSessionClosed";
-NSString *const FBErrorReauthorizeFailedReasonUserCancelled = @"com.facebook.sdk:ErrorReauthorizeFailedReasonUserCancelled";
-NSString *const FBErrorReauthorizeFailedReasonUserCancelledSystem = @"com.facebook.sdk:ErrorReauthorizeFailedReasonUserCancelledSystem";
-NSString *const FBErrorReauthorizeFailedReasonWrongUser = @"com.facebook.sdk:ErrorReauthorizeFailedReasonWrongUser";
+NSString *const GBErrorReauthorizeFailedReasonSessionClosed = @"com.gbombgames.sdk:ErrorReauthorizeFailedReasonSessionClosed";
+NSString *const GBErrorReauthorizeFailedReasonUserCancelled = @"com.gbombgames.sdk:ErrorReauthorizeFailedReasonUserCancelled";
+NSString *const GBErrorReauthorizeFailedReasonUserCancelledSystem = @"com.gbombgames.sdk:ErrorReauthorizeFailedReasonUserCancelledSystem";
+NSString *const GBErrorReauthorizeFailedReasonWrongUser = @"com.gbombgames.sdk:ErrorReauthorizeFailedReasonWrongUser";
 
-NSString *const FBInvalidOperationException = @"com.facebook.sdk:InvalidOperationException";
+NSString *const GBInvalidOperationException = @"com.gbombgames.sdk:InvalidOperationException";
 
-NSString *const FBErrorDialogReasonKey = @"com.facebook.sdk:DialogReasonKey";
-NSString *const FBErrorDialogNotSupported = @"com.facebook.sdk:DialogNotSupported";
-NSString *const FBErrorDialogInvalidForSession = @"DialogInvalidForSession";
-NSString *const FBErrorDialogCantBeDisplayed = @"DialogCantBeDisplayed";
-NSString *const FBErrorDialogInvalidOpenGraphObject = @"DialogInvalidOpenGraphObject";
-NSString *const FBErrorDialogInvalidOpenGraphActionParameters = @"DialogInvalidOpenGraphActionParameters";
+NSString *const GBErrorDialogReasonKey = @"com.gbombgames.sdk:DialogReasonKey";
+NSString *const GBErrorDialogNotSupported = @"com.gbombgames.sdk:DialogNotSupported";
+NSString *const GBErrorDialogInvalidForSession = @"DialogInvalidForSession";
+NSString *const GBErrorDialogCantBeDisplayed = @"DialogCantBeDisplayed";
+NSString *const GBErrorDialogInvalidOpenGraphObject = @"DialogInvalidOpenGraphObject";
+NSString *const GBErrorDialogInvalidOpenGraphActionParameters = @"DialogInvalidOpenGraphActionParameters";
 
-NSString *const FBErrorAppEventsReasonKey = @"com.facebook.sdk:AppEventsReasonKey";
+NSString *const GBErrorAppEventsReasonKey = @"com.gbombgames.sdk:AppEventsReasonKey";

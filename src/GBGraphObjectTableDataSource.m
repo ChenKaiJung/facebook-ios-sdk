@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-#import "FBGraphObjectTableDataSource.h"
+#import "GBGraphObjectTableDataSource.h"
 
-#import "FBGraphObject.h"
-#import "FBGraphObjectTableCell.h"
-#import "FBURLConnection.h"
-#import "FBUtility.h"
+#import "GBGraphObject.h"
+#import "GBGraphObjectTableCell.h"
+#import "GBURLConnection.h"
+#import "GBUtility.h"
 
 // Magic number - iPhone address book doesn't show scrubber for less than 5 contacts
 static const NSInteger kMinimumCountToCollate = 6;
 
-@interface FBGraphObjectTableDataSource ()
+@interface GBGraphObjectTableDataSource ()
 
 @property (nonatomic, retain) NSArray *data;
 @property (nonatomic, retain) NSArray *indexKeys;
@@ -34,17 +34,17 @@ static const NSInteger kMinimumCountToCollate = 6;
 @property (nonatomic, retain) UILocalizedIndexedCollation *collation;
 @property (nonatomic, assign) BOOL showSections;
 
-- (BOOL)filterIncludesItem:(FBGraphObject *)item;
-- (FBGraphObjectTableCell *)cellWithTableView:(UITableView *)tableView;
-- (NSString *)indexKeyOfItem:(FBGraphObject *)item;
-- (UIImage *)tableView:(UITableView *)tableView imageForItem:(FBGraphObject *)item;
-- (void)addOrRemovePendingConnection:(FBURLConnection *)connection;
+- (BOOL)filterIncludesItem:(GBGraphObject *)item;
+- (GBGraphObjectTableCell *)cellWithTableView:(UITableView *)tableView;
+- (NSString *)indexKeyOfItem:(GBGraphObject *)item;
+- (UIImage *)tableView:(UITableView *)tableView imageForItem:(GBGraphObject *)item;
+- (void)addOrRemovePendingConnection:(GBURLConnection *)connection;
 - (BOOL)isActivityIndicatorIndexPath:(NSIndexPath *)indexPath;
 - (BOOL)isLastSection:(NSInteger)section;
 
 @end
 
-@implementation FBGraphObjectTableDataSource
+@implementation GBGraphObjectTableDataSource
 
 @synthesize data = _data;
 @synthesize defaultPicture = _defaultPicture;
@@ -88,8 +88,8 @@ static const NSInteger kMinimumCountToCollate = 6;
 
 - (void)dealloc
 {
-    FBConditionalLog(![_pendingURLConnections count],
-                     @"FBGraphObjectTableDataSource pending connection did not retain self");
+    GBConditionalLog(![_pendingURLConnections count],
+                     @"GBGraphObjectTableDataSource pending connection did not retain self");
 
     [_collation release];
     [_data release];
@@ -174,13 +174,13 @@ static const NSInteger kMinimumCountToCollate = 6;
 - (void)bindTableView:(UITableView *)tableView
 {
     tableView.dataSource = self;
-    tableView.rowHeight = [FBGraphObjectTableCell rowHeight];
+    tableView.rowHeight = [GBGraphObjectTableCell rowHeight];
 }
 
 - (void)cancelPendingRequests
 {
     // Cancel all active connections.
-    for (FBURLConnection *connection in _pendingURLConnections) {
+    for (GBURLConnection *connection in _pendingURLConnections) {
         [connection cancel];
     }
 }
@@ -204,7 +204,7 @@ static const NSInteger kMinimumCountToCollate = 6;
     NSMutableDictionary *indexMap = [[[NSMutableDictionary alloc] init] autorelease];
     NSMutableArray *indexKeys = [[[NSMutableArray alloc] init] autorelease];
 
-    for (FBGraphObject *item in self.data) {
+    for (GBGraphObject *item in self.data) {
         if (![self filterIncludesItem:item]) {
             continue;
         }
@@ -241,7 +241,7 @@ static const NSInteger kMinimumCountToCollate = 6;
 
 #pragma mark - Private Methods
 
-- (BOOL)filterIncludesItem:(FBGraphObject *)item
+- (BOOL)filterIncludesItem:(GBGraphObject *)item
 {
     if (![self.controllerDelegate respondsToSelector:
           @selector(graphObjectTableDataSource:filterIncludesItem:)]) {
@@ -268,14 +268,14 @@ static const NSInteger kMinimumCountToCollate = 6;
     [self setSortingByFields:[NSArray arrayWithObject:fieldName] ascending:ascending];
 }
 
-- (FBGraphObjectTableCell *)cellWithTableView:(UITableView *)tableView
+- (GBGraphObjectTableCell *)cellWithTableView:(UITableView *)tableView
 {
     static NSString * const cellKey = @"fbTableCell";
-    FBGraphObjectTableCell *cell =
-    (FBGraphObjectTableCell*)[tableView dequeueReusableCellWithIdentifier:cellKey];
+    GBGraphObjectTableCell *cell =
+    (GBGraphObjectTableCell*)[tableView dequeueReusableCellWithIdentifier:cellKey];
 
     if (!cell) {
-        cell = [[FBGraphObjectTableCell alloc]
+        cell = [[GBGraphObjectTableCell alloc]
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier:cellKey];
         [cell autorelease];
@@ -286,7 +286,7 @@ static const NSInteger kMinimumCountToCollate = 6;
     return cell;
 }
 
-- (NSString *)indexKeyOfItem:(FBGraphObject *)item
+- (NSString *)indexKeyOfItem:(GBGraphObject *)item
 {
     NSString *text = @"";
 
@@ -308,7 +308,7 @@ static const NSInteger kMinimumCountToCollate = 6;
     return text;
 }
 
-- (FBGraphObject *)itemAtIndexPath:(NSIndexPath *)indexPath
+- (GBGraphObject *)itemAtIndexPath:(NSIndexPath *)indexPath
 {
     id key = nil;
     if (self.useCollation) {
@@ -324,7 +324,7 @@ static const NSInteger kMinimumCountToCollate = 6;
     return nil;
 }
 
-- (NSIndexPath *)indexPathForItem:(FBGraphObject *)item
+- (NSIndexPath *)indexPathForItem:(GBGraphObject *)item
 {
     NSString *key = [self indexKeyOfItem:item];
     NSMutableArray *sectionItems = [self.indexMap objectForKey:key];
@@ -342,7 +342,7 @@ static const NSInteger kMinimumCountToCollate = 6;
         return nil;
     }
 
-    id matchingObject = [FBUtility graphObjectInArray:sectionItems withSameIDAs:item];
+    id matchingObject = [GBUtility graphObjectInArray:sectionItems withSameIDAs:item];
     if (matchingObject == nil) {
         return nil;
     }
@@ -394,22 +394,22 @@ static const NSInteger kMinimumCountToCollate = 6;
     NSArray *sectionItems = [self.indexMap objectForKey:key];
     return sectionItems;
 }
-- (UIImage *)tableView:(UITableView *)tableView imageForItem:(FBGraphObject *)item
+- (UIImage *)tableView:(UITableView *)tableView imageForItem:(GBGraphObject *)item
 {
     __block UIImage *image = nil;
     NSString *urlString = [self.controllerDelegate graphObjectTableDataSource:self
                                                              pictureUrlOfItem:item];
     if (urlString) {
-        FBURLConnectionHandler handler =
-        ^(FBURLConnection *connection, NSError *error, NSURLResponse *response, NSData *data) {
+        GBURLConnectionHandler handler =
+        ^(GBURLConnection *connection, NSError *error, NSURLResponse *response, NSData *data) {
             [self addOrRemovePendingConnection:connection];
             if (!error) {
                 image = [UIImage imageWithData:data];
 
                 NSIndexPath *indexPath = [self indexPathForItem:item];
                 if (indexPath) {
-                    FBGraphObjectTableCell *cell =
-                    (FBGraphObjectTableCell*)[tableView cellForRowAtIndexPath:indexPath];
+                    GBGraphObjectTableCell *cell =
+                    (GBGraphObjectTableCell*)[tableView cellForRowAtIndexPath:indexPath];
 
                     if (cell) {
                         cell.picture = image;
@@ -418,7 +418,7 @@ static const NSInteger kMinimumCountToCollate = 6;
             }
         };
 
-        FBURLConnection *connection = [[[FBURLConnection alloc]
+        GBURLConnection *connection = [[[GBURLConnection alloc]
                                         initWithURL:[NSURL URLWithString:urlString]
                                         completionHandler:handler]
                                        autorelease];
@@ -441,7 +441,7 @@ static const NSInteger kMinimumCountToCollate = 6;
 // Whichever runs first adds the connection to the collection of pending requests,
 // and whichever runs second removes it.  This allows us to track all requests
 // for which one code-path has run and the other has not.
-- (void)addOrRemovePendingConnection:(FBURLConnection *)connection
+- (void)addOrRemovePendingConnection:(GBURLConnection *)connection
 {
     if ([self.pendingURLConnections containsObject:connection]) {
         [self.pendingURLConnections removeObject:connection];
@@ -516,7 +516,7 @@ static const NSInteger kMinimumCountToCollate = 6;
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    FBGraphObjectTableCell *cell = [self cellWithTableView:tableView];
+    GBGraphObjectTableCell *cell = [self cellWithTableView:tableView];
 
     if ([self isActivityIndicatorIndexPath:indexPath]) {
         cell.picture = nil;
@@ -530,7 +530,7 @@ static const NSInteger kMinimumCountToCollate = 6;
         [self.dataNeededDelegate graphObjectTableDataSourceNeedsData:self
                                                 triggeredByIndexPath:indexPath];
     } else {
-        FBGraphObject *item = [self itemAtIndexPath:indexPath];
+        GBGraphObject *item = [self itemAtIndexPath:indexPath];
 
         // This is a no-op if it doesn't have an activity indicator.
         [cell stopAnimatingActivityIndicator];

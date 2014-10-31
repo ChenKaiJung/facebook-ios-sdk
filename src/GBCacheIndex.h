@@ -18,26 +18,26 @@
 
 #import <Foundation/Foundation.h>
 
-@class FBCacheIndex;
+@class GBCacheIndex;
 
-@protocol FBCacheIndexFileDelegate <NSObject>
+@protocol GBCacheIndexFileDelegate <NSObject>
 
 @required
 // Informs the disk cache to write contents to the specified file.  The callback
 // should not block and should be executed in order.
-- (void) cacheIndex:(FBCacheIndex*)cacheIndex
+- (void) cacheIndex:(GBCacheIndex*)cacheIndex
     writeFileWithName:(NSString*)name
     data:(NSData*)data;
 // Informs the disk cache to delete the specified file.
-- (void) cacheIndex:(FBCacheIndex*)cacheIndex
+- (void) cacheIndex:(GBCacheIndex*)cacheIndex
     deleteFileWithName:(NSString*)name;
 
 @end
 
-@interface FBCacheIndex : NSObject
+@interface GBCacheIndex : NSObject
 {
 @private
-    id <FBCacheIndexFileDelegate> _delegate;
+    id <GBCacheIndexFileDelegate> _delegate;
 
     NSCache* _cachedEntries;
 

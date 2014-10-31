@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-#import "FBFriendPickerCacheDescriptor.h"
+#import "GBFriendPickerCacheDescriptor.h"
 
-#import "FBFriendPickerViewController+Internal.h"
-#import "FBGraphObjectPagingLoader.h"
-#import "FBGraphObjectTableDataSource.h"
-#import "FBRequest.h"
-#import "FBRequestConnection.h"
-#import "FBSession.h"
+#import "GBFriendPickerViewController+Internal.h"
+#import "GBGraphObjectPagingLoader.h"
+#import "GBGraphObjectTableDataSource.h"
+#import "GBRequest.h"
+#import "GBRequestConnection.h"
+#import "GBSession.h"
 
-@interface FBFriendPickerCacheDescriptor () <FBGraphObjectPagingLoaderDelegate>
+@interface GBFriendPickerCacheDescriptor () <GBGraphObjectPagingLoaderDelegate>
 
 @property (nonatomic, readwrite, copy) NSSet *fieldsForRequest;
 @property (nonatomic, readwrite, copy) NSString *userID;
-@property (nonatomic, readwrite, retain) FBGraphObjectPagingLoader *loader;
+@property (nonatomic, readwrite, retain) GBGraphObjectPagingLoader *loader;
 
 // these properties are only used by unit tests, and should not be removed or made public
 @property (nonatomic, readwrite, assign) BOOL hasCompletedFetch;
@@ -36,7 +36,7 @@
 
 @end
 
-@implementation FBFriendPickerCacheDescriptor
+@implementation GBFriendPickerCacheDescriptor
 
 @synthesize fieldsForRequest = _fieldsForRequest,
             userID = _userID,
@@ -77,14 +77,14 @@
     [super dealloc];
 }
 
-- (void)prefetchAndCacheForSession:(FBSession*)session {
+- (void)prefetchAndCacheForSession:(GBSession*)session {
     // Friend queries require a session, so do nothing if we don't have one.
     if (session == nil) {
         return;
     }
 
     // datasource has some field ownership, so we need one here
-    FBGraphObjectTableDataSource *datasource = [[[FBGraphObjectTableDataSource alloc] init] autorelease];
+    GBGraphObjectTableDataSource *datasource = [[[GBGraphObjectTableDataSource alloc] init] autorelease];
     datasource.groupByField = @"name";
 
     // me or one of my friends that also uses the app
@@ -94,7 +94,7 @@
     }
 
     // create the request object that we will start with
-    FBRequest *request = [FBFriendPickerViewController requestWithUserID:user
+    GBRequest *request = [GBFriendPickerViewController requestWithUserID:user
                                                                   fields:self.fieldsForRequest
                                                               dataSource:datasource
                                                                  session:session];
@@ -106,8 +106,8 @@
     }
 
     self.loader.delegate = nil;
-    self.loader = [[[FBGraphObjectPagingLoader alloc] initWithDataSource:datasource
-                                                              pagingMode:FBGraphObjectPagingModeImmediateViewless]
+    self.loader = [[[GBGraphObjectPagingLoader alloc] initWithDataSource:datasource
+                                                              pagingMode:GBGraphObjectPagingModeImmediateViewless]
                    autorelease];
     self.loader.session = session;
 
@@ -118,7 +118,7 @@
 
     // seed the cache
     [self.loader startLoadingWithRequest:request
-                           cacheIdentity:FBFriendPickerCacheIdentity
+                           cacheIdentity:GBFriendPickerCacheIdentity
                    skipRoundtripIfCached:NO];
 }
 
@@ -126,7 +126,7 @@
     self.usePageLimitOfOne = YES;
 }
 
-- (void)pagingLoaderDidFinishLoading:(FBGraphObjectPagingLoader *)pagingLoader {
+- (void)pagingLoaderDidFinishLoading:(GBGraphObjectPagingLoader *)pagingLoader {
     self.loader.delegate = nil;
     self.loader = nil;
     self.hasCompletedFetch = YES;

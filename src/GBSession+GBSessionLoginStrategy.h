@@ -14,31 +14,31 @@
  * limitations under the License.
  */
 
-#import "FacebookSDK.h"
+#import "GbombSDK.h"
 
-// A category on FBSession to declare members that FBSessionLoginStrategy
+// A category on GBSession to declare members that GBSessionLoginStrategy
 // implementations needs access to (aka "friend" access).
-@interface FBSession (FBSessionLoginStrategy)
+@interface GBSession (GBSessionLoginStrategy)
 
 - (void)authorizeUsingSystemAccountStore:(NSArray*)permissions
-                         defaultAudience:(FBSessionDefaultAudience)defaultAudience
+                         defaultAudience:(GBSessionDefaultAudience)defaultAudience
                            isReauthorize:(BOOL)isReauthorize;
-- (FBAppCall *)authorizeUsingFacebookNativeLoginWithPermissions:(NSArray*)permissions
-                                                defaultAudience:(FBSessionDefaultAudience)defaultAudience
+- (GBAppCall *)authorizeUsingFacebookNativeLoginWithPermissions:(NSArray*)permissions
+                                                defaultAudience:(GBSessionDefaultAudience)defaultAudience
                                                     clientState:(NSDictionary *)clientState;
 - (BOOL)isURLSchemeRegistered;
 - (NSString *)jsonClientStateWithDictionary:(NSDictionary *)dictionary;
 - (void)retryableAuthorizeWithPermissions:(NSArray*)permissions
-                          defaultAudience:(FBSessionDefaultAudience)defaultAudience
+                          defaultAudience:(GBSessionDefaultAudience)defaultAudience
                            integratedAuth:(BOOL)tryIntegratedAuth
-                                FBAppAuth:(BOOL)tryFBAppAuth
+                                GBAppAuth:(BOOL)tryGBAppAuth
                                safariAuth:(BOOL)trySafariAuth
                                  fallback:(BOOL)tryFallback
                             isReauthorize:(BOOL)isReauthorize
                       canFetchAppSettings:(BOOL)canFetchAppSettings;
 - (BOOL)authorizeUsingFacebookApplication:(NSMutableDictionary *)params;
 - (BOOL)authorizeUsingSafari:(NSMutableDictionary *)params;
-- (void)setLoginTypeOfPendingOpenUrlCallback:(FBSessionLoginType) loginType;
+- (void)setLoginTypeOfPendingOpenUrlCallback:(GBSessionLoginType) loginType;
 - (void)authorizeUsingLoginDialog:(NSMutableDictionary *)params;
 
 @end

@@ -16,22 +16,22 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBDialogsParams.h"
-#import "FBOpenGraphAction.h"
+#import "GBDialogsParams.h"
+#import "GBOpenGraphAction.h"
 
-extern NSString *const FBPostObject;
+extern NSString *const GBPostObject;
 
 /*!
- @class FBOpenGraphActionShareDialogParams
+ @class GBOpenGraphActionShareDialogParams
 
  @abstract
  This object is used to encapsulate state for parameters to an Open Graph share
  dialog that opens in the Facebook app.
  */
-@interface FBOpenGraphActionShareDialogParams : FBDialogsParams
+@interface GBOpenGraphActionShareDialogParams : GBDialogsParams
 
 /*! @abstract The Open Graph action to be published. */
-@property (nonatomic, retain) id<FBOpenGraphAction> action;
+@property (nonatomic, retain) id<GBOpenGraphAction> action;
 
 /*! @abstract The name of the property representing the primary target of the Open
  Graph action, which will be displayed as a preview in the dialog. */

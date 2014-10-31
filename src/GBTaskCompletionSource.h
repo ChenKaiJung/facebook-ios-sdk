@@ -15,24 +15,24 @@
  */
 #import <Foundation/Foundation.h>
 
-@class FBTask;
+@class GBTask;
 
 /*!
- A FBTaskCompletionSource represents the producer side of tasks.
+ A GBTaskCompletionSource represents the producer side of tasks.
  It is a task that also has methods for changing the state of the
  task by settings its completion values.
  */
-@interface FBTaskCompletionSource : NSObject
+@interface GBTaskCompletionSource : NSObject
 
 /*!
  Creates a new unfinished task.
  */
-+ (FBTaskCompletionSource *)taskCompletionSource;
++ (GBTaskCompletionSource *)taskCompletionSource;
 
 /*!
  The task associated with this TaskCompletionSource.
  */
-@property (nonatomic, retain, readonly) FBTask *task;
+@property (nonatomic, retain, readonly) GBTask *task;
 
 /*!
  Completes the task by setting the result.

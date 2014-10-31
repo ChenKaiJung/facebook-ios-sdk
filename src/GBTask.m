@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-#import "FBTask.h"
+#import "GBTask.h"
 
 #import <libkern/OSAtomic.h>
 
-#import "FBTaskCompletionSource.h"
+#import "GBTaskCompletionSource.h"
 
 __attribute__ ((noinline)) void logOperationOnMainThread() {
-    NSLog(@"Warning: A long-running FBTask operation is being executed on the main thread. \n"
+    NSLog(@"Warning: A long-running GBTask operation is being executed on the main thread. \n"
           " Break on logOperationOnMainThread() to debug.");
 }
 
-@interface FBTask () {
+@interface GBTask () {
     id _result;
     NSError *_error;
     NSException *_exception;
@@ -38,7 +38,7 @@ __attribute__ ((noinline)) void logOperationOnMainThread() {
 @property (nonatomic, retain, readwrite) NSMutableArray *callbacks;
 @end
 
-@implementation FBTask
+@implementation GBTask
 
 - (id)init {
     if ((self = [super init])) {
@@ -57,39 +57,39 @@ __attribute__ ((noinline)) void logOperationOnMainThread() {
     [super dealloc];
 }
 
-+ (FBTask *)taskWithResult:(id)result {
-    FBTaskCompletionSource *tcs = [FBTaskCompletionSource taskCompletionSource];
++ (GBTask *)taskWithResult:(id)result {
+    GBTaskCompletionSource *tcs = [GBTaskCompletionSource taskCompletionSource];
     tcs.result = result;
     return tcs.task;
 }
 
-+ (FBTask *)taskWithError:(NSError *)error {
-    FBTaskCompletionSource *tcs = [FBTaskCompletionSource taskCompletionSource];
++ (GBTask *)taskWithError:(NSError *)error {
+    GBTaskCompletionSource *tcs = [GBTaskCompletionSource taskCompletionSource];
     tcs.error = error;
     return tcs.task;
 }
 
-+ (FBTask *)taskWithException:(NSException *)exception {
-    FBTaskCompletionSource *tcs = [FBTaskCompletionSource taskCompletionSource];
++ (GBTask *)taskWithException:(NSException *)exception {
+    GBTaskCompletionSource *tcs = [GBTaskCompletionSource taskCompletionSource];
     tcs.exception = exception;
     return tcs.task;
 }
 
-+ (FBTask *)cancelledTask {
-    FBTaskCompletionSource *tcs = [FBTaskCompletionSource taskCompletionSource];
++ (GBTask *)cancelledTask {
+    GBTaskCompletionSource *tcs = [GBTaskCompletionSource taskCompletionSource];
     [tcs cancel];
     return tcs.task;
 }
 
-+ (FBTask *)taskDependentOnTasks:(NSArray *)tasks {
++ (GBTask *)taskDependentOnTasks:(NSArray *)tasks {
     __block int32_t total = (int32_t)tasks.count;
     if (total == 0) {
-        return [FBTask taskWithResult:nil];
+        return [GBTask taskWithResult:nil];
     }
 
-    FBTaskCompletionSource *tcs = [FBTaskCompletionSource taskCompletionSource];
-    for (FBTask *task in tasks) {
-        [task dependentTaskWithBlock:^id(FBTask *task) {
+    GBTaskCompletionSource *tcs = [GBTaskCompletionSource taskCompletionSource];
+    for (GBTask *task in tasks) {
+        [task dependentTaskWithBlock:^id(GBTask *task) {
             if (OSAtomicDecrement32(&total) == 0) {
                 tcs.result = nil;
             }
@@ -99,8 +99,8 @@ __attribute__ ((noinline)) void logOperationOnMainThread() {
     return tcs.task;
 }
 
-+ (FBTask *)taskWithDelay:(dispatch_time_t)delay {
-    FBTaskCompletionSource *tcs = [FBTaskCompletionSource taskCompletionSource];
++ (GBTask *)taskWithDelay:(dispatch_time_t)delay {
+    GBTaskCompletionSource *tcs = [GBTaskCompletionSource taskCompletionSource];
     dispatch_after(delay, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         tcs.result = nil;
     });
@@ -233,14 +233,14 @@ __attribute__ ((noinline)) void logOperationOnMainThread() {
     }
 }
 
-- (FBTask *)dependentTaskWithBlock:(id(^)(FBTask *task))block {
+- (GBTask *)dependentTaskWithBlock:(id(^)(GBTask *task))block {
     return [self dependentTaskWithBlock:block queue:nil];
 }
 
-- (FBTask *)dependentTaskWithBlock:(id(^)(FBTask *task))block queue:(dispatch_queue_t)queue {
+- (GBTask *)dependentTaskWithBlock:(id(^)(GBTask *task))block queue:(dispatch_queue_t)queue {
     block = [[block copy] autorelease];
 
-    FBTaskCompletionSource *tcs = [FBTaskCompletionSource taskCompletionSource];
+    GBTaskCompletionSource *tcs = [GBTaskCompletionSource taskCompletionSource];
     queue = queue ?: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
     // Capture all of the state that needs to used when the continuation is complete.
@@ -257,8 +257,8 @@ __attribute__ ((noinline)) void logOperationOnMainThread() {
                 return;
             }
 
-            if ([result isKindOfClass:[FBTask class]]) {
-                [(FBTask *)result dependentTaskWithBlock:^id(FBTask *task) {
+            if ([result isKindOfClass:[GBTask class]]) {
+                [(GBTask *)result dependentTaskWithBlock:^id(GBTask *task) {
                     if (task.isCancelled) {
                         [tcs cancel];
                     } else if (task.exception) {
@@ -290,9 +290,9 @@ __attribute__ ((noinline)) void logOperationOnMainThread() {
     return tcs.task;
 }
 
-- (FBTask *)completionTaskWithBlock:(id(^)(FBTask *task))block {
+- (GBTask *)completionTaskWithBlock:(id(^)(GBTask *task))block {
     block = [block copy];
-    return [self dependentTaskWithBlock:^id(FBTask *task) {
+    return [self dependentTaskWithBlock:^id(GBTask *task) {
         if (task.error || task.exception || task.isCancelled) {
             return task;
         } else {
@@ -301,9 +301,9 @@ __attribute__ ((noinline)) void logOperationOnMainThread() {
     }];
 }
 
-- (FBTask *)completionTaskWithQueue:(dispatch_queue_t)queue block:(id(^)(FBTask *task))block {
+- (GBTask *)completionTaskWithQueue:(dispatch_queue_t)queue block:(id(^)(GBTask *task))block {
     block = [block copy];
-    return [self dependentTaskWithBlock:^id(FBTask *task) {
+    return [self dependentTaskWithBlock:^id(GBTask *task) {
         if (task.error || task.exception || task.isCancelled) {
             return task;
         } else {

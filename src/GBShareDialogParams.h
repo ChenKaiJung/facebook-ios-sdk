@@ -16,16 +16,16 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBDialogsParams.h"
+#import "GBDialogsParams.h"
 
 /*!
- @class FBShareDialogParams
+ @class GBShareDialogParams
 
  @abstract
  This object is used to encapsulate state for parameters to a share dialog that
  opens in the Facebook app.
  */
-@interface FBShareDialogParams : FBDialogsParams
+@interface GBShareDialogParams : GBDialogsParams
 
 /*! @abstract The URL link to be attached to the post. Only "http" or "https"
  schemes are supported. */
@@ -47,11 +47,11 @@
  if the link is non-nil. Only "http" or "https" schemes are supported.*/
 @property (nonatomic, copy) NSURL *picture;
 
-/*! @abstract An array of NSStrings or FBGraphUsers to tag in the post.
+/*! @abstract An array of NSStrings or GBGraphUsers to tag in the post.
  If using NSStrings, the values must represent the IDs of the users to tag. */
 @property (nonatomic, copy) NSArray *friends;
 
-/*! @abstract An NSString or FBGraphPlace to tag in the status update. If
+/*! @abstract An NSString or GBGraphPlace to tag in the status update. If
  NSString, the value must be the ID of the place to tag. */
 @property (nonatomic, copy) id place;
 

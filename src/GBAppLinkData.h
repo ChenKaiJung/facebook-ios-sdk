@@ -19,7 +19,7 @@
 /*!
  @abstract This class contains information that represents an App Link from Facebook.
  */
-@interface FBAppLinkData : NSObject
+@interface GBAppLinkData : NSObject
 
 /*! @abstract The target */
 @property (readonly) NSURL *targetURL;

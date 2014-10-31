@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-#import "FBDialogs.h"
-#import "FBLoginDialogParams.h"
+#import "GBDialogs.h"
+#import "GBLoginDialogParams.h"
 
-@interface FBDialogs (Internal)
+@interface GBDialogs (Internal)
 
 /*!
  @abstract
- Determines whether the corresponding presentFBLoginDialogWithParams:clientState:handler:
+ Determines whether the corresponding presentGBLoginDialogWithParams:clientState:handler:
  is supported by the installed version of the Facebook app for iOS.
  */
-+ (BOOL)canPresentLoginDialogWithParams:(FBLoginDialogParams *)params;
++ (BOOL)canPresentLoginDialogWithParams:(GBLoginDialogParams *)params;
 
 /*!
  @abstract
@@ -38,14 +38,14 @@
  @param handler A completion handler that may be called when the login is
  complete. May be nil. If non-nil, the handler will always be called asynchronously.
 
- @return An FBAppCall object that will also be passed into the provided
- FBAppCallCompletionHandler.
+ @return An GBAppCall object that will also be passed into the provided
+ GBAppCallCompletionHandler.
 
- @discussion A non-nil FBAppCall object is only returned if the corresponding
- canPresentFBLoginDialogWithParams method is also returning YES for the same params.
+ @discussion A non-nil GBAppCall object is only returned if the corresponding
+ canPresentGBLoginDialogWithParams method is also returning YES for the same params.
 */
-+ (FBAppCall *)presentLoginDialogWithParams:(FBLoginDialogParams *)params
++ (GBAppCall *)presentLoginDialogWithParams:(GBLoginDialogParams *)params
                                     clientState:(NSDictionary *)clientState
-                                        handler:(FBDialogAppCallCompletionHandler)handler;
+                                        handler:(GBDialogAppCallCompletionHandler)handler;
 
 @end

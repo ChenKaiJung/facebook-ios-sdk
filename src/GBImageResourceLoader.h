@@ -17,7 +17,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface FBImageResourceLoader : NSObject
+@interface GBImageResourceLoader : NSObject
 
 + (UIImage*) imageFromBytes:(const Byte *)bytes
                      length:(NSUInteger)length

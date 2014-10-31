@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-#import "FBAppLinkData.h"
+#import "GBAppLinkData.h"
 
-@interface FBAppLinkData (Internal)
+@interface GBAppLinkData (Internal)
 
 @property (readonly) BOOL isValid;
 
 - (id)initWithURL:(NSURL*)url targetURL:(NSURL *)targetURL ref:(NSArray *)ref originalQueryParameters:(NSDictionary *)originalQueryParameters arguments:(NSDictionary *)arguments;
 
-+ (FBAppLinkData *)createFromURL:(NSURL *)url;
++ (GBAppLinkData *)createFromURL:(NSURL *)url;
 
 @end

@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-#import "FBViewController.h"
-#import "FBViewController+Internal.h"
+#import "GBViewController.h"
+#import "GBViewController+Internal.h"
 
-#import "FBLogger.h"
-#import "FBSettings.h"
+#import "GBLogger.h"
+#import "GBSettings.h"
 
-@interface FBViewController ()
+@interface GBViewController ()
 
 @property (nonatomic, retain) UINavigationBar *navigationBar;
 @property (nonatomic, retain) UIView *canvasView;
-@property (nonatomic, copy) FBModalCompletionHandler handler;
+@property (nonatomic, copy) GBModalCompletionHandler handler;
 @property (nonatomic) BOOL autoDismiss;
 @property (nonatomic) BOOL dismissAnimated;
 
@@ -36,7 +36,7 @@
 
 @end
 
-@implementation FBViewController
+@implementation GBViewController
 
 @synthesize cancelButton = _cancelButton;
 @synthesize doneButton = _doneButton;
@@ -148,7 +148,7 @@
 
 - (void)presentModallyFromViewController:(UIViewController*)viewController
                                 animated:(BOOL)animated
-                                 handler:(FBModalCompletionHandler)handler {
+                                 handler:(GBModalCompletionHandler)handler {
     self.handler = handler;
     // Assumption: we want to dismiss with the same animated-ness as we present.
     self.dismissAnimated = animated;

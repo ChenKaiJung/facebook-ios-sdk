@@ -15,9 +15,9 @@
  */
 
 
-#import "FBSessionLoginStrategyParams.h"
+#import "GBSessionLoginStrategyParams.h"
 
-@implementation FBSessionLoginStrategyParams
+@implementation GBSessionLoginStrategyParams
 
 -(void) dealloc {
     [_permissions release];

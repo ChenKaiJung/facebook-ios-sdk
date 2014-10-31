@@ -14,33 +14,33 @@
  * limitations under the License.
  */
 
-#import "FBNativeDialogs.h"
+#import "GBNativeDialogs.h"
 
 #import <Social/Social.h>
 
-#import "FBAccessTokenData+Internal.h"
-#import "FBAccessTokenData.h"
-#import "FBAppBridge.h"
-#import "FBAppCall+Internal.h"
-#import "FBAppEvents+Internal.h"
-#import "FBAppLinkData+Internal.h"
-#import "FBDialogs+Internal.h"
-#import "FBDialogsData+Internal.h"
-#import "FBDialogsParams+Internal.h"
-#import "FBError.h"
-#import "FBLoginDialogParams.h"
-#import "FBOpenGraphActionShareDialogParams.h"
-#import "FBSession.h"
-#import "FBShareDialogParams.h"
-#import "FBUtility.h"
+#import "GBAccessTokenData+Internal.h"
+#import "GBAccessTokenData.h"
+#import "GBAppBridge.h"
+#import "GBAppCall+Internal.h"
+#import "GBAppEvents+Internal.h"
+#import "GBAppLinkData+Internal.h"
+#import "GBDialogs+Internal.h"
+#import "GBDialogsData+Internal.h"
+#import "GBDialogsParams+Internal.h"
+#import "GBError.h"
+#import "GBLoginDialogParams.h"
+#import "GBOpenGraphActionShareDialogParams.h"
+#import "GBSession.h"
+#import "GBShareDialogParams.h"
+#import "GBUtility.h"
 
-@implementation FBNativeDialogs
+@implementation GBNativeDialogs
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-+ (FBOSIntegratedShareDialogHandler)handlerFromHandler:(FBShareDialogHandler)handler {
++ (GBOSIntegratedShareDialogHandler)handlerFromHandler:(GBShareDialogHandler)handler {
     if (handler) {
-        FBOSIntegratedShareDialogHandler fancy = ^(FBOSIntegratedShareDialogResult result, NSError *error) {
+        GBOSIntegratedShareDialogHandler fancy = ^(GBOSIntegratedShareDialogResult result, NSError *error) {
             handler(result, error);
         };
         return [[fancy copy] autorelease];
@@ -53,42 +53,42 @@
                           initialText:(NSString*)initialText
                                 image:(UIImage*)image
                                   url:(NSURL*)url
-                              handler:(FBShareDialogHandler)handler {
-    return [FBDialogs presentOSIntegratedShareDialogModallyFrom:viewController
+                              handler:(GBShareDialogHandler)handler {
+    return [GBDialogs presentOSIntegratedShareDialogModallyFrom:viewController
                                                     initialText:initialText
                                                           image:image
                                                             url:url
-                                                        handler:[FBNativeDialogs handlerFromHandler:handler]];
+                                                        handler:[GBNativeDialogs handlerFromHandler:handler]];
 }
 
 + (BOOL)presentShareDialogModallyFrom:(UIViewController*)viewController
                           initialText:(NSString*)initialText
                                images:(NSArray*)images
                                  urls:(NSArray*)urls
-                              handler:(FBShareDialogHandler)handler {
-    return [FBDialogs presentOSIntegratedShareDialogModallyFrom:viewController
+                              handler:(GBShareDialogHandler)handler {
+    return [GBDialogs presentOSIntegratedShareDialogModallyFrom:viewController
                                                     initialText:initialText
                                                          images:images
                                                            urls:urls
-                                                        handler:[FBNativeDialogs handlerFromHandler:handler]];
+                                                        handler:[GBNativeDialogs handlerFromHandler:handler]];
 }
 
 + (BOOL)presentShareDialogModallyFrom:(UIViewController*)viewController
-                              session:(FBSession*)session
+                              session:(GBSession*)session
                           initialText:(NSString*)initialText
                                images:(NSArray*)images
                                  urls:(NSArray*)urls
-                              handler:(FBShareDialogHandler)handler {
-    return [FBDialogs presentOSIntegratedShareDialogModallyFrom:viewController
+                              handler:(GBShareDialogHandler)handler {
+    return [GBDialogs presentOSIntegratedShareDialogModallyFrom:viewController
                                                         session:session
                                                     initialText:initialText
                                                          images:images
                                                            urls:urls
-                                                        handler:[FBNativeDialogs handlerFromHandler:handler]];
+                                                        handler:[GBNativeDialogs handlerFromHandler:handler]];
 }
 
-+ (BOOL)canPresentShareDialogWithSession:(FBSession*)session {
-    return [FBDialogs canPresentOSIntegratedShareDialogWithSession:session];
++ (BOOL)canPresentShareDialogWithSession:(GBSession*)session {
+    return [GBDialogs canPresentOSIntegratedShareDialogWithSession:session];
 }
 
 @end

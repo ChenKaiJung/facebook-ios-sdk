@@ -16,25 +16,25 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBAppCall.h"
+#import "GBAppCall.h"
 
-@interface FBAppBridge : NSObject
+@interface GBAppBridge : NSObject
 
 + (id)sharedInstance;
 
-- (void)dispatchDialogAppCall:(FBAppCall *)appCall
+- (void)dispatchDialogAppCall:(GBAppCall *)appCall
                       version:(NSString *)version
-                      session:(FBSession *)session
-            completionHandler:(FBAppCallHandler)handler;
+                      session:(GBSession *)session
+            completionHandler:(GBAppCallHandler)handler;
 
 - (BOOL)handleOpenURL:(NSURL*)url
     sourceApplication:(NSString*)sourceApplication
-              session:(FBSession *)session
-      fallbackHandler:(FBAppCallHandler)fallbackHandler;
+              session:(GBSession *)session
+      fallbackHandler:(GBAppCallHandler)fallbackHandler;
 
 - (void)handleDidBecomeActive;
 
-+ (NSString *)installedFBNativeAppVersionForMethod:(NSString *)method
++ (NSString *)installedGBNativeAppVersionForMethod:(NSString *)method
                                         minVersion:(NSString *)minVersion;
 
 @end

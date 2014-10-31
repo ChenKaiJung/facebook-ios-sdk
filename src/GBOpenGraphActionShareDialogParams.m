@@ -14,31 +14,31 @@
  * limitations under the License.
  */
 
-#import "FBOpenGraphActionShareDialogParams.h"
+#import "GBOpenGraphActionShareDialogParams.h"
 
-#import "FBAppBridge.h"
-#import "FBDialogsParams+Internal.h"
-#import "FBError.h"
-#import "FBLogger.h"
-#import "FBUtility.h"
+#import "GBAppBridge.h"
+#import "GBDialogsParams+Internal.h"
+#import "GBError.h"
+#import "GBLogger.h"
+#import "GBUtility.h"
 
-#ifndef FB_BUILD_ONLY
-#define FB_BUILD_ONLY
+#ifndef GB_BUILD_ONLY
+#define GB_BUILD_ONLY
 #endif
 
-#import "FBSettings.h"
+#import "GBSettings.h"
 
-#ifdef FB_BUILD_ONLY
-#undef FB_BUILD_ONLY
+#ifdef GB_BUILD_ONLY
+#undef GB_BUILD_ONLY
 #endif
 
-NSString *const FBPostObjectOfType = @"fbsdk:create_object_of_type";
-NSString *const FBPostObject = @"fbsdk:create_object";
+NSString *const GBPostObjectOfType = @"fbsdk:create_object_of_type";
+NSString *const GBPostObject = @"fbsdk:create_object";
 
-NSString *const kFBAppBridgeMinVersion = @"20130214";
-NSString *const kFBAppBridgeImageSupportVersion = @"20130410";
+NSString *const kGBAppBridgeMinVersion = @"20130214";
+NSString *const kGBAppBridgeImageSupportVersion = @"20130410";
 
-@implementation FBOpenGraphActionShareDialogParams
+@implementation GBOpenGraphActionShareDialogParams
 
 - (void)dealloc
 {
@@ -49,14 +49,14 @@ NSString *const kFBAppBridgeImageSupportVersion = @"20130410";
     [super dealloc];
 }
 
-+ (NSString *)getPostedObjectTypeFromObject:(id<FBGraphObject>)obj {
-    if ([(id)obj objectForKey:FBPostObject] &&
++ (NSString *)getPostedObjectTypeFromObject:(id<GBGraphObject>)obj {
+    if ([(id)obj objectForKey:GBPostObject] &&
         [(id)obj objectForKey:@"type"]) {
         return [(id)obj objectForKey:@"type"];
     }
     return nil;
 }
-+ (NSString *)getIdOrUrlFromObject:(id<FBGraphObject>)obj {
++ (NSString *)getIdOrUrlFromObject:(id<GBGraphObject>)obj {
     id result;
     if ((result = [(id)obj objectForKey:@"id"]) ||
         (result = [(id)obj objectForKey:@"url"])) {
@@ -69,43 +69,43 @@ NSString *const kFBAppBridgeImageSupportVersion = @"20130410";
     NSString *errorReason = nil;
 
     if (!self.action || !self.actionType || !self.previewPropertyName) {
-        errorReason = FBErrorDialogInvalidOpenGraphActionParameters;
+        errorReason = GBErrorDialogInvalidOpenGraphActionParameters;
     } else {
         for (NSString *key in (id)self.action) {
             id obj = [(id)self.action objectForKey:key];
-            if ([obj conformsToProtocol:@protocol(FBGraphObject)]) {
-                if (![FBOpenGraphActionShareDialogParams getPostedObjectTypeFromObject:obj] &&
-                    ![FBOpenGraphActionShareDialogParams getIdOrUrlFromObject:obj]) {
-                    errorReason = FBErrorDialogInvalidOpenGraphObject;
+            if ([obj conformsToProtocol:@protocol(GBGraphObject)]) {
+                if (![GBOpenGraphActionShareDialogParams getPostedObjectTypeFromObject:obj] &&
+                    ![GBOpenGraphActionShareDialogParams getIdOrUrlFromObject:obj]) {
+                    errorReason = GBErrorDialogInvalidOpenGraphObject;
                 }
             }
         }
     }
     if (errorReason) {
         NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-        userInfo[FBErrorDialogReasonKey] = errorReason;
+        userInfo[GBErrorDialogReasonKey] = errorReason;
         return [NSError errorWithDomain:FacebookSDKDomain
-                                   code:FBErrorDialog
+                                   code:GBErrorDialog
                                userInfo:userInfo];
     }
     return nil;
 }
 
 - (id)flattenObject:(id)obj {
-    if ([obj conformsToProtocol:@protocol(FBGraphObject)]) {
+    if ([obj conformsToProtocol:@protocol(GBGraphObject)]) {
         // #2267154: Temporarily work around change in native protocol. This will be removed
-        // before leaving beta. After that, just don't flatten objects that have FBPostObject.
+        // before leaving beta. After that, just don't flatten objects that have GBPostObject.
         NSString *postedObjectType;
         NSString *idOrUrl;
-        if ((postedObjectType = [FBOpenGraphActionShareDialogParams getPostedObjectTypeFromObject:obj])) {
-            if (![FBAppBridge installedFBNativeAppVersionForMethod:@"ogshare"
+        if ((postedObjectType = [GBOpenGraphActionShareDialogParams getPostedObjectTypeFromObject:obj])) {
+            if (![GBAppBridge installedGBNativeAppVersionForMethod:@"ogshare"
                                                         minVersion:@"20130410"]) {
                 // We only need to do this for pre-20130410 versions.
-                [obj setObject:postedObjectType forKey:FBPostObjectOfType];
-                [obj removeObjectForKey:FBPostObject];
+                [obj setObject:postedObjectType forKey:GBPostObjectOfType];
+                [obj removeObjectForKey:GBPostObject];
                 [obj removeObjectForKey:@"type"];
             }
-        } else if ((idOrUrl = [FBOpenGraphActionShareDialogParams getIdOrUrlFromObject:obj])) {
+        } else if ((idOrUrl = [GBOpenGraphActionShareDialogParams getIdOrUrlFromObject:obj])) {
               return idOrUrl;
         }
     } else if ([obj isKindOfClass:[NSArray class]]) {
@@ -152,14 +152,14 @@ NSString *const kFBAppBridgeImageSupportVersion = @"20130410";
 
 - (NSString *)appBridgeVersion
 {
-    NSString *imgSupportVersion = [FBAppBridge installedFBNativeAppVersionForMethod:@"ogshare"
-                                                                         minVersion:kFBAppBridgeImageSupportVersion];
+    NSString *imgSupportVersion = [GBAppBridge installedGBNativeAppVersionForMethod:@"ogshare"
+                                                                         minVersion:kGBAppBridgeImageSupportVersion];
     if (!imgSupportVersion) {
-        NSString *minVersion = [FBAppBridge installedFBNativeAppVersionForMethod:@"ogshare" minVersion:kFBAppBridgeMinVersion];
-        if ([FBSettings isBetaFeatureEnabled:FBBetaFeaturesOpenGraphShareDialog] && minVersion) {
+        NSString *minVersion = [GBAppBridge installedGBNativeAppVersionForMethod:@"ogshare" minVersion:kGBAppBridgeMinVersion];
+        if ([GBSettings isBetaFeatureEnabled:GBBetaFeaturesOpenGraphShareDialog] && minVersion) {
             if ([self containsUIImages:self.action]) {
-                [FBLogger singleShotLogEntry:FBLoggingBehaviorDeveloperErrors
-                                    logEntry:@"FBOpenGraphActionShareDialogParams: the current Facebook app does not support embedding UIImages."];
+                [GBLogger singleShotLogEntry:GBLoggingBehaviorDeveloperErrors
+                                    logEntry:@"GBOpenGraphActionShareDialogParams: the current Facebook app does not support embedding UIImages."];
                 return nil;
             }
             return minVersion;

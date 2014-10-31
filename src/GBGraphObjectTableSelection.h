@@ -16,24 +16,24 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FBGraphObjectTableDataSource.h"
+#import "GBGraphObjectTableDataSource.h"
 
-@protocol FBGraphObjectSelectionChangedDelegate;
+@protocol GBGraphObjectSelectionChangedDelegate;
 
-@interface FBGraphObjectTableSelection : NSObject<UITableViewDelegate>
+@interface GBGraphObjectTableSelection : NSObject<UITableViewDelegate>
 
-@property (nonatomic, assign) NSObject<FBGraphObjectSelectionChangedDelegate> *delegate;
+@property (nonatomic, assign) NSObject<GBGraphObjectSelectionChangedDelegate> *delegate;
 @property (nonatomic, retain, readonly) NSArray *selection;
 @property (nonatomic) BOOL allowsMultipleSelection;
 
-- (id)initWithDataSource:(FBGraphObjectTableDataSource *)dataSource;
+- (id)initWithDataSource:(GBGraphObjectTableDataSource *)dataSource;
 - (void)clearSelectionInTableView:(UITableView*)tableView;
 - (void)selectItem: (NSArray *)items tableView:(UITableView *)tableView;
 
 @end
 
-@protocol FBGraphObjectSelectionChangedDelegate <NSObject>
+@protocol GBGraphObjectSelectionChangedDelegate <NSObject>
 
-- (void)graphObjectTableSelectionDidChange:(FBGraphObjectTableSelection *)selection;
+- (void)graphObjectTableSelectionDidChange:(GBGraphObjectTableSelection *)selection;
 
 @end

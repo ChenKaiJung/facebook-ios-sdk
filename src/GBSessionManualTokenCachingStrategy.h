@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-#import "FBSessionTokenCachingStrategy.h"
+#import "GBSessionTokenCachingStrategy.h"
 
-// FBSessionManualTokenCachingStrategy
+// GBSessionManualTokenCachingStrategy
 //
 // Summary:
 // Internal use only, this class enables migration logic for the Facebook class, by providing
-// a means to directly provide the access token to a FBSession object
+// a means to directly provide the access token to a GBSession object
 //
-@interface FBSessionManualTokenCachingStrategy : FBSessionTokenCachingStrategy
+@interface GBSessionManualTokenCachingStrategy : GBSessionTokenCachingStrategy
 
-// set the properties before instantiating the FBSession object in order to seed a token
+// set the properties before instantiating the GBSession object in order to seed a token
 @property (readwrite, copy) NSString* accessToken;
 @property (readwrite, copy) NSDate* expirationDate;
 

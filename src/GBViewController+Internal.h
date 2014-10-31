@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-#import "FBViewController.h"
+#import "GBViewController.h"
 
-@interface FBViewController (Internal)
+@interface GBViewController (Internal)
 
 @end
 

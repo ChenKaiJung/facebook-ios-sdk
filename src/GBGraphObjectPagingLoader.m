@@ -14,29 +14,29 @@
  * limitations under the License.
  */
 
-#import "FBGraphObjectPagingLoader.h"
+#import "GBGraphObjectPagingLoader.h"
 
-#import "FBError.h"
-#import "FBRequest.h"
-#import "FBRequestConnection+Internal.h"
+#import "GBError.h"
+#import "GBRequest.h"
+#import "GBRequestConnection+Internal.h"
 
-@interface FBGraphObjectPagingLoader ()
+@interface GBGraphObjectPagingLoader ()
 
 @property (nonatomic, retain) NSString *nextLink;
-@property (nonatomic, retain) FBRequestConnection *connection;
+@property (nonatomic, retain) GBRequestConnection *connection;
 @property (nonatomic, copy) NSString *cacheIdentity;
 @property (nonatomic, assign) BOOL skipRoundtripIfCached;
-@property (nonatomic) FBGraphObjectPagingMode pagingMode;
+@property (nonatomic) GBGraphObjectPagingMode pagingMode;
 
 - (void)followNextLink;
-- (void)requestCompleted:(FBRequestConnection *)connection
+- (void)requestCompleted:(GBRequestConnection *)connection
                   result:(id)result
                    error:(NSError *)error;
 
 @end
 
 
-@implementation FBGraphObjectPagingLoader
+@implementation GBGraphObjectPagingLoader
 
 @synthesize tableView = _tableView;
 @synthesize dataSource = _dataSource;
@@ -51,8 +51,8 @@
 
 #pragma mark Lifecycle methods
 
-- (id)initWithDataSource:(FBGraphObjectTableDataSource*)aDataSource
-              pagingMode:(FBGraphObjectPagingMode)pagingMode;{
+- (id)initWithDataSource:(GBGraphObjectTableDataSource*)aDataSource
+              pagingMode:(GBGraphObjectPagingMode)pagingMode;{
     if (self = [super init]) {
         // Note that pagingMode must be set before dataSource.
         self.pagingMode = pagingMode;
@@ -75,11 +75,11 @@
 
 #pragma mark -
 
-- (void)setDataSource:(FBGraphObjectTableDataSource *)dataSource {
+- (void)setDataSource:(GBGraphObjectTableDataSource *)dataSource {
     [dataSource retain];
     [_dataSource release];
     _dataSource = dataSource;
-    if (self.pagingMode == FBGraphObjectPagingModeAsNeeded) {
+    if (self.pagingMode == GBGraphObjectPagingModeAsNeeded) {
         _dataSource.dataNeededDelegate = self;
     } else {
         _dataSource.dataNeededDelegate = nil;
@@ -93,7 +93,7 @@
 
     // If we already have a nextLink and we are in immediate paging mode, re-start
     // loading when we are reconnected to a table view.
-    if (self.pagingMode == FBGraphObjectPagingModeImmediate &&
+    if (self.pagingMode == GBGraphObjectPagingModeImmediate &&
         self.nextLink &&
         self.tableView) {
         [self followNextLink];
@@ -177,9 +177,9 @@
     // If we are supposed to keep paging, do so. But unless we are viewless, if we have lost
     // our tableView, take that as a sign to stop (probably because the view was unloaded).
     // If tableView is re-set, we will start again.
-    if ((self.pagingMode == FBGraphObjectPagingModeImmediate &&
+    if ((self.pagingMode == GBGraphObjectPagingModeImmediate &&
         self.tableView) ||
-        self.pagingMode == FBGraphObjectPagingModeImmediateViewless) {
+        self.pagingMode == GBGraphObjectPagingModeImmediateViewless) {
         [self followNextLink];
     }
 }
@@ -194,12 +194,12 @@
             [self.delegate pagingLoader:self willLoadURL:self.nextLink];
         }
 
-        FBRequest *request = [[FBRequest alloc] initWithSession:self.session
+        FBRequest *request = [[GBRequest alloc] initWithSession:self.session
                                                       graphPath:nil];
 
-        FBRequestConnection *connection = [[FBRequestConnection alloc] init];
+        GBRequestConnection *connection = [[GBRequestConnection alloc] init];
         [connection addRequest:request completionHandler:
-         ^(FBRequestConnection *connection, id result, NSError *error) {
+         ^(GBRequestConnection *connection, id result, NSError *error) {
              _isResultFromCache = _isResultFromCache || connection.isResultFromCache;
              self.connection = nil;
              [self requestCompleted:connection result:result error:error];
@@ -221,7 +221,7 @@
     }
 }
 
-- (void)startLoadingWithRequest:(FBRequest*)request
+- (void)startLoadingWithRequest:(GBRequest*)request
                   cacheIdentity:(NSString*)cacheIdentity
           skipRoundtripIfCached:(BOOL)skipRoundtripIfCached {
     [self.dataSource prepareForNewRequest];
@@ -232,9 +232,9 @@
     self.cacheIdentity = cacheIdentity;
     self.skipRoundtripIfCached = skipRoundtripIfCached;
 
-    FBRequestConnection *connection = [[FBRequestConnection alloc] init];
+    GBRequestConnection *connection = [[GBRequestConnection alloc] init];
     [connection addRequest:request
-         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+         completionHandler:^(GBRequestConnection *connection, id result, NSError *error) {
              _isResultFromCache = _isResultFromCache || connection.isResultFromCache;
              [self requestCompleted:connection result:result error:error];
          }];
@@ -261,7 +261,7 @@
     self.nextLink = nil;
 }
 
-- (void)requestCompleted:(FBRequestConnection *)connection
+- (void)requestCompleted:(GBRequestConnection *)connection
                   result:(id)result
                    error:(NSError *)error {
     self.connection = nil;
@@ -278,12 +278,12 @@
 
     if (!error && !data) {
         NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-        userInfo[FBErrorParsedJSONResponseKey] = result;
+        userInfo[GBErrorParsedJSONResponseKey] = result;
         if (self.session) {
-            userInfo[FBErrorSessionKey] = self.session;
+            userInfo[GBErrorSessionKey] = self.session;
         }
         error = [[[NSError alloc] initWithDomain:FacebookSDKDomain
-                                            code:FBErrorProtocolMismatch
+                                            code:GBErrorProtocolMismatch
                                         userInfo:userInfo]
                  autorelease];
     }
@@ -292,7 +292,7 @@
     if (error) {
         // Cancellation is not really an error we want to bother the delegate with.
         cancelled = [error.domain isEqualToString:FacebookSDKDomain] &&
-            error.code == FBErrorOperationCancelled;
+            error.code == GBErrorOperationCancelled;
 
         if (cancelled) {
             if ([self.delegate respondsToSelector:@selector(pagingLoaderWasCancelled:)]) {
@@ -308,9 +308,9 @@
     }
 }
 
-#pragma mark FBGraphObjectDataSourceDataNeededDelegate methods
+#pragma mark GBGraphObjectDataSourceDataNeededDelegate methods
 
-- (void)graphObjectTableDataSourceNeedsData:(FBGraphObjectTableDataSource *)dataSource triggeredByIndexPath:(NSIndexPath*)indexPath {
+- (void)graphObjectTableDataSourceNeedsData:(GBGraphObjectTableDataSource *)dataSource triggeredByIndexPath:(NSIndexPath*)indexPath {
     if (self.pagingMode == FBGraphObjectPagingModeAsNeeded) {
         [self followNextLink];
     }

@@ -16,36 +16,36 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBAccessTokenData.h"
+#import "GBAccessTokenData.h"
 
 /*!
  @class
 
  @abstract
- The `FBSessionTokenCachingStrategy` class is responsible for persisting and retrieving cached data related to
- an <FBSession> object, including the user's Facebook access token.
+ The `GBSessionTokenCachingStrategy` class is responsible for persisting and retrieving cached data related to
+ an <GBSession> object, including the user's Facebook access token.
 
  @discussion
- `FBSessionTokenCachingStrategy` is designed to be instantiated directly or used as a base class. Usually default
- token caching behavior is sufficient, and you do not need to interface directly with `FBSessionTokenCachingStrategy` objects.
- However, if you need to control where or how `FBSession` information is cached, then you may take one of two approaches.
+ `GBSessionTokenCachingStrategy` is designed to be instantiated directly or used as a base class. Usually default
+ token caching behavior is sufficient, and you do not need to interface directly with `GBSessionTokenCachingStrategy` objects.
+ However, if you need to control where or how `GBSession` information is cached, then you may take one of two approaches.
 
- The first and simplest approach is to instantiate an instance of `FBSessionTokenCachingStrategy`, and then pass
- the instance to `FBSession` class' `init` method. This enables your application to control the key name used in
+ The first and simplest approach is to instantiate an instance of `GBSessionTokenCachingStrategy`, and then pass
+ the instance to `GBSession` class' `init` method. This enables your application to control the key name used in
  `NSUserDefaults` to store session information. You may consider this approach if you plan to cache session information
  for multiple users.
 
- The second and more advanced approached is to derive a custom class from `FBSessionTokenCachingStrategy`, which will
+ The second and more advanced approached is to derive a custom class from `GBSessionTokenCachingStrategy`, which will
  be responsible for caching behavior of your application. This approach is useful if you need to change where the
  information is cached, for example if you prefer to use the filesystem or make a network connection to fetch and
  persist cached tokens.  Inheritors should override the cacheTokenInformation, fetchTokenInformation, and clearToken methods.
  Doing this enables your application to implement any token caching scheme, including no caching at all (see
- `[FBSessionTokenCachingStrategy* nullCacheInstance ]`.
+ `[GBSessionTokenCachingStrategy* nullCacheInstance ]`.
 
- Direct use of `FBSessionTokenCachingStrategy`is an advanced technique. Most applications use <FBSession> objects without
- passing an `FBSessionTokenCachingStrategy`, which yields default caching to `NSUserDefaults`.
+ Direct use of `GBSessionTokenCachingStrategy`is an advanced technique. Most applications use <GBSession> objects without
+ passing an `GBSessionTokenCachingStrategy`, which yields default caching to `NSUserDefaults`.
  */
-@interface FBSessionTokenCachingStrategy : NSObject
+@interface GBSessionTokenCachingStrategy : NSObject
 
 /*!
  @abstract Initializes and returns an instance
@@ -57,17 +57,17 @@
  Initializes and returns an instance
 
  @param tokenInformationKeyName     Specifies a key name to use for cached token information in NSUserDefaults, nil
- indicates a default value of @"FBAccessTokenInformationKey"
+ indicates a default value of @"GBAccessTokenInformationKey"
  */
 - (id)initWithUserDefaultTokenInformationKeyName:(NSString*)tokenInformationKeyName;
 
 /*!
  @abstract
- Called by <FBSession> (and overridden by inheritors), in order to cache token information.
+ Called by <GBSession> (and overridden by inheritors), in order to cache token information.
 
  @param tokenInformation            Dictionary containing token information to be cached by the method
- @discussion You should favor overriding this instead of `cacheFBAccessTokenData` only if you intend
- to cache additional data not captured by the FBAccessTokenData type.
+ @discussion You should favor overriding this instead of `cacheGBAccessTokenData` only if you intend
+ to cache additional data not captured by the GBAccessTokenData type.
  */
 - (void)cacheTokenInformation:(NSDictionary*)tokenInformation;
 
@@ -77,17 +77,17 @@
  @discussion This essentially wraps a call to `cacheTokenInformation` so you should
  override this when providing a custom token caching strategy.
 */
-- (void)cacheFBAccessTokenData:(FBAccessTokenData *)accessToken;
+- (void)cacheGBAccessTokenData:(GBAccessTokenData *)accessToken;
 
 /*!
  @abstract
- Called by <FBSession> (and overridden by inheritors), in order to fetch cached token information
+ Called by <GBSession> (and overridden by inheritors), in order to fetch cached token information
 
  @discussion
  An overriding implementation should only return a token if it
  can also return an expiration date, otherwise return nil.
- You should favor overriding this instead of `fetchFBAccessTokenData` only if you intend
- to cache additional data not captured by the FBAccessTokenData type.
+ You should favor overriding this instead of `fetchGBAccessTokenData` only if you intend
+ to cache additional data not captured by the GBAccessTokenData type.
 
  */
 - (NSDictionary*)fetchTokenInformation;
@@ -100,15 +100,15 @@
  This essentially wraps a call to `fetchTokenInformation` so you should
  override this when providing a custom token caching strategy.
 
- In order for an `FBSession` instance to be able to use a cached token,
+ In order for an `GBSession` instance to be able to use a cached token,
  the token must be not be expired (see `+isValidTokenInformation:`) and
  must also contain all permissions in the initialized session instance.
  */
-- (FBAccessTokenData *)fetchFBAccessTokenData;
+- (GBAccessTokenData *)fetchGBAccessTokenData;
 
 /*!
  @abstract
- Called by <FBSession> (and overridden by inheritors), in order delete any cached information for the current token
+ Called by <GBSession> (and overridden by inheritors), in order delete any cached information for the current token
  */
 - (void)clearToken;
 
@@ -116,18 +116,18 @@
  @abstract
  Helper function called by the SDK as well as apps, in order to fetch the default strategy instance.
  */
-+ (FBSessionTokenCachingStrategy*)defaultInstance;
++ (GBSessionTokenCachingStrategy*)defaultInstance;
 
 /*!
  @abstract
- Helper function to return a FBSessionTokenCachingStrategy instance that does not perform any caching.
+ Helper function to return a GBSessionTokenCachingStrategy instance that does not perform any caching.
  */
-+ (FBSessionTokenCachingStrategy*)nullCacheInstance;
++ (GBSessionTokenCachingStrategy*)nullCacheInstance;
 
 /*!
  @abstract
  Helper function called by the SDK as well as application code, used to determine whether a given dictionary
- contains the minimum token information usable by the <FBSession>.
+ contains the minimum token information usable by the <GBSession>.
 
  @param tokenInformation            Dictionary containing token information to be validated
  */
@@ -136,25 +136,25 @@
 @end
 
 // The key to use with token information dictionaries to get and set the token value
-extern NSString *const FBTokenInformationTokenKey;
+extern NSString *const GBTokenInformationTokenKey;
 
 // The to use with token information dictionaries to get and set the expiration date
-extern NSString *const FBTokenInformationExpirationDateKey;
+extern NSString *const GBTokenInformationExpirationDateKey;
 
 // The to use with token information dictionaries to get and set the refresh date
-extern NSString *const FBTokenInformationRefreshDateKey;
+extern NSString *const GBTokenInformationRefreshDateKey;
 
 // The key to use with token information dictionaries to get the related user's fbid
-extern NSString *const FBTokenInformationUserFBIDKey;
+extern NSString *const GBTokenInformationUserGBIDKey;
 
 // The key to use with token information dictionaries to determine whether the token was fetched via Facebook Login
-extern NSString *const FBTokenInformationIsFacebookLoginKey;
+extern NSString *const GBTokenInformationIsFacebookLoginKey;
 
 // The key to use with token information dictionaries to determine whether the token was fetched via the OS
-extern NSString *const FBTokenInformationLoginTypeLoginKey;
+extern NSString *const GBTokenInformationLoginTypeLoginKey;
 
 // The key to use with token information dictionaries to get the latest known permissions
-extern NSString *const FBTokenInformationPermissionsKey;
+extern NSString *const GBTokenInformationPermissionsKey;
 
 // The key to use with token information dictionaries to get the date the permissions were last refreshed.
-extern NSString *const FBTokenInformationPermissionsRefreshDateKey;
+extern NSString *const GBTokenInformationPermissionsRefreshDateKey;

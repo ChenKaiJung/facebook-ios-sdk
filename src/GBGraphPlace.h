@@ -16,23 +16,23 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBGraphLocation.h"
-#import "FBGraphObject.h"
+#import "GBGraphLocation.h"
+#import "GBGraphObject.h"
 
 /*!
  @protocol
 
  @abstract
- The `FBGraphPlace` protocol enables typed access to a place object
+ The `GBGraphPlace` protocol enables typed access to a place object
  as represented in the Graph API.
 
 
  @discussion
- The `FBGraphPlace` protocol represents the most commonly used properties of a
+ The `GBGraphPlace` protocol represents the most commonly used properties of a
  Facebook place object. It may be used to access an `NSDictionary` object that has
- been wrapped with an <FBGraphObject> facade.
+ been wrapped with an <GBGraphObject> facade.
  */
-@protocol FBGraphPlace<FBGraphObject>
+@protocol GBGraphPlace<GBGraphObject>
 
 /*!
  @property
@@ -56,6 +56,6 @@
  @property
  @abstract Typed access to the place location.
  */
-@property (retain, nonatomic) id<FBGraphLocation> location;
+@property (retain, nonatomic) id<GBGraphLocation> location;
 
 @end

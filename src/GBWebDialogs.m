@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-#import "FBWebDialogs.h"
+#import "GBWebDialogs.h"
 
 #import <Social/Social.h>
 
-#import "FBAccessTokenData.h"
-#import "FBDialog.h"
-#import "FBFrictionlessDialogSupportDelegate.h"
-#import "FBFrictionlessRecipientCache.h"
-#import "FBFrictionlessRequestSettings.h"
-#import "FBLogger.h"
-#import "FBSession+Internal.h"
-#import "FBSettings.h"
-#import "FBUtility.h"
-#import "FBViewController+Internal.h"
-#import "FacebookSDK.h"
+#import "GBAccessTokenData.h"
+#import "GBDialog.h"
+#import "GBFrictionlessDialogSupportDelegate.h"
+#import "GBFrictionlessRecipientCache.h"
+#import "GBFrictionlessRequestSettings.h"
+#import "GBLogger.h"
+#import "GBSession+Internal.h"
+#import "GBSettings.h"
+#import "GBUtility.h"
+#import "GBViewController+Internal.h"
+#import "GbombSDK.h"
 
 // this is an implementation detail class which acts
 // as the delegate in or to map to a block

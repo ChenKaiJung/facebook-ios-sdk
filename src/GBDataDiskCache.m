@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#import "FBDataDiskCache.h"
+#import "GBDataDiskCache.h"
 
-#import "FBAccessTokenData.h"
-#import "FBCacheIndex.h"
+#import "GBAccessTokenData.h"
+#import "GBCacheIndex.h"
 
 static const NSUInteger kMaxDataInMemorySize = 1 * 1024 * 1024; // 1MB
 static const NSUInteger kMaxDiskCacheSize = 10 * 1024 * 1024; // 10MB
@@ -26,11 +26,11 @@ static NSString* const kDataDiskCachePath = @"DataDiskCache";
 static NSString* const kCacheInfoFile = @"CacheInfo";
 static NSString *const kAccessTokenKey = @"access_token";
 
-@interface FBDataDiskCache() <FBCacheIndexFileDelegate>
+@interface GBDataDiskCache() <GBCacheIndexFileDelegate>
 @property (nonatomic, copy) NSString* dataCachePath;
 @end
 
-@implementation FBDataDiskCache
+@implementation GBDataDiskCache
 
 @synthesize dataCachePath = _dataCachePath;
 @synthesize fileQueue = _fileQueue;
@@ -63,7 +63,7 @@ static NSString *const kAccessTokenKey = @"access_token";
             DISPATCH_QUEUE_SERIAL);
         dispatch_set_target_queue(_fileQueue, bgPriQueue);
 
-        _cacheIndex = [[FBCacheIndex alloc] initWithCacheFolder:_dataCachePath];
+        _cacheIndex = [[GBCacheIndex alloc] initWithCacheFolder:_dataCachePath];
         _cacheIndex.diskCapacity = kMaxDiskCacheSize;
         _cacheIndex.delegate = self;
 
@@ -88,13 +88,13 @@ static NSString *const kAccessTokenKey = @"access_token";
     [super dealloc];
 }
 
-+ (FBDataDiskCache*)sharedCache
++ (GBDataDiskCache*)sharedCache
 {
-    static FBDataDiskCache* _instance;
+    static GBDataDiskCache* _instance;
     static dispatch_once_t onceToken;
 
     dispatch_once(&onceToken, ^{
-        _instance = [[FBDataDiskCache alloc] init];
+        _instance = [[GBDataDiskCache alloc] init];
     });
 
     return _instance;
@@ -112,9 +112,9 @@ static NSString *const kAccessTokenKey = @"access_token";
     _inMemoryCache.totalCostLimit = cacheSizeMemory;
 }
 
-#pragma mark - FBCacheIndexFileDelegate
+#pragma mark - GBCacheIndexFileDelegate
 
-- (void) cacheIndex:(FBCacheIndex*)cacheIndex
+- (void) cacheIndex:(GBCacheIndex*)cacheIndex
     writeFileWithName:(NSString*)name
     data:(NSData*)data
 {
@@ -124,7 +124,7 @@ static NSString *const kAccessTokenKey = @"access_token";
     });
 }
 
-- (void) cacheIndex:(FBCacheIndex*)cacheIndex
+- (void) cacheIndex:(GBCacheIndex*)cacheIndex
     deleteFileWithName:(NSString*)name
 {
     NSString* filePath = [_dataCachePath stringByAppendingPathComponent:name];
@@ -173,7 +173,7 @@ static NSString *const kAccessTokenKey = @"access_token";
             }
         }
     } @catch (NSException* exception) {
-        NSLog(@"FBDiskCache error: %@", exception.reason);
+        NSLog(@"GBDiskCache error: %@", exception.reason);
     } @finally {
         return data;
     }
@@ -186,11 +186,11 @@ static NSString *const kAccessTokenKey = @"access_token";
         [_inMemoryCache removeObjectForKey:url];
         [_cacheIndex removeEntryForKey:url.absoluteString];
     } @catch (NSException* exception) {
-        NSLog(@"FBDiskCache error: %@", exception.reason);
+        NSLog(@"GBDiskCache error: %@", exception.reason);
     }
 }
 
-- (void)removeDataForSession:(FBSession*)session
+- (void)removeDataForSession:(GBSession*)session
 {
     if (session == nil) {
         return;
@@ -224,7 +224,7 @@ static NSString *const kAccessTokenKey = @"access_token";
             forKey:url
             cost:data.length];
     } @catch (NSException* exception) {
-        NSLog(@"FBDiskCache error: %@", exception.reason);
+        NSLog(@"GBDiskCache error: %@", exception.reason);
     }
 }
 

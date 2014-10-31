@@ -16,49 +16,49 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBSession+Internal.h"
+#import "GBSession+Internal.h"
 
 // Keys to be used to serialize the logger (e.g. into JSON)
-extern NSString *const FBSessionAuthLoggerParamAuthMethodKey;
-extern NSString *const FBSessionAuthLoggerParamIDKey;
+extern NSString *const GBSessionAuthLoggerParamAuthMethodKey;
+extern NSString *const GBSessionAuthLoggerParamIDKey;
 
 // The names of the authentication methods that are supported
-extern NSString *const FBSessionAuthLoggerAuthMethodIntegrated;
-extern NSString *const FBSessionAuthLoggerAuthMethodFBApplicationNative;
-extern NSString *const FBSessionAuthLoggerAuthMethodFBApplicationWeb;
-extern NSString *const FBSessionAuthLoggerAuthMethodBrowser;
-extern NSString *const FBSessionAuthLoggerAuthMethodFallback;
+extern NSString *const GBSessionAuthLoggerAuthMethodIntegrated;
+extern NSString *const GBSessionAuthLoggerAuthMethodGBApplicationNative;
+extern NSString *const GBSessionAuthLoggerAuthMethodGBApplicationWeb;
+extern NSString *const GBSessionAuthLoggerAuthMethodBrowser;
+extern NSString *const GBSessionAuthLoggerAuthMethodFallback;
 
 // Well-known result strings.
-extern NSString *const FBSessionAuthLoggerResultSuccess;
-extern NSString *const FBSessionAuthLoggerResultError;
-extern NSString *const FBSessionAuthLoggerResultCancelled;
-extern NSString *const FBSessionAuthLoggerResultSkipped;
+extern NSString *const GBSessionAuthLoggerResultSuccess;
+extern NSString *const GBSessionAuthLoggerResultError;
+extern NSString *const GBSessionAuthLoggerResultCancelled;
+extern NSString *const GBSessionAuthLoggerResultSkipped;
 
 /*
  * This class is used specifically for logging events during auth/reauth cycles, for internal
  * debugging purposes.
  */
-@interface FBSessionAuthLogger : NSObject
+@interface GBSessionAuthLogger : NSObject
 
 @property (nonatomic, readonly) NSString *ID;
 
 /*!
  @abstract
- Returns an initialized FBSessionAuthLogger instance.
+ Returns an initialized GBSessionAuthLogger instance.
 
- @discussion The passed in FBSession is not retained to avoid circular references
+ @discussion The passed in GBSession is not retained to avoid circular references
  */
-- (id)initWithSession:(FBSession *)session;
+- (id)initWithSession:(GBSession *)session;
 
 /*!
  @abstract
- Returns an initialized FBSessionAuthLogger instance with the passed in parameters. This method
+ Returns an initialized GBSessionAuthLogger instance with the passed in parameters. This method
  is designed to be used when deserializing a logger from a URL.
 
- @discussion The passed in FBSession is not retained to avoid circular references
+ @discussion The passed in GBSession is not retained to avoid circular references
  */
-- (id)initWithSession:(FBSession *)session ID:(NSString *)ID authMethod:(NSString *)authMethod;
+- (id)initWithSession:(GBSession *)session ID:(NSString *)ID authMethod:(NSString *)authMethod;
 
 /*!
  @abstract

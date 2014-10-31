@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-#import "FBSessionManualTokenCachingStrategy.h"
+#import "GBSessionManualTokenCachingStrategy.h"
 
 
-@implementation FBSessionManualTokenCachingStrategy
+@implementation GBSessionManualTokenCachingStrategy
 
 @synthesize accessToken = _accessToken,
             expirationDate = _expirationDate;
@@ -29,15 +29,15 @@
 }
 
 - (void)cacheTokenInformation:(NSDictionary*)tokenInformation {
-    self.accessToken = [tokenInformation objectForKey:FBTokenInformationTokenKey];
-    self.expirationDate = [tokenInformation objectForKey:FBTokenInformationExpirationDateKey];
+    self.accessToken = [tokenInformation objectForKey:GBTokenInformationTokenKey];
+    self.expirationDate = [tokenInformation objectForKey:GBTokenInformationExpirationDateKey];
 }
 
 - (NSDictionary*)fetchTokenInformation;
 {
     return [NSDictionary dictionaryWithObjectsAndKeys:
-            self.accessToken, FBTokenInformationTokenKey,
-            self.expirationDate, FBTokenInformationExpirationDateKey,
+            self.accessToken, GBTokenInformationTokenKey,
+            self.expirationDate, GBTokenInformationExpirationDateKey,
             nil];
 }
 

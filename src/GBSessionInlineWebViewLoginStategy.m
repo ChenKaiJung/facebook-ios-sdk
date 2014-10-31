@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-#import "FBSessionInlineWebViewLoginStategy.h"
+#import "GBSessionInlineWebViewLoginStategy.h"
 
-#import "FBLogger.h"
-#import "FBSession+Internal.h"
-#import "FBSessionAuthLogger.h"
-#import "FBSessionLoginStrategy.h"
-#import "FBUtility.h"
+#import "GBLogger.h"
+#import "GBSession+Internal.h"
+#import "GBSessionAuthLogger.h"
+#import "GBSessionLoginStrategy.h"
+#import "GBUtility.h"
 
-@implementation FBSessionInlineWebViewLoginStategy
+@implementation GBSessionInlineWebViewLoginStategy
 
-- (BOOL)tryPerformAuthorizeWithParams:(FBSessionLoginStrategyParams *)params session:(FBSession *)session logger:(FBSessionAuthLogger *)logger {
+- (BOOL)tryPerformAuthorizeWithParams:(GBSessionLoginStrategyParams *)params session:(GBSession *)session logger:(GBSessionAuthLogger *)logger {
     if (params.tryFallback) {
-        NSDictionary *clientState = @{FBSessionAuthLoggerParamAuthMethodKey: self.methodName,
-                                      FBSessionAuthLoggerParamIDKey : logger.ID ?: @""};
-        params.webParams[FBLoginUXClientState] = [session jsonClientStateWithDictionary:clientState];
+        NSDictionary *clientState = @{GBSessionAuthLoggerParamAuthMethodKey: self.methodName,
+                                      GBSessionAuthLoggerParamIDKey : logger.ID ?: @""};
+        params.webParams[GBLoginUXClientState] = [session jsonClientStateWithDictionary:clientState];
         [session authorizeUsingLoginDialog:params.webParams];
         return YES;
     }
@@ -36,7 +36,7 @@
 }
 
 - (NSString *)methodName {
-    return FBSessionAuthLoggerAuthMethodFallback;
+    return GBSessionAuthLoggerAuthMethodFallback;
 }
 
 @end

@@ -16,23 +16,23 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBGraphObject.h"
-#import "FBGraphPlace.h"
+#import "GBGraphObject.h"
+#import "GBGraphPlace.h"
 
 /*!
  @protocol
 
  @abstract
- The `FBGraphUser` protocol enables typed access to a user object
+ The `GBGraphUser` protocol enables typed access to a user object
  as represented in the Graph API.
 
 
  @discussion
- The `FBGraphUser` protocol represents the most commonly used properties of a
+ The `GBGraphUser` protocol represents the most commonly used properties of a
  Facebook user object. It may be used to access an `NSDictionary` object that has
- been wrapped with an <FBGraphObject> facade.
+ been wrapped with an <GBGraphObject> facade.
  */
-@protocol FBGraphUser<FBGraphObject>
+@protocol GBGraphUser<GBGraphObject>
 
 /*!
  @property
@@ -86,6 +86,6 @@
  @property
  @abstract Typed access to the user's current city.
  */
-@property (retain, nonatomic) id<FBGraphPlace> location;
+@property (retain, nonatomic) id<GBGraphPlace> location;
 
 @end

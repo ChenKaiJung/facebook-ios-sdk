@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-#import "FBFetchedAppSettings.h"
+#import "GBFetchedAppSettings.h"
 
-#import "FBSettings.h"
+#import "GBSettings.h"
 
-@interface FBFetchedAppSettings()
+@interface GBFetchedAppSettings()
 
 @property (readwrite, retain, nonatomic) NSString *appID;
 
 @end
 
-@implementation FBFetchedAppSettings
+@implementation GBFetchedAppSettings
 
 -(id) init {
     return [self initWithAppID:nil];
@@ -33,7 +33,7 @@
 -(id) initWithAppID:(NSString *)appID {
     if (self = [super init]) {
         if (appID == nil) {
-            appID = [FBSettings defaultAppID];
+            appID = [GBSettings defaultAppID];
         }
         self.appID = appID;
     }

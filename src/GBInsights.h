@@ -16,42 +16,42 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBSession.h"
+#import "GBSession.h"
 
 /*!
- @typedef FBInsightsFlushBehavior enum
+ @typedef GBInsightsFlushBehavior enum
 
- @abstract This enum has been deprecated in favor of FBAppEventsFlushBehavior.
+ @abstract This enum has been deprecated in favor of GBAppEventsFlushBehavior.
  */
-__attribute__ ((deprecated("use FBAppEventsFlushBehavior instead")))
+__attribute__ ((deprecated("use GBAppEventsFlushBehavior instead")))
 typedef enum {
-    FBInsightsFlushBehaviorAuto __attribute__ ((deprecated("use FBAppEventsFlushBehaviorAuto instead"))),
-    FBInsightsFlushBehaviorExplicitOnly __attribute__ ((deprecated("use FBAppEventsFlushBehaviorExplicitOnly instead"))),
-} FBInsightsFlushBehavior;
+    GBInsightsFlushBehaviorAuto __attribute__ ((deprecated("use GBAppEventsFlushBehaviorAuto instead"))),
+    GBInsightsFlushBehaviorExplicitOnly __attribute__ ((deprecated("use GBAppEventsFlushBehaviorExplicitOnly instead"))),
+} GBInsightsFlushBehavior;
 
-extern NSString *const FBInsightsLoggingResultNotification __attribute__((deprecated));
+extern NSString *const GBInsightsLoggingResultNotification __attribute__((deprecated));
 
 /*!
- @class FBInsights
+ @class GBInsights
 
- @abstract This class has been deprecated in favor of FBAppEvents.
+ @abstract This class has been deprecated in favor of GBAppEvents.
  */
-__attribute__ ((deprecated("Use the FBAppEvents class instead")))
-@interface FBInsights : NSObject
+__attribute__ ((deprecated("Use the GBAppEvents class instead")))
+@interface GBInsights : NSObject
 
 + (NSString *)appVersion __attribute__((deprecated));
-+ (void)setAppVersion:(NSString *)appVersion __attribute__((deprecated("use [FBSettings setAppVersion] instead")));
++ (void)setAppVersion:(NSString *)appVersion __attribute__((deprecated("use [GBSettings setAppVersion] instead")));
 
-+ (void)logPurchase:(double)purchaseAmount currency:(NSString *)currency __attribute__((deprecated("use [FBAppEvents logPurchase] instead")));
-+ (void)logPurchase:(double)purchaseAmount currency:(NSString *)currency parameters:(NSDictionary *)parameters __attribute__((deprecated("use [FBAppEvents logPurchase] instead")));
-+ (void)logPurchase:(double)purchaseAmount currency:(NSString *)currency parameters:(NSDictionary *)parameters session:(FBSession *)session __attribute__((deprecated("use [FBAppEvents logPurchase] instead")));
++ (void)logPurchase:(double)purchaseAmount currency:(NSString *)currency __attribute__((deprecated("use [GBAppEvents logPurchase] instead")));
++ (void)logPurchase:(double)purchaseAmount currency:(NSString *)currency parameters:(NSDictionary *)parameters __attribute__((deprecated("use [GBAppEvents logPurchase] instead")));
++ (void)logPurchase:(double)purchaseAmount currency:(NSString *)currency parameters:(NSDictionary *)parameters session:(GBSession *)session __attribute__((deprecated("use [GBAppEvents logPurchase] instead")));
 
 + (void)logConversionPixel:(NSString *)pixelID valueOfPixel:(double)value __attribute__((deprecated));
-+ (void)logConversionPixel:(NSString *)pixelID valueOfPixel:(double)value session:(FBSession *)session __attribute__((deprecated));
++ (void)logConversionPixel:(NSString *)pixelID valueOfPixel:(double)value session:(GBSession *)session __attribute__((deprecated));
 
-+ (FBInsightsFlushBehavior)flushBehavior __attribute__((deprecated("use [FBAppEvents flushBehavior] instead")));
-+ (void)setFlushBehavior:(FBInsightsFlushBehavior)flushBehavior __attribute__((deprecated("use [FBAppEvents setFlushBehavior] instead")));
++ (GBInsightsFlushBehavior)flushBehavior __attribute__((deprecated("use [GBAppEvents flushBehavior] instead")));
++ (void)setFlushBehavior:(GBInsightsFlushBehavior)flushBehavior __attribute__((deprecated("use [GBAppEvents setFlushBehavior] instead")));
 
-+ (void)flush __attribute__((deprecated("use [FBAppEvents flush] instead")));
++ (void)flush __attribute__((deprecated("use [GBAppEvents flush] instead")));
 
 @end

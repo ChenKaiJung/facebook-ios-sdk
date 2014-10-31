@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-#import "FBAppCall.h"
+#import "GBAppCall.h"
 
-@interface FBAppCall (Internal)
+@interface GBAppCall (Internal)
 
 // Defined here for the rest of the SDK to use
 @property (readonly) BOOL isValid;
@@ -24,25 +24,25 @@
 // Re-defined here as readwrite to allow the rest of the SDK to set these
 // properties
 @property (nonatomic, readwrite, retain) NSError *error;
-@property (nonatomic, readwrite, retain) FBDialogsData *dialogData;
-@property (nonatomic, readwrite, retain) FBAppLinkData *appLinkData;
-@property (nonatomic, readwrite, retain) FBAccessTokenData *accessTokenData;
+@property (nonatomic, readwrite, retain) GBDialogsData *dialogData;
+@property (nonatomic, readwrite, retain) GBAppLinkData *appLinkData;
+@property (nonatomic, readwrite, retain) GBAccessTokenData *accessTokenData;
 
 - (id)initWithID:(NSString *)ID;
 
 /*!
- @abstract Designated initializer for FBAppCall
+ @abstract Designated initializer for GBAppCall
 
- @param ID  the unique identifier for matching the FBAppCall. If nil, a random uid will be generated
+ @param ID  the unique identifier for matching the GBAppCall. If nil, a random uid will be generated
  @param enforceScheme a flag determining if we need to detect if the url scheme that will be used for a FAS
-  is correctly configured to allow a callback from iOS. In general, if you are creating an "outbound" FBAppCall,
+  is correctly configured to allow a callback from iOS. In general, if you are creating an "outbound" GBAppCall,
   you should use the default of YES to make sure the schemes are set correctly. If the scheme is not set correctly,
   a developer error is logged and this will return nil.
- @param appID the explicit app id to use. If nil, defaults to [FBSettings defaultAppID]
- @param urlSchemeSuffix the explicit url scheme suffix to use. If nil, defaults to [FBSettings defaultUrlSchemeSuffix].
+ @param appID the explicit app id to use. If nil, defaults to [GBSettings defaultAppID]
+ @param urlSchemeSuffix the explicit url scheme suffix to use. If nil, defaults to [GBSettings defaultUrlSchemeSuffix].
 
- @discussion The app id and url scheme parameters are overrides that can be specified on an FBSession instance. In order
-  to wire up bridge call backs properly, FBAppCall must know about any such overrides.
+ @discussion The app id and url scheme parameters are overrides that can be specified on an GBSession instance. In order
+  to wire up bridge call backs properly, GBAppCall must know about any such overrides.
 */
 - (id)initWithID:(NSString *)ID enforceScheme:(BOOL)enforceScheme appID:(NSString *)appID urlSchemeSuffix:(NSString *)urlSchemeSuffix;
 

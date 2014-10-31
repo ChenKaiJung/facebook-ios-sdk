@@ -14,48 +14,48 @@
  * limitations under the License.
  */
 
-#import "FBFriendPickerViewController.h"
-#import "FBFriendPickerViewController+Internal.h"
+#import "GBFriendPickerViewController.h"
+#import "GBFriendPickerViewController+Internal.h"
 
-#import "FBAppEvents+Internal.h"
-#import "FBError.h"
-#import "FBFriendPickerCacheDescriptor.h"
-#import "FBFriendPickerViewDefaultPNG.h"
-#import "FBGraphObjectPagingLoader.h"
-#import "FBGraphObjectTableCell.h"
-#import "FBGraphObjectTableDataSource.h"
-#import "FBGraphObjectTableSelection.h"
-#import "FBLogger.h"
-#import "FBRequest.h"
-#import "FBRequestConnection.h"
-#import "FBSession+Internal.h"
-#import "FBSettings.h"
-#import "FBUtility.h"
+#import "GBAppEvents+Internal.h"
+#import "GBError.h"
+#import "GBFriendPickerCacheDescriptor.h"
+#import "GBFriendPickerViewDefaultPNG.h"
+#import "GBGraphObjectPagingLoader.h"
+#import "GBGraphObjectTableCell.h"
+#import "GBGraphObjectTableDataSource.h"
+#import "GBGraphObjectTableSelection.h"
+#import "GBLogger.h"
+#import "GBRequest.h"
+#import "GBRequestConnection.h"
+#import "GBSession+Internal.h"
+#import "GBSettings.h"
+#import "GBUtility.h"
 
-NSString *const FBFriendPickerCacheIdentity = @"FBFriendPicker";
+NSString *const GBFriendPickerCacheIdentity = @"GBFriendPicker";
 
-int const FBRefreshCacheDelaySeconds = 2;
+int const GBRefreshCacheDelaySeconds = 2;
 
-@interface FBFriendPickerViewController () <FBGraphObjectSelectionChangedDelegate,
-                                            FBGraphObjectViewControllerDelegate,
-                                            FBGraphObjectPagingLoaderDelegate>
+@interface GBFriendPickerViewController () <GBGraphObjectSelectionChangedDelegate,
+                                            GBGraphObjectViewControllerDelegate,
+                                            GBGraphObjectPagingLoaderDelegate>
 
-@property (nonatomic, retain) FBGraphObjectTableDataSource *dataSource;
-@property (nonatomic, retain) FBGraphObjectTableSelection *selectionManager;
-@property (nonatomic, retain) FBGraphObjectPagingLoader *loader;
+@property (nonatomic, retain) GBGraphObjectTableDataSource *dataSource;
+@property (nonatomic, retain) GBGraphObjectTableSelection *selectionManager;
+@property (nonatomic, retain) GBGraphObjectPagingLoader *loader;
 @property (nonatomic) BOOL trackActiveSession;
 
 - (void)initialize;
 - (void)centerAndStartSpinner;
 - (void)loadDataSkippingRoundTripIfCached:(NSNumber*)skipRoundTripIfCached;
-- (FBRequest*)requestForLoadData;
-- (void)addSessionObserver:(FBSession*)session;
-- (void)removeSessionObserver:(FBSession*)session;
+- (GBRequest*)requestForLoadData;
+- (void)addSessionObserver:(GBSession*)session;
+- (void)removeSessionObserver:(GBSession*)session;
 - (void)clearData;
 
 @end
 
-@implementation FBFriendPickerViewController {
+@implementation GBFriendPickerViewController {
     BOOL _allowsMultipleSelection;
 }
 
@@ -104,22 +104,22 @@ int const FBRefreshCacheDelaySeconds = 2;
 
 - (void)initialize {
     // Data Source
-    FBGraphObjectTableDataSource *dataSource = [[[FBGraphObjectTableDataSource alloc]
+    GBGraphObjectTableDataSource *dataSource = [[[GBGraphObjectTableDataSource alloc]
                                                  init]
                                                 autorelease];
-    dataSource.defaultPicture = [FBFriendPickerViewDefaultPNG image];
+    dataSource.defaultPicture = [GBFriendPickerViewDefaultPNG image];
     dataSource.controllerDelegate = self;
     dataSource.itemTitleSuffixEnabled = YES;
 
     // Selection Manager
-    FBGraphObjectTableSelection *selectionManager = [[[FBGraphObjectTableSelection alloc]
+    GBGraphObjectTableSelection *selectionManager = [[[GBGraphObjectTableSelection alloc]
                                                       initWithDataSource:dataSource]
                                                      autorelease];
     selectionManager.delegate = self;
 
     // Paging loader
-    id loader = [[[FBGraphObjectPagingLoader alloc] initWithDataSource:dataSource
-                                                            pagingMode:FBGraphObjectPagingModeImmediate]
+    id loader = [[[GBGraphObjectPagingLoader alloc] initWithDataSource:dataSource
+                                                            pagingMode:GBGraphObjectPagingModeImmediate]
                  autorelease];
     self.loader = loader;
     self.loader.delegate = self;
@@ -131,8 +131,8 @@ int const FBRefreshCacheDelaySeconds = 2;
     self.itemPicturesEnabled = YES;
     self.selectionManager = selectionManager;
     self.userID = @"me";
-    self.sortOrdering = FBFriendSortByFirstName;
-    self.displayOrdering = FBFriendDisplayByFirstName;
+    self.sortOrdering = GBFriendSortByFirstName;
+    self.displayOrdering = GBFriendDisplayByFirstName;
     self.trackActiveSession = YES;
 }
 
@@ -181,7 +181,7 @@ int const FBRefreshCacheDelaySeconds = 2;
     // There might be bogus items set via setSelection, so we need to check against
     // datasource and filter them out.
     NSMutableArray* validSelection = [[[NSMutableArray alloc] init] autorelease];
-    for (FBGraphObject *item in self.selectionManager.selection) {
+    for (GBGraphObject *item in self.selectionManager.selection) {
         NSIndexPath* indexPath = [self.dataSource indexPathForItem:item];
         if (indexPath != nil) {
             [validSelection addObject:item];
@@ -195,7 +195,7 @@ int const FBRefreshCacheDelaySeconds = 2;
 }
 
 // We don't really need to store session, let the loader hold it.
-- (void)setSession:(FBSession *)session {
+- (void)setSession:(GBSession *)session {
     if (session != _session) {
         [self removeSessionObserver:_session];
 
@@ -216,7 +216,7 @@ int const FBRefreshCacheDelaySeconds = 2;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [FBLogger registerCurrentTime:FBLoggingBehaviorPerformanceCharacteristics
+    [GBLogger registerCurrentTime:GBLoggingBehaviorPerformanceCharacteristics
                           withTag:self];
     CGRect bounds = self.canvasView.bounds;
 
@@ -255,16 +255,16 @@ int const FBRefreshCacheDelaySeconds = 2;
     self.tableView = nil;
 }
 
-- (void)configureUsingCachedDescriptor:(FBCacheDescriptor*)cacheDescriptor {
-    if (![cacheDescriptor isKindOfClass:[FBFriendPickerCacheDescriptor class]]) {
-        [[NSException exceptionWithName:FBInvalidOperationException
-                                 reason:@"FBFriendPickerViewController: An attempt was made to configure "
+- (void)configureUsingCachedDescriptor:(GBCacheDescriptor*)cacheDescriptor {
+    if (![cacheDescriptor isKindOfClass:[GBFriendPickerCacheDescriptor class]]) {
+        [[NSException exceptionWithName:GBInvalidOperationException
+                                 reason:@"GBFriendPickerViewController: An attempt was made to configure "
                                         @"an instance with a cache descriptor object that was not created "
-                                        @"by the FBFriendPickerViewController class"
+                                        @"by the GBFriendPickerViewController class"
                                userInfo:nil]
          raise];
     }
-    FBFriendPickerCacheDescriptor *cd = (FBFriendPickerCacheDescriptor*)cacheDescriptor;
+    GBFriendPickerCacheDescriptor *cd = (GBFriendPickerCacheDescriptor*)cacheDescriptor;
     self.userID = cd.userID;
     self.fieldsForRequest = cd.fieldsForRequest;
 }
@@ -274,8 +274,8 @@ int const FBRefreshCacheDelaySeconds = 2;
     // if we don't have a session and there is
     // an open active session, use that
     if (!self.session ||
-        (self.trackActiveSession && ![self.session isEqual:[FBSession activeSessionIfOpen]])) {
-        self.session = [FBSession activeSessionIfOpen];
+        (self.trackActiveSession && ![self.session isEqual:[GBSession activeSessionIfOpen]])) {
+        self.session = [GBSession activeSessionIfOpen];
         self.trackActiveSession = YES;
     }
     [self loadDataSkippingRoundTripIfCached:[NSNumber numberWithBool:YES]];
@@ -290,14 +290,14 @@ int const FBRefreshCacheDelaySeconds = 2;
     [self.selectionManager clearSelectionInTableView:self.tableView];
 }
 
-- (void)addSessionObserver:(FBSession *)session {
+- (void)addSessionObserver:(GBSession *)session {
     [session addObserver:self
               forKeyPath:@"state"
                  options:NSKeyValueObservingOptionNew
                  context:nil];
 }
 
-- (void)removeSessionObserver:(FBSession *)session {
+- (void)removeSessionObserver:(GBSession *)session {
     [session removeObserver:self
                  forKeyPath:@"state"];
 }
@@ -321,13 +321,13 @@ int const FBRefreshCacheDelaySeconds = 2;
 
 #pragma mark - public class members
 
-+ (FBCacheDescriptor*)cacheDescriptor {
-    return [[[FBFriendPickerCacheDescriptor alloc] init] autorelease];
++ (GBCacheDescriptor*)cacheDescriptor {
+    return [[[GBFriendPickerCacheDescriptor alloc] init] autorelease];
 }
 
-+ (FBCacheDescriptor*)cacheDescriptorWithUserID:(NSString*)userID
++ (GBCacheDescriptor*)cacheDescriptorWithUserID:(NSString*)userID
                                fieldsForRequest:(NSSet*)fieldsForRequest {
-    return [[[FBFriendPickerCacheDescriptor alloc] initWithUserID:userID
+    return [[[GBFriendPickerCacheDescriptor alloc] initWithUserID:userID
                                                  fieldsForRequest:fieldsForRequest]
             autorelease];
 }
@@ -335,12 +335,12 @@ int const FBRefreshCacheDelaySeconds = 2;
 
 #pragma mark - private members
 
-- (FBRequest*)requestForLoadData {
+- (GBRequest*)requestForLoadData {
 
     // Respect user settings in case they have changed.
     NSMutableArray *sortFields = [NSMutableArray array];
     NSString *groupByField = nil;
-    if (self.sortOrdering == FBFriendSortByFirstName) {
+    if (self.sortOrdering == GBFriendSortByFirstName) {
         [sortFields addObject:@"first_name"];
         [sortFields addObject:@"middle_name"];
         [sortFields addObject:@"last_name"];
@@ -362,7 +362,7 @@ int const FBRefreshCacheDelaySeconds = 2;
     }
 
     // create the request and start the loader
-    FBRequest *request = [FBFriendPickerViewController requestWithUserID:user
+    GBRequest *request = [GBFriendPickerViewController requestWithUserID:user
                                                                   fields:self.fieldsForRequest
                                                               dataSource:self.dataSource
                                                                  session:self.session];
@@ -372,21 +372,21 @@ int const FBRefreshCacheDelaySeconds = 2;
 - (void)loadDataSkippingRoundTripIfCached:(NSNumber*)skipRoundTripIfCached {
     if (self.session) {
         [self.loader startLoadingWithRequest:[self requestForLoadData]
-                               cacheIdentity:FBFriendPickerCacheIdentity
+                               cacheIdentity:GBFriendPickerCacheIdentity
                        skipRoundtripIfCached:skipRoundTripIfCached.boolValue];
     }
 }
 
-+ (FBRequest*)requestWithUserID:(NSString*)userID
++ (GBRequest*)requestWithUserID:(NSString*)userID
                          fields:(NSSet*)fields
-                     dataSource:(FBGraphObjectTableDataSource*)datasource
-                        session:(FBSession*)session {
+                     dataSource:(GBGraphObjectTableDataSource*)datasource
+                        session:(GBSession*)session {
 
-    FBRequest *request = [FBRequest requestForGraphPath:[NSString stringWithFormat:@"%@/friends", userID]];
+    GBRequest *request = [GBRequest requestForGraphPath:[NSString stringWithFormat:@"%@/friends", userID]];
     [request setSession:session];
 
     // Use field expansion to fetch a 100px wide picture if we're on a retina device.
-    NSString *pictureField = ([FBUtility isRetinaDisplay]) ? @"picture.width(100).height(100)" : @"picture";
+    NSString *pictureField = ([GBUtility isRetinaDisplay]) ? @"picture.width(100).height(100)" : @"picture";
 
     NSString *allFields = [datasource fieldsForRequestIncluding:fields,
                            @"id",
@@ -402,35 +402,35 @@ int const FBRefreshCacheDelaySeconds = 2;
 }
 
 - (void)centerAndStartSpinner {
-    [FBUtility centerView:self.spinner tableView:self.tableView];
+    [GBUtility centerView:self.spinner tableView:self.tableView];
     [self.spinner startAnimating];
 }
 
 - (void)logAppEvents:(BOOL)cancelled {
-    [FBAppEvents logImplicitEvent:FBAppEventNameFriendPickerUsage
+    [GBAppEvents logImplicitEvent:GBAppEventNameFriendPickerUsage
                       valueToSum:nil
-                      parameters:@{ FBAppEventParameterDialogOutcome : (cancelled
-                                                                             ? FBAppEventsDialogOutcomeValue_Cancelled
-                                                                             : FBAppEventsDialogOutcomeValue_Completed),
+                      parameters:@{ GBAppEventParameterDialogOutcome : (cancelled
+                                                                             ? GBAppEventsDialogOutcomeValue_Cancelled
+                                                                             : GBAppEventsDialogOutcomeValue_Completed),
                                     @"num_friends_picked" : [NSNumber numberWithUnsignedInteger:self.selection.count]
                                   }
                          session:self.session];
 }
 
-#pragma mark - FBGraphObjectSelectionChangedDelegate
+#pragma mark - GBGraphObjectSelectionChangedDelegate
 
-- (void)graphObjectTableSelectionDidChange:(FBGraphObjectTableSelection *)selection {
+- (void)graphObjectTableSelectionDidChange:(GBGraphObjectTableSelection *)selection {
     if ([self.delegate respondsToSelector:
          @selector(friendPickerViewControllerSelectionDidChange:)]) {
         [(id)self.delegate friendPickerViewControllerSelectionDidChange:self];
     }
 }
 
-#pragma mark - FBGraphObjectViewControllerDelegate
+#pragma mark - GBGraphObjectViewControllerDelegate
 
-- (BOOL)graphObjectTableDataSource:(FBGraphObjectTableDataSource *)dataSource
-                filterIncludesItem:(id<FBGraphObject>)item {
-    id<FBGraphUser> user = (id<FBGraphUser>)item;
+- (BOOL)graphObjectTableDataSource:(GBGraphObjectTableDataSource *)dataSource
+                filterIncludesItem:(id<GBGraphObject>)item {
+    id<GBGraphUser> user = (id<GBGraphUser>)item;
 
     if ([self.delegate
          respondsToSelector:@selector(friendPickerViewController:shouldIncludeUser:)]) {
@@ -441,10 +441,10 @@ int const FBRefreshCacheDelaySeconds = 2;
     }
 }
 
-- (NSString *)graphObjectTableDataSource:(FBGraphObjectTableDataSource *)dataSource
-                             titleOfItem:(id<FBGraphUser>)graphUser {
+- (NSString *)graphObjectTableDataSource:(GBGraphObjectTableDataSource *)dataSource
+                             titleOfItem:(id<GBGraphUser>)graphUser {
     // Title is either "First Middle" or "Last" depending on display order.
-    if (self.displayOrdering == FBFriendDisplayByFirstName) {
+    if (self.displayOrdering == GBFriendDisplayByFirstName) {
         if (graphUser.middle_name) {
             return [NSString stringWithFormat:@"%@ %@", graphUser.first_name, graphUser.middle_name];
         } else {
@@ -455,10 +455,10 @@ int const FBRefreshCacheDelaySeconds = 2;
     }
 }
 
-- (NSString *)graphObjectTableDataSource:(FBGraphObjectTableDataSource *)dataSource
-                       titleSuffixOfItem:(id<FBGraphUser>)graphUser {
+- (NSString *)graphObjectTableDataSource:(GBGraphObjectTableDataSource *)dataSource
+                       titleSuffixOfItem:(id<GBGraphUser>)graphUser {
     // Title suffix is either "Last" or "First Middle" depending on display order.
-    if (self.displayOrdering == FBFriendDisplayByLastName) {
+    if (self.displayOrdering == GBFriendDisplayByLastName) {
         if (graphUser.middle_name) {
             return [NSString stringWithFormat:@"%@ %@", graphUser.first_name, graphUser.middle_name];
         } else {
@@ -470,8 +470,8 @@ int const FBRefreshCacheDelaySeconds = 2;
 
 }
 
-- (NSString *)graphObjectTableDataSource:(FBGraphObjectTableDataSource *)dataSource
-                       pictureUrlOfItem:(id<FBGraphObject>)graphObject {
+- (NSString *)graphObjectTableDataSource:(GBGraphObjectTableDataSource *)dataSource
+                       pictureUrlOfItem:(id<GBGraphObject>)graphObject {
     id picture = [graphObject objectForKey:@"picture"];
     // Depending on what migration the app is in, we may get back either a string, or a
     // dictionary with a "data" property that is a dictionary containing a "url" property.
@@ -482,26 +482,26 @@ int const FBRefreshCacheDelaySeconds = 2;
     return [data objectForKey:@"url"];
 }
 
-- (void)graphObjectTableDataSource:(FBGraphObjectTableDataSource*)dataSource
-                customizeTableCell:(FBGraphObjectTableCell*)cell {
+- (void)graphObjectTableDataSource:(GBGraphObjectTableDataSource*)dataSource
+                customizeTableCell:(GBGraphObjectTableCell*)cell {
     // We want to bold whichever part of the name we are sorting on.
-    cell.boldTitle = (self.sortOrdering == FBFriendSortByFirstName && self.displayOrdering == FBFriendDisplayByFirstName) ||
-        (self.sortOrdering == FBFriendSortByLastName && self.displayOrdering == FBFriendDisplayByLastName);
-    cell.boldTitleSuffix = (self.sortOrdering == FBFriendSortByFirstName && self.displayOrdering == FBFriendDisplayByLastName) ||
-        (self.sortOrdering == FBFriendSortByLastName && self.displayOrdering == FBFriendDisplayByFirstName);
+    cell.boldTitle = (self.sortOrdering == GBFriendSortByFirstName && self.displayOrdering == GBFriendDisplayByFirstName) ||
+        (self.sortOrdering == GBFriendSortByLastName && self.displayOrdering == GBFriendDisplayByLastName);
+    cell.boldTitleSuffix = (self.sortOrdering == GBFriendSortByFirstName && self.displayOrdering == GBFriendDisplayByLastName) ||
+        (self.sortOrdering == GBFriendSortByLastName && self.displayOrdering == GBFriendDisplayByFirstName);
 }
 
-#pragma mark FBGraphObjectPagingLoaderDelegate members
+#pragma mark GBGraphObjectPagingLoaderDelegate members
 
-- (void)pagingLoader:(FBGraphObjectPagingLoader*)pagingLoader willLoadURL:(NSString*)url {
+- (void)pagingLoader:(GBGraphObjectPagingLoader*)pagingLoader willLoadURL:(NSString*)url {
     [self centerAndStartSpinner];
 }
 
-- (void)pagingLoader:(FBGraphObjectPagingLoader*)pagingLoader didLoadData:(NSDictionary*)results {
+- (void)pagingLoader:(GBGraphObjectPagingLoader*)pagingLoader didLoadData:(NSDictionary*)results {
     // This logging currently goes here because we're effectively complete with our initial view when
     // the first page of results come back.  In the future, when we do caching, we will need to move
     // this to a more appropriate place (e.g., after the cache has been brought in).
-    [FBLogger singleShotLogEntry:FBLoggingBehaviorPerformanceCharacteristics
+    [GBLogger singleShotLogEntry:GBLoggingBehaviorPerformanceCharacteristics
                     timestampTag:self
                     formatString:@"Friend Picker: first render "];  // logger will append "%d msec"
 
@@ -511,7 +511,7 @@ int const FBRefreshCacheDelaySeconds = 2;
     }
 }
 
-- (void)pagingLoaderDidFinishLoading:(FBGraphObjectPagingLoader *)pagingLoader {
+- (void)pagingLoaderDidFinishLoading:(GBGraphObjectPagingLoader *)pagingLoader {
     // finished loading, stop animating
     [self.spinner stopAnimating];
 
@@ -525,18 +525,18 @@ int const FBRefreshCacheDelaySeconds = 2;
     if (pagingLoader.isResultFromCache) {
         [self performSelector:@selector(loadDataSkippingRoundTripIfCached:)
                    withObject:[NSNumber numberWithBool:NO]
-                   afterDelay:FBRefreshCacheDelaySeconds];
+                   afterDelay:GBRefreshCacheDelaySeconds];
     }
 }
 
-- (void)pagingLoader:(FBGraphObjectPagingLoader*)pagingLoader handleError:(NSError*)error {
+- (void)pagingLoader:(GBGraphObjectPagingLoader*)pagingLoader handleError:(NSError*)error {
     if ([self.delegate
          respondsToSelector:@selector(friendPickerViewController:handleError:)]) {
         [(id)self.delegate friendPickerViewController:self handleError:error];
     }
 }
 
-- (void)pagingLoaderWasCancelled:(FBGraphObjectPagingLoader*)pagingLoader {
+- (void)pagingLoaderWasCancelled:(GBGraphObjectPagingLoader*)pagingLoader {
     [self.spinner stopAnimating];
 }
 

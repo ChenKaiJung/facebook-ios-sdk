@@ -16,33 +16,33 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBGraphObjectTableDataSource.h"
+#import "GBGraphObjectTableDataSource.h"
 
-@class FBRequest;
-@class FBSession;
-@protocol FBGraphObjectPagingLoaderDelegate;
+@class GBRequest;
+@class GBSession;
+@protocol GBGraphObjectPagingLoaderDelegate;
 
 typedef enum {
     // Paging links will be followed as soon as one set of results is loaded
-    FBGraphObjectPagingModeImmediate,
+    GBGraphObjectPagingModeImmediate,
     // Paging links will be followed as soon as one set of results is loaded, even without a view
-    FBGraphObjectPagingModeImmediateViewless,
+    GBGraphObjectPagingModeImmediateViewless,
     // Paging links will be followed only when the user scrolls to the bottom of the table
-    FBGraphObjectPagingModeAsNeeded
-} FBGraphObjectPagingMode;
+    GBGraphObjectPagingModeAsNeeded
+} GBGraphObjectPagingMode;
 
-@interface FBGraphObjectPagingLoader : NSObject<FBGraphObjectDataSourceDataNeededDelegate>
+@interface GBGraphObjectPagingLoader : NSObject<GBGraphObjectDataSourceDataNeededDelegate>
 
 @property (nonatomic, retain) UITableView *tableView;
-@property (nonatomic, retain) FBGraphObjectTableDataSource *dataSource;
-@property (nonatomic, retain) FBSession *session;
-@property (nonatomic, assign) id<FBGraphObjectPagingLoaderDelegate> delegate;
-@property (nonatomic, readonly) FBGraphObjectPagingMode pagingMode;
+@property (nonatomic, retain) GBGraphObjectTableDataSource *dataSource;
+@property (nonatomic, retain) GBSession *session;
+@property (nonatomic, assign) id<GBGraphObjectPagingLoaderDelegate> delegate;
+@property (nonatomic, readonly) GBGraphObjectPagingMode pagingMode;
 @property (nonatomic, readonly) BOOL isResultFromCache;
 
-- (id)initWithDataSource:(FBGraphObjectTableDataSource*)aDataSource
-              pagingMode:(FBGraphObjectPagingMode)pagingMode;
-- (void)startLoadingWithRequest:(FBRequest*)request
+- (id)initWithDataSource:(GBGraphObjectTableDataSource*)aDataSource
+              pagingMode:(GBGraphObjectPagingMode)pagingMode;
+- (void)startLoadingWithRequest:(GBRequest*)request
                   cacheIdentity:(NSString*)cacheIdentity
           skipRoundtripIfCached:(BOOL)skipRoundtripIfCached;
 - (void)addResultsAndUpdateView:(NSDictionary*)results;
@@ -51,14 +51,14 @@ typedef enum {
 
 @end
 
-@protocol FBGraphObjectPagingLoaderDelegate <NSObject>
+@protocol GBGraphObjectPagingLoaderDelegate <NSObject>
 
 @optional
 
-- (void)pagingLoader:(FBGraphObjectPagingLoader*)pagingLoader willLoadURL:(NSString*)url;
-- (void)pagingLoader:(FBGraphObjectPagingLoader*)pagingLoader didLoadData:(NSDictionary*)results;
-- (void)pagingLoaderDidFinishLoading:(FBGraphObjectPagingLoader*)pagingLoader;
-- (void)pagingLoader:(FBGraphObjectPagingLoader*)pagingLoader handleError:(NSError*)error;
-- (void)pagingLoaderWasCancelled:(FBGraphObjectPagingLoader*)pagingLoader;
+- (void)pagingLoader:(GBGraphObjectPagingLoader*)pagingLoader willLoadURL:(NSString*)url;
+- (void)pagingLoader:(GBGraphObjectPagingLoader*)pagingLoader didLoadData:(NSDictionary*)results;
+- (void)pagingLoaderDidFinishLoading:(GBGraphObjectPagingLoader*)pagingLoader;
+- (void)pagingLoader:(GBGraphObjectPagingLoader*)pagingLoader handleError:(NSError*)error;
+- (void)pagingLoaderWasCancelled:(GBGraphObjectPagingLoader*)pagingLoader;
 
 @end

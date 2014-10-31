@@ -16,13 +16,13 @@
 
 
 /*!
- @class FBErrorUtility
+ @class GBErrorUtility
 
  @abstract A utility class with methods to provide more information for Facebook
- related errors if you do not want to use the NSError(FBError) category.
+ related errors if you do not want to use the NSError(GBError) category.
 
  */
-@interface FBErrorUtility : NSObject
+@interface GBErrorUtility : NSObject
 
 /*!
  @abstract
@@ -36,7 +36,7 @@
 
  @param error the error to be categorized.
  */
-+(FBErrorCategory) errorCategoryForError:(NSError *)error;
++(GBErrorCategory) errorCategoryForError:(NSError *)error;
 
 /*!
  @abstract
@@ -56,7 +56,7 @@
  @abstract
  A message suitable for display to the user, describing a user action necessary to enable Facebook functionality.
  Not all Facebook errors yield a message suitable for user display; however in all cases where
- fberrorShouldNotifyUser is YES, this property returns a localizable message suitable for display.
+ gberrorShouldNotifyUser is YES, this property returns a localizable message suitable for display.
 
  @param error the error to inspect.
  */

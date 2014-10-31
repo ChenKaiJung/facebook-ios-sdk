@@ -14,34 +14,34 @@
  * limitations under the License.
  */
 
-#import "FBSessionFacebookAppNativeLoginStategy.h"
+#import "GBSessionFacebookAppNativeLoginStategy.h"
 
-#import "FBLogger.h"
-#import "FBSession+Internal.h"
-#import "FBSessionAuthLogger.h"
-#import "FBSessionLoginStrategy.h"
-#import "FBUtility.h"
+#import "GBLogger.h"
+#import "GBSession+Internal.h"
+#import "GBSessionAuthLogger.h"
+#import "GBSessionLoginStrategy.h"
+#import "GBUtility.h"
 
-@implementation FBSessionFacebookAppNativeLoginStategy
+@implementation GBSessionFacebookAppNativeLoginStategy
 
-- (BOOL)tryPerformAuthorizeWithParams:(FBSessionLoginStrategyParams *)params session:(FBSession *)session logger:(FBSessionAuthLogger *)logger {
-    if (params.tryFBAppAuth) {
-        FBFetchedAppSettings *fetchedSettings = [FBUtility fetchedAppSettings];
+- (BOOL)tryPerformAuthorizeWithParams:(GBSessionLoginStrategyParams *)params session:(GBSession *)session logger:(GBSessionAuthLogger *)logger {
+    if (params.tryGBAppAuth) {
+        GBFetchedAppSettings *fetchedSettings = [GBUtility fetchedAppSettings];
         [logger addExtrasForNextEvent:@{
          @"hasFetchedAppSettings": @(fetchedSettings != nil),
-         @"pListFacebookDisplayName": [FBSettings defaultDisplayName] ?: @"<missing>"
+         @"pListFacebookDisplayName": [GBSettings defaultDisplayName] ?: @"<missing>"
          }];
-        if ([FBSettings defaultDisplayName] &&            // don't autoselect Native Login unless the app has been setup for it,
-            [session.appID isEqualToString:[FBSettings defaultAppID]] && // If the appId has been overridden, then the bridge cannot be used and native login is denied
+        if ([GBSettings defaultDisplayName] &&            // don't autoselect Native Login unless the app has been setup for it,
+            [session.appID isEqualToString:[GBSettings defaultAppID]] && // If the appId has been overridden, then the bridge cannot be used and native login is denied
             (fetchedSettings || params.canFetchAppSettings) &&   // and we have app-settings available to us, or could fetch if needed
             !TEST_DISABLE_FACEBOOKNATIVELOGIN) {
             if (!fetchedSettings) {
                 // fetch the settings and call the session auth method again.
-                [FBUtility fetchAppSettings:[FBSettings defaultAppID] callback:^(FBFetchedAppSettings * settings, NSError * error) {
+                [GBUtility fetchAppSettings:[GBSettings defaultAppID] callback:^(GBFetchedAppSettings * settings, NSError * error) {
                     [session retryableAuthorizeWithPermissions:params.permissions
                                                defaultAudience:params.defaultAudience
                                                 integratedAuth:params.tryIntegratedAuth
-                                                     FBAppAuth:params.tryFBAppAuth
+                                                     GBAppAuth:params.tryGBAppAuth
                                                     safariAuth:params.trySafariAuth
                                                       fallback:params.tryFallback
                                                  isReauthorize:params.isReauthorize
@@ -54,18 +54,18 @@
                  @"serverAppName": fetchedSettings.serverAppName ?: @"<missing>"
                  }];
                 if (!fetchedSettings.suppressNativeGdp) {
-                    if (![[FBSettings defaultDisplayName] isEqualToString:fetchedSettings.serverAppName]) {
-                        [FBLogger singleShotLogEntry:FBLoggingBehaviorDeveloperErrors
+                    if (![[GBSettings defaultDisplayName] isEqualToString:fetchedSettings.serverAppName]) {
+                        [GBLogger singleShotLogEntry:GBLoggingBehaviorDeveloperErrors
                                             logEntry:@"PLIST entry for FacebookDisplayName does not match Facebook app name."];
                         [logger addExtrasForNextEvent:@{
                          @"nameMismatch": @(YES)
                          }];
                     }
 
-                    NSDictionary *clientState = @{FBSessionAuthLoggerParamAuthMethodKey: self.methodName,
-                                                  FBSessionAuthLoggerParamIDKey : logger.ID ?: @""};
+                    NSDictionary *clientState = @{GBSessionAuthLoggerParamAuthMethodKey: self.methodName,
+                                                  GBSessionAuthLoggerParamIDKey : logger.ID ?: @""};
 
-                    FBAppCall *call = [session authorizeUsingFacebookNativeLoginWithPermissions:params.permissions
+                    GBAppCall *call = [session authorizeUsingFacebookNativeLoginWithPermissions:params.permissions
                                                                                 defaultAudience:params.defaultAudience
                                                                                     clientState:clientState];
                     if (call) {
@@ -83,7 +83,7 @@
 }
 
 - (NSString *)methodName {
-    return FBSessionAuthLoggerAuthMethodFBApplicationNative;
+    return GBSessionAuthLoggerAuthMethodGBApplicationNative;
 }
 
 @end

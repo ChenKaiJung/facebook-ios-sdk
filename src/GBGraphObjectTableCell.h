@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FBGraphObjectTableCell : UITableViewCell
+@interface GBGraphObjectTableCell : UITableViewCell
 
 // We allow the title to be split into two parts, with one (or both) optionally
 // bolded. titleSuffix will be appended to the end of title with a space in between.

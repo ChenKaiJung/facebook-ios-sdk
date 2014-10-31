@@ -14,44 +14,44 @@
  * limitations under the License.
  */
 
-#import "FBSettings.h"
-#import "FBSettings+Internal.h"
+#import "GBSettings.h"
+#import "GBSettings+Internal.h"
 
 #import <UIKit/UIKit.h>
 
-#import "FBError.h"
-#import "FBLogger.h"
-#import "FBRequest.h"
-#import "FBSession.h"
-#import "FBUtility.h"
+#import "GBError.h"
+#import "GBLogger.h"
+#import "GBRequest.h"
+#import "GBSession.h"
+#import "GBUtility.h"
 #import "FacebookSDK.h"
 
 // Keys to get App-specific info from mainBundle
-static NSString *const FBPLISTDisplayNameKey = @"FacebookDisplayName";
-static NSString *const FBPLISTAppIDKey = @"FacebookAppID";
-NSString *const FBPLISTUrlSchemeSuffixKey = @"FacebookUrlSchemeSuffix";
-static NSString *const FBPLISTBundleNameKey = @"FacebookBundleName";
+static NSString *const GBPLISTDisplayNameKey = @"FacebookDisplayName";
+static NSString *const GBPLISTAppIDKey = @"FacebookAppID";
+NSString *const GBPLISTUrlSchemeSuffixKey = @"FacebookUrlSchemeSuffix";
+static NSString *const GBPLISTBundleNameKey = @"FacebookBundleName";
 
 // const strings
-NSString *const FBLoggingBehaviorFBRequests = @"fb_requests";
-NSString *const FBLoggingBehaviorFBURLConnections = @"fburl_connections";
-NSString *const FBLoggingBehaviorAccessTokens = @"include_access_tokens";
-NSString *const FBLoggingBehaviorSessionStateTransitions = @"state_transitions";
-NSString *const FBLoggingBehaviorPerformanceCharacteristics = @"perf_characteristics";
-NSString *const FBLoggingBehaviorAppEvents = @"app_events";
-NSString *const FBLoggingBehaviorInformational = @"informational";
-NSString *const FBLoggingBehaviorDeveloperErrors = @"developer_errors";
+NSString *const GBLoggingBehaviorGBRequests = @"fb_requests";
+NSString *const GBLoggingBehaviorGBURLConnections = @"fburl_connections";
+NSString *const GBLoggingBehaviorAccessTokens = @"include_access_tokens";
+NSString *const GBLoggingBehaviorSessionStateTransitions = @"state_transitions";
+NSString *const GBLoggingBehaviorPerformanceCharacteristics = @"perf_characteristics";
+NSString *const GBLoggingBehaviorAppEvents = @"app_events";
+NSString *const GBLoggingBehaviorInformational = @"informational";
+NSString *const GBLoggingBehaviorDeveloperErrors = @"developer_errors";
 
-NSString *const FBLastAttributionPing = @"com.facebook.sdk:lastAttributionPing%@";
-NSString *const FBLastInstallResponse = @"com.facebook.sdk:lastInstallResponse%@";
-NSString *const FBSettingsLimitEventAndDataUsage = @"com.facebook.sdk:FBAppEventsLimitEventUsage";  // use "FBAppEvents" in string due to previous place this lived.
+NSString *const GBLastAttributionPing = @"com.facebook.sdk:lastAttributionPing%@";
+NSString *const GBLastInstallResponse = @"com.facebook.sdk:lastInstallResponse%@";
+NSString *const GBSettingsLimitEventAndDataUsage = @"com.facebook.sdk:GBAppEventsLimitEventUsage";  // use "GBAppEvents" in string due to previous place this lived.
 
-NSString *const FBPublishActivityPath = @"%@/activities";
-NSString *const FBMobileInstallEvent = @"MOBILE_APP_INSTALL";
+NSString *const GBPublishActivityPath = @"%@/activities";
+NSString *const GBMobileInstallEvent = @"MOBILE_APP_INSTALL";
 
-NSTimeInterval const FBPublishDelay = 0.1;
+NSTimeInterval const GBPublishDelay = 0.1;
 
-@implementation FBSettings
+@implementation GBSettings
 
 static NSSet *g_loggingBehavior;
 static BOOL g_autoPublishInstall = YES;
@@ -67,7 +67,7 @@ static CGFloat g_defaultJPEGCompressionQuality = 0.9;
 static NSUInteger g_betaFeatures = 0;
 
 + (NSString *)sdkVersion {
-    return FB_IOS_SDK_VERSION_STRING;
+    return GB_IOS_SDK_VERSION_STRING;
 }
 
 + (NSSet *)loggingBehavior {
@@ -75,7 +75,7 @@ static NSUInteger g_betaFeatures = 0;
 
         // Establish set of default enabled logging behaviors.  Can completely disable logging by
         // calling setLoggingBehavior with an empty set.
-        g_loggingBehavior = [[NSSet setWithObject:FBLoggingBehaviorDeveloperErrors] retain];
+        g_loggingBehavior = [[NSSet setWithObject:GBLoggingBehaviorDeveloperErrors] retain];
     }
     return g_loggingBehavior;
 }
@@ -115,7 +115,7 @@ static NSUInteger g_betaFeatures = 0;
 + (NSString *)defaultDisplayName {
     if (!g_defaultDisplayName) {
         NSBundle* bundle = [NSBundle mainBundle];
-        g_defaultDisplayName = [bundle objectForInfoDictionaryKey:FBPLISTDisplayNameKey];
+        g_defaultDisplayName = [bundle objectForInfoDictionaryKey:GBPLISTDisplayNameKey];
     }
     return g_defaultDisplayName;
 }
@@ -129,7 +129,7 @@ static NSUInteger g_betaFeatures = 0;
 + (NSString*)defaultAppID {
     if (!g_defaultAppID) {
         NSBundle* bundle = [NSBundle mainBundle];
-        g_defaultAppID = [bundle objectForInfoDictionaryKey:FBPLISTAppIDKey];
+        g_defaultAppID = [bundle objectForInfoDictionaryKey:GBPLISTAppIDKey];
     }
     return g_defaultAppID;
 }
@@ -143,14 +143,14 @@ static NSUInteger g_betaFeatures = 0;
 + (NSString*)resourceBundleName {
     if (!g_defaultBundleName) {
         NSBundle* bundle = [NSBundle mainBundle];
-        g_defaultBundleName = [bundle objectForInfoDictionaryKey:FBPLISTBundleNameKey];
+        g_defaultBundleName = [bundle objectForInfoDictionaryKey:GBPLISTBundleNameKey];
 #if TARGET_IPHONE_SIMULATOR
         // The FacebookSDKResources.bundle is no longer used.
         // Warn the developer if they are including it by default
         if (![g_defaultBundleName isEqualToString:@"FacebookSDKResources"]) {
             NSString* facebookSDKBundlePath = [bundle pathForResource:@"FacebookSDKResources" ofType:@"bundle"];
             if (facebookSDKBundlePath) {
-                [FBLogger singleShotLogEntry:FBLoggingBehaviorDeveloperErrors logEntry:@"The FacebookSDKResources.bundle is no longer required for your application.  It can be removed.  After fixing this, you will need to Clean the project and then reset your simulator."];
+                [GBLogger singleShotLogEntry:GBLoggingBehaviorDeveloperErrors logEntry:@"The FacebookSDKResources.bundle is no longer required for your application.  It can be removed.  After fixing this, you will need to Clean the project and then reset your simulator."];
             }
         }
 #endif
@@ -178,7 +178,7 @@ static NSUInteger g_betaFeatures = 0;
 + (NSString*)defaultUrlSchemeSuffix {
     if (!g_defaultUrlSchemeSuffix) {
         NSBundle* bundle = [NSBundle mainBundle];
-        g_defaultUrlSchemeSuffix = [bundle objectForInfoDictionaryKey:FBPLISTUrlSchemeSuffixKey];
+        g_defaultUrlSchemeSuffix = [bundle objectForInfoDictionaryKey:GBPLISTUrlSchemeSuffixKey];
     }
     return g_defaultUrlSchemeSuffix;
 }
@@ -206,18 +206,18 @@ static NSUInteger g_betaFeatures = 0;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 + (void)autoPublishInstall:(NSString *)appID {
-    if ([FBSettings shouldAutoPublishInstall]) {
+    if ([GBSettings shouldAutoPublishInstall]) {
         dispatch_once(&g_publishInstallOnceToken, ^{
-            // dispatch_once is great, but not re-entrant.  Inside publishInstall we use FBRequest, which will
+            // dispatch_once is great, but not re-entrant.  Inside publishInstall we use GBRequest, which will
             // cause this function to get invoked a second time.  By scheduling the work, we can sidestep the problem.
-            [[FBSettings class] performSelector:@selector(autoPublishInstallImpl:) withObject:appID afterDelay:FBPublishDelay];
+            [[GBSettings class] performSelector:@selector(autoPublishInstallImpl:) withObject:appID afterDelay:GBPublishDelay];
         });
     }
 }
 #pragma GCC diagnostic pop
 
 + (void)autoPublishInstallImpl:(NSString *)appID {
-    [FBSettings publishInstall:appID withHandler:nil isAutoPublish:YES];
+    [GBSettings publishInstall:appID withHandler:nil isAutoPublish:YES];
 }
 
 
@@ -225,15 +225,15 @@ static NSUInteger g_betaFeatures = 0;
   g_betaFeatures |= betaFeatures;
 }
 
-+ (void)enableBetaFeature:(FBBetaFeatures)betaFeature {
++ (void)enableBetaFeature:(GBBetaFeatures)betaFeature {
   g_betaFeatures |= betaFeature;
 }
 
-+ (void)disableBetaFeature:(FBBetaFeatures)betaFeature {
++ (void)disableBetaFeature:(GBBetaFeatures)betaFeature {
     g_betaFeatures &= NSUIntegerMax ^ betaFeature;
 }
 
-+ (BOOL)isBetaFeatureEnabled:(FBBetaFeatures)betaFeature {
++ (BOOL)isBetaFeatureEnabled:(GBBetaFeatures)betaFeature {
   return (g_betaFeatures & betaFeature) == betaFeature;
 }
 
@@ -241,7 +241,7 @@ static NSUInteger g_betaFeatures = 0;
 #pragma mark - Event usage
 
 + (BOOL)limitEventAndDataUsage {
-    NSNumber *storedValue = [[NSUserDefaults standardUserDefaults] objectForKey:FBSettingsLimitEventAndDataUsage];
+    NSNumber *storedValue = [[NSUserDefaults standardUserDefaults] objectForKey:GBSettingsLimitEventAndDataUsage];
     if (storedValue == nil) {
         return NO;
     }
@@ -250,7 +250,7 @@ static NSUInteger g_betaFeatures = 0;
 
 + (void)setLimitEventAndDataUsage:(BOOL)limitEventAndDataUsage {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[NSNumber numberWithBool:limitEventAndDataUsage] forKey:FBSettingsLimitEventAndDataUsage];
+    [defaults setObject:[NSNumber numberWithBool:limitEventAndDataUsage] forKey:GBSettingsLimitEventAndDataUsage];
     [defaults synchronize];
 }
 
@@ -258,24 +258,24 @@ static NSUInteger g_betaFeatures = 0;
 #pragma mark proto-activity publishing code
 
 + (void)publishInstall:(NSString *)appID {
-    [FBSettings publishInstall:appID withHandler:nil];
+    [GBSettings publishInstall:appID withHandler:nil];
 }
 
 + (void)publishInstall:(NSString *)appID
-           withHandler:(FBInstallResponseDataHandler)handler {
-    [FBSettings publishInstall:appID withHandler:handler isAutoPublish:NO];
+           withHandler:(GBInstallResponseDataHandler)handler {
+    [GBSettings publishInstall:appID withHandler:handler isAutoPublish:NO];
 }
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 + (void)publishInstall:(NSString *)appID
-           withHandler:(FBInstallResponseDataHandler)handler
+           withHandler:(GBInstallResponseDataHandler)handler
          isAutoPublish:(BOOL)isAutoPublish {
     @try {
         handler = [[handler copy] autorelease];
 
         if (!appID) {
-            appID = [FBSettings defaultAppID];
+            appID = [GBSettings defaultAppID];
         }
 
         if (!appID) {
@@ -284,8 +284,8 @@ static NSUInteger g_betaFeatures = 0;
                 handler(
                     nil,
                     [NSError errorWithDomain:FacebookSDKDomain
-                                        code:FBErrorPublishInstallResponse
-                                    userInfo:@{ NSLocalizedDescriptionKey : @"A valid App ID was not supplied or detected.  Please call with a valid App ID or configure the app correctly to include FB App ID."}]
+                                        code:GBErrorPublishInstallResponse
+                                    userInfo:@{ NSLocalizedDescriptionKey : @"A valid App ID was not supplied or detected.  Please call with a valid App ID or configure the app correctly to include GB App ID."}]
                 );
             }
             return;
@@ -294,19 +294,19 @@ static NSUInteger g_betaFeatures = 0;
         // We turn off auto-publish, since this was manually called and the expectation
         // is that it's only ever necessary to call this once.
         if (!isAutoPublish) {
-            [FBSettings setShouldAutoPublishInstall:NO];
+            [GBSettings setShouldAutoPublishInstall:NO];
         }
 
         // look for a previous ping & grab the facebook app's current attribution id.
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *pingKey = [NSString stringWithFormat:FBLastAttributionPing, appID, nil];
-        NSString *responseKey = [NSString stringWithFormat:FBLastInstallResponse, appID, nil];
+        NSString *pingKey = [NSString stringWithFormat:GBLastAttributionPing, appID, nil];
+        NSString *responseKey = [NSString stringWithFormat:GBLastInstallResponse, appID, nil];
 
         NSDate *lastPing = [defaults objectForKey:pingKey];
         id lastResponseData = [defaults objectForKey:responseKey];
 
-        NSString *attributionID = [FBUtility attributionID];
-        NSString *advertiserID = [FBUtility advertiserID];
+        NSString *attributionID = [GBUtility attributionID];
+        NSString *advertiserID = [GBUtility advertiserID];
 
         if (lastPing) {
             // Short circuit
@@ -321,14 +321,14 @@ static NSUInteger g_betaFeatures = 0;
               handler(
                 nil,
                 [NSError errorWithDomain:FacebookSDKDomain
-                                    code:FBErrorPublishInstallResponse
+                                    code:GBErrorPublishInstallResponse
                                 userInfo:@{ NSLocalizedDescriptionKey : @"A valid attribution ID or advertiser ID was not found.  Publishing install when neither of them is present is a no-op."}]
               );
           }
           return;
         }
 
-        FBRequestHandler publishCompletionBlock = ^(FBRequestConnection *connection,
+        GBRequestHandler publishCompletionBlock = ^(GBRequestConnection *connection,
                                                     id result,
                                                     NSError *error) {
             @try {
@@ -351,15 +351,15 @@ static NSUInteger g_betaFeatures = 0;
             }
         };
 
-        [FBUtility fetchAppSettings:appID
-                           callback:^(FBFetchedAppSettings *settings, NSError *error) {
+        [GBUtility fetchAppSettings:appID
+                           callback:^(GBFetchedAppSettings *settings, NSError *error) {
             if (!error) {
                 @try {
                     if (settings.supportsAttribution) {
                         // set up the HTTP POST to publish the attribution ID.
-                        NSString *publishPath = [NSString stringWithFormat:FBPublishActivityPath, appID, nil];
-                        NSMutableDictionary<FBGraphObject> *installActivity = [FBGraphObject graphObject];
-                        [installActivity setObject:FBMobileInstallEvent forKey:@"event"];
+                        NSString *publishPath = [NSString stringWithFormat:GBPublishActivityPath, appID, nil];
+                        NSMutableDictionary<GBGraphObject> *installActivity = [GBGraphObject graphObject];
+                        [installActivity setObject:GBMobileInstallEvent forKey:@"event"];
 
                         if (attributionID) {
                             [installActivity setObject:attributionID forKey:@"attribution"];
@@ -367,11 +367,11 @@ static NSUInteger g_betaFeatures = 0;
                         if (advertiserID) {
                             [installActivity setObject:advertiserID forKey:@"advertiser_id"];
                         }
-                        [FBUtility updateParametersWithEventUsageLimitsAndBundleInfo:installActivity];
+                        [GBUtility updateParametersWithEventUsageLimitsAndBundleInfo:installActivity];
 
                         [installActivity setObject:[NSNumber numberWithBool:isAutoPublish].stringValue forKey:@"auto_publish"];
 
-                        FBRequest *publishRequest = [[[FBRequest alloc] initForPostWithSession:nil graphPath:publishPath graphObject:installActivity] autorelease];
+                        GBRequest *publishRequest = [[[GBRequest alloc] initForPostWithSession:nil graphPath:publishPath graphObject:installActivity] autorelease];
                         [publishRequest startWithCompletionHandler:publishCompletionBlock];
                     } else {
                         // the app has turned off install insights.  prevent future attempts.
@@ -383,7 +383,7 @@ static NSUInteger g_betaFeatures = 0;
                           handler(
                             nil,
                             [NSError errorWithDomain:FacebookSDKDomain
-                                                code:FBErrorPublishInstallResponse
+                                                code:GBErrorPublishInstallResponse
                                             userInfo:@{ NSLocalizedDescriptionKey : @"The application has not enabled install insights.  To turn this on, go to developers.facebook.com and enable install insights for the app."}]
                           );
                         }
@@ -395,7 +395,7 @@ static NSUInteger g_betaFeatures = 0;
                         handler(
                             nil,
                             [NSError errorWithDomain:FacebookSDKDomain
-                                                code:FBErrorPublishInstallResponse
+                                                code:GBErrorPublishInstallResponse
                                             userInfo:@{ NSLocalizedDescriptionKey : errorMessage}]
                         );
                     }
@@ -410,7 +410,7 @@ static NSUInteger g_betaFeatures = 0;
             handler(
                 nil,
                 [NSError errorWithDomain:FacebookSDKDomain
-                                    code:FBErrorPublishInstallResponse
+                                    code:GBErrorPublishInstallResponse
                                 userInfo:@{ NSLocalizedDescriptionKey : errorMessage}]
             );
         }

@@ -14,60 +14,60 @@
  * limitations under the License.
  */
 
-#import "FBInsights.h"
+#import "GBInsights.h"
 
 #import <UIKit/UIApplication.h>
 
-#import "FBAppEvents+Internal.h"
-#import "FBAppEvents.h"
-#import "FBSettings.h"
+#import "GBAppEvents+Internal.h"
+#import "GBAppEvents.h"
+#import "GBSettings.h"
 
-// Constant needs to match FBAppEventsLoggingResultNotification.
-NSString *const FBInsightsLoggingResultNotification = @"com.facebook.sdk:FBAppEventsLoggingResultNotification";
+// Constant needs to match GBAppEventsLoggingResultNotification.
+NSString *const GBInsightsLoggingResultNotification = @"com.facebook.sdk:GBAppEventsLoggingResultNotification";
 
-@interface FBInsights ()
+@interface GBInsights ()
 
 @end
 
-@implementation FBInsights
+@implementation GBInsights
 
 + (NSString *)appVersion {
-    return [FBSettings appVersion];
+    return [GBSettings appVersion];
 }
 
 + (void)setAppVersion:(NSString *)appVersion {
-    [FBSettings setAppVersion:appVersion];
+    [GBSettings setAppVersion:appVersion];
 }
 
 + (void)logPurchase:(double)purchaseAmount currency:(NSString *)currency {
-    [FBInsights logPurchase:purchaseAmount currency:currency parameters:nil];
+    [GBInsights logPurchase:purchaseAmount currency:currency parameters:nil];
 }
 
 + (void)logPurchase:(double)purchaseAmount currency:(NSString *)currency parameters:(NSDictionary *)parameters {
-    [FBInsights logPurchase:purchaseAmount currency:currency parameters:parameters session:nil];
+    [GBInsights logPurchase:purchaseAmount currency:currency parameters:parameters session:nil];
 }
 
-+ (void)logPurchase:(double)purchaseAmount currency:(NSString *)currency parameters:(NSDictionary *)parameters session:(FBSession *)session {
-    [FBAppEvents logPurchase:purchaseAmount currency:currency parameters:parameters session:session];
++ (void)logPurchase:(double)purchaseAmount currency:(NSString *)currency parameters:(NSDictionary *)parameters session:(GBSession *)session {
+    [GBAppEvents logPurchase:purchaseAmount currency:currency parameters:parameters session:session];
 }
 
 + (void)logConversionPixel:(NSString *)pixelID valueOfPixel:(double)value {
-    [FBInsights logConversionPixel:pixelID valueOfPixel:value session:nil];
+    [GBInsights logConversionPixel:pixelID valueOfPixel:value session:nil];
 }
-+ (void)logConversionPixel:(NSString *)pixelID valueOfPixel:(double)value session:(FBSession *)session {
-    [FBAppEvents logConversionPixel:pixelID valueOfPixel:value session:session];
-}
-
-+ (FBInsightsFlushBehavior)flushBehavior {
-    return [FBAppEvents flushBehavior];
++ (void)logConversionPixel:(NSString *)pixelID valueOfPixel:(double)value session:(GBSession *)session {
+    [GBAppEvents logConversionPixel:pixelID valueOfPixel:value session:session];
 }
 
-+ (void)setFlushBehavior:(FBInsightsFlushBehavior)flushBehavior {
-    [FBAppEvents setFlushBehavior:flushBehavior];
++ (GBInsightsFlushBehavior)flushBehavior {
+    return [GBAppEvents flushBehavior];
+}
+
++ (void)setFlushBehavior:(GBInsightsFlushBehavior)flushBehavior {
+    [GBAppEvents setFlushBehavior:flushBehavior];
 }
 
 + (void)flush {
-    [FBAppEvents flush];
+    [GBAppEvents flush];
 }
 
 @end

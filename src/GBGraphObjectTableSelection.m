@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-#import "FBGraphObjectTableSelection.h"
+#import "GBGraphObjectTableSelection.h"
 
-#import "FBUtility.h"
+#import "GBUtility.h"
 
-@interface FBGraphObjectTableSelection() <UITableViewDelegate, FBGraphObjectSelectionQueryDelegate>
+@interface GBGraphObjectTableSelection() <UITableViewDelegate, GBGraphObjectSelectionQueryDelegate>
 
-@property (nonatomic, retain) FBGraphObjectTableDataSource *dataSource;
+@property (nonatomic, retain) GBGraphObjectTableDataSource *dataSource;
 @property (nonatomic, retain) NSArray *selection;
 
-- (void)     selectItem:(FBGraphObject *)item
+- (void)     selectItem:(GBGraphObject *)item
                    cell:(UITableViewCell *)cell
   raiseSelectionChanged:(BOOL) raiseSelectionChanged;
 
-- (void)    deselectItem:(FBGraphObject *)item
+- (void)    deselectItem:(GBGraphObject *)item
                     cell:(UITableViewCell *)cell
    raiseSelectionChanged:(BOOL) raiseSelectionChanged;
 
@@ -35,14 +35,14 @@
 
 @end
 
-@implementation FBGraphObjectTableSelection
+@implementation GBGraphObjectTableSelection
 
 @synthesize dataSource = _dataSource;
 @synthesize delegate = _delegate;
 @synthesize selection = _selection;
 @synthesize allowsMultipleSelection = _allowMultipleSelection;
 
-- (id)initWithDataSource:(FBGraphObjectTableDataSource *)dataSource
+- (id)initWithDataSource:(GBGraphObjectTableDataSource *)dataSource
 {
     self = [super init];
 
@@ -77,11 +77,11 @@
     }
 }
 
-- (void)      selectItem:(FBGraphObject *)item
+- (void)      selectItem:(GBGraphObject *)item
                     cell:(UITableViewCell *)cell
    raiseSelectionChanged:(BOOL) raiseSelectionChanged
 {
-    if ([FBUtility graphObjectInArray:self.selection withSameIDAs:item] == nil) {
+    if ([GBUtility graphObjectInArray:self.selection withSameIDAs:item] == nil) {
         NSMutableArray *selection = [[NSMutableArray alloc] initWithArray:self.selection];
         [selection addObject:item];
         self.selection = selection;
@@ -99,7 +99,7 @@
     // Copy this so it doesn't change from under us.
     items = [NSArray arrayWithArray:items];
 
-    for (FBGraphObject *item in items) {
+    for (GBGraphObject *item in items) {
         NSIndexPath *indexPath = [self.dataSource indexPathForItem:item];
 
         UITableViewCell *cell = nil;
@@ -111,11 +111,11 @@
     }
 }
 
-- (void)    deselectItem:(FBGraphObject *)item
+- (void)    deselectItem:(GBGraphObject *)item
                     cell:(UITableViewCell *)cell
    raiseSelectionChanged:(BOOL) raiseSelectionChanged
 {
-    id<FBGraphObject> selectedItem = [FBUtility graphObjectInArray:self.selection withSameIDAs:item];
+    id<GBGraphObject> selectedItem = [GBUtility graphObjectInArray:self.selection withSameIDAs:item];
     if (selectedItem) {
         NSMutableArray *selection = [[NSMutableArray alloc] initWithArray:self.selection];
         [selection removeObject:selectedItem];
@@ -134,7 +134,7 @@
     // Copy this so it doesn't change from under us.
     items = [NSArray arrayWithArray:items];
 
-    for (FBGraphObject *item in items) {
+    for (GBGraphObject *item in items) {
         NSIndexPath *indexPath = [self.dataSource indexPathForItem:item];
 
         UITableViewCell *cell = nil;
@@ -155,15 +155,15 @@
     }
 }
 
-- (BOOL)selectionIncludesItem:(id<FBGraphObject>)item
+- (BOOL)selectionIncludesItem:(id<GBGraphObject>)item
 {
-    return [FBUtility graphObjectInArray:self.selection withSameIDAs:item] != nil;
+    return [GBUtility graphObjectInArray:self.selection withSameIDAs:item] != nil;
 }
 
-#pragma mark - FBGraphObjectSelectionDelegate
+#pragma mark - GBGraphObjectSelectionDelegate
 
-- (BOOL)graphObjectTableDataSource:(FBGraphObjectTableDataSource *)dataSource
-             selectionIncludesItem:(id<FBGraphObject>)item
+- (BOOL)graphObjectTableDataSource:(GBGraphObjectTableDataSource *)dataSource
+             selectionIncludesItem:(id<GBGraphObject>)item
 {
     return [self selectionIncludesItem:item];
 }
@@ -175,7 +175,7 @@
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     // cell may be nil, which is okay, it will pick up the right selected state when it is created.
 
-    FBGraphObject *item = [self.dataSource itemAtIndexPath:indexPath];
+    GBGraphObject *item = [self.dataSource itemAtIndexPath:indexPath];
     if (item != nil) {
         // We want to support multi-select on iOS <5.0, so rather than rely on the table view's notion
         // of selection, just treat this as a toggle. If it is already selected, deselect it, and vice versa.
@@ -200,7 +200,7 @@
         // cell may be nil, which is okay, it will pick up the right selected state when it is created.
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 
-        FBGraphObject *item = [self.dataSource itemAtIndexPath:indexPath];
+        GBGraphObject *item = [self.dataSource itemAtIndexPath:indexPath];
         [self deselectItem:item cell:cell raiseSelectionChanged:NO];
     }
 }
@@ -215,13 +215,13 @@
                                self.delegate];
 
     bool firstItem = YES;
-    for (FBGraphObject *item in self.selection) {
+    for (GBGraphObject *item in self.selection) {
         id objectId = [item objectForKey:@"id"];
         if (!firstItem) {
             [result appendFormat:@", "];
         }
         firstItem = NO;
-        [result appendFormat:@"%@", (objectId != nil) ? objectId : @"<FBGraphObject>"];
+        [result appendFormat:@"%@", (objectId != nil) ? objectId : @"<GBGraphObject>"];
     }
     [result appendFormat:@"]>"];
 

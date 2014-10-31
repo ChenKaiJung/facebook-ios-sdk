@@ -14,30 +14,30 @@
  * limitations under the License.
  */
 
-#import "FBShareDialogParams.h"
+#import "GBShareDialogParams.h"
 
-#import "FBAppBridge.h"
-#import "FBDialogsParams+Internal.h"
-#import "FBLogger.h"
-#import "FBUtility.h"
+#import "GBAppBridge.h"
+#import "GBDialogsParams+Internal.h"
+#import "GBLogger.h"
+#import "GBUtility.h"
 
-#ifndef FB_BUILD_ONLY
-#define FB_BUILD_ONLY
+#ifndef GB_BUILD_ONLY
+#define GB_BUILD_ONLY
 #endif
 
-#import "FBSettings.h"
+#import "GBSettings.h"
 
-#ifdef FB_BUILD_ONLY
-#undef FB_BUILD_ONLY
+#ifdef GB_BUILD_ONLY
+#undef GB_BUILD_ONLY
 #endif
 
-@implementation FBShareDialogParams
+@implementation GBShareDialogParams
 
-static NSString *const kFBHttpScheme  = @"http";
-static NSString *const kFBHttpsScheme = @"https";
+static NSString *const kGBHttpScheme  = @"http";
+static NSString *const kGBHttpsScheme = @"https";
 
-static NSString *const kFBShareDialogBetaVersion = @"20130214";
-static NSString *const kFBShareDialogProdVersion = @"20130410";
+static NSString *const kGBShareDialogBetaVersion = @"20130214";
+static NSString *const kGBShareDialogProdVersion = @"20130410";
 
 - (void)dealloc
 {
@@ -74,12 +74,12 @@ static NSString *const kFBShareDialogProdVersion = @"20130410";
     if (self.friends) {
         NSMutableArray *tags = [NSMutableArray arrayWithCapacity:self.friends.count];
         for (id tag in self.friends) {
-            [tags addObject:[FBUtility stringFBIDFromObject:tag]];
+            [tags addObject:[GBUtility stringGBIDFromObject:tag]];
         }
         [args setObject:tags forKey:@"tags"];
     }
     if (self.place) {
-        [args setObject:[FBUtility stringFBIDFromObject:self.place] forKey:@"place"];
+        [args setObject:[GBUtility stringGBIDFromObject:self.place] forKey:@"place"];
     }
     if (self.ref) {
         [args setObject:self.ref forKey:@"ref"];
@@ -94,8 +94,8 @@ static NSString *const kFBShareDialogProdVersion = @"20130410";
     [_link autorelease];
     if(link && ![self isSupportedScheme:link.scheme]) {
         _link = nil;
-        [FBLogger singleShotLogEntry:FBLoggingBehaviorDeveloperErrors
-                            logEntry:@"FBShareDialogParams: only \"http\" or \"https\" schemes are supported for link shares"];
+        [GBLogger singleShotLogEntry:GBLoggingBehaviorDeveloperErrors
+                            logEntry:@"GBShareDialogParams: only \"http\" or \"https\" schemes are supported for link shares"];
     } else {
         _link = [link copy];
     }
@@ -106,8 +106,8 @@ static NSString *const kFBShareDialogProdVersion = @"20130410";
     [_picture autorelease];
     if (picture && ![self isSupportedScheme:picture.scheme]) {
         _picture = nil;
-        [FBLogger singleShotLogEntry:FBLoggingBehaviorDeveloperErrors
-                            logEntry:@"FBShareDialogParams: only \"http\" or \"https\" schemes are supported for link thumbnails"];
+        [GBLogger singleShotLogEntry:GBLoggingBehaviorDeveloperErrors
+                            logEntry:@"GBShareDialogParams: only \"http\" or \"https\" schemes are supported for link thumbnails"];
     } else {
         _picture = [picture copy];
     }
@@ -115,8 +115,8 @@ static NSString *const kFBShareDialogProdVersion = @"20130410";
 
 - (BOOL)isSupportedScheme:(NSString *)scheme
 {
-    return [[scheme lowercaseString] isEqualToString:kFBHttpScheme] ||
-           [[scheme lowercaseString] isEqualToString:kFBHttpsScheme];
+    return [[scheme lowercaseString] isEqualToString:kGBHttpScheme] ||
+           [[scheme lowercaseString] isEqualToString:kGBHttpsScheme];
 }
 
 - (NSString *)appBridgeVersion
@@ -128,13 +128,13 @@ static NSString *const kFBShareDialogProdVersion = @"20130410";
         return nil;
     }
 
-    NSString *prodVersion = [FBAppBridge installedFBNativeAppVersionForMethod:@"share"
-                                                                   minVersion:kFBShareDialogProdVersion];
+    NSString *prodVersion = [GBAppBridge installedGBNativeAppVersionForMethod:@"share"
+                                                                   minVersion:kGBShareDialogProdVersion];
     if (!prodVersion) {
-        if (![FBSettings isBetaFeatureEnabled:FBBetaFeaturesShareDialog]) {
+        if (![GBSettings isBetaFeatureEnabled:GBBetaFeaturesShareDialog]) {
             return nil;
         }
-        return [FBAppBridge installedFBNativeAppVersionForMethod:@"share" minVersion:kFBShareDialogBetaVersion];
+        return [GBAppBridge installedGBNativeAppVersionForMethod:@"share" minVersion:kGBShareDialogBetaVersion];
     }
     return prodVersion;
 }

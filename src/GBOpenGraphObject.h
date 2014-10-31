@@ -16,21 +16,21 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBGraphObject.h"
+#import "GBGraphObject.h"
 
 /*!
  @protocol
 
  @abstract
- The `FBOpenGraphObject` protocol is the base protocol for use in posting and retrieving Open Graph objects.
- It inherits from the `FBGraphObject` protocol; you may derive custome protocols from `FBOpenGraphObject` in order
+ The `GBOpenGraphObject` protocol is the base protocol for use in posting and retrieving Open Graph objects.
+ It inherits from the `GBGraphObject` protocol; you may derive custome protocols from `GBOpenGraphObject` in order
  implement typed access to your application's custom objects.
 
  @discussion
  Represents an Open Graph custom object, to be used directly, or from which to
  derive custom action protocols with custom properties.
  */
-@protocol FBOpenGraphObject<FBGraphObject>
+@protocol GBOpenGraphObject<GBGraphObject>
 
 /*!
  @property
@@ -72,6 +72,6 @@
  @property
  @abstract Typed access to action's data, which is a dictionary of custom properties
  */
-@property (retain, nonatomic) id<FBGraphObject>     data;
+@property (retain, nonatomic) id<GBGraphObject>     data;
 
 @end

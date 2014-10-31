@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-#import "FBTaskCompletionSource.h"
+#import "GBTaskCompletionSource.h"
 
-#import "FBTask.h"
+#import "GBTask.h"
 
-@interface FBTaskCompletionSource ()
-@property (nonatomic, retain, readwrite) FBTask *task;
+@interface GBTaskCompletionSource ()
+@property (nonatomic, retain, readwrite) GBTask *task;
 @end
 
-@interface FBTask (FBTaskCompletionSource)
+@interface GBTask (GBTaskCompletionSource)
 - (void)setResult:(id)result;
 - (void)setError:(NSError *)error;
 - (void)setException:(NSException *)exception;
@@ -33,15 +33,15 @@
 - (BOOL)trySetCancelled;
 @end
 
-@implementation FBTaskCompletionSource
+@implementation GBTaskCompletionSource
 
-+ (FBTaskCompletionSource *)taskCompletionSource {
-    return [[[FBTaskCompletionSource alloc] init] autorelease];
++ (GBTaskCompletionSource *)taskCompletionSource {
+    return [[[GBTaskCompletionSource alloc] init] autorelease];
 }
 
 - (id)init {
     if ((self = [super init])) {
-        _task = [[FBTask alloc] init];
+        _task = [[GBTask alloc] init];
     }
     return self;
 }

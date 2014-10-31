@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-#import "FBSessionAppEventsState.h"
-#import "FBUtility.h"
+#import "GBSessionAppEventsState.h"
+#import "GBUtility.h"
 
-NSString *const kFBAppEventIsImplicit = @"isImplicit";
+NSString *const kGBAppEventIsImplicit = @"isImplicit";
 
-@interface FBSessionAppEventsState ()
+@interface GBSessionAppEventsState ()
 
 @property (readwrite, retain) NSMutableArray *accumulatedEvents;
 @property (readwrite, retain) NSMutableArray *inFlightEvents;
 
 @end
 
-@implementation FBSessionAppEventsState
+@implementation GBSessionAppEventsState
 
 const int MAX_ACCUMULATED_LOG_EVENTS                 = 1000;
 
@@ -59,7 +59,7 @@ const int MAX_ACCUMULATED_LOG_EVENTS                 = 1000;
             self.numSkippedEventsDueToFullBuffer++;
         } else {
             [self.accumulatedEvents addObject:@{@"event" : eventDictionary,
-                                                kFBAppEventIsImplicit : [NSNumber numberWithBool:isImplicit],
+                                                kGBAppEventIsImplicit : [NSNumber numberWithBool:isImplicit],
                                                }];
         }
     }
@@ -85,7 +85,7 @@ const int MAX_ACCUMULATED_LOG_EVENTS                 = 1000;
     NSMutableArray *eventArray = [[NSMutableArray alloc] initWithCapacity:self.inFlightEvents.count];
 
     for (NSDictionary *eventAndImplicitFlag in self.inFlightEvents) {
-        if (!includeImplicitEvents && [[eventAndImplicitFlag objectForKey:kFBAppEventIsImplicit] boolValue]) {
+        if (!includeImplicitEvents && [[eventAndImplicitFlag objectForKey:kGBAppEventIsImplicit] boolValue]) {
             continue;
         }
         [eventArray addObject:[eventAndImplicitFlag objectForKey:@"event"]];
@@ -93,7 +93,7 @@ const int MAX_ACCUMULATED_LOG_EVENTS                 = 1000;
 
     NSString *jsonEncodedEvents = nil;
     if (eventArray.count != 0) {
-        jsonEncodedEvents = [FBUtility simpleJSONEncode:eventArray];
+        jsonEncodedEvents = [GBUtility simpleJSONEncode:eventArray];
     }
 
     [eventArray release];

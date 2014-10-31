@@ -18,32 +18,32 @@
 #import <Foundation/Foundation.h>
 
 // up-front decl's
-@class FBAccessTokenData;
-@class FBSession;
-@class FBSessionTokenCachingStrategy;
+@class GBAccessTokenData;
+@class GBSession;
+@class GBSessionTokenCachingStrategy;
 
-#define FB_SESSIONSTATETERMINALBIT (1 << 8)
+#define GB_SESSIONSTATETERMINALBIT (1 << 8)
 
-#define FB_SESSIONSTATEOPENBIT (1 << 9)
+#define GB_SESSIONSTATEOPENBIT (1 << 9)
 
 /*
  * Constants used by NSNotificationCenter for active session notification
  */
 
 /*! NSNotificationCenter name indicating that a new active session was set */
-extern NSString *const FBSessionDidSetActiveSessionNotification;
+extern NSString *const GBSessionDidSetActiveSessionNotification;
 
 /*! NSNotificationCenter name indicating that an active session was unset */
-extern NSString *const FBSessionDidUnsetActiveSessionNotification;
+extern NSString *const GBSessionDidUnsetActiveSessionNotification;
 
 /*! NSNotificationCenter name indicating that the active session is open */
-extern NSString *const FBSessionDidBecomeOpenActiveSessionNotification;
+extern NSString *const GBSessionDidBecomeOpenActiveSessionNotification;
 
 /*! NSNotificationCenter name indicating that there is no longer an open active session */
-extern NSString *const FBSessionDidBecomeClosedActiveSessionNotification;
+extern NSString *const GBSessionDidBecomeClosedActiveSessionNotification;
 
 /*!
- @typedef FBSessionState enum
+ @typedef GBSessionState enum
 
  @abstract Passed to handler block each time a session state changes
 
@@ -51,32 +51,32 @@ extern NSString *const FBSessionDidBecomeClosedActiveSessionNotification;
  */
 typedef enum {
     /*! One of two initial states indicating that no valid cached token was found */
-    FBSessionStateCreated                   = 0,
+    GBSessionStateCreated                   = 0,
     /*! One of two initial session states indicating that a cached token was loaded;
      when a session is in this state, a call to open* will result in an open session,
      without UX or app-switching*/
-    FBSessionStateCreatedTokenLoaded        = 1,
+    GBSessionStateCreatedTokenLoaded        = 1,
     /*! One of three pre-open session states indicating that an attempt to open the session
      is underway*/
-    FBSessionStateCreatedOpening            = 2,
+    GBSessionStateCreatedOpening            = 2,
 
     /*! Open session state indicating user has logged in or a cached token is available */
-    FBSessionStateOpen                      = 1 | FB_SESSIONSTATEOPENBIT,
+    GBSessionStateOpen                      = 1 | GB_SESSIONSTATEOPENBIT,
     /*! Open session state indicating token has been extended */
-    FBSessionStateOpenTokenExtended         = 2 | FB_SESSIONSTATEOPENBIT,
+    GBSessionStateOpenTokenExtended         = 2 | GB_SESSIONSTATEOPENBIT,
 
     /*! Closed session state indicating that a login attempt failed */
-    FBSessionStateClosedLoginFailed         = 1 | FB_SESSIONSTATETERMINALBIT, // NSError obj w/more info
+    GBSessionStateClosedLoginFailed         = 1 | GB_SESSIONSTATETERMINALBIT, // NSError obj w/more info
     /*! Closed session state indicating that the session was closed, but the users token
         remains cached on the device for later use */
-    FBSessionStateClosed                    = 2 | FB_SESSIONSTATETERMINALBIT, // "
-} FBSessionState;
+    GBSessionStateClosed                    = 2 | GB_SESSIONSTATETERMINALBIT, // "
+} GBSessionState;
 
 /*! helper macro to test for states that imply an open session */
-#define FB_ISSESSIONOPENWITHSTATE(state) (0 != (state & FB_SESSIONSTATEOPENBIT))
+#define GB_ISSESSIONOPENWITHSTATE(state) (0 != (state & GB_SESSIONSTATEOPENBIT))
 
 /*! helper macro to test for states that are terminal */
-#define FB_ISSESSIONSTATETERMINAL(state) (0 != (state & FB_SESSIONSTATETERMINALBIT))
+#define GB_ISSESSIONSTATETERMINAL(state) (0 != (state & GB_SESSIONSTATETERMINALBIT))
 
 /*!
  @typedef FBSessionLoginBehavior enum
@@ -101,17 +101,17 @@ typedef enum {
  */
 typedef enum {
     /*! Attempt Facebook Login, ask user for credentials if necessary */
-    FBSessionLoginBehaviorWithFallbackToWebView      = 0,
+    GBSessionLoginBehaviorWithFallbackToWebView      = 0,
     /*! Attempt Facebook Login, no direct request for credentials will be made */
-    FBSessionLoginBehaviorWithNoFallbackToWebView    = 1,
+    GBSessionLoginBehaviorWithNoFallbackToWebView    = 1,
     /*! Only attempt WebView Login; ask user for credentials */
-    FBSessionLoginBehaviorForcingWebView             = 2,
+    GBSessionLoginBehaviorForcingWebView             = 2,
     /*! Attempt Facebook Login, prefering system account and falling back to fast app switch if necessary */
-    FBSessionLoginBehaviorUseSystemAccountIfPresent  = 3,
-} FBSessionLoginBehavior;
+    GBSessionLoginBehaviorUseSystemAccountIfPresent  = 3,
+} GBSessionLoginBehavior;
 
 /*!
- @typedef FBSessionDefaultAudience enum
+ @typedef GBSessionDefaultAudience enum
 
  @abstract
  Passed to open to indicate which default audience to use for sessions that post data to Facebook.
@@ -124,17 +124,17 @@ typedef enum {
  */
 typedef enum {
     /*! No audience needed; this value is useful for cases where data will only be read from Facebook */
-    FBSessionDefaultAudienceNone                = 0,
+    GBSessionDefaultAudienceNone                = 0,
     /*! Indicates that only the user is able to see posts made by the application */
-    FBSessionDefaultAudienceOnlyMe              = 10,
+    GBSessionDefaultAudienceOnlyMe              = 10,
     /*! Indicates that the user's friends are able to see posts made by the application */
-    FBSessionDefaultAudienceFriends             = 20,
+    GBSessionDefaultAudienceFriends             = 20,
     /*! Indicates that all Facebook users are able to see posts made by the application */
-    FBSessionDefaultAudienceEveryone            = 30,
-} FBSessionDefaultAudience;
+    GBSessionDefaultAudienceEveryone            = 30,
+} GBSessionDefaultAudience;
 
 /*!
- @typedef FBSessionLoginType enum
+ @typedef GBSessionLoginType enum
 
  @abstract
  Used as the type of the loginType property in order to specify what underlying technology was used to
@@ -148,18 +148,18 @@ typedef enum {
  */
 typedef enum {
     /*! A login type has not yet been established */
-    FBSessionLoginTypeNone                      = 0,
+    GBSessionLoginTypeNone                      = 0,
     /*! A system integrated account was used to log the user into the application */
-    FBSessionLoginTypeSystemAccount             = 1,
+    GBSessionLoginTypeSystemAccount             = 1,
     /*! The Facebook native application was used to log the user into the application */
-    FBSessionLoginTypeFacebookApplication       = 2,
+    GBSessionLoginTypeFacebookApplication       = 2,
     /*! Safari was used to log the user into the application */
-    FBSessionLoginTypeFacebookViaSafari         = 3,
+    GBSessionLoginTypeFacebookViaSafari         = 3,
     /*! A web view was used to log the user into the application */
-    FBSessionLoginTypeWebView                   = 4,
+    GBSessionLoginTypeWebView                   = 4,
     /*! A test user was used to create an open session */
-    FBSessionLoginTypeTestUser                  = 5,
-} FBSessionLoginType;
+    GBSessionLoginTypeTestUser                  = 5,
+} GBSessionLoginType;
 
 /*!
  @typedef
@@ -174,8 +174,8 @@ typedef enum {
   request the permissions closer to the operation that requires it (e.g., when
   the user performs some action).
  */
-typedef void (^FBSessionStateHandler)(FBSession *session,
-                                       FBSessionState status,
+typedef void (^GBSessionStateHandler)(GBSession *session,
+                                       GBSessionState status,
                                        NSError *error);
 
 /*!
@@ -193,7 +193,7 @@ typedef void (^FBSessionStateHandler)(FBSession *session,
  request the permissions closer to the operation that requires it (e.g., when
  the user performs some action).
  */
-typedef void (^FBSessionRequestPermissionResultHandler)(FBSession *session,
+typedef void (^GBSessionRequestPermissionResultHandler)(GBSession *session,
                                                         NSError *error);
 
 /*!
@@ -204,7 +204,7 @@ typedef void (^FBSessionRequestPermissionResultHandler)(FBSession *session,
  @discussion You should use the preferred FBSessionRequestPermissionHandler typedef rather than
  this synonym, which has been deprecated.
  */
-typedef FBSessionRequestPermissionResultHandler FBSessionReauthorizeResultHandler __attribute__((deprecated));
+typedef GBSessionRequestPermissionResultHandler GBSessionReauthorizeResultHandler __attribute__((deprecated));
 
 /*!
  @typedef
@@ -212,10 +212,10 @@ typedef FBSessionRequestPermissionResultHandler FBSessionReauthorizeResultHandle
  @abstract Block type used to define blocks called for system credential renewals.
  @discussion
  */
-typedef void (^FBSessionRenewSystemCredentialsHandler)(ACAccountCredentialRenewResult result, NSError *error) ;
+typedef void (^GBSessionRenewSystemCredentialsHandler)(ACAccountCredentialRenewResult result, NSError *error) ;
 
 /*!
- @class FBSession
+ @class GBSession
 
  @abstract
  The `FBSession` object is used to authenticate a user and manage the user's session. After
@@ -235,7 +235,7 @@ typedef void (^FBSessionRenewSystemCredentialsHandler)(ACAccountCredentialRenewR
 
  2. The object supports Key-Value Observing (KVO) for property changes.
  */
-@interface FBSession : NSObject
+@interface GBSession : NSObject
 
 /*!
  @methodgroup Creating a session
@@ -289,7 +289,7 @@ typedef void (^FBSessionRenewSystemCredentialsHandler)(ACAccountCredentialRenewR
 - (id)initWithAppID:(NSString*)appID
         permissions:(NSArray*)permissions
     urlSchemeSuffix:(NSString*)urlSchemeSuffix
- tokenCacheStrategy:(FBSessionTokenCachingStrategy*)tokenCachingStrategy;
+ tokenCacheStrategy:(GBSessionTokenCachingStrategy*)tokenCachingStrategy;
 
 /*!
  @method
@@ -313,9 +313,9 @@ typedef void (^FBSessionRenewSystemCredentialsHandler)(ACAccountCredentialRenewR
  */
 - (id)initWithAppID:(NSString*)appID
         permissions:(NSArray*)permissions
-    defaultAudience:(FBSessionDefaultAudience)defaultAudience
+    defaultAudience:(GBSessionDefaultAudience)defaultAudience
     urlSchemeSuffix:(NSString*)urlSchemeSuffix
- tokenCacheStrategy:(FBSessionTokenCachingStrategy*)tokenCachingStrategy;
+ tokenCacheStrategy:(GBSessionTokenCachingStrategy*)tokenCachingStrategy;
 
 // instance readonly properties
 
@@ -323,7 +323,7 @@ typedef void (^FBSessionRenewSystemCredentialsHandler)(ACAccountCredentialRenewR
 @property (readonly) BOOL isOpen;
 
 /*! @abstract Detailed session state */
-@property (readonly) FBSessionState state;
+@property (readonly) GBSessionState state;
 
 /*! @abstract Identifies the Facebook app which the session object represents. */
 @property (readonly, copy) NSString *appID;
@@ -346,11 +346,11 @@ __attribute__((deprecated));
 
 /*! @abstract Specifies the login type used to authenticate the user.
     @discussion Deprecated. Use the `accessTokenData` property. */
-@property(readonly) FBSessionLoginType loginType
+@property(readonly) GBSessionLoginType loginType
 __attribute__((deprecated));
 
 /*! @abstract Gets the FBAccessTokenData for the session */
-@property (readonly, copy) FBAccessTokenData *accessTokenData;
+@property (readonly, copy) GBAccessTokenData *accessTokenData;
 
 /*! @abstract Gets the code for the session */
 @property (readonly, copy) NSString *code;
@@ -382,7 +382,7 @@ __attribute__((deprecated));
 
  @param handler A block to call with the state changes. The default is nil.
 */
-- (void)openWithCompletionHandler:(FBSessionStateHandler)handler;
+- (void)openWithCompletionHandler:(GBSessionStateHandler)handler;
 
 /*!
  @method
@@ -394,7 +394,7 @@ __attribute__((deprecated));
  @param handler A block to call with the state changes. The default is nil.
  */
 - (void)openWithRedirectUri:(NSString*)redirectUri
-          completionHandler:(FBSessionStateHandler)handler;
+          completionHandler:(GBSessionStateHandler)handler;
 
 /*!
  @method
@@ -417,8 +417,8 @@ __attribute__((deprecated));
  is to allow Facebook Login, with fallback to Inline Facebook Login.
  @param handler A block to call with session state changes. The default is nil.
  */
-- (void)openWithBehavior:(FBSessionLoginBehavior)behavior
-       completionHandler:(FBSessionStateHandler)handler;
+- (void)openWithBehavior:(GBSessionLoginBehavior)behavior
+       completionHandler:(GBSessionStateHandler)handler;
 
 /*!
  @method
@@ -440,7 +440,7 @@ __attribute__((deprecated));
  @param accessTokenData The token data. See `FBAccessTokenData` for construction methods.
  @param handler A block to call with session state changes. The default is nil.
  */
-- (BOOL)openFromAccessTokenData:(FBAccessTokenData *)accessTokenData completionHandler:(FBSessionStateHandler) handler;
+- (BOOL)openFromAccessTokenData:(GBAccessTokenData *)accessTokenData completionHandler:(GBSessionStateHandler) handler;
 
 /*!
  @abstract
@@ -469,8 +469,8 @@ __attribute__((deprecated));
  (e.g. reauthorizeWithReadPermissions or reauthorizeWithPublishPermissions)
  */
 - (void)reauthorizeWithPermissions:(NSArray*)permissions
-                          behavior:(FBSessionLoginBehavior)behavior
-                 completionHandler:(FBSessionReauthorizeResultHandler)handler
+                          behavior:(GBSessionLoginBehavior)behavior
+                 completionHandler:(GBSessionReauthorizeResultHandler)handler
  __attribute__((deprecated));
 
 /*!
@@ -486,7 +486,7 @@ __attribute__((deprecated));
  using <[FBSession requestNewReadPermissions:completionHandler:]>, which is preferred for readability.
  */
 - (void)reauthorizeWithReadPermissions:(NSArray*)readPermissions
-                     completionHandler:(FBSessionReauthorizeResultHandler)handler
+                     completionHandler:(GBSessionReauthorizeResultHandler)handler
 __attribute__((deprecated));
 
 /*!
@@ -504,8 +504,8 @@ __attribute__((deprecated));
  Consider using <[FBSession requestNewPublishPermissions:defaultAudience:completionHandler:]>, which is preferred for readability.
  */
 - (void)reauthorizeWithPublishPermissions:(NSArray*)writePermissions
-                          defaultAudience:(FBSessionDefaultAudience)defaultAudience
-                        completionHandler:(FBSessionReauthorizeResultHandler)handler
+                          defaultAudience:(GBSessionDefaultAudience)defaultAudience
+                        completionHandler:(GBSessionReauthorizeResultHandler)handler
 __attribute__((deprecated));
 
 /*!
@@ -522,7 +522,7 @@ __attribute__((deprecated));
  for each state-change for the session.
  */
 - (void)requestNewReadPermissions:(NSArray*)readPermissions
-                completionHandler:(FBSessionRequestPermissionResultHandler)handler;
+                completionHandler:(GBSessionRequestPermissionResultHandler)handler;
 
 /*!
  @abstract
@@ -540,8 +540,8 @@ __attribute__((deprecated));
  for each state-change for the session.
  */
 - (void)requestNewPublishPermissions:(NSArray*)writePermissions
-                     defaultAudience:(FBSessionDefaultAudience)defaultAudience
-                   completionHandler:(FBSessionRequestPermissionResultHandler)handler;
+                     defaultAudience:(GBSessionDefaultAudience)defaultAudience
+                   completionHandler:(GBSessionRequestPermissionResultHandler)handler;
 
 /*!
  @abstract
@@ -572,7 +572,7 @@ __attribute__((deprecated));
  but still want to assign a `FBSessionStateHandler` block. This can happen when the SDK
  opens a session from an app link.
 */
-- (void)setStateChangeHandler:(FBSessionStateHandler)stateChangeHandler;
+- (void)setStateChangeHandler:(GBSessionStateHandler)stateChangeHandler;
 
 /*!
  @methodgroup Class methods
@@ -640,7 +640,7 @@ __attribute__((deprecated));
  */
 + (BOOL)openActiveSessionWithPermissions:(NSArray*)permissions
                             allowLoginUI:(BOOL)allowLoginUI
-                       completionHandler:(FBSessionStateHandler)handler
+                       completionHandler:(GBSessionStateHandler)handler
  __attribute__((deprecated));
 
 /*!
@@ -674,7 +674,7 @@ __attribute__((deprecated));
  */
 + (BOOL)openActiveSessionWithReadPermissions:(NSArray*)readPermissions
                                 allowLoginUI:(BOOL)allowLoginUI
-                           completionHandler:(FBSessionStateHandler)handler;
+                           completionHandler:(GBSessionStateHandler)handler;
 
 /*!
  @abstract
@@ -708,9 +708,9 @@ __attribute__((deprecated));
 
  */
 + (BOOL)openActiveSessionWithPublishPermissions:(NSArray*)publishPermissions
-                                defaultAudience:(FBSessionDefaultAudience)defaultAudience
+                                defaultAudience:(GBSessionDefaultAudience)defaultAudience
                                    allowLoginUI:(BOOL)allowLoginUI
-                              completionHandler:(FBSessionStateHandler)handler;
+                              completionHandler:(GBSessionStateHandler)handler;
 
 /*!
  @abstract
@@ -723,7 +723,7 @@ __attribute__((deprecated));
  is active, a session object is instatiated and returned; in this case open must be called on the session
  in order for it to be useable for communication with Facebook.
  */
-+ (FBSession*)activeSession;
++ (GBSession*)activeSession;
 
 /*!
  @abstract
@@ -736,7 +736,7 @@ __attribute__((deprecated));
  If an application prefers the flexibilility of directly instantiating a session object, an active
  session can be set directly.
  */
-+ (FBSession*)setActiveSession:(FBSession*)session;
++ (GBSession*)setActiveSession:(GBSession*)session;
 
 /*!
  @method
@@ -800,5 +800,5 @@ __attribute__((deprecated));
  This is safe to call (and will surface an error to the handler) on versions of iOS before 6 or if the user
  logged in via Safari or Facebook SSO.
 */
-+ (void)renewSystemCredentials:(FBSessionRenewSystemCredentialsHandler)handler;
++ (void)renewSystemCredentials:(GBSessionRenewSystemCredentialsHandler)handler;
 @end

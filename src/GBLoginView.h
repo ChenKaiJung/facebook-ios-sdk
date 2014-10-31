@@ -16,22 +16,22 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FBGraphUser.h"
-#import "FBSession.h"
+#import "GBGraphUser.h"
+#import "GBSession.h"
 
-@protocol FBLoginViewDelegate;
+@protocol GBLoginViewDelegate;
 
 /*!
- @class FBLoginView
- @abstract FBLoginView is a custom UIView that renders a button to login or logout based on the
-  state of `FBSession.activeSession`
+ @class GBLoginView
+ @abstract GBLoginView is a custom UIView that renders a button to login or logout based on the
+  state of `GBSession.activeSession`
 
- @discussion This view is closely associated with `FBSession.activeSession`. Upon initialization,
+ @discussion This view is closely associated with `GBSession.activeSession`. Upon initialization,
   it will attempt to open an active session without UI if the current active session is not open.
 
-  The FBLoginView instance also monitors for changes to the active session.
+  The GBLoginView instance also monitors for changes to the active session.
  */
-@interface FBLoginView : UIView
+@interface GBLoginView : UIView
 
 /*!
  @abstract
@@ -57,8 +57,8 @@
  The publish permissions to request if the user logs in via this view.
 
  @discussion
- Note, that a defaultAudience value of FBSessionDefaultAudienceOnlyMe, FBSessionDefaultAudienceEveryone, or
- FBSessionDefaultAudienceFriends should be set if publish permissions are specified. Additionally, when publish
+ Note, that a defaultAudience value of GBSessionDefaultAudienceOnlyMe, GBSessionDefaultAudienceEveryone, or
+ GBSessionDefaultAudienceFriends should be set if publish permissions are specified. Additionally, when publish
  permissions are specified, then read should not be specified.
  */
 @property (nonatomic, copy) NSArray *publishPermissions;
@@ -67,21 +67,21 @@
  @abstract
  The default audience to use, if publish permissions are requested at login time.
  */
-@property (nonatomic, assign) FBSessionDefaultAudience defaultAudience;
+@property (nonatomic, assign) GBSessionDefaultAudience defaultAudience;
 
 /*!
  @abstract
  The login behavior for the active session if the user logs in via this view
 
  @discussion
- The default value is FBSessionLoginBehaviorUseSystemAccountIfPresent.
+ The default value is GBSessionLoginBehaviorUseSystemAccountIfPresent.
  */
-@property (nonatomic) FBSessionLoginBehavior loginBehavior;
+@property (nonatomic) GBSessionLoginBehavior loginBehavior;
 
 
 /*!
  @abstract
- Initializes and returns an `FBLoginView` object.  The underlying session has basic permissions granted to it.
+ Initializes and returns an `GBLoginView` object.  The underlying session has basic permissions granted to it.
  */
 - (id)init;
 
@@ -89,7 +89,7 @@
  @method
 
  @abstract
- Initializes and returns an `FBLoginView` object constructed with the specified permissions.
+ Initializes and returns an `GBLoginView` object constructed with the specified permissions.
 
  @param permissions  An array of strings representing the permissions to request during the
  authentication flow. A value of nil will indicates basic permissions.
@@ -103,7 +103,7 @@
  @method
 
  @abstract
- Initializes and returns an `FBLoginView` object constructed with the specified permissions.
+ Initializes and returns an `GBLoginView` object constructed with the specified permissions.
 
  @param readPermissions  An array of strings representing the read permissions to request during the
  authentication flow. A value of nil will indicates basic permissions.
@@ -115,23 +115,23 @@
  @method
 
  @abstract
- Initializes and returns an `FBLoginView` object constructed with the specified permissions.
+ Initializes and returns an `GBLoginView` object constructed with the specified permissions.
 
  @param publishPermissions  An array of strings representing the publish permissions to request during the
  authentication flow.
 
- @param defaultAudience  An audience for published posts; note that FBSessionDefaultAudienceNone is not valid
+ @param defaultAudience  An audience for published posts; note that GBSessionDefaultAudienceNone is not valid
  for permission requests that include publish or manage permissions.
 
  */
 - (id)initWithPublishPermissions:(NSArray *)publishPermissions
-                 defaultAudience:(FBSessionDefaultAudience)defaultAudience;
+                 defaultAudience:(GBSessionDefaultAudience)defaultAudience;
 
 /*!
  @abstract
  The delegate object that receives updates for selection and display control.
  */
-@property (nonatomic, assign) IBOutlet id<FBLoginViewDelegate> delegate;
+@property (nonatomic, assign) IBOutlet id<GBLoginViewDelegate> delegate;
 
 @end
 
@@ -139,10 +139,10 @@
  @protocol
 
  @abstract
- The `FBLoginViewDelegate` protocol defines the methods used to receive event
- notifications from `FBLoginView` objects.
+ The `GBLoginViewDelegate` protocol defines the methods used to receive event
+ notifications from `GBLoginView` objects.
  */
-@protocol FBLoginViewDelegate <NSObject>
+@protocol GBLoginViewDelegate <NSObject>
 
 @optional
 
@@ -152,7 +152,7 @@
 
  @param loginView   The login view that transitioned its view mode
  */
-- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView;
+- (void)loginViewShowingLoggedInUser:(GBLoginView *)loginView;
 
 /*!
  @abstract
@@ -162,8 +162,8 @@
 
  @param user        The user info object describing the logged in user
  */
-- (void)loginViewFetchedUserInfo:(FBLoginView *)loginView
-                            user:(id<FBGraphUser>)user;
+- (void)loginViewFetchedUserInfo:(GBLoginView *)loginView
+                            user:(id<GBGraphUser>)user;
 
 /*!
  @abstract
@@ -171,7 +171,7 @@
 
  @param loginView   The login view that transitioned its view mode
  */
-- (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView;
+- (void)loginViewShowingLoggedOutUser:(GBLoginView *)loginView;
 
 /*!
  @abstract
@@ -182,7 +182,7 @@
  @discussion See https://developers.facebook.com/docs/technical-guides/iossdk/errors/
  for error handling best practices.
  */
-- (void)loginView:(FBLoginView *)loginView
+- (void)loginView:(GBLoginView *)loginView
       handleError:(NSError *)error;
 
 @end

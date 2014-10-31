@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-#import "FBDialog.h"
+#import "GBDialog.h"
 
-#import "FBDialogClosePNG.h"
-#import "FBFrictionlessRequestSettings.h"
-#import "FBUtility.h"
-#import "Facebook.h"
+#import "GBDialogClosePNG.h"
+#import "GBFrictionlessRequestSettings.h"
+#import "GBUtility.h"
+#import "Gbomb.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // global
@@ -34,7 +34,7 @@ static CGFloat kBorderWidth = 10;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-static BOOL FBIsDeviceIPad() {
+static BOOL GBIsDeviceIPad() {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 30200
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         return YES;
@@ -45,7 +45,7 @@ static BOOL FBIsDeviceIPad() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation FBDialog {
+@implementation GBDialog {
     BOOL _everShown;
 }
 
@@ -169,7 +169,7 @@ params   = _params;
                                  frame.origin.y + ceil(frame.size.height/2));
 
     CGFloat scale_factor = 1.0f;
-    if (FBIsDeviceIPad()) {
+    if (GBIsDeviceIPad()) {
         // On the iPad the dialog's dimensions should only be 60% of the screen's
         scale_factor = 0.6f;
     }
@@ -222,7 +222,7 @@ params   = _params;
         NSMutableArray* pairs = [NSMutableArray array];
         for (NSString* key in params.keyEnumerator) {
             NSString* value = [params objectForKey:key];
-            NSString* escaped_value = [FBUtility stringByURLEncodingString:value];
+            NSString* escaped_value = [GBUtility stringByURLEncodingString:value];
             [pairs addObject:[NSString stringWithFormat:@"%@=%@", key, escaped_value]];
         }
 
@@ -299,8 +299,8 @@ params   = _params;
     NSString *recipientJson = [self getStringFromUrl:[url absoluteString]
                                               needle:@"frictionless_recipients="];
     if (recipientJson) {
-        // if value parses as an array, treat as set of fbids
-        id recipients = [FBUtility simpleJSONDecode:recipientJson];
+        // if value parses as an array, treat as set of gbids
+        id recipients = [GBUtility simpleJSONDecode:recipientJson];
 
         // if we got something usable, copy the ids out and update the cache
         if ([recipients isKindOfClass:[NSArray class]]) {
@@ -308,8 +308,8 @@ params   = _params;
                                     initWithCapacity:[recipients count]]
                                    autorelease];
             for (id recipient in recipients) {
-                NSString *fbid = [NSString stringWithFormat:@"%@", recipient];
-                [ids addObject:fbid];
+                NSString *gbid = [NSString stringWithFormat:@"%@", recipient];
+                [ids addObject:GBid];
             }
             // we may be tempted to terminate outstanding requests before this
             // point, but that would cause problems if the user cancelled a dialog
@@ -338,7 +338,7 @@ params   = _params;
         _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self addSubview:_webView];
 
-        UIImage* closeImage = [FBDialogClosePNG image];
+        UIImage* closeImage = [GBDialogClosePNG image];
 
         UIColor* color = [UIColor colorWithRed:167.0/255 green:184.0/255 blue:216.0/255 alpha:1];
         _closeButton = [[UIButton buttonWithType:UIButtonTypeCustom] retain];
@@ -459,7 +459,7 @@ params   = _params;
   NSLog(@"Query: %@", [url query]);
   NSLog(@"Fragment: %@", [url fragment]);
 #endif
-  if ([url.scheme isEqualToString:@"fbconnect"]) {
+  if ([url.scheme isEqualToString:@"gbconnect"]) {
     if ([[url.resourceSpecifier substringToIndex:8] isEqualToString:@"//cancel"]) {
       NSString * errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];
       NSString * errorStr = [self getStringFromUrl:[url absoluteString] needle:@"error_msg="];
@@ -574,7 +574,7 @@ params   = _params;
    _showingKeyboard = YES;
 
 
-    if (FBIsDeviceIPad()) {
+    if (GBIsDeviceIPad()) {
         // On the iPad the screen is large enough that we don't need to
         // resize the dialog to accomodate the keyboard popping up
         return;
@@ -591,7 +591,7 @@ params   = _params;
 - (void)keyboardWillHide:(NSNotification*)notification {
     _showingKeyboard = NO;
 
-    if (FBIsDeviceIPad()) {
+    if (GBIsDeviceIPad()) {
         return;
     }
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
@@ -632,8 +632,8 @@ params   = _params;
 - (id)initWithURL: (NSString *) serverURL
            params: (NSMutableDictionary *) params
   isViewInvisible: (BOOL)isViewInvisible
-     frictionlessSettings: (FBFrictionlessRequestSettings*) frictionlessSettings
-         delegate: (id <FBDialogDelegate>) delegate {
+     frictionlessSettings: (GBFrictionlessRequestSettings*) frictionlessSettings
+         delegate: (id <GBDialogDelegate>) delegate {
 
     self = [self init];
     _serverURL = [serverURL retain];

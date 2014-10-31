@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-#import "FBProfilePictureView.h"
+#import "GBProfilePictureView.h"
 
-#import "FBProfilePictureViewBlankProfilePortraitPNG.h"
-#import "FBProfilePictureViewBlankProfileSquarePNG.h"
-#import "FBRequest.h"
-#import "FBSDKVersion.h"
-#import "FBURLConnection.h"
-#import "FBUtility.h"
+#import "GBProfilePictureViewBlankProfilePortraitPNG.h"
+#import "GBProfilePictureViewBlankProfileSquarePNG.h"
+#import "GBRequest.h"
+#import "GBSDKVersion.h"
+#import "GBURLConnection.h"
+#import "GBUtility.h"
 
-@interface FBProfilePictureView()
+@interface GBProfilePictureView()
 
 @property (readonly, nonatomic) NSString *imageQueryParamString;
 @property (retain, nonatomic) NSString *previousImageQueryParamString;
 
-@property (retain, nonatomic) FBURLConnection *connection;
+@property (retain, nonatomic) GBURLConnection *connection;
 @property (retain, nonatomic) UIImageView *imageView;
 
 - (void)initialize;
@@ -37,7 +37,7 @@
 
 @end
 
-@implementation FBProfilePictureView
+@implementation GBProfilePictureView
 
 @synthesize profileID = _profileID;
 @synthesize pictureCropping = _pictureCropping;
@@ -66,7 +66,7 @@
 }
 
 - (id)initWithProfileID:(NSString *)profileID
-        pictureCropping:(FBProfilePictureCropping)pictureCropping {
+        pictureCropping:(GBProfilePictureCropping)pictureCropping {
     self = [self init];
     if (self) {
         self.pictureCropping = pictureCropping;
@@ -106,11 +106,11 @@
     // to be calculated using the scale factor accessed above.
     int width = (int)(self.bounds.size.width * screenScaleFactor);
 
-    if (self.pictureCropping == FBProfilePictureCroppingSquare) {
+    if (self.pictureCropping == GBProfilePictureCroppingSquare) {
         return [NSString stringWithFormat:@"width=%d&height=%d&migration_bundle=%@",
                 width,
                 width,
-                FB_IOS_SDK_MIGRATION_BUNDLE];
+                GB_IOS_SDK_MIGRATION_BUNDLE];
     }
 
     // For non-square images, we choose between three variants knowing that the small profile picture is
@@ -158,9 +158,9 @@
 
         [self.connection cancel];
 
-        FBURLConnectionHandler handler =
-            ^(FBURLConnection *connection, NSError *error, NSURLResponse *response, NSData *data) {
-                FBConditionalLog(self.connection == connection, @"Inconsistent connection state");
+        GBURLConnectionHandler handler =
+            ^(GBURLConnection *connection, NSError *error, NSURLResponse *response, NSData *data) {
+                GBConditionalLog(self.connection == connection, @"Inconsistent connection state");
 
                 self.connection = nil;
                 if (!error) {
@@ -171,20 +171,20 @@
 
         NSString *template = @"%@/%@/picture?%@";
         NSString *urlString = [NSString stringWithFormat:template,
-                               [FBUtility buildFacebookUrlWithPre:@"https://graph."],
+                               [GBUtility buildFacebookUrlWithPre:@"https://graph."],
                                self.profileID,
                                newImageQueryParamString];
         NSURL *url = [NSURL URLWithString:urlString];
 
-        self.connection = [[[FBURLConnection alloc] initWithURL:url
+        self.connection = [[[GBURLConnection alloc] initWithURL:url
                                               completionHandler:handler]
                            autorelease];
     } else {
-        BOOL isSquare = (self.pictureCropping == FBProfilePictureCroppingSquare);
+        BOOL isSquare = (self.pictureCropping == GBProfilePictureCroppingSquare);
 
         self.imageView.image = isSquare ?
-            [FBProfilePictureViewBlankProfileSquarePNG image] :
-            [FBProfilePictureViewBlankProfilePortraitPNG image];
+            [GBProfilePictureViewBlankProfileSquarePNG image] :
+            [GBProfilePictureViewBlankProfilePortraitPNG image];
         [self ensureImageViewContentMode];
     }
 
@@ -219,7 +219,7 @@
     }
 }
 
-- (void)setPictureCropping:(FBProfilePictureCropping)pictureCropping  {
+- (void)setPictureCropping:(GBProfilePictureCropping)pictureCropping  {
     if (_pictureCropping != pictureCropping) {
         _pictureCropping = pictureCropping;
         [self refreshImage:YES];

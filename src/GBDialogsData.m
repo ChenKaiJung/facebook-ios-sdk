@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-#import "FBDialogsData+Internal.h"
+#import "GBDialogsData+Internal.h"
 
-@interface FBDialogsData ()
+@interface GBDialogsData ()
 
 @property (nonatomic, readwrite, copy) NSString *method;
 @property (nonatomic, readwrite, copy) NSDictionary *arguments;
@@ -25,7 +25,7 @@
 
 @end
 
-@implementation FBDialogsData
+@implementation GBDialogsData
 
 - (id)initWithMethod:(NSString *)method arguments:(NSDictionary *)arguments {
     self = [super init];

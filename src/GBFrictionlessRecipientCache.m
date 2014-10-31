@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-#import "FBFrictionlessRecipientCache.h"
+#import "GBFrictionlessRecipientCache.h"
 
-#import "FBFrictionlessDialogSupportDelegate.h"
-#import "FBFrictionlessRequestSettings.h"
-#import "FBSession+Internal.h"
-#import "FBUtility.h"
+#import "GBFrictionlessDialogSupportDelegate.h"
+#import "GBFrictionlessRequestSettings.h"
+#import "GBSession+Internal.h"
+#import "GBUtility.h"
 
-@interface FBFrictionlessRecipientCache () <FBFrictionlessDialogSupportDelegate>
+@interface GBFrictionlessRecipientCache () <GBFrictionlessDialogSupportDelegate>
 @property (nonatomic, readwrite) BOOL frictionlessShouldMakeViewInvisible;
-@property (nonatomic, readwrite, retain) FBFrictionlessRequestSettings *frictionlessSettings;
+@property (nonatomic, readwrite, retain) GBFrictionlessRequestSettings *frictionlessSettings;
 @end
 
-@implementation FBFrictionlessRecipientCache
+@implementation GBFrictionlessRecipientCache
 
 @synthesize frictionlessSettings = _frictionlessSettings;
 @synthesize frictionlessShouldMakeViewInvisible = _frictionlessShouldMakeViewInvisible;
@@ -34,7 +34,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.frictionlessSettings = [[[FBFrictionlessRequestSettings alloc] init] autorelease];
+        self.frictionlessSettings = [[[GBFrictionlessRequestSettings alloc] init] autorelease];
         [self.frictionlessSettings enableWithFacebook:nil]; // sets the flag on
     }
     return self;
@@ -53,15 +53,15 @@
     [self.frictionlessSettings updateRecipientCacheWithRecipients:recipientIDs];
 }
 
-- (BOOL)isFrictionlessRecipient:(id)fbid {
+- (BOOL)isFrictionlessRecipient:(id)gbid {
     // we support NSString, NSNumber and dictionary with id-key of string or number
-    return [self.frictionlessSettings isFrictionlessEnabledForRecipient:[FBUtility stringFBIDFromObject:fbid]];
+    return [self.frictionlessSettings isFrictionlessEnabledForRecipient:[GBUtility stringGBIDFromObject:fbid]];
 }
 
-- (BOOL)areFrictionlessRecipients:(NSArray*)fbids {
+- (BOOL)areFrictionlessRecipients:(NSArray*)gbids {
     // we handle arrays of NSString, NSNumber, or dictionary with id-key of string or number
     // and return NO on anything else
-    for (id fbid in fbids) {
+    for (id fbid in gbids) {
         // if we miss our cache once, we fail the set
         if (![self isFrictionlessRecipient:fbid]) {
             return NO;
@@ -70,23 +70,23 @@
     return YES;
 }
 
-- (void)prefetchAndCacheForSession:(FBSession *)session {
+- (void)prefetchAndCacheForSession:(GBSession *)session {
     [self prefetchAndCacheForSession:session
                    completionHandler:nil];
 }
 
-- (void)prefetchAndCacheForSession:(FBSession *)session
-                 completionHandler:(FBRequestHandler)handler {
+- (void)prefetchAndCacheForSession:(GBSession *)session
+                 completionHandler:(GBRequestHandler)handler {
 
     // if a session isn't specified, fall back to active session when available
     if (!session) {
-        session = [FBSession activeSessionIfOpen];
+        session = [GBSession activeSessionIfOpen];
     }
 
-    [[[[FBRequest alloc] initWithSession:session
+    [[[[GBRequest alloc] initWithSession:session
                                graphPath:@"me/apprequestformerrecipients"]
       autorelease]
-     startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+     startWithCompletionHandler:^(GBRequestConnection *connection, id result, NSError *error) {
          [self.frictionlessSettings updateRecipientCacheWithRequestResult:result];
          if (handler) {
              handler(connection, result, error);
@@ -96,7 +96,7 @@
 
 - (void)webDialogsWillPresentDialog:(NSString *)dialog
                          parameters:(NSMutableDictionary *)parameters
-                            session:(FBSession *)session {
+                            session:(GBSession *)session {
 
     // this method adds fricitonless behaviors to a dialog presentation, if the
     // dialog is an apprequests dialog; noop if a non-apprequests dialog
@@ -112,15 +112,15 @@
         self.frictionlessShouldMakeViewInvisible = NO;
 
         // set invisible if all recipients are enabled for frictionless requests
-        id fbid = [parameters objectForKey:@"to"];
+        id gbid = [parameters objectForKey:@"to"];
         if (fbid != nil) {
             // if value parses as a json array expression get the list that way
-            id fbids = [FBUtility simpleJSONDecode:fbid];
-            if (![fbids isKindOfClass:[NSArray class]]) {
+            id gbids = [GBUtility simpleJSONDecode:fbid];
+            if (![gbids isKindOfClass:[NSArray class]]) {
                 // otherwise separate by commas (handles the singleton case too)
-                fbids = [fbid componentsSeparatedByString:@","];
+                gbids = [gbid componentsSeparatedByString:@","];
             }
-            self.frictionlessShouldMakeViewInvisible = [self.frictionlessSettings isFrictionlessEnabledForRecipients:fbids];
+            self.frictionlessShouldMakeViewInvisible = [self.frictionlessSettings isFrictionlessEnabledForRecipients:gbids];
         }
     }
 }

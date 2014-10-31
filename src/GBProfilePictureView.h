@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 /*!
- @typedef FBProfilePictureCropping enum
+ @typedef GBProfilePictureCropping enum
 
  @abstract
  Type used to specify the cropping treatment of the profile picture.
@@ -27,17 +27,17 @@
 typedef enum {
 
     /*! Square (default) - the square version that the Facebook user defined. */
-    FBProfilePictureCroppingSquare      = 0,
+    GBProfilePictureCroppingSquare      = 0,
 
     /*! Original - the original profile picture, as uploaded. */
-    FBProfilePictureCroppingOriginal    = 1
+    GBProfilePictureCroppingOriginal    = 1
 
-} FBProfilePictureCropping;
+} GBProfilePictureCropping;
 
 /*!
  @class
  @abstract
- An instance of `FBProfilePictureView` is used to display a profile picture.
+ An instance of `GBProfilePictureView` is used to display a profile picture.
 
  The default behavior of this control is to center the profile picture
  in the view and shrinks it, if necessary, to the view's bounds, preserving the aspect ratio. The smallest
@@ -45,7 +45,7 @@ typedef enum {
  a different size of the image being loaded.  Canonical image sizes are documented in the "Pictures" section
  of https://developers.facebook.com/docs/reference/api.
  */
-@interface FBProfilePictureView : UIView
+@interface GBProfilePictureView : UIView
 
 /*!
  @abstract
@@ -57,7 +57,7 @@ typedef enum {
  @abstract
  The cropping to use for the profile picture.
  */
-@property (nonatomic) FBProfilePictureCropping pictureCropping;
+@property (nonatomic) GBProfilePictureCropping pictureCropping;
 
 /*!
  @abstract
@@ -74,7 +74,7 @@ typedef enum {
  @param pictureCropping The cropping to use for the profile picture.
  */
 - (id)initWithProfileID:(NSString*)profileID
-     pictureCropping:(FBProfilePictureCropping)pictureCropping;
+     pictureCropping:(GBProfilePictureCropping)pictureCropping;
 
 
 @end

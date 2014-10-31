@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#import "FBTask.h"
+#import "GBTask.h"
 
-@interface FBTask (Private)
+@interface GBTask (Private)
 
 /*!
  Waits until this operation is completed, then returns its value.

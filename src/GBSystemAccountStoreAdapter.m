@@ -14,46 +14,46 @@
  * limitations under the License.
  */
 
-#import "FBSystemAccountStoreAdapter.h"
+#import "GBSystemAccountStoreAdapter.h"
 
-#import "FBAccessTokenData.h"
-#import "FBDynamicFrameworkLoader.h"
-#import "FBError.h"
-#import "FBErrorUtility+Internal.h"
-#import "FBLogger.h"
-#import "FBSettings.h"
-#import "FBUtility.h"
+#import "GBAccessTokenData.h"
+#import "GBDynamicFrameworkLoader.h"
+#import "GBError.h"
+#import "GBErrorUtility+Internal.h"
+#import "GBLogger.h"
+#import "GBSettings.h"
+#import "GBUtility.h"
 
-@interface FBSystemAccountStoreAdapter() {
+@interface GBSystemAccountStoreAdapter() {
     BOOL _forceBlockingRenew;
 }
 
 @property (retain, nonatomic, readonly) ACAccountStore *accountStore;
-@property (retain, nonatomic, readonly) ACAccountType *accountTypeFB;
+@property (retain, nonatomic, readonly) ACAccountType *accountTypeGB;
 
 @end
 
-static NSString *const FBForceBlockingRenewKey = @"com.facebook.sdk:ForceBlockingRenewKey";
-static FBSystemAccountStoreAdapter* _singletonInstance = nil;
+static NSString *const GBForceBlockingRenewKey = @"com.facebook.sdk:ForceBlockingRenewKey";
+static GBSystemAccountStoreAdapter* _singletonInstance = nil;
 
-@implementation FBSystemAccountStoreAdapter
+@implementation GBSystemAccountStoreAdapter
 
 @synthesize accountStore = _accountStore;
-@synthesize accountTypeFB = _accountTypeFB;
+@synthesize accountTypeGB = _accountTypeGB;
 
 - (id)init {
     self = [super init];
     if (self) {
-        _forceBlockingRenew = [[NSUserDefaults standardUserDefaults] boolForKey:FBForceBlockingRenewKey];
-        _accountStore = [[[FBDynamicFrameworkLoader loadClass:@"ACAccountStore" withFramework:@"Accounts"] alloc] init];
-        _accountTypeFB = [[_accountStore accountTypeWithAccountTypeIdentifier:@"com.apple.facebook"] retain];
+        _forceBlockingRenew = [[NSUserDefaults standardUserDefaults] boolForKey:GBForceBlockingRenewKey];
+        _accountStore = [[[GBDynamicFrameworkLoader loadClass:@"ACAccountStore" withFramework:@"Accounts"] alloc] init];
+        _accountTypeGB = [[_accountStore accountTypeWithAccountTypeIdentifier:@"com.apple.facebook"] retain];
     }
     return self;
 }
 
 - (void) dealloc {
     [_accountStore release];
-    [_accountTypeFB release];
+    [_accountTypeGB release];
     [super dealloc];
 }
 
@@ -66,24 +66,24 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
     if (_forceBlockingRenew!= forceBlockingRenew){
         _forceBlockingRenew = forceBlockingRenew;
         NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setBool:forceBlockingRenew forKey:FBForceBlockingRenewKey];
+        [userDefaults setBool:forceBlockingRenew forKey:GBForceBlockingRenewKey];
         [userDefaults synchronize];
     }
 }
 
-+ (FBSystemAccountStoreAdapter*) sharedInstance {
++ (GBSystemAccountStoreAdapter*) sharedInstance {
     if (_singletonInstance == nil) {
         static dispatch_once_t onceToken;
 
         dispatch_once(&onceToken, ^{
-            _singletonInstance = [[FBSystemAccountStoreAdapter alloc] init];
+            _singletonInstance = [[GBSystemAccountStoreAdapter alloc] init];
         });
     }
 
     return _singletonInstance;
 }
 
-+ (void) setSharedInstance:(FBSystemAccountStoreAdapter *) instance {
++ (void) setSharedInstance:(GBSystemAccountStoreAdapter *) instance {
     if (instance != _singletonInstance){
         [_singletonInstance release];
          _singletonInstance = [instance retain];
@@ -91,8 +91,8 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
 }
 
 - (BOOL) canRequestAccessWithoutUI {
-    if (self.accountTypeFB && self.accountTypeFB.accessGranted) {
-        NSArray *fbAccounts = [self.accountStore accountsWithAccountType:self.accountTypeFB];
+    if (self.accountTypeGB && self.accountTypeGB.accessGranted) {
+        NSArray *fbAccounts = [self.accountStore accountsWithAccountType:self.accountTypeGB];
         if (fbAccounts.count > 0) {
             id account = [fbAccounts objectAtIndex:0];
             id credential = [account credential];
@@ -105,8 +105,8 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
 
 #pragma  mark - Public properties and methods
 
-- (FBTask *)requestAccessToFacebookAccountStoreAsTask:(FBSession *)session {
-    FBTaskCompletionSource* tcs = [FBTaskCompletionSource taskCompletionSource];
+- (GBTask *)requestAccessToFacebookAccountStoreAsTask:(GBSession *)session {
+    GBTaskCompletionSource* tcs = [GBTaskCompletionSource taskCompletionSource];
     [self requestAccessToFacebookAccountStore:session handler:^(NSString *oauthToken, NSError *accountStoreError) {
         if (accountStoreError) {
             [tcs setError:accountStoreError];
@@ -118,8 +118,8 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
 }
 
 
-- (void)requestAccessToFacebookAccountStore:(FBSession *)session
-                                    handler:(FBRequestAccessToAccountsHandler)handler {
+- (void)requestAccessToFacebookAccountStore:(GBSession *)session
+                                    handler:(GBRequestAccessToAccountsHandler)handler {
     return [self requestAccessToFacebookAccountStore:session.accessTokenData.permissions
                                      defaultAudience:session.lastRequestedSystemAudience
                                        isReauthorize:NO
@@ -129,11 +129,11 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
 }
 
 - (void)requestAccessToFacebookAccountStore:(NSArray *)permissions
-                            defaultAudience:(FBSessionDefaultAudience)defaultAudience
+                            defaultAudience:(GBSessionDefaultAudience)defaultAudience
                               isReauthorize:(BOOL)isReauthorize
                                       appID:(NSString *)appID
-                                    session:(FBSession *)session
-                                    handler:(FBRequestAccessToAccountsHandler)handler {
+                                    session:(GBSession *)session
+                                    handler:(GBRequestAccessToAccountsHandler)handler {
     if (appID == nil) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException
                                                          reason:@"appID cannot be nil"
@@ -142,22 +142,22 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
 
     // app may be asking for nothing, but we will always have an array here
     NSArray *permissionsToUse = permissions ? permissions : [NSArray array];
-    if ([FBUtility areAllPermissionsReadPermissions:permissions]) {
+    if ([GBUtility areAllPermissionsReadPermissions:permissions]) {
         // If we have only read permissions being requested, ensure that basic info
         //  is among the permissions requested.
-        permissionsToUse = [FBUtility addBasicInfoPermission:permissionsToUse];
+        permissionsToUse = [GBUtility addBasicInfoPermission:permissionsToUse];
     }
 
     NSString *audience;
     switch (defaultAudience) {
-        case FBSessionDefaultAudienceOnlyMe:
-            audience = [FBDynamicFrameworkLoader loadStringConstant:@"ACFacebookAudienceOnlyMe" withFramework:@"Accounts"];
+        case GBSessionDefaultAudienceOnlyMe:
+            audience = [GBDynamicFrameworkLoader loadStringConstant:@"ACFacebookAudienceOnlyMe" withFramework:@"Accounts"];
             break;
-        case FBSessionDefaultAudienceFriends:
-            audience = [FBDynamicFrameworkLoader loadStringConstant:@"ACFacebookAudienceFriends" withFramework:@"Accounts"];
+        case GBSessionDefaultAudienceFriends:
+            audience = [GBDynamicFrameworkLoader loadStringConstant:@"ACFacebookAudienceFriends" withFramework:@"Accounts"];
             break;
-        case FBSessionDefaultAudienceEveryone:
-            audience = [FBDynamicFrameworkLoader loadStringConstant:@"ACFacebookAudienceEveryone" withFramework:@"Accounts"];
+        case GBSessionDefaultAudienceEveryone:
+            audience = [GBDynamicFrameworkLoader loadStringConstant:@"ACFacebookAudienceEveryone" withFramework:@"Accounts"];
             break;
         default:
             audience = nil;
@@ -167,10 +167,10 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
     if (!audience && isReauthorize) {
         for (NSString *p in permissions) {
             if ([p hasPrefix:@"publish"]) {
-                [[NSException exceptionWithName:FBInvalidOperationException
-                                         reason:@"FBSession: One or more publish permission was requested "
-                  @"without specifying an audience; use FBSessionDefaultAudienceJustMe, "
-                  @"FBSessionDefaultAudienceFriends, or FBSessionDefaultAudienceEveryone"
+                [[NSException exceptionWithName:GBInvalidOperationException
+                                         reason:@"GBSession: One or more publish permission was requested "
+                  @"without specifying an audience; use GBSessionDefaultAudienceJustMe, "
+                  @"GBSessionDefaultAudienceFriends, or GBSessionDefaultAudienceEveryone"
                                        userInfo:nil]
                  raise];
             }
@@ -179,16 +179,16 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
 
     // construct access options
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
-                             appID, [FBDynamicFrameworkLoader loadStringConstant:@"ACFacebookAppIdKey" withFramework:@"Accounts"],
-                             permissionsToUse, [FBDynamicFrameworkLoader loadStringConstant:@"ACFacebookPermissionsKey" withFramework:@"Accounts"],
-                             audience, [FBDynamicFrameworkLoader loadStringConstant:@"ACFacebookAudienceKey" withFramework:@"Accounts"], // must end on this key/value due to audience possibly being nil
+                             appID, [GBDynamicFrameworkLoader loadStringConstant:@"ACFacebookAppIdKey" withFramework:@"Accounts"],
+                             permissionsToUse, [GBDynamicFrameworkLoader loadStringConstant:@"ACFacebookPermissionsKey" withFramework:@"Accounts"],
+                             audience, [GBDynamicFrameworkLoader loadStringConstant:@"ACFacebookAudienceKey" withFramework:@"Accounts"], // must end on this key/value due to audience possibly being nil
                              nil];
 
     //wrap the request call into a separate block to help with possibly block chaining below.
     void(^requestAccessBlock)(void) = ^{
-        if (!self.accountTypeFB) {
+        if (!self.accountTypeGB) {
             if (handler) {
-                handler(nil, [session errorLoginFailedWithReason:FBErrorLoginFailedReasonSystemError
+                handler(nil, [session errorLoginFailedWithReason:GBErrorLoginFailedReasonSystemError
                                                        errorCode:nil
                                                       innerError:nil]);
             }
@@ -196,14 +196,14 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
         }
         // we will attempt an iOS integrated facebook login
         [self.accountStore
-         requestAccessToAccountsWithType:self.accountTypeFB
+         requestAccessToAccountsWithType:self.accountTypeGB
          options:options
          completion:^(BOOL granted, NSError *error) {
              if (!(granted ||
                    error.code != ACErrorPermissionDenied ||
                    [error.description rangeOfString:@"remote_app_id does not match stored id"].location == NSNotFound)) {
 
-                 [FBLogger singleShotLogEntry:FBLoggingBehaviorDeveloperErrors formatString:
+                 [GBLogger singleShotLogEntry:GBLoggingBehaviorDeveloperErrors formatString:
                               @"System authorization failed:'%@'. This may be caused by a mismatch between"
                               @" the bundle identifier and your app configuration on the server"
                               @" at developers.facebook.com/apps.",
@@ -216,7 +216,7 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
                  NSError* accountStoreError = error;
                  NSString *oauthToken = nil;
                  if (granted) {
-                     NSArray *fbAccounts = [self.accountStore accountsWithAccountType:self.accountTypeFB];
+                     NSArray *fbAccounts = [self.accountStore accountsWithAccountType:self.accountTypeGB];
                      id account = [fbAccounts objectAtIndex:0];
                      id credential = [account credential];
 
@@ -226,7 +226,7 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
                  if (!accountStoreError && !oauthToken){
                      // This means iOS did not give an error nor granted. In order to
                      // surface this to users, stuff in our own error that can be inspected.
-                     accountStoreError = [session errorLoginFailedWithReason:FBErrorLoginFailedReasonSystemDisallowedWithoutErrorValue
+                     accountStoreError = [session errorLoginFailedWithReason:GBErrorLoginFailedReasonSystemDisallowedWithoutErrorValue
                                                                    errorCode:nil
                                                                   innerError:nil];
                  }
@@ -236,8 +236,8 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
     };
 
     if (self.forceBlockingRenew
-        && [self.accountStore accountsWithAccountType:self.accountTypeFB].count > 0) {
-        // If the force renew flag is set and an iOS FB account is still set,
+        && [self.accountStore accountsWithAccountType:self.accountTypeGB].count > 0) {
+        // If the force renew flag is set and an iOS GB account is still set,
         // chain the requestAccessBlock to a successful renew result
         [self renewSystemAuthorization:^(ACAccountCredentialRenewResult result, NSError *error) {
             if (result == ACAccountCredentialRenewResultRenewed) {
@@ -247,7 +247,7 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
                 // Otherwise, invoke the caller's handler back on the main thread with an
                 // error that will trigger the password change user message.
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    handler(nil, [FBErrorUtility fberrorForSystemPasswordChange:error]);
+                    handler(nil, [GBErrorUtility fberrorForSystemPasswordChange:error]);
                 });
             }
         }];
@@ -260,15 +260,15 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
 - (void)renewSystemAuthorization:(void( ^ )(ACAccountCredentialRenewResult, NSError* )) handler {
     // if the slider has been set to off, renew calls to iOS simply hang, so we must
     // preemptively check for that condition.
-    if (self.accountStore && self.accountTypeFB && self.accountTypeFB.accessGranted) {
-        NSArray *fbAccounts = [self.accountStore accountsWithAccountType:self.accountTypeFB];
+    if (self.accountStore && self.accountTypeGB && self.accountTypeGB.accessGranted) {
+        NSArray *fbAccounts = [self.accountStore accountsWithAccountType:self.accountTypeGB];
         id account;
         if (fbAccounts && [fbAccounts count] > 0 &&
             (account = [fbAccounts objectAtIndex:0])){
 
             [self.accountStore renewCredentialsForAccount:account completion:^(ACAccountCredentialRenewResult renewResult, NSError *error) {
                 if (error){
-                    [FBLogger singleShotLogEntry:FBLoggingBehaviorAccessTokens
+                    [GBLogger singleShotLogEntry:GBLoggingBehaviorAccessTokens
                                         logEntry:[NSString stringWithFormat:@"renewCredentialsForAccount result:%ld, error: %@",
                                                   (long)renewResult,
                                                   error]];
@@ -286,15 +286,15 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
     if (handler) {
         // If there is a handler and we didn't return earlier (i.e, no renew call), determine an appropriate error to surface.
         NSError *error;
-        if (self.accountTypeFB && !self.accountTypeFB.accessGranted) {
+        if (self.accountTypeGB && !self.accountTypeGB.accessGranted) {
             error = [[NSError errorWithDomain:FacebookSDKDomain
-                                                 code:FBErrorSystemAPI
+                                                 code:GBErrorSystemAPI
                                              userInfo:@{ NSLocalizedDescriptionKey : @"Access has not been granted to the Facebook account. Verify device settings."}]
                      retain];
 
         } else {
             error = [[NSError errorWithDomain:FacebookSDKDomain
-                                        code:FBErrorSystemAPI
+                                        code:GBErrorSystemAPI
                                     userInfo:@{ NSLocalizedDescriptionKey : @"The Facebook account has not been configured on the device."}]
                      retain];
         }
@@ -306,8 +306,8 @@ static FBSystemAccountStoreAdapter* _singletonInstance = nil;
     }
 }
 
-- (FBTask *)renewSystemAuthorizationAsTask {
-    FBTaskCompletionSource* tcs = [FBTaskCompletionSource taskCompletionSource];
+- (GBTask *)renewSystemAuthorizationAsTask {
+    GBTaskCompletionSource* tcs = [GBTaskCompletionSource taskCompletionSource];
     [self renewSystemAuthorization:^(ACAccountCredentialRenewResult result, NSError *error) {
         if (error) {
             [tcs setError:error];

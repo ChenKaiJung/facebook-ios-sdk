@@ -17,27 +17,27 @@
 #import <CoreLocation/CoreLocation.h>
 #import <UIKit/UIKit.h>
 
-#import "FBAppCall.h"
-#import "FBOpenGraphActionShareDialogParams.h"
-#import "FBShareDialogParams.h"
+#import "GBAppCall.h"
+#import "GBOpenGraphActionShareDialogParams.h"
+#import "GBShareDialogParams.h"
 
-@class FBSession;
-@protocol FBOpenGraphAction;
+@class GBSession;
+@protocol GBOpenGraphAction;
 
 /*!
- @typedef FBNativeDialogResult enum
+ @typedef GBNativeDialogResult enum
 
  @abstract
  Passed to a handler to indicate the result of a dialog being displayed to the user.
  */
 typedef enum {
     /*! Indicates that the dialog action completed successfully. */
-    FBOSIntegratedShareDialogResultSucceeded = 0,
+    GBOSIntegratedShareDialogResultSucceeded = 0,
     /*! Indicates that the dialog action was cancelled (either by the user or the system). */
-    FBOSIntegratedShareDialogResultCancelled = 1,
+    GBOSIntegratedShareDialogResultCancelled = 1,
     /*! Indicates that the dialog could not be shown (because not on ios6 or ios6 auth was not used). */
-    FBOSIntegratedShareDialogResultError = 2
-} FBOSIntegratedShareDialogResult;
+    GBOSIntegratedShareDialogResultError = 2
+} GBOSIntegratedShareDialogResult;
 
 /*!
  @typedef
@@ -45,19 +45,19 @@ typedef enum {
  @abstract Defines a handler that will be called in response to the native share dialog
  being displayed.
  */
-typedef void (^FBOSIntegratedShareDialogHandler)(FBOSIntegratedShareDialogResult result, NSError *error);
+typedef void (^GBOSIntegratedShareDialogHandler)(GBOSIntegratedShareDialogResult result, NSError *error);
 
 /*!
- @typedef FBDialogAppCallCompletionHandler
+ @typedef GBDialogAppCallCompletionHandler
 
  @abstract
- A block that when passed to a method in FBDialogs is called back
+ A block that when passed to a method in GBDialogs is called back
  with the results of the AppCall for that dialog.
 
  @discussion
  This will be called on the UI thread, once the AppCall completes.
 
- @param call      The `FBAppCall` that was completed.
+ @param call      The `GBAppCall` that was completed.
 
  @param results     The results of the AppCall for the dialog. This parameters is present
  purely for convenience, and is the exact same value as call.dialogData.results.
@@ -66,28 +66,28 @@ typedef void (^FBOSIntegratedShareDialogHandler)(FBOSIntegratedShareDialogResult
  present purely for convenience, and is the exact same value as call.error.
 
  */
-typedef void (^FBDialogAppCallCompletionHandler)(
-FBAppCall *call,
+typedef void (^GBDialogAppCallCompletionHandler)(
+GBAppCall *call,
 NSDictionary *results,
 NSError *error);
 
 /*!
- @class FBDialogs
+ @class GBDialogs
 
  @abstract
  Provides methods to display native (i.e., non-Web-based) dialogs to the user.
 
  @discussion
  If you are building an app with a urlSchemeSuffix, you should also set the appropriate
- plist entry. See `[FBSettings defaultUrlSchemeSuffix]`.
+ plist entry. See `[GBSettings defaultUrlSchemeSuffix]`.
  */
-@interface FBDialogs : NSObject
+@interface GBDialogs : NSObject
 
 /*!
  @abstract
  Presents a dialog that allows the user to share a status update that may include
  text, images, or URLs. This dialog is only available on iOS 6.0 and above. The
- current active session returned by [FBSession activeSession] will be used to determine
+ current active session returned by [GBSession activeSession] will be used to determine
  whether the dialog will be displayed. If a session is active, it must be open and the
  login method used to authenticate the user must be native iOS 6.0 authentication.
  If no session active, then whether the call succeeds or not will depend on
@@ -112,13 +112,13 @@ NSError *error);
                                       initialText:(NSString*)initialText
                                             image:(UIImage*)image
                                               url:(NSURL*)url
-                                          handler:(FBOSIntegratedShareDialogHandler)handler;
+                                          handler:(GBOSIntegratedShareDialogHandler)handler;
 
 /*!
  @abstract
  Presents a dialog that allows the user to share a status update that may include
  text, images, or URLs. This dialog is only available on iOS 6.0 and above. The
- current active session returned by [FBSession activeSession] will be used to determine
+ current active session returned by [GBSession activeSession] will be used to determine
  whether the dialog will be displayed. If a session is active, it must be open and the
  login method used to authenticate the user must be native iOS 6.0 authentication.
  If no session active, then whether the call succeeds or not will depend on
@@ -144,13 +144,13 @@ NSError *error);
                                       initialText:(NSString*)initialText
                                            images:(NSArray*)images
                                              urls:(NSArray*)urls
-                                          handler:(FBOSIntegratedShareDialogHandler)handler;
+                                          handler:(GBOSIntegratedShareDialogHandler)handler;
 
 /*!
  @abstract
  Presents a dialog that allows the user to share a status update that may include
  text, images, or URLs. This dialog is only available on iOS 6.0 and above. An
- <FBSession> may be specified, or nil may be passed to indicate that the current
+ <GBSession> may be specified, or nil may be passed to indicate that the current
  active session should be used. If a session is specified (whether explicitly or by
  virtue of being the active session), it must be open and the login method used to
  authenticate the user must be native iOS 6.0 authentication. If no session is specified
@@ -159,8 +159,8 @@ NSError *error);
 
  @param viewController  The view controller which will present the dialog.
 
- @param session     The <FBSession> to use to determine whether or not the user has been
- authenticated with iOS native authentication. If nil, then [FBSession activeSession]
+ @param session     The <GBSession> to use to determine whether or not the user has been
+ authenticated with iOS native authentication. If nil, then [GBSession activeSession]
  will be checked. See discussion above for the implications of nil or non-nil session.
 
  @param initialText The text which will initially be populated in the dialog. The user
@@ -178,11 +178,11 @@ NSError *error);
  will still be called, with an error indicating the reason the dialog was not displayed)
  */
 + (BOOL)presentOSIntegratedShareDialogModallyFrom:(UIViewController*)viewController
-                                          session:(FBSession*)session
+                                          session:(GBSession*)session
                                       initialText:(NSString*)initialText
                                            images:(NSArray*)images
                                              urls:(NSArray*)urls
-                                          handler:(FBOSIntegratedShareDialogHandler)handler;
+                                          handler:(GBOSIntegratedShareDialogHandler)handler;
 
 /*!
  @abstract
@@ -191,13 +191,13 @@ NSError *error);
  depending on whether the dialog is available on the current platform and for the current
  user.
 
- @param session     The <FBSession> to use to determine whether or not the user has been
- authenticated with iOS native authentication. If nil, then [FBSession activeSession]
+ @param session     The <GBSession> to use to determine whether or not the user has been
+ authenticated with iOS native authentication. If nil, then [GBSession activeSession]
  will be checked. See discussion above for the implications of nil or non-nil session.
 
  @return YES if the dialog would be presented for the session, and NO if not
  */
-+ (BOOL)canPresentOSIntegratedShareDialogWithSession:(FBSession*)session;
++ (BOOL)canPresentOSIntegratedShareDialogWithSession:(GBSession*)session;
 
 /*!
  @abstract
@@ -206,15 +206,15 @@ NSError *error);
  need to modify the available UI controls depending on whether the dialog is
  available on the current platform.
 
- @param params The parameters for the FB share dialog.
+ @param params The parameters for the GB share dialog.
 
  @return YES if the dialog would be presented, and NO if not
 
  @discussion A return value of YES here indicates that the corresponding
- presentShareDialogWithParams method will return a non-nil FBAppCall for the same
+ presentShareDialogWithParams method will return a non-nil GBAppCall for the same
  params. And vice versa.
  */
-+ (BOOL)canPresentShareDialogWithParams:(FBShareDialogParams *)params;
++ (BOOL)canPresentShareDialogWithParams:(GBShareDialogParams *)params;
 
 /*!
  @abstract
@@ -224,14 +224,14 @@ NSError *error);
 
  Note that this will perform an app switch to the Facebook app, and will cause the
  current app to be suspended. When the share is complete, the Facebook app will redirect
- to a url of the form "fb{APP_ID}://" that the application must handle. The app should
- then call [FBAppCall handleOpenURL:sourceApplication:fallbackHandler:] to trigger
- the appropriate handling. Note that FBAppCall will first try to call the completion
+ to a url of the form "gb{APP_ID}://" that the application must handle. The app should
+ then call [GBAppCall handleOpenURL:sourceApplication:fallbackHandler:] to trigger
+ the appropriate handling. Note that GBAppCall will first try to call the completion
  handler associated with this method, but since during an app switch, the calling app
  may be suspended or killed, the app must also give a fallbackHandler to the
- handleOpenURL: method in FBAppCall.
+ handleOpenURL: method in GBAppCall.
 
- @param params The parameters for the FB share dialog.
+ @param params The parameters for the GB share dialog.
 
  @param clientState An NSDictionary that's passed through when the completion handler
  is called. This is useful for the app to maintain state about the share request that
@@ -240,15 +240,15 @@ NSError *error);
  @param handler A completion handler that may be called when the status update is
  complete. May be nil. If non-nil, the handler will always be called asynchronously.
 
- @return An FBAppCall object that will also be passed into the provided
- FBAppCallCompletionHandler.
+ @return An GBAppCall object that will also be passed into the provided
+ GBAppCallCompletionHandler.
 
- @discussion A non-nil FBAppCall object is only returned if the corresponding
+ @discussion A non-nil GBAppCall object is only returned if the corresponding
  canPresentShareDialogWithParams method is also returning YES for the same params.
  */
-+ (FBAppCall *)presentShareDialogWithParams:(FBShareDialogParams *)params
++ (GBAppCall *)presentShareDialogWithParams:(GBShareDialogParams *)params
                                 clientState:(NSDictionary *)clientState
-                                    handler:(FBDialogAppCallCompletionHandler)handler;
+                                    handler:(GBDialogAppCallCompletionHandler)handler;
 
 /*!
  @abstract
@@ -258,26 +258,26 @@ NSError *error);
 
  Note that this will perform an app switch to the Facebook app, and will cause the
  current app to be suspended. When the share is complete, the Facebook app will redirect
- to a url of the form "fb{APP_ID}://" that the application must handle. The app should
- then call [FBAppCall handleOpenURL:sourceApplication:fallbackHandler:] to trigger
- the appropriate handling. Note that FBAppCall will first try to call the completion
+ to a url of the form "gb{APP_ID}://" that the application must handle. The app should
+ then call [GBAppCall handleOpenURL:sourceApplication:fallbackHandler:] to trigger
+ the appropriate handling. Note that GBAppCall will first try to call the completion
  handler associated with this method, but since during an app switch, the calling app
  may be suspended or killed, the app must also give a fallbackHandler to the
- handleOpenURL: method in FBAppCall.
+ handleOpenURL: method in GBAppCall.
 
  @param link The URL link to be attached to the post.
 
  @param handler A completion handler that may be called when the status update is
  complete. May be nil. If non-nil, the handler will always be called asynchronously.
 
- @return An FBAppCall object that will also be passed into the provided
- FBAppCallCompletionHandler.
+ @return An GBAppCall object that will also be passed into the provided
+ GBAppCallCompletionHandler.
 
- @discussion A non-nil FBAppCall object is only returned if the corresponding
+ @discussion A non-nil GBAppCall object is only returned if the corresponding
  canPresentShareDialogWithParams method is also returning YES for the same params.
  */
-+ (FBAppCall *)presentShareDialogWithLink:(NSURL *)link
-                                  handler:(FBDialogAppCallCompletionHandler)handler;
++ (GBAppCall *)presentShareDialogWithLink:(NSURL *)link
+                                  handler:(GBDialogAppCallCompletionHandler)handler;
 
 /*!
  @abstract
@@ -287,12 +287,12 @@ NSError *error);
 
  Note that this will perform an app switch to the Facebook app, and will cause the
  current app to be suspended. When the share is complete, the Facebook app will redirect
- to a url of the form "fb{APP_ID}://" that the application must handle. The app should
- then call [FBAppCall handleOpenURL:sourceApplication:fallbackHandler:] to trigger
- the appropriate handling. Note that FBAppCall will first try to call the completion
+ to a url of the form "gb{APP_ID}://" that the application must handle. The app should
+ then call [GBAppCall handleOpenURL:sourceApplication:fallbackHandler:] to trigger
+ the appropriate handling. Note that GBAppCall will first try to call the completion
  handler associated with this method, but since during an app switch, the calling app
  may be suspended or killed, the app must also give a fallbackHandler to the
- handleOpenURL: method in FBAppCall.
+ handleOpenURL: method in GBAppCall.
 
  @param link The URL link to be attached to the post.
 
@@ -301,15 +301,15 @@ NSError *error);
  @param handler A completion handler that may be called when the status update is
  complete. May be nil. If non-nil, the handler will always be called asynchronously.
 
- @return An FBAppCall object that will also be passed into the provided
- FBAppCallCompletionHandler.
+ @return An GBAppCall object that will also be passed into the provided
+ GBAppCallCompletionHandler.
 
- @discussion A non-nil FBAppCall object is only returned if the corresponding
+ @discussion A non-nil GBAppCall object is only returned if the corresponding
  canPresentShareDialogWithParams method is also returning YES for the same params.
  */
-+ (FBAppCall *)presentShareDialogWithLink:(NSURL *)link
++ (GBAppCall *)presentShareDialogWithLink:(NSURL *)link
                                      name:(NSString *)name
-                                  handler:(FBDialogAppCallCompletionHandler)handler;
+                                  handler:(GBDialogAppCallCompletionHandler)handler;
 
 /*!
  @abstract
@@ -319,12 +319,12 @@ NSError *error);
 
  Note that this will perform an app switch to the Facebook app, and will cause the
  current app to be suspended. When the share is complete, the Facebook app will redirect
- to a url of the form "fb{APP_ID}://" that the application must handle. The app should
- then call [FBAppCall handleOpenURL:sourceApplication:fallbackHandler:] to trigger
- the appropriate handling. Note that FBAppCall will first try to call the completion
+ to a url of the form "gb{APP_ID}://" that the application must handle. The app should
+ then call [GBAppCall handleOpenURL:sourceApplication:fallbackHandler:] to trigger
+ the appropriate handling. Note that GBAppCall will first try to call the completion
  handler associated with this method, but since during an app switch, the calling app
  may be suspended or killed, the app must also give a fallbackHandler to the
- handleOpenURL: method in FBAppCall.
+ handleOpenURL: method in GBAppCall.
 
  @param link The URL link to be attached to the post.
 
@@ -343,19 +343,19 @@ NSError *error);
  @param handler A completion handler that may be called when the status update is
  complete. May be nil. If non-nil, the handler will always be called asynchronously.
 
- @return An FBAppCall object that will also be passed into the provided
- FBAppCallCompletionHandler.
+ @return An GBAppCall object that will also be passed into the provided
+ GBAppCallCompletionHandler.
 
- @discussion A non-nil FBAppCall object is only returned if the corresponding
+ @discussion A non-nil GBAppCall object is only returned if the corresponding
  canPresentShareDialogWithParams method is also returning YES for the same params.
  */
-+ (FBAppCall *)presentShareDialogWithLink:(NSURL *)link
++ (GBAppCall *)presentShareDialogWithLink:(NSURL *)link
                                      name:(NSString *)name
                                   caption:(NSString *)caption
                               description:(NSString *)description
                                   picture:(NSURL *)picture
                               clientState:(NSDictionary *)clientState
-                                  handler:(FBDialogAppCallCompletionHandler)handler;
+                                  handler:(GBDialogAppCallCompletionHandler)handler;
 
 /*!
  @abstract
@@ -364,15 +364,15 @@ NSError *error);
  that need to modify the available UI controls depending on whether the dialog is
  available on the current platform.
 
- @param params The parameters for the FB share dialog.
+ @param params The parameters for the GB share dialog.
 
  @return YES if the dialog would be presented, and NO if not
 
  @discussion A return value of YES here indicates that the corresponding
- presentShareDialogWithOpenGraphActionParams method will return a non-nil FBAppCall for
+ presentShareDialogWithOpenGraphActionParams method will return a non-nil GBAppCall for
  the same params. And vice versa.
  */
-+ (BOOL)canPresentShareDialogWithOpenGraphActionParams:(FBOpenGraphActionShareDialogParams *)params;
++ (BOOL)canPresentShareDialogWithOpenGraphActionParams:(GBOpenGraphActionShareDialogParams *)params;
 
 /*!
  @abstract
@@ -382,12 +382,12 @@ NSError *error);
 
  Note that this will perform an app switch to the Facebook app, and will cause the
  current app to be suspended. When the share is complete, the Facebook app will redirect
- to a url of the form "fb{APP_ID}://" that the application must handle. The app should
- then call [FBAppCall handleOpenURL:sourceApplication:fallbackHandler:] to trigger
- the appropriate handling. Note that FBAppCall will first try to call the completion
+ to a url of the form "gb{APP_ID}://" that the application must handle. The app should
+ then call [GBAppCall handleOpenURL:sourceApplication:fallbackHandler:] to trigger
+ the appropriate handling. Note that GBAppCall will first try to call the completion
  handler associated with this method, but since during an app switch, the calling app
  may be suspended or killed, the app must also give a fallbackHandler to the
- handleOpenURL: method in FBAppCall.
+ handleOpenURL: method in GBAppCall.
 
  @param params The parameters for the Open Graph action dialog.
 
@@ -398,15 +398,15 @@ NSError *error);
  @param handler A completion handler that may be called when the status update is
  complete. May be nil. If non-nil, the handler will always be called asynchronously.
 
- @return An FBAppCall object that will also be passed into the provided
- FBAppCallCompletionHandler.
+ @return An GBAppCall object that will also be passed into the provided
+ GBAppCallCompletionHandler.
 
- @discussion A non-nil FBAppCall object is only returned if the corresponding
+ @discussion A non-nil GBAppCall object is only returned if the corresponding
  canPresentShareDialogWithOpenGraphActionParams method is also returning YES for the same params.
  */
-+ (FBAppCall *)presentShareDialogWithOpenGraphActionParams:(FBOpenGraphActionShareDialogParams *)params
++ (GBAppCall *)presentShareDialogWithOpenGraphActionParams:(GBOpenGraphActionShareDialogParams *)params
                                                clientState:(NSDictionary *)clientState
-                                                   handler:(FBDialogAppCallCompletionHandler)handler;
+                                                   handler:(GBDialogAppCallCompletionHandler)handler;
 
 /*!
  @abstract
@@ -416,12 +416,12 @@ NSError *error);
 
  Note that this will perform an app switch to the Facebook app, and will cause the
  current app to be suspended. When the share is complete, the Facebook app will redirect
- to a url of the form "fb{APP_ID}://" that the application must handle. The app should
- then call [FBAppCall handleOpenURL:sourceApplication:fallbackHandler:] to trigger
- the appropriate handling. Note that FBAppCall will first try to call the completion
+ to a url of the form "gb{APP_ID}://" that the application must handle. The app should
+ then call [GBAppCall handleOpenURL:sourceApplication:fallbackHandler:] to trigger
+ the appropriate handling. Note that GBAppCall will first try to call the completion
  handler associated with this method, but since during an app switch, the calling app
  may be suspended or killed, the app must also give a fallbackHandler to the
- handleOpenURL: method in FBAppCall.
+ handleOpenURL: method in GBAppCall.
 
  @param action The Open Graph action to be published. May not be nil.
 
@@ -435,16 +435,16 @@ NSError *error);
  @param handler A completion handler that may be called when the status update is
  complete. May be nil. If non-nil, the handler will always be called asynchronously.
 
- @return An FBAppCall object that will also be passed into the provided
- FBAppCallCompletionHandler.
+ @return An GBAppCall object that will also be passed into the provided
+ GBAppCallCompletionHandler.
 
- @discussion A non-nil FBAppCall object is only returned if the corresponding
+ @discussion A non-nil GBAppCall object is only returned if the corresponding
  canPresentShareDialogWithOpenGraphActionParams method is also returning YES for the same params.
  */
-+ (FBAppCall *)presentShareDialogWithOpenGraphAction:(id<FBOpenGraphAction>)action
++ (GBAppCall *)presentShareDialogWithOpenGraphAction:(id<GBOpenGraphAction>)action
                                           actionType:(NSString *)actionType
                                  previewPropertyName:(NSString *)previewPropertyName
-                                             handler:(FBDialogAppCallCompletionHandler) handler;
+                                             handler:(GBDialogAppCallCompletionHandler) handler;
 
 /*!
  @abstract
@@ -454,12 +454,12 @@ NSError *error);
 
  Note that this will perform an app switch to the Facebook app, and will cause the
  current app to be suspended. When the share is complete, the Facebook app will redirect
- to a url of the form "fb{APP_ID}://" that the application must handle. The app should
- then call [FBAppCall handleOpenURL:sourceApplication:fallbackHandler:] to trigger
- the appropriate handling. Note that FBAppCall will first try to call the completion
+ to a url of the form "gb{APP_ID}://" that the application must handle. The app should
+ then call [GBAppCall handleOpenURL:sourceApplication:fallbackHandler:] to trigger
+ the appropriate handling. Note that GBAppCall will first try to call the completion
  handler associated with this method, but since during an app switch, the calling app
  may be suspended or killed, the app must also give a fallbackHandler to the
- handleOpenURL: method in FBAppCall.
+ handleOpenURL: method in GBAppCall.
 
  @param action The Open Graph action to be published. May not be nil.
 
@@ -477,16 +477,16 @@ NSError *error);
  @param handler A completion handler that may be called when the status update is
  complete. May be nil. If non-nil, the handler will always be called asynchronously.
 
- @return An FBAppCall object that will also be passed into the provided
- FBAppCallCompletionHandler.
+ @return An GBAppCall object that will also be passed into the provided
+ GBAppCallCompletionHandler.
 
- @discussion A non-nil FBAppCall object is only returned if the corresponding
+ @discussion A non-nil GBAppCall object is only returned if the corresponding
  canPresentShareDialogWithOpenGraphActionParams method is also returning YES for the same params.
  */
-+ (FBAppCall *)presentShareDialogWithOpenGraphAction:(id<FBOpenGraphAction>)action
++ (GBAppCall *)presentShareDialogWithOpenGraphAction:(id<GBOpenGraphAction>)action
                                           actionType:(NSString *)actionType
                                  previewPropertyName:(NSString *)previewPropertyName
                                          clientState:(NSDictionary *)clientState
-                                             handler:(FBDialogAppCallCompletionHandler) handler;
+                                             handler:(GBDialogAppCallCompletionHandler) handler;
 
 @end

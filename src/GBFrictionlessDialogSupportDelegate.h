@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-#import "FBWebDialogs.h"
+#import "GBWebDialogs.h"
 
-@class FBFrictionlessRequestSettings;
+@class GBFrictionlessRequestSettings;
 
 // this protocol is internal wiring which
 // enables frictionless uses of web dialogs
 // methods in this protocol are called after the will-present method
 // in the base protocol
-@protocol FBFrictionlessDialogSupportDelegate<FBWebDialogsDelegate>
+@protocol GBFrictionlessDialogSupportDelegate<GBWebDialogsDelegate>
 @required
 - (BOOL)frictionlessShouldMakeViewInvisible;
-- (FBFrictionlessRequestSettings *)frictionlessSettings;
+- (GBFrictionlessRequestSettings *)frictionlessSettings;
 @end

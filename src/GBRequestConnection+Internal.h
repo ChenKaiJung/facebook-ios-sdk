@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-#import "FBRequestConnection.h"
-#import "FBRequestMetadata.h"
+#import "GBRequestConnection.h"
+#import "GBRequestMetadata.h"
 
-@class FBRequestConnectionRetryManager;
+@class GBRequestConnectionRetryManager;
 
-@interface FBRequestConnection (Internal)
+@interface GBRequestConnection (Internal)
 
 @property (nonatomic, readonly) BOOL isResultFromCache;
 @property (nonatomic, readonly) NSMutableArray *requests;
-@property (nonatomic, readonly) FBRequestConnectionRetryManager *retryManager;
+@property (nonatomic, readonly) GBRequestConnectionRetryManager *retryManager;
 
 - (id)initWithMetadata:(NSArray *)metadataArray;
 
 - (void)startWithCacheIdentity:(NSString*)cacheIdentity
          skipRoundtripIfCached:(BOOL)consultCache;
 
-- (FBRequestMetadata *) getRequestMetadata:(FBRequest *)request;
+- (GBRequestMetadata *) getRequestMetadata:(GBRequest *)request;
 
 @end

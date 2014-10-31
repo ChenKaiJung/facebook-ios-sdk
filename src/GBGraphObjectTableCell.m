@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#import "FBGraphObjectTableCell.h"
+#import "GBGraphObjectTableCell.h"
 
 static const CGFloat titleFontHeight = 16;
 static const CGFloat subtitleFontHeight = 12;
@@ -27,7 +27,7 @@ static const CGFloat subtitleTop = 23;
 static const CGFloat titleHeight = titleFontHeight * 1.25;
 static const CGFloat subtitleHeight = subtitleFontHeight * 1.25;
 
-@interface FBGraphObjectTableCell()
+@interface GBGraphObjectTableCell()
 
 @property (nonatomic, retain) UIImageView *pictureView;\
 @property (nonatomic, retain) UILabel* titleSuffixLabel;
@@ -37,7 +37,7 @@ static const CGFloat subtitleHeight = subtitleFontHeight * 1.25;
 
 @end
 
-@implementation FBGraphObjectTableCell
+@implementation GBGraphObjectTableCell
 
 @synthesize pictureView = _pictureView;
 @synthesize titleSuffixLabel = _titleSuffixLabel;

@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-#import "FBSessionFacebookAppWebLoginStategy.h"
+#import "GBSessionFacebookAppWebLoginStategy.h"
 
-#import "FBLogger.h"
-#import "FBSession+Internal.h"
-#import "FBSessionAuthLogger.h"
-#import "FBSessionLoginStrategy.h"
-#import "FBUtility.h"
+#import "GBLogger.h"
+#import "GBSession+Internal.h"
+#import "GBSessionAuthLogger.h"
+#import "GBSessionLoginStrategy.h"
+#import "GBUtility.h"
 
-@implementation FBSessionFacebookAppWebLoginStategy
+@implementation GBSessionFacebookAppWebLoginStategy
 
-- (BOOL)tryPerformAuthorizeWithParams:(FBSessionLoginStrategyParams *)params session:(FBSession *)session logger:(FBSessionAuthLogger *)logger {
-    if (params.tryFBAppAuth && !TEST_DISABLE_FACEBOOKLOGIN) {
-        NSDictionary *clientState = @{FBSessionAuthLoggerParamAuthMethodKey: self.methodName,
-                                      FBSessionAuthLoggerParamIDKey : logger.ID ?: @""};
-        params.webParams[FBLoginUXClientState] = [session jsonClientStateWithDictionary:clientState];
+- (BOOL)tryPerformAuthorizeWithParams:(GBSessionLoginStrategyParams *)params session:(GBSession *)session logger:(GBSessionAuthLogger *)logger {
+    if (params.tryGBAppAuth && !TEST_DISABLE_FACEBOOKLOGIN) {
+        NSDictionary *clientState = @{GBSessionAuthLoggerParamAuthMethodKey: self.methodName,
+                                      GBSessionAuthLoggerParamIDKey : logger.ID ?: @""};
+        params.webParams[GBLoginUXClientState] = [session jsonClientStateWithDictionary:clientState];
         return [session authorizeUsingFacebookApplication:params.webParams];
     }
     return NO;
 }
 
 - (NSString *)methodName {
-    return FBSessionAuthLoggerAuthMethodFBApplicationWeb;
+    return GBSessionAuthLoggerAuthMethodGBApplicationWeb;
 }
 
 @end

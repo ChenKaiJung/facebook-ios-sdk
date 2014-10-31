@@ -17,7 +17,7 @@
 #import <Foundation/Foundation.h>
 
 /*!
- @class FBLogger
+ @class GBLogger
 
  @abstract
  Simple logging utility for conditionally logging strings and then emitting them
@@ -25,15 +25,15 @@
 
  @unsorted
  */
-@interface FBLogger : NSObject
+@interface GBLogger : NSObject
 
 // Access current accumulated contents of the logger.
 @property (copy, nonatomic) NSString *contents;
 
-// Each FBLogger gets a unique serial number to allow the client to log these numbers and, for instance, correlation of Request/Response
+// Each GBLogger gets a unique serial number to allow the client to log these numbers and, for instance, correlation of Request/Response
 @property (nonatomic, readonly) NSUInteger loggerSerialNumber;
 
-// The logging behavior of this logger.  See the FB_LOG_BEHAVIOR* constants in FBSession.h
+// The logging behavior of this logger.  See the GB_LOG_BEHAVIOR* constants in FBSession.h
 @property (copy, nonatomic, readonly) NSString *loggingBehavior;
 
 // Is the current logger instance active, based on its loggingBehavior?

@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-#import "FBRequestConnection.h"
-#import "FBRequestConnection+Internal.h"
+#import "GBRequestConnection.h"
+#import "GBRequestConnection+Internal.h"
 
 #import <UIKit/UIImage.h>
 
-#import "FBDataDiskCache.h"
-#import "FBError.h"
-#import "FBErrorUtility+Internal.h"
-#import "FBGraphObject.h"
-#import "FBLogger.h"
-#import "FBRequest+Internal.h"
-#import "FBRequestBody.h"
-#import "FBRequestConnectionRetryManager.h"
-#import "FBRequestHandlerFactory.h"
-#import "FBSDKVersion.h"
-#import "FBSession+Internal.h"
-#import "FBSession.h"
-#import "FBSettings.h"
-#import "FBSystemAccountStoreAdapter.h"
-#import "FBURLConnection.h"
-#import "FBUtility.h"
-#import "Facebook.h"
+#import "GBDataDiskCache.h"
+#import "GBError.h"
+#import "GBErrorUtility+Internal.h"
+#import "GBGraphObject.h"
+#import "GBLogger.h"
+#import "GBRequest+Internal.h"
+#import "GBRequestBody.h"
+#import "GBRequestConnectionRetryManager.h"
+#import "GBRequestHandlerFactory.h"
+#import "GBSDKVersion.h"
+#import "GBSession+Internal.h"
+#import "GBSession.h"
+#import "GBSettings.h"
+#import "GBSystemAccountStoreAdapter.h"
+#import "GBURLConnection.h"
+#import "GBUtility.h"
+#import "Gbomb.h"
 
 // URL construction constants
 NSString *const kGraphURLPrefix = @"https://graph.";
@@ -50,13 +50,13 @@ NSString *const kBatchEntryName = @"name";
 
 NSString *const kAccessTokenKey = @"access_token";
 NSString *const kSDK = @"ios";
-NSString *const kUserAgentBase = @"FBiOSSDK";
+NSString *const kUserAgentBase = @"GBiOSSDK";
 
 NSString *const kExtendTokenRestMethod = @"auth.extendSSOAccessToken";
 NSString *const kBatchRestMethodBaseURL = @"method/";
 
 // response object property/key
-NSString *const FBNonJSONResponseProperty = @"FACEBOOK_NON_JSON_RESULT";
+NSString *const GBNonJSONResponseProperty = @"FACEBOOK_NON_JSON_RESULT";
 
 static const int kRESTAPIAccessTokenErrorCode = 190;
 static const int kRESTAPIPermissionErrorCode = 200;
@@ -67,41 +67,41 @@ static const int kMaximumBatchSize = 50;
 typedef void (^KeyValueActionHandler)(NSString *key, id value);
 
 // ----------------------------------------------------------------------------
-// FBRequestConnectionState
+// GBRequestConnectionState
 
-typedef enum FBRequestConnectionState {
+typedef enum GBRequestConnectionState {
     kStateCreated,
     kStateSerialized,
     kStateStarted,
     kStateCompleted,
     kStateCancelled,
-} FBRequestConnectionState;
+} GBRequestConnectionState;
 
 // ----------------------------------------------------------------------------
 // Private properties and methods
 
-@interface FBRequestConnection () {
+@interface GBRequestConnection () {
     BOOL _errorBehavior;
 }
 
-@property (nonatomic, retain) FBURLConnection *connection;
+@property (nonatomic, retain) GBURLConnection *connection;
 @property (nonatomic, retain) NSMutableArray *requests;
-@property (nonatomic) FBRequestConnectionState state;
+@property (nonatomic) GBRequestConnectionState state;
 @property (nonatomic) NSTimeInterval timeout;
 @property (nonatomic, retain) NSMutableURLRequest *internalUrlRequest;
 @property (nonatomic, retain, readwrite) NSHTTPURLResponse *urlResponse;
-@property (nonatomic, retain) FBRequest *deprecatedRequest;
-@property (nonatomic, retain) FBLogger *logger;
+@property (nonatomic, retain) GBRequest *deprecatedRequest;
+@property (nonatomic, retain) GBLogger *logger;
 @property (nonatomic) unsigned long requestStartTime;
 @property (nonatomic, readonly) BOOL isResultFromCache;
-@property (nonatomic, retain) FBRequestConnectionRetryManager *retryManager;
+@property (nonatomic, retain) GBRequestConnectionRetryManager *retryManager;
 
 @end
 
 // ----------------------------------------------------------------------------
-// FBRequestConnection
+// GBRequestConnection
 
-@implementation FBRequestConnection
+@implementation GBRequestConnection
 
 // ----------------------------------------------------------------------------
 // Property implementations
@@ -111,7 +111,7 @@ typedef enum FBRequestConnectionState {
     if (self.internalUrlRequest) {
         NSMutableURLRequest *request = self.internalUrlRequest;
 
-        [request setValue:[FBRequestConnection userAgent] forHTTPHeaderField:@"User-Agent"];
+        [request setValue:[GBRequestConnection userAgent] forHTTPHeaderField:@"User-Agent"];
         [self logRequest:request bodyLength:0 bodyLogger:nil attachmentLogger:nil];
 
         return request;
@@ -132,12 +132,12 @@ typedef enum FBRequestConnectionState {
     self.internalUrlRequest = request;
 }
 
-- (FBRequestConnectionErrorBehavior)errorBehavior
+- (GBRequestConnectionErrorBehavior)errorBehavior
 {
     return _errorBehavior;
 }
 
-- (void)setErrorBehavior:(FBRequestConnectionErrorBehavior)errorBehavior
+- (void)setErrorBehavior:(GBRequestConnectionErrorBehavior)errorBehavior
 {
     NSAssert(self.requests.count == 0, @"Cannot set errorBehavior after requests have been added");
     _errorBehavior = errorBehavior;
@@ -158,7 +158,7 @@ typedef enum FBRequestConnectionState {
         _requests = [[NSMutableArray alloc] init];
         _timeout = timeout;
         _state = kStateCreated;
-        _logger = [[FBLogger alloc] initWithLoggingBehavior:FBLoggingBehaviorFBRequests];
+        _logger = [[GBLogger alloc] initWithLoggingBehavior:GBLoggingBehaviorGBRequests];
         _isResultFromCache = NO;
     }
     return self;
@@ -190,35 +190,35 @@ typedef enum FBRequestConnectionState {
 
 // ----------------------------------------------------------------------------
 // Public methods
-- (void)addRequest:(FBRequest *)request
- completionHandler:(FBRequestHandler)handler
+- (void)addRequest:(GBRequest *)request
+ completionHandler:(GBRequestHandler)handler
 {
     [self addRequest:request completionHandler:handler batchEntryName:nil];
 }
 
-- (void)addRequest:(FBRequest *)request
- completionHandler:(FBRequestHandler)handler
+- (void)addRequest:(GBRequest *)request
+ completionHandler:(GBRequestHandler)handler
     batchEntryName:(NSString *)name
 {
     NSDictionary *batchParams = (name)? @{kBatchEntryName : name } : nil;
     [self addRequest:request completionHandler:handler batchParameters:batchParams behavior:self.errorBehavior];
 }
 
-- (void)addRequest:(FBRequest*)request
- completionHandler:(FBRequestHandler)handler
+- (void)addRequest:(GBRequest*)request
+ completionHandler:(GBRequestHandler)handler
    batchParameters:(NSDictionary*)batchParameters {
     [self addRequest:request completionHandler:handler batchParameters:batchParameters behavior:self.errorBehavior];
 }
 
-- (void)addRequest:(FBRequest*)request
- completionHandler:(FBRequestHandler)handler
+- (void)addRequest:(GBRequest*)request
+ completionHandler:(GBRequestHandler)handler
    batchParameters:(NSDictionary*)batchParameters
-          behavior:(FBRequestConnectionErrorBehavior)behavior
+          behavior:(GBRequestConnectionErrorBehavior)behavior
 {
     NSAssert(self.state == kStateCreated,
              @"Requests must be added before starting or cancelling.");
 
-    FBRequestMetadata *metadata = [[FBRequestMetadata alloc] initWithRequest:request
+    GBRequestMetadata *metadata = [[GBRequestMetadata alloc] initWithRequest:request
                                                            completionHandler:handler
                                                              batchParameters:batchParameters
                                                                     behavior:behavior];
@@ -247,44 +247,44 @@ typedef enum FBRequestConnectionState {
 // ----------------------------------------------------------------------------
 // Public class methods
 
-+ (FBRequestConnection*)startForMeWithCompletionHandler:(FBRequestHandler)handler {
-    FBRequest *request = [FBRequest requestForMe];
++ (GBRequestConnection*)startForMeWithCompletionHandler:(GBRequestHandler)handler {
+    GBRequest *request = [GBRequest requestForMe];
     return [request startWithCompletionHandler:handler];
 }
 
-+ (FBRequestConnection*)startForMyFriendsWithCompletionHandler:(FBRequestHandler)handler {
-    FBRequest *request = [FBRequest requestForMyFriends];
++ (GBRequestConnection*)startForMyFriendsWithCompletionHandler:(GBRequestHandler)handler {
+    GBRequest *request = [GBRequest requestForMyFriends];
     return [request startWithCompletionHandler:handler];
 }
 
-+ (FBRequestConnection*)startForUploadPhoto:(UIImage *)photo
-                          completionHandler:(FBRequestHandler)handler {
-    FBRequest *request = [FBRequest requestForUploadPhoto:photo];
++ (GBRequestConnection*)startForUploadPhoto:(UIImage *)photo
+                          completionHandler:(GBRequestHandler)handler {
+    GBRequest *request = [GBRequest requestForUploadPhoto:photo];
     return [request startWithCompletionHandler:handler];
 }
 
-+ (FBRequestConnection *)startForPostStatusUpdate:(NSString *)message
-                                completionHandler:(FBRequestHandler)handler {
-    FBRequest *request = [FBRequest requestForPostStatusUpdate:message];
++ (GBRequestConnection *)startForPostStatusUpdate:(NSString *)message
+                                completionHandler:(GBRequestHandler)handler {
+    GBRequest *request = [GBRequest requestForPostStatusUpdate:message];
     return [request startWithCompletionHandler:handler];
 }
 
-+ (FBRequestConnection *)startForPostStatusUpdate:(NSString *)message
++ (GBRequestConnection *)startForPostStatusUpdate:(NSString *)message
                                             place:(id)place
                                              tags:(id<NSFastEnumeration>)tags
-                                completionHandler:(FBRequestHandler)handler {
-    FBRequest *request = [FBRequest requestForPostStatusUpdate:message
+                                completionHandler:(GBRequestHandler)handler {
+    GBRequest *request = [GBRequest requestForPostStatusUpdate:message
                                                          place:place
                                                           tags:tags];
     return [request startWithCompletionHandler:handler];
 }
 
-+ (FBRequestConnection*)startForPlacesSearchAtCoordinate:(CLLocationCoordinate2D)coordinate
++ (GBRequestConnection*)startForPlacesSearchAtCoordinate:(CLLocationCoordinate2D)coordinate
                                           radiusInMeters:(NSInteger)radius
                                             resultsLimit:(NSInteger)limit
                                               searchText:(NSString*)searchText
-                                       completionHandler:(FBRequestHandler)handler {
-    FBRequest *request = [FBRequest requestForPlacesSearchAtCoordinate:coordinate
+                                       completionHandler:(GBRequestHandler)handler {
+    GBRequest *request = [GBRequest requestForPlacesSearchAtCoordinate:coordinate
                                                         radiusInMeters:radius
                                                           resultsLimit:limit
                                                             searchText:searchText];
@@ -292,65 +292,65 @@ typedef enum FBRequestConnectionState {
     return [request startWithCompletionHandler:handler];
 }
 
-+ (FBRequestConnection*)startForCustomAudienceThirdPartyID:(FBSession *)session
-                                         completionHandler:(FBRequestHandler)handler {
++ (GBRequestConnection*)startForCustomAudienceThirdPartyID:(GBSession *)session
+                                         completionHandler:(GBRequestHandler)handler {
 
-    return [[FBRequest requestForCustomAudienceThirdPartyID:session]
+    return [[GBRequest requestForCustomAudienceThirdPartyID:session]
             startWithCompletionHandler:handler];
 }
 
-+ (FBRequestConnection*)startWithGraphPath:(NSString*)graphPath
-                         completionHandler:(FBRequestHandler)handler
++ (GBRequestConnection*)startWithGraphPath:(NSString*)graphPath
+                         completionHandler:(GBRequestHandler)handler
 {
-    return [FBRequestConnection startWithGraphPath:graphPath
+    return [GBRequestConnection startWithGraphPath:graphPath
                                         parameters:nil
                                         HTTPMethod:nil
                                  completionHandler:handler];
 }
 
-+ (FBRequestConnection*)startForDeleteObject:(id)object
-                           completionHandler:(FBRequestHandler)handler
++ (GBRequestConnection*)startForDeleteObject:(id)object
+                           completionHandler:(GBRequestHandler)handler
 {
-    FBRequest *request = [FBRequest requestForDeleteObject:object];
+    GBRequest *request = [GBRequest requestForDeleteObject:object];
     return [request startWithCompletionHandler:handler];
 }
 
-+ (FBRequestConnection*)startForPostWithGraphPath:(NSString*)graphPath
-                                      graphObject:(id<FBGraphObject>)graphObject
-                                completionHandler:(FBRequestHandler)handler
++ (GBRequestConnection*)startForPostWithGraphPath:(NSString*)graphPath
+                                      graphObject:(id<GBGraphObject>)graphObject
+                                completionHandler:(GBRequestHandler)handler
 {
-    FBRequest *request = [FBRequest requestForPostWithGraphPath:graphPath
+    GBRequest *request = [GBRequest requestForPostWithGraphPath:graphPath
                                                     graphObject:graphObject];
 
     return [request startWithCompletionHandler:handler];
 }
 
-+ (FBRequestConnection*)startWithGraphPath:(NSString*)graphPath
++ (GBRequestConnection*)startWithGraphPath:(NSString*)graphPath
                                 parameters:(NSDictionary*)parameters
                                 HTTPMethod:(NSString*)HTTPMethod
-                         completionHandler:(FBRequestHandler)handler
+                         completionHandler:(GBRequestHandler)handler
 {
-    FBRequest *request = [FBRequest requestWithGraphPath:graphPath
+    GBRequest *request = [GBRequest requestWithGraphPath:graphPath
                                               parameters:parameters
                                               HTTPMethod:HTTPMethod];
 
     return [request startWithCompletionHandler:handler];
 }
 
-+ (FBRequestConnection *)startForPostOpenGraphObject:(id<FBOpenGraphObject>)object
-                                   completionHandler:(FBRequestHandler)handler {
-    FBRequest *request = [FBRequest requestForPostOpenGraphObject:object];
++ (GBRequestConnection *)startForPostOpenGraphObject:(id<GBOpenGraphObject>)object
+                                   completionHandler:(GBRequestHandler)handler {
+    GBRequest *request = [GBRequest requestForPostOpenGraphObject:object];
     return [request startWithCompletionHandler:handler];
 }
 
-+ (FBRequestConnection *)startForPostOpenGraphObjectWithType:(NSString *)type
++ (GBRequestConnection *)startForPostOpenGraphObjectWithType:(NSString *)type
                                                        title:(NSString *)title
                                                        image:(id)image
                                                          url:(id)url
                                                  description:(NSString *)description
                                             objectProperties:(NSDictionary *)objectProperties
-                                           completionHandler:(FBRequestHandler)handler {
-    FBRequest *request = [FBRequest requestForPostOpenGraphObjectWithType:type
+                                           completionHandler:(GBRequestHandler)handler {
+    GBRequest *request = [GBRequest requestForPostOpenGraphObjectWithType:type
                                                                     title:title
                                                                     image:image
                                                                       url:url
@@ -359,20 +359,20 @@ typedef enum FBRequestConnectionState {
     return [request startWithCompletionHandler:handler];
 }
 
-+ (FBRequestConnection *)startForUpdateOpenGraphObject:(id<FBOpenGraphObject>)object
-                                     completionHandler:(FBRequestHandler)handler {
-    FBRequest *request = [FBRequest requestForUpdateOpenGraphObject:object];
++ (GBRequestConnection *)startForUpdateOpenGraphObject:(id<GBOpenGraphObject>)object
+                                     completionHandler:(GBRequestHandler)handler {
+    GBRequest *request = [GBRequest requestForUpdateOpenGraphObject:object];
     return [request startWithCompletionHandler:handler];
 }
 
-+ (FBRequestConnection *)startForUpdateOpenGraphObjectWithId:(id)objectId
++ (GBRequestConnection *)startForUpdateOpenGraphObjectWithId:(id)objectId
                                                        title:(NSString *)title
                                                        image:(id)image
                                                          url:(id)url
                                                  description:(NSString *)description
                                             objectProperties:(NSDictionary *)objectProperties
-                                           completionHandler:(FBRequestHandler)handler {
-    FBRequest *request = [FBRequest requestForUpdateOpenGraphObjectWithId:objectId
+                                           completionHandler:(GBRequestHandler)handler {
+    GBRequest *request = [GBRequest requestForUpdateOpenGraphObjectWithId:objectId
                                                                     title:title
                                                                     image:image
                                                                       url:url
@@ -381,9 +381,9 @@ typedef enum FBRequestConnectionState {
     return [request startWithCompletionHandler:handler];
 }
 
-+ (FBRequestConnection *)startForUploadStagingResourceWithImage:(UIImage *)photo
-                                              completionHandler:(FBRequestHandler)handler {
-    FBRequest *request = [FBRequest requestForUploadStagingResourceWithImage:photo];
++ (GBRequestConnection *)startForUploadStagingResourceWithImage:(UIImage *)photo
+                                              completionHandler:(GBRequestHandler)handler {
+    GBRequest *request = [GBRequest requestForUploadStagingResourceWithImage:photo];
     return [request startWithCompletionHandler:handler];
 }
 
@@ -394,12 +394,12 @@ typedef enum FBRequestConnectionState {
          skipRoundtripIfCached:(BOOL)skipRoundtripIfCached
 {
     if ([self.requests count] == 1) {
-        FBRequestMetadata *firstMetadata = [self.requests objectAtIndex:0];
+        GBRequestMetadata *firstMetadata = [self.requests objectAtIndex:0];
         if ([firstMetadata.request delegate]) {
             self.deprecatedRequest = firstMetadata.request;
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-            [self.deprecatedRequest setState:kFBRequestStateLoading];
+            [self.deprecatedRequest setState:kGBRequestStateLoading];
 #pragma GCC diagnostic pop
         }
     }
@@ -412,17 +412,17 @@ typedef enum FBRequestConnectionState {
         // depending on whether there may be batching or whether we are certain there is no batching
         request = self.urlRequest;
 
-        // when we generalize this for consumers of FBRequest, then we will use a more
+        // when we generalize this for consumers of GBRequest, then we will use a more
         // normalized form for our identification scheme than this URL construction; given the only
         // clients are the two pickers -- this scheme achieves stability via being a closed system,
         // and provides a simple first step to the more general solution
-        cacheIdentityURL = [[[NSURL alloc] initWithScheme:@"FBRequestCache"
+        cacheIdentityURL = [[[NSURL alloc] initWithScheme:@"GBRequestCache"
                                                      host:cacheIdentity
                                                      path:[NSString stringWithFormat:@"/%@", request.URL]]
                             autorelease];
 
         if (skipRoundtripIfCached) {
-            cachedData = [[FBDataDiskCache sharedCache] dataForURL:cacheIdentityURL];
+            cachedData = [[GBDataDiskCache sharedCache] dataForURL:cacheIdentityURL];
         }
     }
 
@@ -433,7 +433,7 @@ typedef enum FBRequestConnectionState {
         // why we won't piggyback on top of a REST API call.) Don't try this if the caller gave us
         // an already-formed request object, since we don't know its structure.
         BOOL safeForPiggyback = YES;
-        for (FBRequestMetadata *requestMetadata in self.requests) {
+        for (GBRequestMetadata *requestMetadata in self.requests) {
             if (requestMetadata.request.restMethod) {
                 safeForPiggyback = NO;
                 break;
@@ -459,11 +459,11 @@ typedef enum FBRequestConnectionState {
              @"Cannot call start again after calling start or cancel.");
     self.state = kStateStarted;
 
-    _requestStartTime = [FBUtility currentTimeInMilliseconds];
+    _requestStartTime = [GBUtility currentTimeInMilliseconds];
 
     if (!cachedData) {
-        FBURLConnectionHandler handler =
-        ^(FBURLConnection *connection,
+        GBURLConnectionHandler handler =
+        ^(GBURLConnection *connection,
           NSError *error,
           NSURLResponse *response,
           NSData *responseData) {
@@ -471,7 +471,7 @@ typedef enum FBRequestConnectionState {
             if (cacheIdentityURL &&
                 [response isKindOfClass:[NSHTTPURLResponse class]] &&
                 ((NSHTTPURLResponse*)response).statusCode == 200) {
-                [[FBDataDiskCache sharedCache] setData:responseData
+                [[GBDataDiskCache sharedCache] setData:responseData
                                                 forURL:cacheIdentityURL];
             }
             // complete on result from round-trip to server
@@ -480,7 +480,7 @@ typedef enum FBRequestConnectionState {
                                orError:error];
         };
 
-        id<FBRequestDelegate> deprecatedDelegate = [self.deprecatedRequest delegate];
+        id<GBRequestDelegate> deprecatedDelegate = [self.deprecatedRequest delegate];
         if ([deprecatedDelegate respondsToSelector:@selector(requestLoading:)]) {
             [deprecatedDelegate requestLoading:self.deprecatedRequest];
         }
@@ -499,16 +499,16 @@ typedef enum FBRequestConnectionState {
 
 - (void)startURLConnectionWithRequest:(NSURLRequest *)request
                 skipRoundTripIfCached:(BOOL)skipRoundTripIfCached
-                    completionHandler:(FBURLConnectionHandler) handler {
-    FBURLConnection *connection = [[self newFBURLConnection] initWithRequest:request
+                    completionHandler:(GBURLConnectionHandler) handler {
+    GBURLConnection *connection = [[self newGBURLConnection] initWithRequest:request
                                                           skipRoundTripIfCached:skipRoundTripIfCached
                                                               completionHandler:handler];
     self.connection = connection;
     [connection release];
 }
 
-- (FBURLConnection *)newFBURLConnection {
-    return [FBURLConnection alloc];
+- (GBURLConnection *)newGBURLConnection {
+    return [GBURLConnection alloc];
 }
 
 //
@@ -519,22 +519,22 @@ typedef enum FBRequestConnectionState {
 - (NSMutableURLRequest *)requestWithBatch:(NSArray *)requests
                                   timeout:(NSTimeInterval)timeout
 {
-    FBRequestBody *body = [[FBRequestBody alloc] init];
-    FBLogger *bodyLogger = [[FBLogger alloc] initWithLoggingBehavior:_logger.loggingBehavior];
-    FBLogger *attachmentLogger = [[FBLogger alloc] initWithLoggingBehavior:_logger.loggingBehavior];
+    GBRequestBody *body = [[GBRequestBody alloc] init];
+    GBLogger *bodyLogger = [[GBLogger alloc] initWithLoggingBehavior:_logger.loggingBehavior];
+    GBLogger *attachmentLogger = [[GBLogger alloc] initWithLoggingBehavior:_logger.loggingBehavior];
 
     NSMutableURLRequest *request;
 
     if (requests.count == 0) {
-        [[NSException exceptionWithName:FBInvalidOperationException
-                                 reason:@"FBRequestConnection: Must have at least one request or urlRequest not specified."
+        [[NSException exceptionWithName:GBInvalidOperationException
+                                 reason:@"GBRequestConnection: Must have at least one request or urlRequest not specified."
                                userInfo:nil]
          raise];
 
     }
 
     if ([requests count] == 1) {
-        FBRequestMetadata *metadata = [requests objectAtIndex:0];
+        GBRequestMetadata *metadata = [requests objectAtIndex:0];
         NSURL *url = [NSURL URLWithString:[self urlStringForSingleRequest:metadata.request forBatch:NO]];
         request = [NSMutableURLRequest requestWithURL:url
                                           cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
@@ -550,7 +550,7 @@ typedef enum FBRequestConnectionState {
 
         // if we have a post object, also roll that into the body
         if (metadata.request.graphObject) {
-            [FBRequestConnection processGraphObject:metadata.request.graphObject
+            [GBRequestConnection processGraphObject:metadata.request.graphObject
                                             forPath:[url path]
                                                 withAction:^(NSString *key, id value) {
                 [body appendWithKey:key formValue:value logger:bodyLogger];
@@ -563,9 +563,9 @@ typedef enum FBRequestConnectionState {
         if (!batchAppID || batchAppID.length == 0) {
             // The Graph API batch method requires either an access token or batch_app_id.
             // If we can't determine an App ID to use for the batch, we can't issue it.
-            [[NSException exceptionWithName:FBInvalidOperationException
-                                     reason:@"FBRequestConnection: At least one request in a"
-                                             " batch must have an open FBSession, or a default"
+            [[NSException exceptionWithName:GBInvalidOperationException
+                                     reason:@"GBRequestConnection: At least one request in a"
+                                             " batch must have an open GBSession, or a default"
                                              " app ID must be specified."
                                    userInfo:nil]
              raise];
@@ -587,7 +587,7 @@ typedef enum FBRequestConnectionState {
 
         [attachments release];
 
-        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[FBUtility buildFacebookUrlWithPre:kGraphURLPrefix]]
+        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[GBUtility buildFacebookUrlWithPre:kGraphURLPrefix]]
                                           cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                       timeoutInterval:timeout];
         [request setHTTPMethod:@"POST"];
@@ -597,8 +597,8 @@ typedef enum FBRequestConnectionState {
     NSUInteger bodyLength = [[body data] length] / 1024;
     [body release];
 
-    [request setValue:[FBRequestConnection userAgent] forHTTPHeaderField:@"User-Agent"];
-    [request setValue:[FBRequestBody mimeContentType] forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[GBRequestConnection userAgent] forHTTPHeaderField:@"User-Agent"];
+    [request setValue:[GBRequestBody mimeContentType] forHTTPHeaderField:@"Content-Type"];
 
     [self logRequest:request bodyLength:bodyLength bodyLogger:bodyLogger attachmentLogger:attachmentLogger];
 
@@ -611,8 +611,8 @@ typedef enum FBRequestConnectionState {
 
 - (void)logRequest:(NSMutableURLRequest *)request
         bodyLength:(NSUInteger)bodyLength
-        bodyLogger:(FBLogger *)bodyLogger
-  attachmentLogger:(FBLogger *)attachmentLogger
+        bodyLogger:(GBLogger *)bodyLogger
+  attachmentLogger:(GBLogger *)attachmentLogger
 {
     if (_logger.isActive) {
         [_logger appendFormat:@"Request <#%lu>:\n", (unsigned long)_logger.loggerSerialNumber];
@@ -649,7 +649,7 @@ typedef enum FBRequestConnectionState {
 //
 // Attachments are named and referenced by name in the URL.
 //
-- (NSString *)urlStringForSingleRequest:(FBRequest *)request forBatch:(BOOL)forBatch
+- (NSString *)urlStringForSingleRequest:(GBRequest *)request forBatch:(BOOL)forBatch
 {
     [request.parameters setValue:@"json" forKey:@"format"];
     [request.parameters setValue:kSDK forKey:@"sdk"];
@@ -664,7 +664,7 @@ typedef enum FBRequestConnectionState {
         if (forBatch) {
             baseURL = [kBatchRestMethodBaseURL stringByAppendingString:request.restMethod];
         } else {
-            baseURL = [[FBUtility buildFacebookUrlWithPre:kApiURLPrefix withPost:@"/method/"] stringByAppendingString:request.restMethod];
+            baseURL = [[GBUtility buildFacebookUrlWithPre:kApiURLPrefix withPost:@"/method/"] stringByAppendingString:request.restMethod];
         }
     } else {
         if (forBatch) {
@@ -680,11 +680,11 @@ typedef enum FBRequestConnectionState {
                     prefix = kGraphVideoURLPrefix;
                 }
             }
-            baseURL = [[FBUtility buildFacebookUrlWithPre:prefix withPost:@"/"] stringByAppendingString:request.graphPath];
+            baseURL = [[GBUtility buildFacebookUrlWithPre:prefix withPost:@"/"] stringByAppendingString:request.graphPath];
         }
     }
 
-    NSString *url = [FBRequest serializeURL:baseURL
+    NSString *url = [GBRequest serializeURL:baseURL
                                      params:request.parameters
                                  httpMethod:request.HTTPMethod];
     return url;
@@ -695,12 +695,12 @@ typedef enum FBRequestConnectionState {
 // programmatically or via the plist).
 - (NSString *)getBatchAppID:(NSArray*)requests
 {
-    for (FBRequestMetadata *metadata in requests) {
+    for (GBRequestMetadata *metadata in requests) {
         if (metadata.request.session.appID.length > 0) {
             return metadata.request.session.appID;
         }
     }
-    return [FBSettings defaultAppID];
+    return [GBSettings defaultAppID];
 }
 
 //
@@ -712,18 +712,18 @@ typedef enum FBRequestConnectionState {
 // named and referenced by name in the JSON.
 //
 - (void)appendJSONRequests:(NSArray *)requests
-                    toBody:(FBRequestBody *)body
+                    toBody:(GBRequestBody *)body
         andNameAttachments:(NSMutableDictionary *)attachments
-                    logger:(FBLogger *)logger
+                    logger:(GBLogger *)logger
 {
     NSMutableArray *batch = [[NSMutableArray alloc] init];
-    for (FBRequestMetadata *metadata in requests) {
+    for (GBRequestMetadata *metadata in requests) {
         [self addRequest:metadata
                  toBatch:batch
              attachments:attachments];
     }
 
-    NSString *jsonBatch = [FBUtility simpleJSONEncode:batch];
+    NSString *jsonBatch = [GBUtility simpleJSONEncode:batch];
 
     [batch release];
 
@@ -735,7 +735,7 @@ typedef enum FBRequestConnectionState {
 // Binary attachments are referenced by name in JSON and added to the
 // attachments dictionary.
 //
-- (void)addRequest:(FBRequestMetadata *)metadata
+- (void)addRequest:(GBRequestMetadata *)metadata
            toBatch:(NSMutableArray *)batch
        attachments:(NSDictionary *)attachments
 {
@@ -775,12 +775,12 @@ typedef enum FBRequestConnectionState {
     if (metadata.request.graphObject) {
         NSMutableString *bodyValue = [[[NSMutableString alloc] init] autorelease];
         __block NSString *delimiter = @"";
-        [FBRequestConnection
+        [GBRequestConnection
          processGraphObject:metadata.request.graphObject
                     forPath:urlString
          withAction:^(NSString *key, id value) {
              // escape the value
-             value = [FBUtility stringByURLEncodingString:[value description]];
+             value = [GBUtility stringByURLEncodingString:[value description]];
              [bodyValue appendFormat:@"%@%@=%@",
               delimiter,
               key,
@@ -805,9 +805,9 @@ typedef enum FBRequestConnectionState {
 }
 
 - (void)appendAttachments:(NSDictionary *)attachments
-                   toBody:(FBRequestBody *)body
+                   toBody:(GBRequestBody *)body
               addFormData:(BOOL)addFormData
-                   logger:(FBLogger *)logger
+                   logger:(GBLogger *)logger
 {
     // key is name for both, first case is string which we can print, second pass grabs object
     if (addFormData) {
@@ -835,11 +835,11 @@ typedef enum FBRequestConnectionState {
                                 value:(id)value
                                action:(KeyValueActionHandler)action
                           passByValue:(BOOL)passByValue {
-    if ([value conformsToProtocol:@protocol(FBGraphObject)]) {
-        NSDictionary<FBGraphObject> *refObject = (NSDictionary<FBGraphObject>*)value;
+    if ([value conformsToProtocol:@protocol(GBGraphObject)]) {
+        NSDictionary<GBGraphObject> *refObject = (NSDictionary<GBGraphObject>*)value;
 
         if (refObject.provisionedForPost) {
-            NSString *value = [FBUtility simpleJSONEncode:refObject];
+            NSString *value = [GBUtility simpleJSONEncode:refObject];
             action(key, value);
         } else if (passByValue) {
             // We need to pass all properties of this object in key[propertyName] format.
@@ -878,7 +878,7 @@ typedef enum FBRequestConnectionState {
     }
 }
 
-+ (void)processGraphObject:(id<FBGraphObject>)object forPath:(NSString*)path withAction:(KeyValueActionHandler)action {
++ (void)processGraphObject:(id<GBGraphObject>)object forPath:(NSString*)path withAction:(KeyValueActionHandler)action {
     BOOL isOGAction = NO;
     if ([path hasPrefix:@"me/"] ||
         [path hasPrefix:@"/me/"]) {
@@ -923,7 +923,7 @@ typedef enum FBRequestConnectionState {
         statusCode = self.urlResponse.statusCode;
 
         if (!error && [response.MIMEType hasPrefix:@"image"]) {
-            error = [self errorWithCode:FBErrorNonTextMimeTypeReturned
+            error = [self errorWithCode:GBErrorNonTextMimeTypeReturned
                              statusCode:0
                      parsedJSONResponse:nil
                              innerError:nil
@@ -954,9 +954,9 @@ typedef enum FBRequestConnectionState {
 
     if (!error) {
         if ([self.requests count] != [results count]) {
-            [FBLogger singleShotLogEntry:FBLoggingBehaviorFBRequests formatString:@"Expected %lu results, got %lu",
+            [GBLogger singleShotLogEntry:GBLoggingBehaviorGBRequests formatString:@"Expected %lu results, got %lu",
                             (unsigned long)[self.requests count], (unsigned long)[results count]];
-            error = [self errorWithCode:FBErrorProtocolMismatch
+            error = [self errorWithCode:GBErrorProtocolMismatch
                              statusCode:statusCode
                      parsedJSONResponse:results
                              innerError:nil
@@ -968,7 +968,7 @@ typedef enum FBRequestConnectionState {
 
         [_logger appendFormat:@"Response <#%lu>\nDuration: %lu msec\nSize: %lu kB\nResponse Body:\n%@\n\n",
          (unsigned long)[_logger loggerSerialNumber],
-         [FBUtility currentTimeInMilliseconds] - _requestStartTime,
+         [GBUtility currentTimeInMilliseconds] - _requestStartTime,
          (unsigned long)[data length],
          results];
 
@@ -1057,7 +1057,7 @@ typedef enum FBRequestConnectionState {
         }
         results = mutableResults;
     } else {
-        *error = [self errorWithCode:FBErrorProtocolMismatch
+        *error = [self errorWithCode:GBErrorProtocolMismatch
                           statusCode:statusCode
                   parsedJSONResponse:results
                           innerError:nil
@@ -1073,18 +1073,18 @@ typedef enum FBRequestConnectionState {
 {
     id parsed = nil;
     if (!(*error)) {
-        parsed = [FBUtility simpleJSONDecode:utf8 error:error];
+        parsed = [GBUtility simpleJSONDecode:utf8 error:error];
         // if we fail parse we attemp a reparse of a modified input to support results in the form "foo=bar", "true", etc.
         if (*error) {
             // we round-trip our hand-wired response through the parser in order to remain
             // consistent with the rest of the output of this function (note, if perf turns out
             // to be a problem -- unlikely -- we can return the following dictionary outright)
             NSDictionary *original = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      utf8, FBNonJSONResponseProperty,
+                                      utf8, GBNonJSONResponseProperty,
                                       nil];
-            NSString *jsonrep = [FBUtility simpleJSONEncode:original];
+            NSString *jsonrep = [GBUtility simpleJSONEncode:original];
             NSError *reparseError = nil;
-            parsed = [FBUtility simpleJSONDecode:jsonrep error:&reparseError];
+            parsed = [GBUtility simpleJSONDecode:jsonrep error:&reparseError];
             if (!reparseError) {
                 *error = nil;
             }
@@ -1103,7 +1103,7 @@ typedef enum FBRequestConnectionState {
         result = [resultDictionary objectForKey:@"body"];
     }
 
-    id<FBRequestDelegate> delegate = [self.deprecatedRequest delegate];
+    id<GBRequestDelegate> delegate = [self.deprecatedRequest delegate];
 
     if (!error) {
         if ([delegate respondsToSelector:@selector(request:didReceiveResponse:)]) {
@@ -1134,39 +1134,39 @@ typedef enum FBRequestConnectionState {
     }
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    [self.deprecatedRequest setState:kFBRequestStateComplete];
+    [self.deprecatedRequest setState:kGBRequestStateComplete];
 #pragma GCC diagnostic pop
 }
 
 - (NSError*) unpackIndividualJSONResponseError:(NSError *)itemError {
-    // task #1256476: in the current implementation, FBErrorParsedJSONResponseKey has two
+    // task #1256476: in the current implementation, GBErrorParsedJSONResponseKey has two
     // semantics; both of which are used by the implementation; the right fix is to break the meaning into
     // two throughout, and surface both in the public API; the following fix is a lower risk and also
     // less correct solution that improves the public API surface for this release
-    // Unpack FBErrorParsedJSONResponseKey array if present
+    // Unpack GBErrorParsedJSONResponseKey array if present
     id parsedResponse;
     if ((parsedResponse = itemError.userInfo) && // do we have an error with userInfo
-        (parsedResponse = [parsedResponse objectForKey:FBErrorParsedJSONResponseKey]) && // response present?
+        (parsedResponse = [parsedResponse objectForKey:GBErrorParsedJSONResponseKey]) && // response present?
         ([parsedResponse isKindOfClass:[NSArray class]])) { // array?
         id newValue = nil;
-        // if we successfully spelunk this far, then we don't want to return FBErrorParsedJSONResponseKey as is
+        // if we successfully spelunk this far, then we don't want to return GBErrorParsedJSONResponseKey as is
         // but if there is an empty array here, then we are better off nil-ing the key
         if ([parsedResponse count]) {
             newValue = [parsedResponse objectAtIndex:0];
         }
-        itemError = [self errorWithCode:(FBErrorCode)itemError.code
-                             statusCode:[[itemError.userInfo objectForKey:FBErrorHTTPStatusCodeKey] intValue]
+        itemError = [self errorWithCode:(GBErrorCode)itemError.code
+                             statusCode:[[itemError.userInfo objectForKey:GBErrorHTTPStatusCodeKey] intValue]
                      parsedJSONResponse:newValue
-                             innerError:[itemError.userInfo objectForKey:FBErrorInnerErrorKey]
+                             innerError:[itemError.userInfo objectForKey:GBErrorInnerErrorKey]
                                 message:[itemError.userInfo objectForKey:NSLocalizedDescriptionKey]];
     }
     return itemError;
 
 }
 
-// Helper method to determine if FBRequestConnection should close
-// the session for a given FBRequest.
-- (BOOL) shouldCloseRequestSession:(FBRequest *)request {
+// Helper method to determine if GBRequestConnection should close
+// the session for a given GBRequest.
+- (BOOL) shouldCloseRequestSession:(GBRequest *)request {
     // We don't close requests whose session is being repaired
     // since the repair resolution is now responsible for
     // either maintaining the session or closing it.
@@ -1177,12 +1177,12 @@ typedef enum FBRequestConnectionState {
                     orError:(NSError *)error
 {
     // set up a new retry manager for this flow.
-    self.retryManager = [[[FBRequestConnectionRetryManager alloc] initWithFBRequestConnection:self] autorelease];
+    self.retryManager = [[[GBRequestConnectionRetryManager alloc] initWithGBRequestConnection:self] autorelease];
 
     NSUInteger count = [self.requests count];
     NSMutableArray *tasks = [[NSMutableArray alloc] init];
     for (NSUInteger i = 0; i < count; i++) {
-        FBRequestMetadata *metadata = [self.requests objectAtIndex:i];
+        GBRequestMetadata *metadata = [self.requests objectAtIndex:i];
         id result = error ? nil : [results objectAtIndex:i];
         NSError *itemError = error ? error : [self errorFromResult:result];
 
@@ -1192,22 +1192,22 @@ typedef enum FBRequestConnectionState {
         id body = nil;
         if (!itemError && [result isKindOfClass:[NSDictionary class]]) {
             NSDictionary *resultDictionary = (NSDictionary *)result;
-            body = [FBGraphObject graphObjectWrappingDictionary:[resultDictionary objectForKey:@"body"]];
+            body = [GBGraphObject graphObjectWrappingDictionary:[resultDictionary objectForKey:@"body"]];
         }
 
         NSUInteger resultIndex = error == itemError ? i : 0;
-        FBTask *taskWork = [FBTask taskWithResult:nil];
-        FBSystemAccountStoreAdapter *systemAccountStoreAdapter = [FBSystemAccountStoreAdapter sharedInstance];
+        GBTask *taskWork = [GBTask taskWithResult:nil];
+        GBSystemAccountStoreAdapter *systemAccountStoreAdapter = [GBSystemAccountStoreAdapter sharedInstance];
 
-        if ((metadata.request.session.accessTokenData.loginType == FBSessionLoginTypeSystemAccount) &&
+        if ((metadata.request.session.accessTokenData.loginType == GBSessionLoginTypeSystemAccount) &&
             [self isInsufficientPermissionError:error resultIndex:resultIndex]) {
             // if we lack permissions, use this as a cue to refresh the
             // OS's understanding of current permissions
-            taskWork = [taskWork dependentTaskWithBlock:^id(FBTask *task) {
+            taskWork = [taskWork dependentTaskWithBlock:^id(GBTask *task) {
                 return [systemAccountStoreAdapter renewSystemAuthorizationAsTask];
             } queue:dispatch_get_main_queue()];
         } else if ([self isInvalidSessionError:itemError resultIndex:resultIndex]) {
-            if (metadata.request.session.accessTokenData.loginType == FBSessionLoginTypeSystemAccount){
+            if (metadata.request.session.accessTokenData.loginType == GBSessionLoginTypeSystemAccount){
                 // For system auth, there are a number of edge cases we pre-process before
                 // closing the session.
 
@@ -1216,25 +1216,25 @@ typedef enum FBRequestConnectionState {
                     // If token is expired and iOS says user has granted permissions
                     // we can simply renew the token and flip the error to a retry.
 
-                    taskWork = [taskWork dependentTaskWithBlock:^id(FBTask *task) {
+                    taskWork = [taskWork dependentTaskWithBlock:^id(GBTask *task) {
                         return [systemAccountStoreAdapter renewSystemAuthorizationAsTask];
                     } queue:dispatch_get_main_queue()];
 
-                    taskWork = [taskWork completionTaskWithQueue:dispatch_get_main_queue() block:^id(FBTask *task) {
+                    taskWork = [taskWork completionTaskWithQueue:dispatch_get_main_queue() block:^id(GBTask *task) {
                         if (task.result == ACAccountCredentialRenewResultRenewed) {
-                            FBTask *requestAccessTask = [systemAccountStoreAdapter requestAccessToFacebookAccountStoreAsTask:metadata.request.session];
-                            return [requestAccessTask completionTaskWithQueue:dispatch_get_main_queue() block:^id(FBTask *task) {
+                            GBTask *requestAccessTask = [systemAccountStoreAdapter requestAccessToFacebookAccountStoreAsTask:metadata.request.session];
+                            return [requestAccessTask completionTaskWithQueue:dispatch_get_main_queue() block:^id(GBTask *task) {
                                 if (task.result) { // aka success means task.result ==  (oauthToken)
                                     [metadata.request.session refreshAccessToken:task.result expirationDate:[NSDate distantFuture]];
                                     [metadata invokeCompletionHandlerForConnection:self
                                                                        withResults:body
-                                                                             error:[FBErrorUtility fberrorForRetry:unpackedError]];
-                                    return [FBTask cancelledTask];
+                                                                             error:[GBErrorUtility fberrorForRetry:unpackedError]];
+                                    return [GBTask cancelledTask];
                                 }
-                                return [FBTask taskWithError:nil];
+                                return [GBTask taskWithError:nil];
                             }];
                         }
-                        return [FBTask taskWithError:nil];
+                        return [GBTask taskWithError:nil];
                     }];
                 } else if ([self isPasswordChangeError:itemError resultIndex:resultIndex]) {
                     // For iOS6, when the password is changed on the server, the system account store
@@ -1242,55 +1242,55 @@ typedef enum FBRequestConnectionState {
                     // password AND _THEN_ a renew call is made. To prevent opening
                     // with an old token which would immediately be closed, we tell our adapter
                     // that we want to force a blocking renew until success.
-                    [FBSystemAccountStoreAdapter sharedInstance].forceBlockingRenew = YES;
+                    [GBSystemAccountStoreAdapter sharedInstance].forceBlockingRenew = YES;
                 } else {
                     // For other invalid session cases, we can simply issue the renew now
                     // to update the system account's world view.
-                    taskWork = [taskWork dependentTaskWithBlock:^id(FBTask *task) {
+                    taskWork = [taskWork dependentTaskWithBlock:^id(GBTask *task) {
                         return [systemAccountStoreAdapter renewSystemAuthorizationAsTask];
                     } queue:dispatch_get_main_queue()];
                 }
             }
             // Invalid session case, should close the session at end of this if block
             // unless we signified not to earlier via a task cancellation.
-            taskWork = [taskWork dependentTaskWithBlock:^id(FBTask *task) {
+            taskWork = [taskWork dependentTaskWithBlock:^id(GBTask *task) {
                 if (task.isCancelled) {
                     return task;
                 }
                 if ([self shouldCloseRequestSession:metadata.request]) {
                     [metadata.request.session closeAndClearTokenInformation:unpackedError];
                 }
-                return [FBTask taskWithResult:nil];
+                return [GBTask taskWithResult:nil];
             } queue:dispatch_get_main_queue()];
         } else if ([metadata.request.session shouldExtendAccessToken]) {
             // If we have not had the opportunity to piggyback a token-extension request,
             // but we need to, do so now as a separate request.
-            taskWork = [taskWork dependentTaskWithBlock:^id(FBTask *task) {
-                FBRequestConnection *connection = [[FBRequestConnection alloc] init];
-                [FBRequestConnection addRequestToExtendTokenForSession:metadata.request.session
+            taskWork = [taskWork dependentTaskWithBlock:^id(GBTask *task) {
+                GBRequestConnection *connection = [[GBRequestConnection alloc] init];
+                [GBRequestConnection addRequestToExtendTokenForSession:metadata.request.session
                                                             connection:connection];
                 [connection start];
                 [connection release];
-                return [FBTask taskWithResult:nil];
+                return [GBTask taskWithResult:nil];
             } queue:dispatch_get_main_queue()];
         }
 
         // Always invoke handler at the end.
-        taskWork = [taskWork dependentTaskWithBlock:^id(FBTask *task) {
+        taskWork = [taskWork dependentTaskWithBlock:^id(GBTask *task) {
             if (task.isCancelled) {
                 return task;
             }
             [metadata invokeCompletionHandlerForConnection:self withResults:body error:unpackedError];
-            return [FBTask taskWithResult:nil];
+            return [GBTask taskWithResult:nil];
         } queue:dispatch_get_main_queue()];
         [tasks addObject:taskWork];
     } //end for loop
 
 
-    FBTask *finalTask = [FBTask taskDependentOnTasks:tasks];
-    [finalTask dependentTaskWithBlock:^id(FBTask *task) {
+    GBTask *finalTask = [GBTask taskDependentOnTasks:tasks];
+    [finalTask dependentTaskWithBlock:^id(GBTask *task) {
         [self.retryManager performRetries];
-        return [FBTask taskWithResult:nil];
+        return [GBTask taskWithResult:nil];
     } queue:dispatch_get_main_queue()];
     [tasks release];
 }
@@ -1307,7 +1307,7 @@ typedef enum FBRequestConnectionState {
 
             NSMutableDictionary *userInfo = [[[NSMutableDictionary alloc] init] autorelease];
             [userInfo addEntriesFromDictionary:dictionary];
-            return [self errorWithCode:FBErrorRequestConnectionApi
+            return [self errorWithCode:GBErrorRequestConnectionApi
                             statusCode:200
                     parsedJSONResponse:idResult
                             innerError:nil
@@ -1325,20 +1325,20 @@ typedef enum FBRequestConnectionState {
     return nil;
 }
 
-- (NSError *)errorWithCode:(FBErrorCode)code
+- (NSError *)errorWithCode:(GBErrorCode)code
                 statusCode:(NSInteger)statusCode
         parsedJSONResponse:(id)response
                 innerError:(NSError*)innerError
                    message:(NSString*)message {
     NSMutableDictionary *userInfo = [[[NSMutableDictionary alloc] init] autorelease];
-    [userInfo setObject:[NSNumber numberWithInteger:statusCode] forKey:FBErrorHTTPStatusCodeKey];
+    [userInfo setObject:[NSNumber numberWithInteger:statusCode] forKey:GBErrorHTTPStatusCodeKey];
 
     if (response) {
-        userInfo[FBErrorParsedJSONResponseKey] = response;
+        userInfo[GBErrorParsedJSONResponseKey] = response;
     }
 
     if (innerError) {
-        userInfo[FBErrorInnerErrorKey] = innerError;
+        userInfo[GBErrorInnerErrorKey] = innerError;
     }
 
     if (message) {
@@ -1347,8 +1347,8 @@ typedef enum FBRequestConnectionState {
 
     // if we only have one session (possibly more than once) in this batch, stuff it in the error,
     // otherwise it is a more advanced batch and the app is responsible for handling error state
-    FBSession *session = nil;
-    for (FBRequestMetadata *requestMetadata in self.requests) {
+    GBSession *session = nil;
+    for (GBRequestMetadata *requestMetadata in self.requests) {
         if (requestMetadata.request.session) {
             if (!session) {
                 session = requestMetadata.request.session;
@@ -1360,7 +1360,7 @@ typedef enum FBRequestConnectionState {
     }
 
     if (session) {
-        userInfo[FBErrorSessionKey] = session;
+        userInfo[GBErrorSessionKey] = session;
     }
 
     NSError *error = [[[NSError alloc]
@@ -1383,8 +1383,8 @@ typedef enum FBRequestConnectionState {
     }
     NSError *result = nil;
     if (innerError || ((statusCode < 200) || (statusCode >= 300))) {
-        [FBLogger singleShotLogEntry:FBLoggingBehaviorFBRequests formatString:@"Error: HTTP status code: %lu", (unsigned long)statusCode];
-        result = [self errorWithCode:FBErrorHTTPError
+        [GBLogger singleShotLogEntry:GBLoggingBehaviorGBRequests formatString:@"Error: HTTP status code: %lu", (unsigned long)statusCode];
+        result = [self errorWithCode:GBErrorHTTPError
                           statusCode:statusCode
                   parsedJSONResponse:response
                           innerError:innerError
@@ -1396,7 +1396,7 @@ typedef enum FBRequestConnectionState {
 - (BOOL)isInsufficientPermissionError:(NSError *)error
                           resultIndex:(NSUInteger)index {
     int code;
-    [FBErrorUtility fberrorGetCodeValueForError:error
+    [GBErrorUtility fberrorGetCodeValueForError:error
                                    index:index
                                     code:&code
                                  subcode:nil];
@@ -1405,59 +1405,59 @@ typedef enum FBRequestConnectionState {
 
 - (BOOL)isInvalidSessionError:(NSError *)error
                   resultIndex:(NSUInteger)index {
-    // Please note the retry behaviors in FBRequestHandlerFactory are coupled
-    // to the FBRequestConnection invalid session behavior, so any changes
+    // Please note the retry behaviors in GBRequestHandlerFactory are coupled
+    // to the GBRequestConnection invalid session behavior, so any changes
     // to conditions that trigger `closeAndClearTokenInformation` will probably
-    // need to replicate to the FBRequestHandlerFactory.
+    // need to replicate to the GBRequestHandlerFactory.
     int code = 0, subcode = 0;
-    [FBErrorUtility fberrorGetCodeValueForError:error
+    [GBErrorUtility fberrorGetCodeValueForError:error
                                           index:index
                                            code:&code
                                         subcode:&subcode];
 
-    return [FBErrorUtility fberrorCategoryFromError:error
+    return [GBErrorUtility fberrorCategoryFromError:error
                                                code:code
                                             subcode:subcode
                                returningUserMessage:nil
-                                andShouldNotifyUser:nil] == FBErrorCategoryAuthenticationReopenSession;
+                                andShouldNotifyUser:nil] == GBErrorCategoryAuthenticationReopenSession;
 }
 
 - (BOOL)isPasswordChangeError:(NSError *)error
                   resultIndex:(NSUInteger)index {
     int code = 0, subcode = 0;
-    [FBErrorUtility fberrorGetCodeValueForError:error
+    [GBErrorUtility fberrorGetCodeValueForError:error
                                           index:index
                                            code:&code
                                         subcode:&subcode];
 
-    [FBErrorUtility fberrorCategoryFromError:error
+    [GBErrorUtility fberrorCategoryFromError:error
                                         code:code
                                      subcode:subcode
                         returningUserMessage:nil
                          andShouldNotifyUser:nil];
-    return subcode == FBAuthSubcodePasswordChanged;
+    return subcode == GBAuthSubcodePasswordChanged;
 }
 
 - (BOOL)isExpiredTokenError:(NSError *)error
                 resultIndex:(NSUInteger)index {
     int code = 0, subcode = 0;
-    [FBErrorUtility fberrorGetCodeValueForError:error
+    [GBErrorUtility fberrorGetCodeValueForError:error
                                           index:index
                                            code:&code
                                         subcode:&subcode];
 
-    [FBErrorUtility fberrorCategoryFromError:error
+    [GBErrorUtility fberrorCategoryFromError:error
                                         code:code
                                      subcode:subcode
                         returningUserMessage:nil
                          andShouldNotifyUser:nil];
-    return subcode == FBAuthSubcodeExpired;
+    return subcode == GBAuthSubcodeExpired;
 }
 
 - (void)registerTokenToOmitFromLog:(NSString *)token
 {
-    if (![[FBSettings loggingBehavior] containsObject:FBLoggingBehaviorAccessTokens]) {
-        [FBLogger registerStringToReplace:token replaceWith:@"ACCESS_TOKEN_REMOVED"];
+    if (![[GBSettings loggingBehavior] containsObject:GBLoggingBehaviorAccessTokens]) {
+        [GBLogger registerStringToReplace:token replaceWith:@"ACCESS_TOKEN_REMOVED"];
     }
 }
 
@@ -1466,7 +1466,7 @@ typedef enum FBRequestConnectionState {
     static NSString *agent = nil;
 
     if (!agent) {
-        agent = [[NSString stringWithFormat:@"%@.%@", kUserAgentBase, FB_IOS_SDK_VERSION_STRING] retain];
+        agent = [[NSString stringWithFormat:@"%@.%@", kUserAgentBase, GB_IOS_SDK_VERSION_STRING] retain];
     }
 
     return agent;
@@ -1476,36 +1476,36 @@ typedef enum FBRequestConnectionState {
 {
     // Get the set of sessions used by our requests
     NSMutableSet *sessions = [[NSMutableSet alloc] init];
-    for (FBRequestMetadata *requestMetadata in self.requests) {
+    for (GBRequestMetadata *requestMetadata in self.requests) {
         // Have we seen this session yet? If not, assume we'll extend its token if it wants us to.
         if (requestMetadata.request.session) {
             [sessions addObject:requestMetadata.request.session];
         }
     }
 
-    for (FBSession *session in sessions) {
+    for (GBSession *session in sessions) {
         if (self.requests.count >= kMaximumBatchSize) {
             break;
         }
         if ([session shouldExtendAccessToken]) {
-            [FBRequestConnection addRequestToExtendTokenForSession:session connection:self];
+            [GBRequestConnection addRequestToExtendTokenForSession:session connection:self];
         }
         if (self.requests.count < kMaximumBatchSize && [session shouldRefreshPermissions]) {
-            [FBRequestConnection addRequestToRefreshPermissionsSession:session connection:self];
+            [GBRequestConnection addRequestToRefreshPermissionsSession:session connection:self];
         }
     }
 
     [sessions release];
 }
 
-+ (void)addRequestToExtendTokenForSession:(FBSession*)session connection:(FBRequestConnection*)connection
++ (void)addRequestToExtendTokenForSession:(GBSession*)session connection:(GBRequestConnection*)connection
 {
-    FBRequest *request = [[FBRequest alloc] initWithSession:session
+    GBRequest *request = [[GBRequest alloc] initWithSession:session
                                                  restMethod:kExtendTokenRestMethod
                                                  parameters:nil
                                                  HTTPMethod:nil];
     [connection addRequest:request
-         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+         completionHandler:^(GBRequestConnection *connection, id result, NSError *error) {
              // extract what we care about
              id token = [result objectForKey:@"access_token"];
              id expireTime = [result objectForKey:@"expires_at"];
@@ -1533,12 +1533,12 @@ typedef enum FBRequestConnectionState {
     [request release];
 }
 
-+ (void)addRequestToRefreshPermissionsSession:(FBSession*)session connection:(FBRequestConnection*)connection {
-    FBRequest *request = [[FBRequest alloc] initWithSession:session graphPath:@"me/permissions"];
++ (void)addRequestToRefreshPermissionsSession:(GBSession*)session connection:(GBRequestConnection*)connection {
+    GBRequest *request = [[GBRequest alloc] initWithSession:session graphPath:@"me/permissions"];
     request.canCloseSessionOnError = NO;
 
     [connection addRequest:request
-         completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+         completionHandler:^(GBRequestConnection *connection, id result, NSError *error) {
              if (!error && [result isKindOfClass:[NSDictionary class] ]) {
                  NSArray *resultData = result[@"data"];
                  if (resultData.count > 0) {
@@ -1554,8 +1554,8 @@ typedef enum FBRequestConnectionState {
 }
 
 // Helper method to map a request to its metadata instance.
-- (FBRequestMetadata *) getRequestMetadata:(FBRequest *)request {
-    for (FBRequestMetadata *metadata in self.requests) {
+- (GBRequestMetadata *) getRequestMetadata:(GBRequest *)request {
+    for (GBRequestMetadata *metadata in self.requests) {
         if (metadata.request == request) {
             return metadata;
         }
@@ -1571,8 +1571,8 @@ typedef enum FBRequestConnectionState {
                                self,
                                (unsigned long)self.requests.count];
     BOOL comma = NO;
-    for (FBRequestMetadata *metadata in self.requests) {
-        FBRequest *request = metadata.request;
+    for (GBRequestMetadata *metadata in self.requests) {
+        GBRequest *request = metadata.request;
         if (comma) {
             [result appendString:@",\n"];
         }

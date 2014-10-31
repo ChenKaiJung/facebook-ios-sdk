@@ -16,16 +16,16 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FBSession.h"
-#import "FBViewController.h"
+#import "GBSession.h"
+#import "GBViewController.h"
 
 /*!
  @protocol
 
  @abstract
- The `FBUserSettingsDelegate` protocol defines the methods called by a <FBUserSettingsViewController>.
+ The `GBUserSettingsDelegate` protocol defines the methods called by a <GBUserSettingsViewController>.
  */
-@protocol FBUserSettingsDelegate <FBViewControllerDelegate>
+@protocol GBUserSettingsDelegate <GBViewControllerDelegate>
 
 @optional
 
@@ -79,18 +79,18 @@
 
 
 /*!
- @class FBUserSettingsViewController
+ @class GBUserSettingsViewController
 
  @abstract
- The `FBUserSettingsViewController` class provides a user interface exposing a user's
+ The `GBUserSettingsViewController` class provides a user interface exposing a user's
  Facebook-related settings. Currently, this is limited to whether they are logged in or out
  of Facebook.
 
  Because of the size of some graphics used in this view, its resources are packaged as a separate
- bundle. In order to use `FBUserSettingsViewController`, drag the `FBUserSettingsViewResources.bundle`
+ bundle. In order to use `GBUserSettingsViewController`, drag the `GBUserSettingsViewResources.bundle`
  from the SDK directory into your Xcode project.
  */
-@interface FBUserSettingsViewController : FBViewController
+@interface GBUserSettingsViewController : GBViewController
 
 /*!
  @abstract
@@ -112,8 +112,8 @@
  The publish permissions to request if the user logs in via this view.
 
  @discussion
- Note, that a defaultAudience value of FBSessionDefaultAudienceOnlyMe, FBSessionDefaultAudienceEveryone, or
- FBSessionDefaultAudienceFriends should be set if publish permissions are specified. Additionally, when publish
+ Note, that a defaultAudience value of GBSessionDefaultAudienceOnlyMe, GBSessionDefaultAudienceEveryone, or
+ GBSessionDefaultAudienceFriends should be set if publish permissions are specified. Additionally, when publish
  permissions are specified, then read should not be specified.
  */
 @property (nonatomic, copy) NSArray *publishPermissions;
@@ -122,7 +122,7 @@
  @abstract
  The default audience to use, if publish permissions are requested at login time.
  */
-@property (nonatomic, assign) FBSessionDefaultAudience defaultAudience;
+@property (nonatomic, assign) GBSessionDefaultAudience defaultAudience;
 
 @end
 

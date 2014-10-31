@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-#import "FBDialogsParams+Internal.h"
+#import "GBDialogsParams+Internal.h"
 
-@implementation FBDialogsParams
+@implementation GBDialogsParams
 
 /*!
  @abstract
- This method is abstract and must be defined my all classes that derive from `FBDialogsParams`
+ This method is abstract and must be defined my all classes that derive from `GBDialogsParams`
  */
 - (NSDictionary *)dictionaryMethodArgs {
     @throw [NSException exceptionWithName:NSInternalInconsistencyException

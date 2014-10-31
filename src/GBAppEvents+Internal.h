@@ -14,109 +14,109 @@
  * limitations under the License.
  */
 
-#import "FBAppEvents.h"
+#import "GBAppEvents.h"
 
-@class FBRequest;
+@class GBRequest;
 
 // Internally known event names
 
 /*! Use to log that the share dialog was launched */
-extern NSString *const FBAppEventNameShareSheetLaunch;
+extern NSString *const GBAppEventNameShareSheetLaunch;
 
 /*! Use to log that the share dialog was dismissed */
-extern NSString *const FBAppEventNameShareSheetDismiss;
+extern NSString *const GBAppEventNameShareSheetDismiss;
 
 /*! Use to log that the permissions UI was launched */
-extern NSString *const FBAppEventNamePermissionsUILaunch;
+extern NSString *const GBAppEventNamePermissionsUILaunch;
 
 /*! Use to log that the permissions UI was dismissed */
-extern NSString *const FBAppEventNamePermissionsUIDismiss;
+extern NSString *const GBAppEventNamePermissionsUIDismiss;
 
 /*! Use to log that the friend picker was launched and completed */
-extern NSString *const FBAppEventNameFriendPickerUsage;
+extern NSString *const GBAppEventNameFriendPickerUsage;
 
 /*! Use to log that the place picker dialog was launched and completed */
-extern NSString *const FBAppEventNamePlacePickerUsage;
+extern NSString *const GBAppEventNamePlacePickerUsage;
 
 /*! Use to log that the login view was used */
-extern NSString *const FBAppEventNameLoginViewUsage;
+extern NSString *const GBAppEventNameLoginViewUsage;
 
 /*! Use to log that the user settings view controller was used */
-extern NSString *const FBAppEventNameUserSettingsUsage;
+extern NSString *const GBAppEventNameUserSettingsUsage;
 
 // Internally known event parameters
 
 /*! String parameter specifying the outcome of a dialog invocation */
-extern NSString *const FBAppEventParameterDialogOutcome;
+extern NSString *const GBAppEventParameterDialogOutcome;
 
-/*! Use to log the result of a call to FBDialogs canPresentShareDialogWithParams: */
-extern NSString *const FBAppEventNameFBDialogsPresentShareDialog;
+/*! Use to log the result of a call to GBDialogs canPresentShareDialogWithParams: */
+extern NSString *const GBAppEventNameGBDialogsPresentShareDialog;
 
-/*! Use to log the result of a call to FBDialogs canPresentShareDialogWithOpenGraphActionParams: */
-extern NSString *const FBAppEventNameFBDialogsPresentShareDialogOG;
+/*! Use to log the result of a call to GBDialogs canPresentShareDialogWithOpenGraphActionParams: */
+extern NSString *const GBAppEventNameGBDialogsPresentShareDialogOG;
 
 /*! Use to log the start of an auth request that cannot be fulfilled by the token cache */
-extern NSString *const FBAppEventNameFBSessionAuthStart;
+extern NSString *const GBAppEventNameGBSessionAuthStart;
 
 /*! Use to log the end of an auth request that was not fulfilled by the token cache */
-extern NSString *const FBAppEventNameFBSessionAuthEnd;
+extern NSString *const GBAppEventNameGBSessionAuthEnd;
 
 /*! Use to log the start of a specific auth method as part of an auth request */
-extern NSString *const FBAppEventNameFBSessionAuthMethodStart;
+extern NSString *const GBAppEventNameGBSessionAuthMethodStart;
 
 /*! Use to log the end of the last tried auth method as part of an auth request */
-extern NSString *const FBAppEventNameFBSessionAuthMethodEnd;
+extern NSString *const GBAppEventNameGBSessionAuthMethodEnd;
 
 /*! Use to log the timestamp for the transition to the Facebook native login dialog */
-extern NSString *const FBAppEventNameFBDialogsNativeLoginDialogStart;
+extern NSString *const GBAppEventNameGBDialogsNativeLoginDialogStart;
 
 /*! Use to log the timestamp for the transition back to the app after the Facebook native login dialog */
-extern NSString *const FBAppEventNameFBDialogsNativeLoginDialogEnd;
+extern NSString *const GBAppEventNameGBDialogsNativeLoginDialogEnd;
 
 /*! Use to log the e2e timestamp metrics for web login */
-extern NSString *const FBAppEventNameFBDialogsWebLoginCompleted;
+extern NSString *const GBAppEventNameGBDialogsWebLoginCompleted;
 
 // Internally known event parameter values
 
-extern NSString *const FBAppEventsDialogOutcomeValue_Completed;
-extern NSString *const FBAppEventsDialogOutcomeValue_Cancelled;
-extern NSString *const FBAppEventsDialogOutcomeValue_Failed;
+extern NSString *const GBAppEventsDialogOutcomeValue_Completed;
+extern NSString *const GBAppEventsDialogOutcomeValue_Cancelled;
+extern NSString *const GBAppEventsDialogOutcomeValue_Failed;
 
-extern NSString *const FBAppEventsNativeLoginDialogStartTime;
-extern NSString *const FBAppEventsNativeLoginDialogEndTime;
+extern NSString *const GBAppEventsNativeLoginDialogStartTime;
+extern NSString *const GBAppEventsNativeLoginDialogEndTime;
 
-extern NSString *const FBAppEventsWebLoginE2E;
-extern NSString *const FBAppEventsWebLoginSwitchbackTime;
+extern NSString *const GBAppEventsWebLoginE2E;
+extern NSString *const GBAppEventsWebLoginSwitchbackTime;
 
 typedef enum {
-    FBAppEventsFlushReasonExplicit,
-    FBAppEventsFlushReasonTimer,
-    FBAppEventsFlushReasonSessionChange,
-    FBAppEventsFlushReasonPersistedEvents,
-    FBAppEventsFlushReasonEventThreshold,
-    FBAppEventsFlushReasonEagerlyFlushingEvent
-} FBAppEventsFlushReason;
+    GBAppEventsFlushReasonExplicit,
+    GBAppEventsFlushReasonTimer,
+    GBAppEventsFlushReasonSessionChange,
+    GBAppEventsFlushReasonPersistedEvents,
+    GBAppEventsFlushReasonEventThreshold,
+    GBAppEventsFlushReasonEagerlyFlushingEvent
+} GBAppEventsFlushReason;
 
-@interface FBAppEvents (Internal)
+@interface GBAppEvents (Internal)
 
 + (void)logImplicitEvent:(NSString *)eventName
               valueToSum:(NSNumber *)valueToSum
               parameters:(NSDictionary *)parameters
-                 session:(FBSession *)session;
+                 session:(GBSession *)session;
 
-+ (FBRequest *)customAudienceThirdPartyIDRequest:(FBSession *)session;
++ (GBRequest *)customAudienceThirdPartyIDRequest:(GBSession *)session;
 
 // *** Expose internally for testing/mocking only ***
-+ (FBAppEvents *)singleton;
++ (GBAppEvents *)singleton;
 - (void)handleActivitiesPostCompletion:(NSError *)error
                           loggingEntry:(NSString *)loggingEntry
-                               session:(FBSession *)session;
+                               session:(GBSession *)session;
 
 + (void)logConversionPixel:(NSString *)pixelID
               valueOfPixel:(double)value
-                   session:(FBSession *)session;
+                   session:(GBSession *)session;
 
-- (void)instanceFlush:(FBAppEventsFlushReason)flushReason;
+- (void)instanceFlush:(GBAppEventsFlushReason)flushReason;
 
 // *** end ***
 

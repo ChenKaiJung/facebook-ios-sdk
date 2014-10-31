@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-#import "FBSession.h"
-#import "FBSessionAppEventsState.h"
-#import "FBSystemAccountStoreAdapter.h"
+#import "GBSession.h"
+#import "GBSessionAppEventsState.h"
+#import "GBSystemAccountStoreAdapter.h"
 
-extern NSString *const FBLoginUXClientState;
-extern NSString *const FBLoginUXClientStateIsClientState;
-extern NSString *const FBLoginUXClientStateIsOpenSession;
-extern NSString *const FBLoginUXClientStateIsActiveSession;
-extern NSString *const FBLoginUXResponseTypeToken;
-extern NSString *const FBLoginUXResponseType;
+extern NSString *const GBLoginUXClientState;
+extern NSString *const GBLoginUXClientStateIsClientState;
+extern NSString *const GBLoginUXClientStateIsOpenSession;
+extern NSString *const GBLoginUXClientStateIsActiveSession;
+extern NSString *const GBLoginUXResponseTypeToken;
+extern NSString *const GBLoginUXResponseType;
 
-extern NSString *const FBInnerErrorObjectKey;
-extern NSString *const FBSessionDidSetActiveSessionNotificationUserInfoIsOpening;
-extern NSString *const FacebookNativeApplicationLoginDomain;
+extern NSString *const GBInnerErrorObjectKey;
+extern NSString *const GBSessionDidSetActiveSessionNotificationUserInfoIsOpening;
+extern NSString *const GbombNativeApplicationLoginDomain;
 
-@interface FBSession (Internal)
+@interface GBSession (Internal)
 
-@property (readonly) FBSessionDefaultAudience lastRequestedSystemAudience;
-@property (readonly, retain) FBSessionAppEventsState *appEventsState;
+@property (readonly) GBSessionDefaultAudience lastRequestedSystemAudience;
+@property (readonly, retain) GBSessionAppEventsState *appEventsState;
 @property (readonly) NSThread *affinitizedThread;
 @property (atomic, readonly) BOOL isRepairing;
 
@@ -43,30 +43,30 @@ extern NSString *const FacebookNativeApplicationLoginDomain;
 - (void)closeAndClearTokenInformation:(NSError*) error;
 - (void)clearAffinitizedThread;
 
-+ (FBSession*)activeSessionIfExists;
++ (GBSession*)activeSessionIfExists;
 
-+ (FBSession*)activeSessionIfOpen;
++ (GBSession*)activeSessionIfOpen;
 
 - (NSError*)errorLoginFailedWithReason:(NSString*)errorReason
                              errorCode:(NSString*)errorCode
                             innerError:(NSError*)innerError;
 
-- (BOOL)openFromAccessTokenData:(FBAccessTokenData *)accessTokenData
-              completionHandler:(FBSessionStateHandler) handler
+- (BOOL)openFromAccessTokenData:(GBAccessTokenData *)accessTokenData
+              completionHandler:(GBSessionStateHandler) handler
    raiseExceptionIfInvalidState:(BOOL)raiseException;
 
 + (NSError *)sdkSurfacedErrorForNativeLoginError:(NSError *)nativeLoginError;
 
-- (void)repairWithHandler:(FBSessionRequestPermissionResultHandler) handler;
+- (void)repairWithHandler:(GBSessionRequestPermissionResultHandler) handler;
 
 + (BOOL)openActiveSessionWithPermissions:(NSArray*)permissions
                             allowLoginUI:(BOOL)allowLoginUI
-                         defaultAudience:(FBSessionDefaultAudience)defaultAudience
-                       completionHandler:(FBSessionStateHandler)handler;
+                         defaultAudience:(GBSessionDefaultAudience)defaultAudience
+                       completionHandler:(GBSessionStateHandler)handler;
 
 + (BOOL)openActiveSessionWithPermissions:(NSArray*)permissions
-                           loginBehavior:(FBSessionLoginBehavior)loginBehavior
+                           loginBehavior:(GBSessionLoginBehavior)loginBehavior
                                   isRead:(BOOL)isRead
-                         defaultAudience:(FBSessionDefaultAudience)defaultAudience
-                       completionHandler:(FBSessionStateHandler)handler;
+                         defaultAudience:(GBSessionDefaultAudience)defaultAudience
+                       completionHandler:(GBSessionStateHandler)handler;
 @end

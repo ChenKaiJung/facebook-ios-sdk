@@ -17,37 +17,37 @@
 #import <CoreLocation/CoreLocation.h>
 #import <UIKit/UIKit.h>
 
-#import "FBCacheDescriptor.h"
-#import "FBGraphPlace.h"
-#import "FBSession.h"
-#import "FBViewController.h"
+#import "GBCacheDescriptor.h"
+#import "GBGraphPlace.h"
+#import "GBSession.h"
+#import "GBViewController.h"
 
-@protocol FBPlacePickerDelegate;
+@protocol GBPlacePickerDelegate;
 
 /*!
- @class FBPlacePickerViewController
+ @class GBPlacePickerViewController
 
  @abstract
- The `FBPlacePickerViewController` class creates a controller object that manages
+ The `GBPlacePickerViewController` class creates a controller object that manages
  the user interface for displaying and selecting nearby places.
 
  @discussion
- When the `FBPlacePickerViewController` view loads it creates a `UITableView` object
+ When the `GBPlacePickerViewController` view loads it creates a `UITableView` object
  where the places near a given location will be displayed. You can access this view
  through the `tableView` property.
 
  The place data can be pre-fetched and cached prior to using the view controller. The
- cache is setup using an <FBCacheDescriptor> object that can trigger the
+ cache is setup using an <GBCacheDescriptor> object that can trigger the
  data fetch. Any place data requests will first check the cache and use that data.
  If the place picker is being displayed cached data will initially be shown before
  a fresh copy is retrieved.
 
- The `delegate` property may be set to an object that conforms to the <FBPlacePickerDelegate>
+ The `delegate` property may be set to an object that conforms to the <GBPlacePickerDelegate>
  protocol. The `delegate` object will receive updates related to place selection and
  data changes. The delegate can also be used to filter the places to display in the
  picker.
  */
-@interface FBPlacePickerViewController : FBViewController
+@interface GBPlacePickerViewController : GBViewController
 
 /*!
  @abstract
@@ -101,14 +101,14 @@
  @abstract
  The session that is used in the request for place data.
  */
-@property (nonatomic, retain) FBSession *session;
+@property (nonatomic, retain) GBSession *session;
 
 /*!
  @abstract
  The place that is currently selected in the view.  This is nil
  if nothing is selected.
   */
-@property (nonatomic, retain, readonly) id<FBGraphPlace> selection;
+@property (nonatomic, retain, readonly) id<GBGraphPlace> selection;
 
 /*!
  @abstract
@@ -148,9 +148,9 @@
  If the view controller finds a cached copy of the data, it will
  first display the cached content then fetch a fresh copy from the server.
 
- @param cacheDescriptor     The <FBCacheDescriptor> containing the cache query properties.
+ @param cacheDescriptor     The <GBCacheDescriptor> containing the cache query properties.
  */
-- (void)configureUsingCachedDescriptor:(FBCacheDescriptor*)cacheDescriptor;
+- (void)configureUsingCachedDescriptor:(GBCacheDescriptor*)cacheDescriptor;
 
 /*!
  @abstract
@@ -179,11 +179,11 @@
 
  @abstract
  Creates a cache descriptor with additional fields and a profile ID for use with the
- `FBPlacePickerViewController` object.
+ `GBPlacePickerViewController` object.
 
  @discussion
- An `FBCacheDescriptor` object may be used to pre-fetch data before it is used by
- the view controller. It may also be used to configure the `FBPlacePickerViewController`
+ An `GBCacheDescriptor` object may be used to pre-fetch data before it is used by
+ the view controller. It may also be used to configure the `GBPlacePickerViewController`
  object.
 
  @param locationCoordinate              The coordinates to use for place discovery.
@@ -192,7 +192,7 @@
  @param resultsLimit                    The maximum number of places to fetch.
  @param fieldsForRequest                Addtional fields to fetch when making the Graph API call to get place data.
  */
-+ (FBCacheDescriptor*)cacheDescriptorWithLocationCoordinate:(CLLocationCoordinate2D)locationCoordinate
++ (GBCacheDescriptor*)cacheDescriptorWithLocationCoordinate:(CLLocationCoordinate2D)locationCoordinate
                                              radiusInMeters:(NSInteger)radiusInMeters
                                                  searchText:(NSString*)searchText
                                                resultsLimit:(NSInteger)resultsLimit
@@ -204,11 +204,11 @@
  @protocol
 
  @abstract
- The `FBPlacePickerDelegate` protocol defines the methods used to receive event
- notifications and allow for deeper control of the <FBPlacePickerViewController>
+ The `GBPlacePickerDelegate` protocol defines the methods used to receive event
+ notifications and allow for deeper control of the <GBPlacePickerViewController>
  view.
  */
-@protocol FBPlacePickerDelegate <FBViewControllerDelegate>
+@protocol GBPlacePickerDelegate <GBViewControllerDelegate>
 @optional
 
 /*!
@@ -216,13 +216,13 @@
  Tells the delegate that data has been loaded.
 
  @discussion
- The <FBPlacePickerViewController> object's `tableView` property is automatically
+ The <GBPlacePickerViewController> object's `tableView` property is automatically
  reloaded when this happens. However, if another table view, for example the
  `UISearchBar` is showing data, then it may also need to be reloaded.
 
  @param placePicker   The place picker view controller whose data changed.
  */
-- (void)placePickerViewControllerDataDidChange:(FBPlacePickerViewController *)placePicker;
+- (void)placePickerViewControllerDataDidChange:(GBPlacePickerViewController *)placePicker;
 
 /*!
  @abstract
@@ -230,7 +230,7 @@
 
  @param placePicker   The place picker view controller whose selection changed.
  */
-- (void)placePickerViewControllerSelectionDidChange:(FBPlacePickerViewController *)placePicker;
+- (void)placePickerViewControllerSelectionDidChange:(GBPlacePickerViewController *)placePicker;
 
 /*!
  @abstract
@@ -240,10 +240,10 @@
  This can be used to implement a search bar that filters the places list.
 
  @param placePicker         The place picker view controller that is requesting this information.
- @param place               An <FBGraphPlace> object representing the place.
+ @param place               An <GBGraphPlace> object representing the place.
  */
-- (BOOL)placePickerViewController:(FBPlacePickerViewController *)placePicker
-               shouldIncludePlace:(id <FBGraphPlace>)place;
+- (BOOL)placePickerViewController:(GBPlacePickerViewController *)placePicker
+               shouldIncludePlace:(id <GBGraphPlace>)place;
 
 /*!
  @abstract
@@ -252,7 +252,7 @@
  @param placePicker         The place picker view controller that encountered the error.
  @param error               An error object containing details of the error.
  */
-- (void)placePickerViewController:(FBPlacePickerViewController *)placePicker
+- (void)placePickerViewController:(GBPlacePickerViewController *)placePicker
                       handleError:(NSError *)error;
 
 @end

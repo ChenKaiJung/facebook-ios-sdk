@@ -14,36 +14,36 @@
  * limitations under the License.
  */
 
-#import "FBAppEvents.h"
-#import "FBUtility.h"
-#import "FBGraphObject.h"
-#import "FBLogger.h"
-#import "FBRequest+Internal.h"
-#import "FBSession.h"
-#import "FBDynamicFrameworkLoader.h"
-#import "FBSettings.h"
+#import "GBAppEvents.h"
+#import "GBUtility.h"
+#import "GBGraphObject.h"
+#import "GBLogger.h"
+#import "GBRequest+Internal.h"
+#import "GBSession.h"
+#import "GBDynamicFrameworkLoader.h"
+#import "GBSettings.h"
 
 #import <AdSupport/AdSupport.h>
 #include <sys/time.h>
 
 static const double APPSETTINGS_STALE_THRESHOLD_SECONDS = 60 * 60; // one hour.
-static FBFetchedAppSettings *g_fetchedAppSettings = nil;
+static GBFetchedAppSettings *g_fetchedAppSettings = nil;
 static NSError *g_fetchedAppSettingsError = nil;
 static NSDate *g_fetchedAppSettingsTimestamp = nil;
 
-@implementation FBUtility
+@implementation GBUtility
 
-+ (NSDictionary*)queryParamsDictionaryFromFBURL:(NSURL*)url {
++ (NSDictionary*)queryParamsDictionaryFromGBURL:(NSURL*)url {
     // version 3.2.3 of the Facebook app encodes the parameters in the query but
     // version 3.3 and above encode the parameters in the fragment;
     // merge them together with fragment taking priority.
 
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
     if ([url query]) {
-        [result addEntriesFromDictionary:[FBUtility dictionaryByParsingURLQueryPart:[url query]]];
+        [result addEntriesFromDictionary:[GBUtility dictionaryByParsingURLQueryPart:[url query]]];
     }
     if ([url fragment]) {
-        [result addEntriesFromDictionary:[FBUtility dictionaryByParsingURLQueryPart:[url fragment]]];
+        [result addEntriesFromDictionary:[GBUtility dictionaryByParsingURLQueryPart:[url fragment]]];
     }
     
     return result;
@@ -73,8 +73,8 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
         }
         
         if (key && value) {
-            [result setObject:[FBUtility stringByURLDecodingString:value]
-                       forKey:[FBUtility stringByURLDecodingString:key]];
+            [result setObject:[GBUtility stringByURLDecodingString:value]
+                       forKey:[GBUtility stringByURLDecodingString:key]];
         }
     }
     return result;
@@ -90,7 +90,7 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
             }
             [queryString appendFormat:@"%@=%@",
              key,
-             [FBUtility stringByURLEncodingString:queryParameters[key]]];
+             [GBUtility stringByURLEncodingString:queryParameters[key]]];
             hasParameters = YES;
         }
     }
@@ -125,9 +125,9 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
     return minValue + (maxValue - minValue) * (double)arc4random() / UINT32_MAX;
 }
 
-+ (id<FBGraphObject>)graphObjectInArray:(NSArray*)array withSameIDAs:(id<FBGraphObject>)item {
-    for (id<FBGraphObject> obj in array) {
-        if ([FBGraphObject isGraphObjectID:obj sameAs:item]) {
++ (id<GBGraphObject>)graphObjectInArray:(NSArray*)array withSameIDAs:(id<GBGraphObject>)item {
+    for (id<GBGraphObject> obj in array) {
+        if ([GBGraphObject isGraphObjectID:obj sameAs:item]) {
             return obj;
         }
     }
@@ -150,7 +150,7 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
     view.center = center;
 }
 
-+ (NSString *)stringFBIDFromObject:(id)object {
++ (NSString *)stringGBIDFromObject:(id)object {
     if ([object isKindOfClass:[NSDictionary class]]) {
         id val = [object objectForKey:@"id"];
         if ([val isKindOfClass:[NSString class]]) {
@@ -193,7 +193,7 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
     static NSBundle *bundle = nil;
     
     dispatch_once(&fetchBundleOnce, ^{
-        NSString *path = [[NSBundle mainBundle] pathForResource:[FBSettings resourceBundleName]
+        NSString *path = [[NSBundle mainBundle] pathForResource:[GBSettings resourceBundleName]
                                                          ofType:@"bundle"];
         bundle = [NSBundle bundleWithPath:path];
     });
@@ -202,7 +202,7 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
 
 + (NSString *)localizedStringForKey:(NSString *)key
                         withDefault:(NSString *)value {
-    return [self localizedStringForKey:key withDefault:value inBundle:FBUtility.facebookSDKBundle];
+    return [self localizedStringForKey:key withDefault:value inBundle:GBUtility.facebookSDKBundle];
 }
 
 + (NSString *)localizedStringForKey:(NSString *)key
@@ -260,13 +260,13 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
 // with calling with a second appid are undefined (in reality will just return the previously requested app's results).
 
 + (void)fetchAppSettings:(NSString *)appID
-                callback:(void (^)(FBFetchedAppSettings *, NSError *))callback {
-    if ([FBUtility isFetchedFBAppSettingsStale] || (!g_fetchedAppSettingsError && !g_fetchedAppSettings) ) {
+                callback:(void (^)(GBFetchedAppSettings *, NSError *))callback {
+    if ([GBUtility isFetchedGBAppSettingsStale] || (!g_fetchedAppSettingsError && !g_fetchedAppSettings) ) {
         
         NSString *pingPath = [NSString stringWithFormat:@"%@?fields=supports_attribution,supports_implicit_sdk_logging,suppress_native_ios_gdp,name", appID, nil];
-        FBRequest *pingRequest = [[[FBRequest alloc] initWithSession:nil graphPath:pingPath] autorelease];
+        GBRequest *pingRequest = [[[GBRequest alloc] initWithSession:nil graphPath:pingPath] autorelease];
         pingRequest.canCloseSessionOnError = NO;
-        if ([pingRequest startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        if ([pingRequest startWithCompletionHandler:^(GBRequestConnection *connection, id result, NSError *error) {
             [g_fetchedAppSettingsError release];
             g_fetchedAppSettingsError = nil;
             
@@ -274,7 +274,7 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
                 if (g_fetchedAppSettings) {
                     // We have older app settings but the refresh received an error.
                     // Log and ignore the error.
-                    [FBLogger singleShotLogEntry:FBLoggingBehaviorInformational formatString:@"fetchAppSettings refresh failed with %@", error];
+                    [GBLogger singleShotLogEntry:GBLoggingBehaviorInformational formatString:@"fetchAppSettings refresh failed with %@", error];
                 } else {
                     // Only set the error if we don't have previously fetched app settings.
                     // (i.e., if we have app settings and a new call gets an error, we'll
@@ -287,7 +287,7 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
                     [g_fetchedAppSettingsTimestamp release];
                     [g_fetchedAppSettings release];
                     
-                    g_fetchedAppSettings = [[FBFetchedAppSettings alloc] initWithAppID:appID];
+                    g_fetchedAppSettings = [[GBFetchedAppSettings alloc] initWithAppID:appID];
                     g_fetchedAppSettingsTimestamp = [[NSDate date] retain];
                     
                     g_fetchedAppSettings.serverAppName = [result objectForKey:@"name"];
@@ -296,27 +296,27 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
                     g_fetchedAppSettings.suppressNativeGdp = [[result objectForKey:@"suppress_native_ios_gdp"] boolValue];
                 }
             }
-            [FBUtility callTheFetchAppSettingsCallback:callback];
+            [GBUtility callTheFetchAppSettingsCallback:callback];
         }
              ]
             );
     } else {
-        [FBUtility callTheFetchAppSettingsCallback:callback];
+        [GBUtility callTheFetchAppSettingsCallback:callback];
     }
 }
 
-+ (FBFetchedAppSettings *)fetchedAppSettings {
-    if ([FBUtility isFetchedFBAppSettingsStale]) {
-        [FBUtility fetchAppSettings:g_fetchedAppSettings.appID callback:nil];
++ (GBFetchedAppSettings *)fetchedAppSettings {
+    if ([GBUtility isFetchedGBAppSettingsStale]) {
+        [GBUtility fetchAppSettings:g_fetchedAppSettings.appID callback:nil];
     }
     return g_fetchedAppSettings;
 }
 
-+ (BOOL) isFetchedFBAppSettingsStale {
++ (BOOL) isFetchedGBAppSettingsStale {
     return g_fetchedAppSettingsTimestamp && ([[NSDate date] timeIntervalSinceDate:g_fetchedAppSettingsTimestamp] > APPSETTINGS_STALE_THRESHOLD_SECONDS );
 }
 
-+ (void)callTheFetchAppSettingsCallback:(void (^)(FBFetchedAppSettings *, NSError *))callback {
++ (void)callTheFetchAppSettingsCallback:(void (^)(GBFetchedAppSettings *, NSError *))callback {
     if (callback) {
         if (g_fetchedAppSettingsError) {
             callback(nil, g_fetchedAppSettingsError);
@@ -332,7 +332,7 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
 
 + (NSString *)advertiserID {
     NSString *advertiserID = nil;
-    Class ASIdentifierManagerClass = [FBDynamicFrameworkLoader loadClass:@"ASIdentifierManager" withFramework:@"AdSupport"];
+    Class ASIdentifierManagerClass = [GBDynamicFrameworkLoader loadClass:@"ASIdentifierManager" withFramework:@"AdSupport"];
     if ([ASIdentifierManagerClass class]) {
         ASIdentifierManager *manager = [ASIdentifierManagerClass sharedManager];
         advertiserID = [[manager advertisingIdentifier] UUIDString];
@@ -340,9 +340,9 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
     return advertiserID;
 }
 
-+ (FBAdvertisingTrackingStatus)advertisingTrackingStatus {
-    FBAdvertisingTrackingStatus status = AdvertisingTrackingUnspecified;
-    Class ASIdentifierManagerClass = [FBDynamicFrameworkLoader loadClass:@"ASIdentifierManager" withFramework:@"AdSupport"];
++ (GBAdvertisingTrackingStatus)advertisingTrackingStatus {
+    GBAdvertisingTrackingStatus status = AdvertisingTrackingUnspecified;
+    Class ASIdentifierManagerClass = [GBDynamicFrameworkLoader loadClass:@"ASIdentifierManager" withFramework:@"AdSupport"];
     if ([ASIdentifierManagerClass class]) {
         ASIdentifierManager *manager = [ASIdentifierManagerClass sharedManager];
         if (manager) {
@@ -355,14 +355,14 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
 + (void)updateParametersWithEventUsageLimitsAndBundleInfo:(NSMutableDictionary *)parameters {
   // Only add the iOS global value if we have a definitive allowed/disallowed on advertising tracking.  Otherwise,
   // absence of this parameter is to be interpreted as 'unspecified'.
-  FBAdvertisingTrackingStatus advertisingTrackingStatus = [FBUtility advertisingTrackingStatus];
+  GBAdvertisingTrackingStatus advertisingTrackingStatus = [GBUtility advertisingTrackingStatus];
   if (advertisingTrackingStatus != AdvertisingTrackingUnspecified) {
       BOOL allowed = (advertisingTrackingStatus == AdvertisingTrackingAllowed);
       [parameters setObject:[[NSNumber numberWithBool:allowed] stringValue]
                      forKey:@"advertiser_tracking_enabled"];
   }
 
-  [parameters setObject:[[NSNumber numberWithBool:!FBSettings.limitEventAndDataUsage] stringValue] forKey:@"application_tracking_enabled"];
+  [parameters setObject:[[NSNumber numberWithBool:!GBSettings.limitEventAndDataUsage] stringValue] forKey:@"application_tracking_enabled"];
   
   static dispatch_once_t fetchBundleOnce;
   static NSString *bundleIdentifier;
@@ -373,22 +373,22 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
   dispatch_once(&fetchBundleOnce, ^{
       NSBundle *mainBundle = [NSBundle mainBundle];
       urlSchemes = [[NSMutableArray alloc] init];
-      for (NSDictionary *fields in [mainBundle objectForInfoDictionaryKey:@"CFBundleURLTypes"]) {
-          NSArray *schemesForType = [fields objectForKey:@"CFBundleURLSchemes"];
+      for (NSDictionary *fields in [mainBundle objectForInfoDictionaryKey:@"CGBundleURLTypes"]) {
+          NSArray *schemesForType = [fields objectForKey:@"CGBundleURLSchemes"];
           if (schemesForType) {
               [urlSchemes addObjectsFromArray:schemesForType];
           }
       }
       bundleIdentifier = mainBundle.bundleIdentifier;
-      longVersion = [mainBundle objectForInfoDictionaryKey:@"CFBundleVersion"];
-      shortVersion = [mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+      longVersion = [mainBundle objectForInfoDictionaryKey:@"CGBundleVersion"];
+      shortVersion = [mainBundle objectForInfoDictionaryKey:@"CGBundleShortVersionString"];
   });
 
   if (bundleIdentifier.length > 0) {
       [parameters setObject:bundleIdentifier forKey:@"bundle_id"];
   }
   if (urlSchemes.count > 0) {
-      [parameters setObject:[FBUtility simpleJSONEncode:urlSchemes] forKey:@"url_schemes"];
+      [parameters setObject:[GBUtility simpleJSONEncode:urlSchemes] forKey:@"url_schemes"];
   }
   if (longVersion.length > 0) {
       [parameters setObject:longVersion forKey:@"bundle_version"];
@@ -400,7 +400,7 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
 }
 
 + (NSString *)simpleJSONEncode:(id)data {
-    return [FBUtility simpleJSONEncode:data
+    return [GBUtility simpleJSONEncode:data
                                  error:nil
                         writingOptions:0];
 }
@@ -421,7 +421,7 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
 }
 
 + (id)simpleJSONDecode:(NSString *)jsonEncoding {
-    return [FBUtility simpleJSONDecode:jsonEncoding error:nil];
+    return [GBUtility simpleJSONDecode:jsonEncoding error:nil];
 }
 
 + (id)simpleJSONDecode:(NSString *)jsonEncoding
@@ -467,10 +467,10 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
     static NSArray *urlTypes = nil;
     
     dispatch_once(&fetchBundleOnce, ^{
-        urlTypes = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleURLTypes"];
+        urlTypes = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"CGBundleURLTypes"];
     });
     for (NSDictionary *urlType in urlTypes) {
-        NSArray *urlSchemes = [urlType valueForKey:@"CFBundleURLSchemes"];
+        NSArray *urlSchemes = [urlType valueForKey:@"CGBundleURLSchemes"];
         if ([urlSchemes containsObject:urlScheme]) {
             return YES;
         }
@@ -479,15 +479,15 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
 }
 
 + (NSString *)buildFacebookUrlWithPre:(NSString *)pre {
-    return [FBUtility buildFacebookUrlWithPre:pre withPost:nil];
+    return [GBUtility buildFacebookUrlWithPre:pre withPost:nil];
 }
 
 + (NSString *)buildFacebookUrlWithPre:(NSString *)pre
                              withPost:(NSString *)post {
-    NSString *domainPart = [FBSettings facebookDomainPart];
-    NSString *domain = FB_BASE_URL;
+    NSString *domainPart = [GBSettings facebookDomainPart];
+    NSString *domain = GB_BASE_URL;
     if (domainPart) {
-        domain = [NSString stringWithFormat:@"%@.%@", domainPart, FB_BASE_URL];
+        domain = [NSString stringWithFormat:@"%@.%@", domainPart, GB_BASE_URL];
     }
     return [NSString stringWithFormat:@"%@%@%@", pre, domain, post ?: @""];
 }
@@ -499,16 +499,16 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
 
 + (BOOL)isSystemAccountStoreAvailable {
     id accountStore = nil;
-    id accountTypeFB = nil;
+    id accountTypeGB = nil;
     
     return (accountStore = [[[NSClassFromString(@"ACAccountStore") alloc] init] autorelease]) &&
-    (accountTypeFB = [accountStore accountTypeWithAccountTypeIdentifier:@"com.apple.facebook"]);
+    (accountTypeGB = [accountStore accountTypeWithAccountTypeIdentifier:@"com.apple.facebook"]);
 }
 
 + (void)deleteFacebookCookies {
     NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     NSArray* facebookCookies = [cookies cookiesForURL:
-                                [NSURL URLWithString:[FBUtility dialogBaseURL]]];
+                                [NSURL URLWithString:[GBUtility dialogBaseURL]]];
     
     for (NSHTTPCookie* cookie in facebookCookies) {
         [cookies deleteCookie:cookie];
@@ -516,6 +516,6 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
 }
 
 + (NSString *)dialogBaseURL {
-    return [FBUtility buildFacebookUrlWithPre:@"https://m." withPost:@"/dialog/"];
+    return [GBUtility buildFacebookUrlWithPre:@"https://m." withPost:@"/dialog/"];
 }
 @end

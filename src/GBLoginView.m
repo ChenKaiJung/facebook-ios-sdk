@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-#import "FBLoginView.h"
+#import "GBLoginView.h"
 
-#import "FBAppEvents+Internal.h"
-#import "FBGraphUser.h"
-#import "FBLoginViewButtonPNG.h"
-#import "FBLoginViewButtonPressedPNG.h"
-#import "FBProfilePictureView.h"
-#import "FBRequest.h"
-#import "FBRequestConnection+Internal.h"
-#import "FBSession+Internal.h"
-#import "FBSession.h"
-#import "FBUtility.h"
+#import "GBAppEvents+Internal.h"
+#import "GBGraphUser.h"
+#import "GBLoginViewButtonPNG.h"
+#import "GBLoginViewButtonPressedPNG.h"
+#import "GBProfilePictureView.h"
+#import "GBRequest.h"
+#import "GBRequestConnection+Internal.h"
+#import "GBSession+Internal.h"
+#import "GBSession.h"
+#import "GBUtility.h"
 
-static NSString *const FBLoginViewCacheIdentity = @"FBLoginView";
+static NSString *const GBLoginViewCacheIdentity = @"GBLoginView";
 // The design calls for 16 pixels of space on the right edge of the button
 static const float kButtonEndCapWidth = 16.0;
 // The button has a 12 pixel buffer to the right of the f logo
@@ -36,19 +36,19 @@ static const float kButtonPaddingWidth = 12.0;
 static CGSize g_buttonSize;
 
 // Forward declare our label wrapper that provides shadow blur
-@interface FBShadowLabel : UILabel
+@interface GBShadowLabel : UILabel
 
 @end
 
-@interface FBLoginView() <UIActionSheetDelegate>
+@interface GBLoginView() <UIActionSheetDelegate>
 
 @property (retain, nonatomic) UILabel *label;
 @property (retain, nonatomic) UIButton *button;
-@property (retain, nonatomic) FBSession *session;
-@property (retain, nonatomic) FBRequestConnection *request;
-@property (retain, nonatomic) id<FBGraphUser> user;
-@property (copy, nonatomic) FBSessionStateHandler sessionStateHandler;
-@property (copy, nonatomic) FBRequestHandler requestHandler;
+@property (retain, nonatomic) GBSession *session;
+@property (retain, nonatomic) GBRequestConnection *request;
+@property (retain, nonatomic) id<GBGraphUser> user;
+@property (copy, nonatomic) GBSessionStateHandler sessionStateHandler;
+@property (copy, nonatomic) GBRequestHandler requestHandler;
 // lastObservedStateWasOpen is essentially a nullable bool to track if the
 // the session state was open when the inform delegate is called. This is
 // to prevent messaging the delegate again in state transfers that are
@@ -57,7 +57,7 @@ static CGSize g_buttonSize;
 
 @end
 
-@implementation FBLoginView
+@implementation GBLoginView
 
 - (id)init {
     self = [super init];
@@ -86,7 +86,7 @@ static CGSize g_buttonSize;
 }
 
 - (id)initWithPublishPermissions:(NSArray *)publishPermissions
-                 defaultAudience:(FBSessionDefaultAudience)defaultAudience {
+                 defaultAudience:(GBSessionDefaultAudience)defaultAudience {
     self = [super init];
     if (self) {
         self.publishPermissions = publishPermissions;
@@ -117,7 +117,7 @@ static CGSize g_buttonSize;
     // As noted in `initializeBlocks`, if we are being dealloc'ed, we
     // need to let our handlers know with the sentinel value of nil
     // to prevent EXC_BAD_ACCESS errors.
-    self.sessionStateHandler(nil, FBSessionStateClosed, nil);
+    self.sessionStateHandler(nil, GBSessionStateClosed, nil);
     [_sessionStateHandler release];
     [_requestHandler release];
 
@@ -140,7 +140,7 @@ static CGSize g_buttonSize;
     [super dealloc];
 }
 
-- (void)setDelegate:(id<FBLoginViewDelegate>)newValue {
+- (void)setDelegate:(id<GBLoginViewDelegate>)newValue {
     if (_delegate != newValue) {
         _delegate = newValue;
 
@@ -154,11 +154,11 @@ static CGSize g_buttonSize;
 
 - (void)initializeBlocks {
     // Set up our block handlers in a way that supports nil'ing out the weak self reference to
-    // prevent EXC_BAD_ACCESS errors if the session invokes the handler after the FBLoginView
+    // prevent EXC_BAD_ACCESS errors if the session invokes the handler after the GBLoginView
     // has been deallocated. Note the handlers are declared as a `copy` property so that
     // the block lives on the heap.
-    __block FBLoginView *weakSelf = self;
-    self.sessionStateHandler = ^(FBSession *session, FBSessionState status, NSError *error) {
+    __block GBLoginView *weakSelf = self;
+    self.sessionStateHandler = ^(GBSession *session, GBSessionState status, NSError *error) {
         if (session == nil) {
             // The nil sentinel value for session indicates both blocks should no-op thereafter.
             weakSelf = nil;
@@ -166,7 +166,7 @@ static CGSize g_buttonSize;
             [weakSelf informDelegateOfError:error];
         }
     };
-    self.requestHandler = ^(FBRequestConnection *connection, NSMutableDictionary<FBGraphUser> *result, NSError *error) {
+    self.requestHandler = ^(GBRequestConnection *connection, NSMutableDictionary<GBGraphUser> *result, NSError *error) {
         if (result) {
             weakSelf.user = result;
             [weakSelf informDelegate:YES];
@@ -197,25 +197,25 @@ static CGSize g_buttonSize;
 
     [self initializeBlocks];
 
-    if ([FBSession activeSessionIfOpen] == nil) {
+    if ([GBSession activeSessionIfOpen] == nil) {
         // if our session has a cached token ready, we open it; note that it is important
         // that we open the session before notification wiring is in place
-        [FBSession openActiveSessionWithReadPermissions:nil
+        [GBSession openActiveSessionWithReadPermissions:nil
                                            allowLoginUI:NO
                                       completionHandler:self.sessionStateHandler];
     }
 
     // wire-up the current session to the login view, before adding global session-change handlers
-    [self wireViewForSession:FBSession.activeSession userInfo:nil];
+    [self wireViewForSession:GBSession.activeSession userInfo:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleActiveSessionSetNotifications:)
-                                                 name:FBSessionDidSetActiveSessionNotification
+                                                 name:GBSessionDidSetActiveSessionNotification
                                                object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleActiveSessionUnsetNotifications:)
-                                                 name:FBSessionDidUnsetActiveSessionNotification
+                                                 name:GBSessionDidUnsetActiveSessionNotification
                                                object:nil];
 
     // setup button
@@ -230,10 +230,10 @@ static CGSize g_buttonSize;
     // We inset enough pixels to make sure that happens
     UIEdgeInsets imageInsets = UIEdgeInsetsMake(4.0, 40.0, 4.0, 4.0);
 
-    UIImage *image = [[FBLoginViewButtonPNG image] resizableImageWithCapInsets:imageInsets];
+    UIImage *image = [[GBLoginViewButtonPNG image] resizableImageWithCapInsets:imageInsets];
     [self.button setBackgroundImage:image forState:UIControlStateNormal];
 
-    image = [[FBLoginViewButtonPressedPNG image] resizableImageWithCapInsets:imageInsets];
+    image = [[GBLoginViewButtonPressedPNG image] resizableImageWithCapInsets:imageInsets];
     [self.button setBackgroundImage:image forState:UIControlStateHighlighted];
 
     [self addSubview:self.button];
@@ -246,7 +246,7 @@ static CGSize g_buttonSize;
     g_buttonSize = CGSizeMake(image.size.width + textSizeWidth + kButtonPaddingWidth + kButtonEndCapWidth, image.size.height);
 
     // add a label that will appear over the button
-    self.label = [[[FBShadowLabel alloc] init] autorelease];
+    self.label = [[[GBShadowLabel alloc] init] autorelease];
     self.label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 #ifdef __IPHONE_6_0
     self.label.textAlignment = NSTextAlignmentCenter;
@@ -280,7 +280,7 @@ static CGSize g_buttonSize;
         [self configureViewForStateLoggedIn:NO];
     }
 
-    self.loginBehavior = FBSessionLoginBehaviorUseSystemAccountIfPresent;
+    self.loginBehavior = GBSessionLoginBehaviorUseSystemAccountIfPresent;
 }
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"
 
@@ -293,11 +293,11 @@ static CGSize g_buttonSize;
 }
 
 - (NSString *)logInText {
-    return [FBUtility localizedStringForKey:@"FBLV:LogInButton" withDefault:@"Log in with Facebook"];
+    return [GBUtility localizedStringForKey:@"GBLV:LogInButton" withDefault:@"Log in with Facebook"];
 }
 
 - (NSString *)logOutText {
-    return [FBUtility localizedStringForKey:@"FBLV:LogOutButton" withDefault:@"Log out"];
+    return [GBUtility localizedStringForKey:@"GBLV:LogOutButton" withDefault:@"Log out"];
 }
 
 - (void)configureViewForStateLoggedIn:(BOOL)isLoggedIn {
@@ -310,12 +310,12 @@ static CGSize g_buttonSize;
 }
 
 - (void)fetchMeInfo {
-    FBRequest *request = [FBRequest requestForMe];
+    GBRequest *request = [GBRequest requestForMe];
     [request setSession:self.session];
-    self.request = [[[FBRequestConnection alloc] init] autorelease];
+    self.request = [[[GBRequestConnection alloc] init] autorelease];
     [self.request addRequest:request
            completionHandler:self.requestHandler];
-    [self.request startWithCacheIdentity:FBLoginViewCacheIdentity
+    [self.request startWithCacheIdentity:GBLoginViewCacheIdentity
                    skipRoundtripIfCached:YES];
 
 }
@@ -326,7 +326,7 @@ static CGSize g_buttonSize;
             [self.delegate loginViewFetchedUserInfo:self
                                                user:self.user];
         }
-    } else if (FBSession.activeSession.isOpen) {
+    } else if (GBSession.activeSession.isOpen) {
         if (![self.lastObservedStateWasOpen isEqualToNumber:@1]) {
             self.lastObservedStateWasOpen = @1;
 
@@ -359,7 +359,7 @@ static CGSize g_buttonSize;
     }
 }
 
-- (void)wireViewForSessionWithoutOpening:(FBSession *)session {
+- (void)wireViewForSessionWithoutOpening:(GBSession *)session {
     // if there is an outstanding request for the previous session, cancel
     [self.request cancel];
     self.request = nil;
@@ -373,12 +373,12 @@ static CGSize g_buttonSize;
                       context:nil];
 }
 
-- (void)wireViewForSession:(FBSession *)session userInfo:(NSDictionary *)userInfo {
+- (void)wireViewForSession:(GBSession *)session userInfo:(NSDictionary *)userInfo {
     [self wireViewForSessionWithoutOpening:session];
 
     // anytime we find that our session is created with an available token
     // we open it on the spot
-    if (self.session.state == FBSessionStateCreatedTokenLoaded && (![userInfo[FBSessionDidSetActiveSessionNotificationUserInfoIsOpening] isEqual:@YES])) {
+    if (self.session.state == GBSessionStateCreatedTokenLoaded && (![userInfo[GBSessionDidSetActiveSessionNotificationUserInfoIsOpening] isEqual:@YES])) {
         [self.session openWithBehavior:self.loginBehavior
                      completionHandler:self.sessionStateHandler];
     }
@@ -408,7 +408,7 @@ static CGSize g_buttonSize;
 - (void)handleActiveSessionSetNotifications:(NSNotification *)notification {
     // NSNotificationCenter is a global channel, so we guard against
     // unexpected uses of this notification the best we can
-    if ([notification.object isKindOfClass:[FBSession class]]) {
+    if ([notification.object isKindOfClass:[GBSession class]]) {
         [self wireViewForSession:notification.object userInfo:notification.userInfo];
     }
 }
@@ -420,13 +420,13 @@ static CGSize g_buttonSize;
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) { // logout
-        [FBSession.activeSession closeAndClearTokenInformation];
+        [GBSession.activeSession closeAndClearTokenInformation];
     }
 }
 
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 - (void)buttonPressed:(id)sender {
-    if (self.session == FBSession.activeSession) {
+    if (self.session == GBSession.activeSession) {
         BOOL loggingInLogFlag = NO;
         if (!self.session.isOpen) { // login
             // the policy here is:
@@ -437,16 +437,16 @@ static CGSize g_buttonSize;
             // 4) if you provide any publish permissions, and don't specify a valid audience, the control will throw an exception
             //    when the user presses login
             if (self.permissions) {
-                [FBSession openActiveSessionWithPermissions:self.permissions
+                [GBSession openActiveSessionWithPermissions:self.permissions
                                               loginBehavior:self.loginBehavior
                                                      isRead:NO
                                             defaultAudience:self.defaultAudience
                                           completionHandler:self.sessionStateHandler];
             } else if (![self.publishPermissions count]) {
-                [FBSession openActiveSessionWithPermissions:self.readPermissions
+                [GBSession openActiveSessionWithPermissions:self.readPermissions
                                               loginBehavior:self.loginBehavior
                                                      isRead:YES
-                                            defaultAudience:FBSessionDefaultAudienceNone
+                                            defaultAudience:GBSessionDefaultAudienceNone
                                           completionHandler:self.sessionStateHandler];
             } else {
                 // combined read and publish permissions will usually fail, but if the app wants us to
@@ -457,7 +457,7 @@ static CGSize g_buttonSize;
                     [set addObjectsFromArray:self.readPermissions];
                     permissions = [set allObjects];
                 }
-                [FBSession openActiveSessionWithPermissions:permissions
+                [GBSession openActiveSessionWithPermissions:permissions
                                               loginBehavior:self.loginBehavior
                                                      isRead:NO
                                             defaultAudience:self.defaultAudience
@@ -468,16 +468,16 @@ static CGSize g_buttonSize;
             NSString *name = self.user.name;
             NSString *title = nil;
             if (name) {
-                title = [NSString stringWithFormat:[FBUtility localizedStringForKey:@"FBLV:LoggedInAs"
+                title = [NSString stringWithFormat:[GBUtility localizedStringForKey:@"GBLV:LoggedInAs"
                                                                         withDefault:@"Logged in as %@"], name];
             } else {
-                title = [FBUtility localizedStringForKey:@"FBLV:LoggedInUsingFacebook"
+                title = [GBUtility localizedStringForKey:@"GBLV:LoggedInUsingFacebook"
                                             withDefault:@"Logged in using Facebook"];
             }
 
-            NSString *cancelTitle = [FBUtility localizedStringForKey:@"FBLV:CancelAction"
+            NSString *cancelTitle = [GBUtility localizedStringForKey:@"GBLV:CancelAction"
                                                          withDefault:@"Cancel"];
-            NSString *logOutTitle = [FBUtility localizedStringForKey:@"FBLV:LogOutAction"
+            NSString *logOutTitle = [GBUtility localizedStringForKey:@"GBLV:LogOutAction"
                                                          withDefault:@"Log out"];
             UIActionSheet *sheet = [[[UIActionSheet alloc] initWithTitle:title
                                                                 delegate:self
@@ -488,14 +488,14 @@ static CGSize g_buttonSize;
             // Show the sheet
             [sheet showInView:self];
         }
-        [FBAppEvents logImplicitEvent:FBAppEventNameLoginViewUsage
+        [GBAppEvents logImplicitEvent:GBAppEventNameLoginViewUsage
                            valueToSum:nil
                            parameters:@{ @"logging_in" : [NSNumber numberWithBool:loggingInLogFlag] }
                               session:nil];
     } else { // state of view out of sync with active session
         // so resync
         [self unwireViewForSession];
-        [self wireViewForSession:FBSession.activeSession userInfo:nil];
+        [self wireViewForSession:GBSession.activeSession userInfo:nil];
         [self configureViewForStateLoggedIn:self.session.isOpen];
         [self informDelegate:NO];
     }
@@ -503,7 +503,7 @@ static CGSize g_buttonSize;
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"
 @end
 
-@implementation FBShadowLabel
+@implementation GBShadowLabel
 
 - (void) drawTextInRect:(CGRect)rect {
     CGSize myShadowOffset = CGSizeMake(0, -1);

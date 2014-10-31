@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-#import "FacebookSDK.h"
+#import "GbombSDK.h"
 
-@interface FBSessionLoginStrategyParams : NSObject
+@interface GBSessionLoginStrategyParams : NSObject
 
 @property BOOL tryIntegratedAuth;
-@property BOOL tryFBAppAuth;
+@property BOOL tryGBAppAuth;
 @property BOOL trySafariAuth;
 @property BOOL tryFallback;
 @property BOOL isReauthorize;
-@property FBSessionDefaultAudience defaultAudience;
+@property GBSessionDefaultAudience defaultAudience;
 @property (retain, nonatomic) NSArray *permissions;
 @property BOOL canFetchAppSettings;
 @property (retain, nonatomic) NSMutableDictionary *webParams;

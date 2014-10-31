@@ -16,15 +16,15 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FBAccessTokenData.h"
-#import "FBAppLinkData.h"
-#import "FBDialogsData.h"
-#import "FBSession.h"
+#import "GBAccessTokenData.h"
+#import "GBAppLinkData.h"
+#import "GBDialogsData.h"
+#import "GBSession.h"
 
-@class FBAppCall;
+@class GBAppCall;
 
 /*!
- @typedef FBAppCallHandler
+ @typedef GBAppCallHandler
 
  @abstract
  A block that is passed to performAppCall to register for a callback with the results
@@ -34,72 +34,72 @@
  Pass a block of this type when calling performAppCall.  This will be called on the UI
  thread, once the AppCall completes.
 
- @param call      The `FBAppCall` that was completed.
+ @param call      The `GBAppCall` that was completed.
 
  */
-typedef void (^FBAppCallHandler)(FBAppCall *call);
+typedef void (^GBAppCallHandler)(GBAppCall *call);
 
 /*!
- @typedef FBAppLinkFallbackHandler
+ @typedef GBAppLinkFallbackHandler
 
  @abstract
  See `+openDeferredAppLink`.
  */
-typedef void (^FBAppLinkFallbackHandler)(NSError *error);
+typedef void (^GBAppLinkFallbackHandler)(NSError *error);
 
 /*!
- @class FBAppCall
+ @class GBAppCall
 
  @abstract
- The FBAppCall object is used to encapsulate state when the app performs an
+ The GBAppCall object is used to encapsulate state when the app performs an
  action that requires switching over to the native Facebook app, or when the app
  receives an App Link.
 
  @discussion
- - Each FBAppCall instance will have a unique ID
- - This object is passed into an FBAppCallHandler for context
+ - Each GBAppCall instance will have a unique ID
+ - This object is passed into an GBAppCallHandler for context
  - dialogData will be present if this AppCall is for a Native Dialog
  - appLinkData will be present if this AppCall is for an App Link
  - accessTokenData will be present if this AppCall contains an access token.
  */
-@interface FBAppCall : NSObject
+@interface GBAppCall : NSObject
 
-/*! @abstract The ID of this FBAppCall instance */
+/*! @abstract The ID of this GBAppCall instance */
 @property (nonatomic, readonly) NSString *ID;
 
 /*! @abstract Error that occurred in processing this AppCall */
 @property (nonatomic, readonly) NSError *error;
 
 /*! @abstract Data related to a Dialog AppCall */
-@property (nonatomic, readonly) FBDialogsData *dialogData;
+@property (nonatomic, readonly) GBDialogsData *dialogData;
 
 /*! @abstract Data for native app link */
-@property (nonatomic, readonly) FBAppLinkData *appLinkData;
+@property (nonatomic, readonly) GBAppLinkData *appLinkData;
 
 /*! @abstract Access Token that was returned in this AppCall */
-@property (nonatomic, readonly) FBAccessTokenData *accessTokenData;
+@property (nonatomic, readonly) GBAccessTokenData *accessTokenData;
 
 /*!
  @abstract
- Returns an FBAppCall instance from a url, if applicable. Otherwise, returns nil.
+ Returns an GBAppCall instance from a url, if applicable. Otherwise, returns nil.
 
  @param url The url.
 
- @return an FBAppCall instance if the url is valid; nil otherwise.
+ @return an GBAppCall instance if the url is valid; nil otherwise.
 
  @discussion This is typically used for App Link URLs.
  */
-+ (FBAppCall *) appCallFromURL:(NSURL *)url;
++ (GBAppCall *) appCallFromURL:(NSURL *)url;
 
 /*!
  @abstract
- Compares the receiving FBAppCall to the passed in FBAppCall
+ Compares the receiving GBAppCall to the passed in GBAppCall
 
- @param appCall the other FBAppCall to compare to.
+ @param appCall the other GBAppCall to compare to.
 
  @return YES if the AppCalls can be considered to be the same; NO if otherwise.
  */
-- (BOOL)isEqualToAppCall:(FBAppCall *)appCall;
+- (BOOL)isEqualToAppCall:(GBAppCall *)appCall;
 
 /*!
  @abstract
@@ -134,7 +134,7 @@ typedef void (^FBAppLinkFallbackHandler)(NSError *error);
  */
 + (BOOL)handleOpenURL:(NSURL *)url
     sourceApplication:(NSString *)sourceApplication
-      fallbackHandler:(FBAppCallHandler)handler;
+      fallbackHandler:(GBAppCallHandler)handler;
 
 /*!
  @abstract
@@ -147,13 +147,13 @@ typedef void (^FBAppLinkFallbackHandler)(NSError *error);
  @param sourceApplication The sourceApplication as passed to [UIApplicationDelegate application:openURL:sourceApplication:annotation:].
 
  @param session If this url is being sent back to this app as part of SSO authorization flow, then pass in the
- session that was being opened. A nil value defaults to FBSession.activeSession
+ session that was being opened. A nil value defaults to GBSession.activeSession
 
  @return YES if the url was intended for the Facebook SDK, NO if not.
  */
 + (BOOL)handleOpenURL:(NSURL *)url
     sourceApplication:(NSString *)sourceApplication
-          withSession:(FBSession *)session;
+          withSession:(GBSession *)session;
 
 /*!
  @abstract
@@ -166,7 +166,7 @@ typedef void (^FBAppLinkFallbackHandler)(NSError *error);
  @param sourceApplication The sourceApplication as passed to [UIApplicationDelegate application:openURL:sourceApplication:annotation:].
 
  @param session If this url is being sent back to this app as part of SSO authorization flow, then pass in the
- session that was being opened. A nil value defaults to FBSession.activeSession
+ session that was being opened. A nil value defaults to GBSession.activeSession
 
  @param handler Optional handler that gives the app the opportunity to do some further processing on urls
  that the SDK could not completely process. A fallback handler is not a requirement for such a url to be considered
@@ -176,14 +176,14 @@ typedef void (^FBAppLinkFallbackHandler)(NSError *error);
  */
 + (BOOL)handleOpenURL:(NSURL *)url
     sourceApplication:(NSString *)sourceApplication
-          withSession:(FBSession *)session
-      fallbackHandler:(FBAppCallHandler)handler;
+          withSession:(GBSession *)session
+      fallbackHandler:(GBAppCallHandler)handler;
 
 /*!
  @abstract
  Call this method when the application's applicationDidBecomeActive: is invoked.
- This ensures proper state management of any pending FBAppCalls or pending login flow for the
- FBSession.activeSession. If any pending FBAppCalls are found, their registered callbacks
+ This ensures proper state management of any pending GBAppCalls or pending login flow for the
+ GBSession.activeSession. If any pending GBAppCalls are found, their registered callbacks
  will be invoked with appropriate state
  */
 + (void)handleDidBecomeActive;
@@ -191,14 +191,14 @@ typedef void (^FBAppLinkFallbackHandler)(NSError *error);
 /*!
  @abstract
  Call this method when the application's applicationDidBecomeActive: is invoked.
- This ensures proper state management of any pending FBAppCalls or a pending open for the
- passed in FBSession. If any pending FBAppCalls are found, their registered callbacks will
+ This ensures proper state management of any pending GBAppCalls or a pending open for the
+ passed in GBSession. If any pending GBAppCalls are found, their registered callbacks will
  be invoked with appropriate state
 
  @param session Session that is currently being used. Any pending calls to open will be cancelled.
  If no session is provided, then the activeSession (if present) is used.
  */
-+ (void)handleDidBecomeActiveWithSession:(FBSession *)session;
++ (void)handleDidBecomeActiveWithSession:(GBSession *)session;
 
 /*!
  @abstract
@@ -219,12 +219,12 @@ typedef void (^FBAppLinkFallbackHandler)(NSError *error);
  only do so if the application is not being launched by a URL. For example,
 
     if (launchOptions[UIApplicationLaunchOptionsURLKey] == nil) {
-     [FBAppCall openDeferredAppLink:^(NSError *error) {
+     [GBAppCall openDeferredAppLink:^(NSError *error) {
         // ....
       }
     }
 */
-+ (void)openDeferredAppLink:(FBAppLinkFallbackHandler)fallbackHandler;
++ (void)openDeferredAppLink:(GBAppLinkFallbackHandler)fallbackHandler;
 
 @end
 

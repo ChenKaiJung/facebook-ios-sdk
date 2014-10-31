@@ -18,22 +18,22 @@
 
 #import "FBGraphObject.h"
 
-@protocol FBGraphObjectViewControllerDelegate;
-@protocol FBGraphObjectSelectionQueryDelegate;
-@protocol FBGraphObjectDataSourceDataNeededDelegate;
-@class FBGraphObjectTableCell;
+@protocol GBGraphObjectViewControllerDelegate;
+@protocol GBGraphObjectSelectionQueryDelegate;
+@protocol GBGraphObjectDataSourceDataNeededDelegate;
+@class GBGraphObjectTableCell;
 
-@interface FBGraphObjectTableDataSource : NSObject<UITableViewDataSource>
+@interface GBGraphObjectTableDataSource : NSObject<UITableViewDataSource>
 
 @property (nonatomic, retain) UIImage *defaultPicture;
-@property (nonatomic, assign) id<FBGraphObjectViewControllerDelegate> controllerDelegate;
+@property (nonatomic, assign) id<GBGraphObjectViewControllerDelegate> controllerDelegate;
 @property (nonatomic, copy) NSString *groupByField;
 @property (nonatomic, assign) BOOL useCollation;
 @property (nonatomic) BOOL itemTitleSuffixEnabled;
 @property (nonatomic) BOOL itemPicturesEnabled;
 @property (nonatomic) BOOL itemSubtitleEnabled;
-@property (nonatomic, assign) id<FBGraphObjectSelectionQueryDelegate> selectionDelegate;
-@property (nonatomic, assign) id<FBGraphObjectDataSourceDataNeededDelegate> dataNeededDelegate;
+@property (nonatomic, assign) id<GBGraphObjectSelectionQueryDelegate> selectionDelegate;
+@property (nonatomic, assign) id<GBGraphObjectDataSourceDataNeededDelegate> dataNeededDelegate;
 @property (nonatomic, copy) NSArray *sortDescriptors;
 
 - (NSString *)fieldsForRequestIncluding:(NSSet *)customFields, ...;
@@ -57,47 +57,47 @@
 - (void)update;
 
 // Returns the graph object at a given indexPath.
-- (FBGraphObject *)itemAtIndexPath:(NSIndexPath *)indexPath;
+- (GBGraphObject *)itemAtIndexPath:(NSIndexPath *)indexPath;
 
 // Returns the indexPath for a given graph object.
-- (NSIndexPath *)indexPathForItem:(FBGraphObject *)item;
+- (NSIndexPath *)indexPathForItem:(GBGraphObject *)item;
 
 @end
 
-@protocol FBGraphObjectViewControllerDelegate <NSObject>
+@protocol GBGraphObjectViewControllerDelegate <NSObject>
 @required
 
-- (NSString *)graphObjectTableDataSource:(FBGraphObjectTableDataSource *)dataSource
-                             titleOfItem:(id<FBGraphObject>)graphObject;
+- (NSString *)graphObjectTableDataSource:(GBGraphObjectTableDataSource *)dataSource
+                             titleOfItem:(id<GBGraphObject>)graphObject;
 
 @optional
 
-- (NSString *)graphObjectTableDataSource:(FBGraphObjectTableDataSource *)dataSource
-                       titleSuffixOfItem:(id<FBGraphObject>)graphObject;
+- (NSString *)graphObjectTableDataSource:(GBGraphObjectTableDataSource *)dataSource
+                       titleSuffixOfItem:(id<GBGraphObject>)graphObject;
 
-- (NSString *)graphObjectTableDataSource:(FBGraphObjectTableDataSource *)dataSource
-                          subtitleOfItem:(id<FBGraphObject>)graphObject;
+- (NSString *)graphObjectTableDataSource:(GBGraphObjectTableDataSource *)dataSource
+                          subtitleOfItem:(id<GBGraphObject>)graphObject;
 
-- (NSString *)graphObjectTableDataSource:(FBGraphObjectTableDataSource *)dataSource
-                        pictureUrlOfItem:(id<FBGraphObject>)graphObject;
+- (NSString *)graphObjectTableDataSource:(GBGraphObjectTableDataSource *)dataSource
+                        pictureUrlOfItem:(id<GBGraphObject>)graphObject;
 
-- (BOOL)graphObjectTableDataSource:(FBGraphObjectTableDataSource *)dataSource
-                filterIncludesItem:(id<FBGraphObject>)item;
+- (BOOL)graphObjectTableDataSource:(GBGraphObjectTableDataSource *)dataSource
+                filterIncludesItem:(id<GBGraphObject>)item;
 
-- (void)graphObjectTableDataSource:(FBGraphObjectTableDataSource*)dataSource
-                customizeTableCell:(FBGraphObjectTableCell*)cell;
-
-@end
-
-@protocol FBGraphObjectSelectionQueryDelegate <NSObject>
-
-- (BOOL)graphObjectTableDataSource:(FBGraphObjectTableDataSource *)dataSource
-             selectionIncludesItem:(id<FBGraphObject>)item;
+- (void)graphObjectTableDataSource:(GBGraphObjectTableDataSource*)dataSource
+                customizeTableCell:(GBGraphObjectTableCell*)cell;
 
 @end
 
-@protocol FBGraphObjectDataSourceDataNeededDelegate <NSObject>
+@protocol GBGraphObjectSelectionQueryDelegate <NSObject>
 
-- (void)graphObjectTableDataSourceNeedsData:(FBGraphObjectTableDataSource *)dataSource triggeredByIndexPath:(NSIndexPath*)indexPath;
+- (BOOL)graphObjectTableDataSource:(GBGraphObjectTableDataSource *)dataSource
+             selectionIncludesItem:(id<GBGraphObject>)item;
+
+@end
+
+@protocol GBGraphObjectDataSourceDataNeededDelegate <NSObject>
+
+- (void)graphObjectTableDataSourceNeedsData:(GBGraphObjectTableDataSource *)dataSource triggeredByIndexPath:(NSIndexPath*)indexPath;
 
 @end

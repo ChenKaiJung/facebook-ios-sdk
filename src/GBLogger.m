@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-#import "FBLogger.h"
+#import "GBLogger.h"
 
-#import "FBSession.h"
-#import "FBSettings.h"
-#import "FBUtility.h"
+#import "GBSession.h"
+#import "GBSettings.h"
+#import "GBUtility.h"
 
 static NSUInteger g_serialNumberCounter = 1111;
 static NSMutableDictionary *g_stringsToReplace = nil;
 static NSMutableDictionary *g_startTimesWithTags = nil;
 
-@interface FBLogger ()
+@interface GBLogger ()
 
 @property (nonatomic, retain, readonly) NSMutableString *internalContents;
 
 @end
 
-@implementation FBLogger
+@implementation GBLogger
 
 @synthesize internalContents = _internalContents;
 @synthesize isActive = _isActive;
@@ -41,11 +41,11 @@ static NSMutableDictionary *g_startTimesWithTags = nil;
 
 - (id)initWithLoggingBehavior:(NSString *)loggingBehavior {
     if (self = [super init]) {
-        _isActive = [[FBSettings loggingBehavior] containsObject:loggingBehavior];
+        _isActive = [[GBSettings loggingBehavior] containsObject:loggingBehavior];
         _loggingBehavior = loggingBehavior;
         if (_isActive) {
             _internalContents = [[NSMutableString alloc] init];
-            _loggerSerialNumber = [FBLogger newSerialNumber];
+            _loggerSerialNumber = [GBLogger newSerialNumber];
         }
     }
 
@@ -112,7 +112,7 @@ static NSMutableDictionary *g_startTimesWithTags = nil;
         if (_internalContents.length > MAX_LOG_STRING_LENGTH) {
             logString = [NSString stringWithFormat:@"TRUNCATED: %@", [_internalContents substringToIndex:MAX_LOG_STRING_LENGTH]];
         }
-        NSLog(@"FBSDKLog: %@", logString);
+        NSLog(@"GBSDKLog: %@", logString);
 
         [_internalContents setString:@""];
     }
@@ -126,8 +126,8 @@ static NSMutableDictionary *g_startTimesWithTags = nil;
 
 + (void)singleShotLogEntry:(NSString *)loggingBehavior
                   logEntry:(NSString *)logEntry {
-    if ([[FBSettings loggingBehavior] containsObject:loggingBehavior]) {
-        FBLogger *logger = [[FBLogger alloc] initWithLoggingBehavior:loggingBehavior];
+    if ([[GBSettings loggingBehavior] containsObject:loggingBehavior]) {
+        GBLogger *logger = [[GBLogger alloc] initWithLoggingBehavior:loggingBehavior];
         [logger appendString:logEntry];
         [logger emitToNSLog];
         [logger release];
@@ -137,7 +137,7 @@ static NSMutableDictionary *g_startTimesWithTags = nil;
 + (void)singleShotLogEntry:(NSString *)loggingBehavior
               formatString:(NSString *)formatString, ... {
 
-    if ([[FBSettings loggingBehavior] containsObject:loggingBehavior]) {
+    if ([[GBSettings loggingBehavior] containsObject:loggingBehavior]) {
         va_list vaArguments;
         va_start(vaArguments, formatString);
         NSString *logString = [[[NSString alloc] initWithFormat:formatString arguments:vaArguments] autorelease];
@@ -152,7 +152,7 @@ static NSMutableDictionary *g_startTimesWithTags = nil;
               timestampTag:(NSObject *)timestampTag
               formatString:(NSString *)formatString, ... {
 
-    if ([[FBSettings loggingBehavior] containsObject:loggingBehavior]) {
+    if ([[GBSettings loggingBehavior] containsObject:loggingBehavior]) {
         va_list vaArguments;
         va_start(vaArguments, formatString);
         NSString *logString = [[[NSString alloc] initWithFormat:formatString arguments:vaArguments] autorelease];
@@ -166,7 +166,7 @@ static NSMutableDictionary *g_startTimesWithTags = nil;
 
         // Only log if there's been an associated start time.
         if (startTimeNumber) {
-            unsigned long elapsed = [FBUtility currentTimeInMilliseconds] - startTimeNumber.unsignedLongValue;
+            unsigned long elapsed = [GBUtility currentTimeInMilliseconds] - startTimeNumber.unsignedLongValue;
             [g_startTimesWithTags removeObjectForKey:tagAsNumber];  // served its purpose, remove
 
             // Log string is appended with "%d msec", with nothing intervening.  This gives the most control to the caller.
@@ -180,18 +180,18 @@ static NSMutableDictionary *g_startTimesWithTags = nil;
 + (void)registerCurrentTime:(NSString *)loggingBehavior
                     withTag:(NSObject *)timestampTag {
 
-    if ([[FBSettings loggingBehavior] containsObject:loggingBehavior]) {
+    if ([[GBSettings loggingBehavior] containsObject:loggingBehavior]) {
 
         if (!g_startTimesWithTags) {
             g_startTimesWithTags = [[NSMutableDictionary alloc] init];
         }
 
         if (g_startTimesWithTags.count >= 1000) {
-            [FBLogger singleShotLogEntry:FBLoggingBehaviorDeveloperErrors logEntry:
+            [GBLogger singleShotLogEntry:GBLoggingBehaviorDeveloperErrors logEntry:
                     @"Unexpectedly large number of outstanding perf logging start times, something is likely wrong."];
         }
 
-        unsigned long currTime = [FBUtility currentTimeInMilliseconds];
+        unsigned long currTime = [GBUtility currentTimeInMilliseconds];
 
         // Treat the incoming object tag simply as an address, since it's only used to identify during lifetime.  If
         // we send in as an object, the dictionary will try to copy it.
@@ -207,7 +207,7 @@ static NSMutableDictionary *g_startTimesWithTags = nil;
 
     // Strings sent in here never get cleaned up, but that's OK, don't ever expect too many.
 
-    if ([[FBSettings loggingBehavior] count] > 0) {  // otherwise there's no logging.
+    if ([[GBSettings loggingBehavior] count] > 0) {  // otherwise there's no logging.
 
         if (!g_stringsToReplace) {
             g_stringsToReplace = [[NSMutableDictionary alloc] init];

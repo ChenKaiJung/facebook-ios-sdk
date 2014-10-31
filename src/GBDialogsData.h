@@ -21,7 +21,7 @@
  This class encapsulates state and data related to the presentation and completion
  of a dialog.
  */
-@interface FBDialogsData : NSObject
+@interface GBDialogsData : NSObject
 
 /*! @abstract The method being performed */
 @property (nonatomic, readonly) NSString *method;
@@ -29,7 +29,7 @@
 @property (nonatomic, readonly) NSDictionary *arguments;
 /*! @abstract Client JSON state that is passed through to the completion handler for context */
 @property (nonatomic, readonly) NSDictionary *clientState;
-/*! @abstract Results of this FBAppCall that are only set before calling an FBAppCallHandler */
+/*! @abstract Results of this GBAppCall that are only set before calling an GBAppCallHandler */
 @property (nonatomic, readonly) NSDictionary *results;
 
 @end

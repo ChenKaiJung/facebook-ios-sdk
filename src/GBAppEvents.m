@@ -14,114 +14,114 @@
  * limitations under the License.
  */
 
-#import "FBAppEvents.h"
-#import "FBAppEvents+Internal.h"
+#import "GBAppEvents.h"
+#import "GBAppEvents+Internal.h"
 
 #import <UIKit/UIApplication.h>
 
-#import "FBError.h"
-#import "FBLogger.h"
-#import "FBRequest+Internal.h"
-#import "FBSession+Internal.h"
-#import "FBSessionAppEventsState.h"
-#import "FBSessionManualTokenCachingStrategy.h"
-#import "FBSettings.h"
-#import "FBUtility.h"
+#import "GBError.h"
+#import "GBLogger.h"
+#import "GBRequest+Internal.h"
+#import "GBSession+Internal.h"
+#import "GBSessionAppEventsState.h"
+#import "GBSessionManualTokenCachingStrategy.h"
+#import "GBSettings.h"
+#import "GBUtility.h"
 
 //
 // Public event names
 //
 
 // General purpose
-NSString *const FBAppEventNameActivatedApp            = @"fb_mobile_activate_app";
-NSString *const FBAppEventNameCompletedRegistration   = @"fb_mobile_complete_registration";
-NSString *const FBAppEventNameViewedContent           = @"fb_mobile_content_view";
-NSString *const FBAppEventNameSearched                = @"fb_mobile_search";
-NSString *const FBAppEventNameRated                   = @"fb_mobile_rate";
-NSString *const FBAppEventNameCompletedTutorial       = @"fb_mobile_tutorial_completion";
+NSString *const GBAppEventNameActivatedApp            = @"gb_mobile_activate_app";
+NSString *const GBAppEventNameCompletedRegistration   = @"gb_mobile_complete_registration";
+NSString *const GBAppEventNameViewedContent           = @"gb_mobile_content_view";
+NSString *const GBAppEventNameSearched                = @"gb_mobile_search";
+NSString *const GBAppEventNameRated                   = @"gb_mobile_rate";
+NSString *const GBAppEventNameCompletedTutorial       = @"gb_mobile_tutorial_completion";
 
 // Ecommerce related
-NSString *const FBAppEventNameAddedToCart             = @"fb_mobile_add_to_cart";
-NSString *const FBAppEventNameAddedToWishlist         = @"fb_mobile_add_to_wishlist";
-NSString *const FBAppEventNameInitiatedCheckout       = @"fb_mobile_initiated_checkout";
-NSString *const FBAppEventNameAddedPaymentInfo        = @"fb_mobile_add_payment_info";
-NSString *const FBAppEventNamePurchased               = @"fb_mobile_purchase";
+NSString *const GBAppEventNameAddedToCart             = @"gb_mobile_add_to_cart";
+NSString *const GBAppEventNameAddedToWishlist         = @"gb_mobile_add_to_wishlist";
+NSString *const GBAppEventNameInitiatedCheckout       = @"gb_mobile_initiated_checkout";
+NSString *const GBAppEventNameAddedPaymentInfo        = @"gb_mobile_add_payment_info";
+NSString *const GBAppEventNamePurchased               = @"gb_mobile_purchase";
 
 // Gaming related
-NSString *const FBAppEventNameAchievedLevel           = @"fb_mobile_level_achieved";
-NSString *const FBAppEventNameUnlockedAchievement     = @"fb_mobile_achievement_unlocked";
-NSString *const FBAppEventNameSpentCredits            = @"fb_mobile_spent_credits";
+NSString *const GBAppEventNameAchievedLevel           = @"gb_mobile_level_achieved";
+NSString *const GBAppEventNameUnlockedAchievement     = @"gb_mobile_achievement_unlocked";
+NSString *const GBAppEventNameSpentCredits            = @"gb_mobile_spent_credits";
 
 //
 // Public event parameter names
 //
 
-NSString *const FBAppEventParameterNameCurrency               = @"fb_currency";
-NSString *const FBAppEventParameterNameRegistrationMethod     = @"fb_registration_method";
-NSString *const FBAppEventParameterNameContentType            = @"fb_content_type";
-NSString *const FBAppEventParameterNameContentID              = @"fb_content_id";
-NSString *const FBAppEventParameterNameSearchString           = @"fb_search_string";
-NSString *const FBAppEventParameterNameSuccess                = @"fb_success";
-NSString *const FBAppEventParameterNameMaxRatingValue         = @"fb_max_rating_value";
-NSString *const FBAppEventParameterNamePaymentInfoAvailable   = @"fb_payment_info_available";
-NSString *const FBAppEventParameterNameNumItems               = @"fb_num_items";
-NSString *const FBAppEventParameterNameLevel                  = @"fb_level";
-NSString *const FBAppEventParameterNameDescription            = @"fb_description";
+NSString *const GBAppEventParameterNameCurrency               = @"gb_currency";
+NSString *const GBAppEventParameterNameRegistrationMethod     = @"gb_registration_method";
+NSString *const GBAppEventParameterNameContentType            = @"gb_content_type";
+NSString *const GBAppEventParameterNameContentID              = @"gb_content_id";
+NSString *const GBAppEventParameterNameSearchString           = @"gb_search_string";
+NSString *const GBAppEventParameterNameSuccess                = @"gb_success";
+NSString *const GBAppEventParameterNameMaxRatingValue         = @"gb_max_rating_value";
+NSString *const GBAppEventParameterNamePaymentInfoAvailable   = @"gb_payment_info_available";
+NSString *const GBAppEventParameterNameNumItems               = @"gb_num_items";
+NSString *const GBAppEventParameterNameLevel                  = @"gb_level";
+NSString *const GBAppEventParameterNameDescription            = @"gb_description";
 
 //
 // Public event parameter values
 //
 
-NSString *const FBAppEventParameterValueNo                    = @"0";
-NSString *const FBAppEventParameterValueYes                   = @"1";
+NSString *const GBAppEventParameterValueNo                    = @"0";
+NSString *const GBAppEventParameterValueYes                   = @"1";
 
 //
 // Event names internal to this file
 //
 
-NSString *const FBAppEventNameLogConversionPixel               = @"fb_log_offsite_pixel";
-NSString *const FBAppEventNameFriendPickerUsage                = @"fb_friend_picker_usage";
-NSString *const FBAppEventNamePlacePickerUsage                 = @"fb_place_picker_usage";
-NSString *const FBAppEventNameLoginViewUsage                   = @"fb_login_view_usage";
-NSString *const FBAppEventNameUserSettingsUsage                = @"fb_user_settings_vc_usage";
-NSString *const FBAppEventNameShareSheetLaunch                 = @"fb_share_sheet_launch";
-NSString *const FBAppEventNameShareSheetDismiss                = @"fb_share_sheet_dismiss";
-NSString *const FBAppEventNamePermissionsUILaunch              = @"fb_permissions_ui_launch";
-NSString *const FBAppEventNamePermissionsUIDismiss             = @"fb_permissions_ui_dismiss";
-NSString *const FBAppEventNameFBDialogsPresentShareDialog   = @"fb_dialogs_present_share";
-NSString *const FBAppEventNameFBDialogsPresentShareDialogOG = @"fb_dialogs_present_share_og";
+NSString *const GBAppEventNameLogConversionPixel               = @"gb_log_offsite_pixel";
+NSString *const GBAppEventNameFriendPickerUsage                = @"gb_friend_picker_usage";
+NSString *const GBAppEventNamePlacePickerUsage                 = @"gb_place_picker_usage";
+NSString *const GBAppEventNameLoginViewUsage                   = @"gb_login_view_usage";
+NSString *const GBAppEventNameUserSettingsUsage                = @"gb_user_settings_vc_usage";
+NSString *const GBAppEventNameShareSheetLaunch                 = @"gb_share_sheet_launch";
+NSString *const GBAppEventNameShareSheetDismiss                = @"gb_share_sheet_dismiss";
+NSString *const GBAppEventNamePermissionsUILaunch              = @"gb_permissions_ui_launch";
+NSString *const GBAppEventNamePermissionsUIDismiss             = @"gb_permissions_ui_dismiss";
+NSString *const GBAppEventNameGBDialogsPresentShareDialog   = @"gb_dialogs_present_share";
+NSString *const GBAppEventNameGBDialogsPresentShareDialogOG = @"gb_dialogs_present_share_og";
 
 
-NSString *const FBAppEventNameFBDialogsNativeLoginDialogStart  = @"fb_dialogs_native_login_dialog_start";
-NSString *const FBAppEventsNativeLoginDialogStartTime          = @"fb_native_login_dialog_start_time";
+NSString *const GBAppEventNameGBDialogsNativeLoginDialogStart  = @"gb_dialogs_native_login_dialog_start";
+NSString *const GBAppEventsNativeLoginDialogStartTime          = @"gb_native_login_dialog_start_time";
 
-NSString *const FBAppEventNameFBDialogsNativeLoginDialogEnd    = @"fb_dialogs_native_login_dialog_end";
-NSString *const FBAppEventsNativeLoginDialogEndTime            = @"fb_native_login_dialog_end_time";
+NSString *const GBAppEventNameGBDialogsNativeLoginDialogEnd    = @"gb_dialogs_native_login_dialog_end";
+NSString *const GBAppEventsNativeLoginDialogEndTime            = @"gb_native_login_dialog_end_time";
 
-NSString *const FBAppEventNameFBDialogsWebLoginCompleted       = @"fb_dialogs_web_login_dialog_complete";
-NSString *const FBAppEventsWebLoginE2E                         = @"fb_web_login_e2e";
-NSString *const FBAppEventsWebLoginSwitchbackTime              = @"fb_web_login_switchback_time";
+NSString *const GBAppEventNameGBDialogsWebLoginCompleted       = @"gb_dialogs_web_login_dialog_complete";
+NSString *const GBAppEventsWebLoginE2E                         = @"gb_web_login_e2e";
+NSString *const GBAppEventsWebLoginSwitchbackTime              = @"gb_web_login_switchback_time";
 
-NSString *const FBAppEventNameFBSessionAuthStart               = @"fb_mobile_login_start";
-NSString *const FBAppEventNameFBSessionAuthEnd                 = @"fb_mobile_login_complete";
-NSString *const FBAppEventNameFBSessionAuthMethodStart         = @"fb_mobile_login_method_start";
-NSString *const FBAppEventNameFBSessionAuthMethodEnd           = @"fb_mobile_login_method_complete";
+NSString *const GBAppEventNameGBSessionAuthStart               = @"gb_mobile_login_start";
+NSString *const GBAppEventNameGBSessionAuthEnd                 = @"gb_mobile_login_complete";
+NSString *const GBAppEventNameGBSessionAuthMethodStart         = @"gb_mobile_login_method_start";
+NSString *const GBAppEventNameGBSessionAuthMethodEnd           = @"gb_mobile_login_method_complete";
 
 // Event Parameters internal to this file
-NSString *const FBAppEventParameterConversionPixelID           = @"fb_offsite_pixel_id";
-NSString *const FBAppEventParameterConversionPixelValue        = @"fb_offsite_pixel_value";
-NSString *const FBAppEventParameterDialogOutcome               = @"fb_dialog_outcome";
+NSString *const GBAppEventParameterConversionPixelID           = @"gb_offsite_pixel_id";
+NSString *const GBAppEventParameterConversionPixelValue        = @"gb_offsite_pixel_value";
+NSString *const GBAppEventParameterDialogOutcome               = @"gb_dialog_outcome";
 
 // Event parameter values internal to this file
-NSString *const FBAppEventsDialogOutcomeValue_Completed = @"Completed";
-NSString *const FBAppEventsDialogOutcomeValue_Cancelled = @"Cancelled";
-NSString *const FBAppEventsDialogOutcomeValue_Failed    = @"Failed";
+NSString *const GBAppEventsDialogOutcomeValue_Completed = @"Completed";
+NSString *const GBAppEventsDialogOutcomeValue_Cancelled = @"Cancelled";
+NSString *const GBAppEventsDialogOutcomeValue_Failed    = @"Failed";
 
 
-NSString *const FBAppEventsLoggingResultNotification = @"com.facebook.sdk:FBAppEventsLoggingResultNotification";
-NSString *const FBAppEventsActivateAppFlush = @"com.facebook.sdk:FBAppEventsActivateAppFlush%@";
+NSString *const GBAppEventsLoggingResultNotification = @"com.facebook.sdk:GBAppEventsLoggingResultNotification";
+NSString *const GBAppEventsActivateAppFlush = @"com.facebook.sdk:GBAppEventsActivateAppFlush%@";
 
-@interface FBAppEvents ()
+@interface GBAppEvents ()
 
 #pragma mark - typedefs
 
@@ -132,10 +132,10 @@ typedef enum {
     AppSupportsAttributionFalse,
 } AppSupportsAttributionStatus;
 
-@property (readwrite, atomic) FBAppEventsFlushBehavior     flushBehavior;
+@property (readwrite, atomic) GBAppEventsFlushBehavior     flushBehavior;
 @property (readwrite, atomic) BOOL                         haveOutstandingPersistedData;
-@property (readwrite, atomic, retain) FBSession                   *lastSessionLoggedTo;
-@property (readwrite, atomic, retain) FBSession                   *anonymousSession;
+@property (readwrite, atomic, retain) GBSession                   *lastSessionLoggedTo;
+@property (readwrite, atomic, retain) GBSession                   *anonymousSession;
 @property (readwrite, atomic, retain) NSTimer                     *flushTimer;
 @property (readwrite, atomic, retain) NSTimer                     *attributionIDRecheckTimer;
 @property (readwrite, atomic) AppSupportsAttributionStatus appSupportsAttributionStatus;
@@ -150,12 +150,12 @@ typedef enum {
 
 @end
 
-@implementation FBAppEvents
+@implementation GBAppEvents
 
-NSString *const FBAppEventsPersistedEventsFilename   = @"com-facebook-sdk-AppEventsPersistedEvents.json";
+NSString *const GBAppEventsPersistedEventsFilename   = @"com-facebook-sdk-AppEventsPersistedEvents.json";
 
-NSString *const FBAppEventsPersistKeyNumSkipped      = @"numSkipped";
-NSString *const FBAppEventsPersistKeyEvents          = @"events";
+NSString *const GBAppEventsPersistKeyNumSkipped      = @"numSkipped";
+NSString *const GBAppEventsPersistKeyEvents          = @"events";
 
 
 #pragma mark - Constants
@@ -187,20 +187,20 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
  * Event logging
  */
 + (void)logEvent:(NSString *)eventName {
-    [FBAppEvents logEvent:eventName
+    [GBAppEvents logEvent:eventName
               parameters:nil];
 }
 
 + (void)logEvent:(NSString *)eventName
       valueToSum:(double)valueToSum {
-    [FBAppEvents logEvent:eventName
+    [GBAppEvents logEvent:eventName
               valueToSum:valueToSum
               parameters:nil];
 }
 
 + (void)logEvent:(NSString *)eventName
       parameters:(NSDictionary *)parameters {
-    [FBAppEvents logEvent:eventName
+    [GBAppEvents logEvent:eventName
               valueToSum:nil
               parameters:parameters
                  session:nil];
@@ -209,7 +209,7 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 + (void)logEvent:(NSString *)eventName
       valueToSum:(double)valueToSum
       parameters:(NSDictionary *)parameters {
-    [FBAppEvents logEvent:eventName
+    [GBAppEvents logEvent:eventName
               valueToSum:[NSNumber numberWithDouble:valueToSum]
               parameters:parameters
                  session:nil];
@@ -218,8 +218,8 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 + (void)logEvent:(NSString *)eventName
       valueToSum:(NSNumber *)valueToSum
       parameters:(NSDictionary *)parameters
-         session:(FBSession *)session {
-    [FBAppEvents.singleton instanceLogEvent:eventName
+         session:(GBSession *)session {
+    [GBAppEvents.singleton instanceLogEvent:eventName
                                 valueToSum:valueToSum
                                 parameters:parameters
                         isImplicitlyLogged:NO
@@ -230,9 +230,9 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 + (void)logImplicitEvent:(NSString *)eventName
               valueToSum:(NSNumber *)valueToSum
               parameters:(NSDictionary *)parameters
-                 session:(FBSession *)session {
+                 session:(GBSession *)session {
 
-    [FBAppEvents.singleton instanceLogEvent:eventName
+    [GBAppEvents.singleton instanceLogEvent:eventName
                                 valueToSum:valueToSum
                                 parameters:parameters
                         isImplicitlyLogged:YES
@@ -243,7 +243,7 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 
 + (void)logPurchase:(double)purchaseAmount
            currency:(NSString *)currency {
-    [FBAppEvents logPurchase:purchaseAmount
+    [GBAppEvents logPurchase:purchaseAmount
                     currency:currency
                   parameters:nil];
 }
@@ -251,7 +251,7 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 + (void)logPurchase:(double)purchaseAmount
            currency:(NSString *)currency
          parameters:(NSDictionary *)parameters {
-    [FBAppEvents logPurchase:purchaseAmount
+    [GBAppEvents logPurchase:purchaseAmount
                     currency:currency
                   parameters:parameters
                      session:nil];
@@ -261,38 +261,38 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 + (void)logPurchase:(double)purchaseAmount
            currency:(NSString *)currency
          parameters:(NSDictionary *)parameters
-            session:(FBSession *)session {
+            session:(GBSession *)session {
 
     // A purchase event is just a regular logged event with a given event name
     // and treating the currency value as going into the parameters dictionary.
 
     NSDictionary *newParameters;
     if (!parameters) {
-        newParameters = @{ FBAppEventParameterNameCurrency : currency };
+        newParameters = @{ GBAppEventParameterNameCurrency : currency };
     } else {
         newParameters = [NSMutableDictionary dictionaryWithDictionary:parameters];
-        [newParameters setValue:currency forKey:FBAppEventParameterNameCurrency];
+        [newParameters setValue:currency forKey:GBAppEventParameterNameCurrency];
     }
 
-    [FBAppEvents logEvent:FBAppEventNamePurchased
+    [GBAppEvents logEvent:GBAppEventNamePurchased
               valueToSum:[NSNumber numberWithDouble:purchaseAmount]
               parameters:newParameters
                  session:session];
 
     // Unless the behavior is set to only allow explicit flushing, we go ahead and flush, since purchase events
     // are relatively rare and relatively high value and worth getting across on wire right away.
-    if ([FBAppEvents flushBehavior] != FBAppEventsFlushBehaviorExplicitOnly) {
-        [FBAppEvents.singleton instanceFlush:FBAppEventsFlushReasonEagerlyFlushingEvent];
+    if ([GBAppEvents flushBehavior] != GBAppEventsFlushBehaviorExplicitOnly) {
+        [GBAppEvents.singleton instanceFlush:GBAppEventsFlushReasonEagerlyFlushingEvent];
     }
 
 }
 
 #pragma mark - Conversion Pixels
 
-// Deprecated... only accessed through FBInsights
+// Deprecated... only accessed through GBInsights
 + (void)logConversionPixel:(NSString *)pixelID
               valueOfPixel:(double)value
-                   session:(FBSession *)session {
+                   session:(GBSession *)session {
 
     // This method exists to allow a single API to be invoked to log a conversion pixel from a native mobile app
     // (and thus readily included in a snippet).  It logs the event with known event name and parameter names.
@@ -300,31 +300,31 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
     // are relatively rare and relatively high value and worth getting across on wire right away.
 
     if (!pixelID) {
-        [FBAppEvents logAndNotify:@"Conversion Pixel ID cannot be nil"];
+        [GBAppEvents logAndNotify:@"Conversion Pixel ID cannot be nil"];
         return;
     }
 
-    [FBAppEvents logEvent:FBAppEventNameLogConversionPixel
+    [GBAppEvents logEvent:GBAppEventNameLogConversionPixel
               valueToSum:[NSNumber numberWithDouble:value]
-              parameters:@{ FBAppEventParameterConversionPixelID : pixelID,
-                            FBAppEventParameterConversionPixelValue : [NSNumber numberWithDouble:value] }
+              parameters:@{ GBAppEventParameterConversionPixelID : pixelID,
+                            GBAppEventParameterConversionPixelValue : [NSNumber numberWithDouble:value] }
                  session:session];
 
-    if ([FBAppEvents flushBehavior] != FBAppEventsFlushBehaviorExplicitOnly) {
-        [FBAppEvents.singleton instanceFlush:FBAppEventsFlushReasonEagerlyFlushingEvent];
+    if ([GBAppEvents flushBehavior] != GBAppEventsFlushBehaviorExplicitOnly) {
+        [GBAppEvents.singleton instanceFlush:GBAppEventsFlushReasonEagerlyFlushingEvent];
     }
 }
 
 #pragma mark - Event usage
 
-// Deprecated... access through FBSettings.limitEventAndDataUsage
+// Deprecated... access through GBSettings.limitEventAndDataUsage
 + (BOOL)limitEventUsage {
-    return FBSettings.limitEventAndDataUsage;
+    return GBSettings.limitEventAndDataUsage;
 }
 
-// Deprecated... access through FBSettings.limitEventAndDataUsage
+// Deprecated... access through GBSettings.limitEventAndDataUsage
 + (void)setLimitEventUsage:(BOOL)limitEventUsage {
-    FBSettings.limitEventAndDataUsage = limitEventUsage;
+    GBSettings.limitEventAndDataUsage = limitEventUsage;
 }
 
 + (void)activateApp {
@@ -332,35 +332,35 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     // activateApp supercedes publishInstall in the public API, but we need to
     // trigger an install event as before.
-    [FBSettings publishInstall:nil];
+    [GBSettings publishInstall:nil];
 #pragma clang diagnostic pop
 
-    [FBAppEvents logEvent:FBAppEventNameActivatedApp];
+    [GBAppEvents logEvent:GBAppEventNameActivatedApp];
 }
 
 #pragma mark - Flushing & Session Management
 
-+ (FBAppEventsFlushBehavior)flushBehavior {
-    return FBAppEvents.singleton.flushBehavior;
++ (GBAppEventsFlushBehavior)flushBehavior {
+    return GBAppEvents.singleton.flushBehavior;
 }
 
-+ (void)setFlushBehavior:(FBAppEventsFlushBehavior)flushBehavior {
-    FBAppEvents.singleton.flushBehavior = flushBehavior;
++ (void)setFlushBehavior:(GBAppEventsFlushBehavior)flushBehavior {
+    GBAppEvents.singleton.flushBehavior = flushBehavior;
 }
 
 + (void)flush {
-    [FBAppEvents.singleton instanceFlush:FBAppEventsFlushReasonExplicit];
+    [GBAppEvents.singleton instanceFlush:GBAppEventsFlushReasonExplicit];
 }
 
 #pragma mark - Private Methods
 
 
-+ (FBAppEvents *)singleton {
++ (GBAppEvents *)singleton {
     static dispatch_once_t pred;
-    static FBAppEvents *shared = nil;
+    static GBAppEvents *shared = nil;
 
     dispatch_once(&pred, ^{
-        shared = [[FBAppEvents alloc] init];
+        shared = [[GBAppEvents alloc] init];
     });
     return shared;
 }
@@ -370,32 +370,32 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
  *
  * Multithreading Principles
  *
- * Logging events may be invoked from any thread.  The FBSession-specific logging data structures
+ * Logging events may be invoked from any thread.  The GBSession-specific logging data structures
  * will be locked before being updated.  Flushes, be they invoked explicitly or implicitly, will be
  * dispatched to the main thread.
  *
- * FBSessionAppEventsState is a chunk of state that hangs off of FBSession and holds event state
+ * GBSessionAppEventsState is a chunk of state that hangs off of GBSession and holds event state
  * destined for that session.
  *
- * That FBSessionAppEventsState instance itself is used as the synchronization object for most logging
- * state.  For multi-thread accessed global state, we synchronize mostly on the FBAppEvents singleton object.
+ * That GBSessionAppEventsState instance itself is used as the synchronization object for most logging
+ * state.  For multi-thread accessed global state, we synchronize mostly on the GBAppEvents singleton object.
  *
  * The other singleton state is intended to be accessed from the main thread only (though certain ones, like
  * flushBehavior, are innocuous enough that it doesn't matter).
  *
  * Every method here that is expected to be called from the main thread should have
- * [FBAppEvents ensureOnMainThread] at its top.  This just does an FBConditionalLog if it's not the main thread,
+ * [GBAppEvents ensureOnMainThread] at its top.  This just does an GBConditionalLog if it's not the main thread,
  * but indicates a clear logic error in how this is being used when that occurs.
  */
 
 
-- (FBAppEvents *)init {
+- (GBAppEvents *)init {
     self = [super init];
     if (self) {
         // Default haveOutstandingPersistedData to YES in case the app was killed before it could upload data
         // This will still require a session and a call to logEvent at some point to set that session up
         self.haveOutstandingPersistedData = YES;
-        self.flushBehavior = FBAppEventsFlushBehaviorAuto;
+        self.flushBehavior = GBAppEventsFlushBehaviorAuto;
         self.appSupportsAttributionStatus = AppSupportsAttributionUnknown;
 
         self.appAuthSessions = [[[NSMutableDictionary alloc] init] autorelease];
@@ -444,7 +444,7 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 - (BOOL)validateIdentifier:(NSString *)identifier {
 
     if (identifier == nil || identifier.length == 0 || identifier.length > MAX_IDENTIFIER_LENGTH || ![self regexValidateIdentifier:identifier]) {
-        [FBAppEvents logAndNotify:[NSString stringWithFormat:@"Invalid identifier: '%@'.  Must be between 1 and %d characters, and must be contain only alphanumerics, _, - or spaces, starting with alphanumeric or _.",
+        [GBAppEvents logAndNotify:[NSString stringWithFormat:@"Invalid identifier: '%@'.  Must be between 1 and %d characters, and must be contain only alphanumerics, _, - or spaces, starting with alphanumeric or _.",
                                   identifier, MAX_IDENTIFIER_LENGTH]];
         return NO;
     }
@@ -482,7 +482,7 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
               valueToSum:(NSNumber *)valueToSum
               parameters:(NSDictionary *)parameters
       isImplicitlyLogged:(BOOL)isImplicitlyLogged
-                 session:(FBSession *)session {
+                 session:(GBSession *)session {
 
     // Bail out of implicitly logged events if we know we're not doing implicit logging.
     if (isImplicitlyLogged && self.haveFetchedAppSettings && !self.appSupportsImplicitLogging) {
@@ -499,7 +499,7 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
     [parameters enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
 
         if (![key isKindOfClass:[NSString class]]) {
-            [FBAppEvents logAndNotify:[NSString stringWithFormat:@"The keys in the parameters must be NSStrings, '%@' is not.", key]];
+            [GBAppEvents logAndNotify:[NSString stringWithFormat:@"The keys in the parameters must be NSStrings, '%@' is not.", key]];
             failed = YES;
         }
 
@@ -508,7 +508,7 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
         }
 
         if (![obj isKindOfClass:[NSString class]] && ![obj isKindOfClass:[NSNumber class]]) {
-            [FBAppEvents logAndNotify:[NSString stringWithFormat:@"The values in the parameters dictionary must be NSStrings or NSNumbers, '%@' is not.", obj]];
+            [GBAppEvents logAndNotify:[NSString stringWithFormat:@"The values in the parameters dictionary must be NSStrings or NSNumbers, '%@' is not.", obj]];
             failed = YES;
         }
 
@@ -521,10 +521,10 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 
     // Push the event onto the queue for later flushing.
 
-    FBSession *sessionToLogTo = [self sessionToSendRequestTo:session];
+    GBSession *sessionToLogTo = [self sessionToSendRequestTo:session];
     NSMutableDictionary *eventDictionary = [NSMutableDictionary dictionaryWithDictionary:parameters];
 
-    long logTime = [FBAppEvents unixTimeNow];
+    long logTime = [GBAppEvents unixTimeNow];
     [eventDictionary setObject:eventName forKey:@"_eventName"];
     [eventDictionary setObject:[NSNumber numberWithLong:logTime] forKey:@"_logTime"];
 
@@ -537,8 +537,8 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
     }
 
     @synchronized (self) {
-        if ([FBSettings appVersion]) {
-            [eventDictionary setObject:[FBSettings appVersion] forKey:@"_appVersion"];
+        if ([GBSettings appVersion]) {
+            [eventDictionary setObject:[GBSettings appVersion] forKey:@"_appVersion"];
         }
 
         // If this is a different session than the most recent we logged to, set up that earlier session for flushing, and update
@@ -550,18 +550,18 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
         if (self.lastSessionLoggedTo != sessionToLogTo) {
             // Since we're not logging to lastSessionLoggedTo, at least for now, set it up for flushing.  If we swap back and
             // forth frequently between sessions, this could be thrashy, but that's not an expected use case of the SDK.
-            [self flush:FBAppEventsFlushReasonSessionChange session:self.lastSessionLoggedTo];
+            [self flush:GBAppEventsFlushReasonSessionChange session:self.lastSessionLoggedTo];
             self.lastSessionLoggedTo = sessionToLogTo;
         }
 
-        FBSessionAppEventsState *appEventsState = sessionToLogTo.appEventsState;
+        GBSessionAppEventsState *appEventsState = sessionToLogTo.appEventsState;
 
         [appEventsState addEvent:eventDictionary isImplicit:isImplicitlyLogged];
 
         if (!isImplicitlyLogged) {
-            [FBLogger singleShotLogEntry:FBLoggingBehaviorAppEvents
-                            formatString:@"FBAppEvents: Recording event @ %ld: %@",
-                [FBAppEvents unixTimeNow],
+            [GBLogger singleShotLogEntry:GBLoggingBehaviorAppEvents
+                            formatString:@"GBAppEvents: Recording event @ %ld: %@",
+                [GBAppEvents unixTimeNow],
                 eventDictionary];
         }
 
@@ -572,27 +572,27 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
             self.haveOutstandingPersistedData = NO;
         }
 
-        if (self.flushBehavior != FBAppEventsFlushBehaviorExplicitOnly) {
+        if (self.flushBehavior != GBAppEventsFlushBehaviorExplicitOnly) {
 
             if (appEventsState.getAccumulatedEventCount > NUM_LOG_EVENTS_TO_TRY_TO_FLUSH_AFTER) {
-                [self flush:FBAppEventsFlushReasonEventThreshold session:sessionToLogTo];
+                [self flush:GBAppEventsFlushReasonEventThreshold session:sessionToLogTo];
             } else if (eventsRetrievedFromPersistedData) {
-                [self flush:FBAppEventsFlushReasonPersistedEvents session:sessionToLogTo];
+                [self flush:GBAppEventsFlushReasonPersistedEvents session:sessionToLogTo];
             }
 
         }
     }
 }
 
-- (void)instanceFlush:(FBAppEventsFlushReason)flushReason {
+- (void)instanceFlush:(GBAppEventsFlushReason)flushReason {
     if (self.lastSessionLoggedTo) {  // nil only if no logging yet, instanceLogEvent will fill this in.
         [self flush:flushReason session:self.lastSessionLoggedTo];
     }
 }
 
 
-- (void)flush:(FBAppEventsFlushReason)flushReason
-      session:(FBSession *)session {
+- (void)flush:(GBAppEventsFlushReason)flushReason
+      session:(GBSession *)session {
 
     // Always flush asynchronously, even on main thread, for two reasons:
     // - most consistent code path for all threads.
@@ -624,11 +624,11 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
  On app activation: Read back from persisted data and flush asap.
 
  */
-- (void)flushOnMainQueue:(FBAppEventsFlushReason)flushReason
-                 session:(FBSession *)session {
+- (void)flushOnMainQueue:(GBAppEventsFlushReason)flushReason
+                 session:(GBSession *)session {
 
-    [FBAppEvents ensureOnMainThread];
-    FBSessionAppEventsState *appEventsState = session.appEventsState;
+    [GBAppEvents ensureOnMainThread];
+    GBSessionAppEventsState *appEventsState = session.appEventsState;
 
     // If trying to flush a session already in flight, just ignore and continue to accum events
     // until we try to flush again.
@@ -643,10 +643,10 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
         // If we haven't yet determined whether the app supports sending the attribution ID, we'll need
         // to make an initial request to determine this, and then call back in once we know.
         self.appSupportsAttributionStatus = AppSupportsAttributionQueryInFlight;
-        [FBUtility fetchAppSettings:appid
-                           callback:^(FBFetchedAppSettings *settings, NSError *error) {
+        [GBUtility fetchAppSettings:appid
+                           callback:^(GBFetchedAppSettings *settings, NSError *error) {
 
-                               [FBAppEvents ensureOnMainThread];
+                               [GBAppEvents ensureOnMainThread];
 
                                // Treat an error as if the app doesn't allow sending of attribution ID.
                                self.appSupportsAttributionStatus = settings.supportsAttribution && !error
@@ -686,8 +686,8 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
     NSData *utf8EncodedEvents = [jsonEncodedEvents dataUsingEncoding:NSUTF8StringEncoding];
 
     if (!utf8EncodedEvents) {
-        [FBLogger singleShotLogEntry:FBLoggingBehaviorAppEvents
-                            logEntry:@"FBAppEvents: Flushing skipped - no events after removing implicitly logged ones.\n"];
+        [GBLogger singleShotLogEntry:GBLoggingBehaviorAppEvents
+                            logEntry:@"GBAppEvents: Flushing skipped - no events after removing implicitly logged ones.\n"];
         return;
     }
 
@@ -706,10 +706,10 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
                                               session:session];
 
     NSString *loggingEntry = nil;
-    if ([[FBSettings loggingBehavior] containsObject:FBLoggingBehaviorAppEvents]) {
+    if ([[GBSettings loggingBehavior] containsObject:GBLoggingBehaviorAppEvents]) {
 
-        id decodedEvents = [FBUtility simpleJSONDecode:jsonEncodedEvents];
-        NSString *prettyPrintedJsonEvents = [FBUtility simpleJSONEncode:decodedEvents
+        id decodedEvents = [GBUtility simpleJSONDecode:jsonEncodedEvents];
+        NSString *prettyPrintedJsonEvents = [GBUtility simpleJSONEncode:decodedEvents
                                                                   error:nil
                                                          writingOptions:NSJSONWritingPrettyPrinted];
 
@@ -717,21 +717,21 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
         NSMutableDictionary *paramsForPrinting = [NSMutableDictionary dictionaryWithDictionary:postParameters];
         [paramsForPrinting removeObjectForKey:@"custom_events_file"];
 
-        loggingEntry = [NSString stringWithFormat:@"FBAppEvents: Flushed @ %ld, %lu events due to '%@' - %@\nEvents: %@",
-                         [FBAppEvents unixTimeNow],
+        loggingEntry = [NSString stringWithFormat:@"GBAppEvents: Flushed @ %ld, %lu events due to '%@' - %@\nEvents: %@",
+                         [GBAppEvents unixTimeNow],
                          (unsigned long)eventCount,
-                         [FBAppEvents flushReasonToString:flushReason],
+                         [GBAppEvents flushReasonToString:flushReason],
                          paramsForPrinting,
                          prettyPrintedJsonEvents];
     }
 
-    FBRequest *request = [[[FBRequest alloc] initWithSession:session
+    GBRequest *request = [[[GBRequest alloc] initWithSession:session
                                                    graphPath:[NSString stringWithFormat:@"%@/activities", appid]
                                                   parameters:postParameters
                                                   HTTPMethod:@"POST"] autorelease];
     request.canCloseSessionOnError = NO;
 
-    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+    [request startWithCompletionHandler:^(GBRequestConnection *connection, id result, NSError *error) {
         [self handleActivitiesPostCompletion:error
                                 loggingEntry:loggingEntry
                                      session:session];
@@ -741,10 +741,10 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 }
 
 - (void)appendAttributionAndAdvertiserIDs:(NSMutableDictionary *)postParameters
-                                            session:(FBSession *)session {
+                                            session:(GBSession *)session {
 
     if (self.appSupportsAttributionStatus == AppSupportsAttributionTrue) {
-        NSString *attributionID = [FBUtility attributionID];
+        NSString *attributionID = [GBUtility attributionID];
         if (attributionID) {
             [postParameters setObject:attributionID forKey:@"attribution"];
         }
@@ -753,41 +753,41 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
     // Send advertiserID if available, and send along whether tracking is enabled too.  That's because
     // we can use the advertiser_id for non-tracking purposes (aggregated Insights/demographics) that doesn't
     // result in advertising targeting that user.
-    NSString *advertiserID = [FBUtility advertiserID];
+    NSString *advertiserID = [GBUtility advertiserID];
     if (advertiserID) {
         [postParameters setObject:advertiserID forKey:@"advertiser_id"];
     }
 
-    [FBUtility updateParametersWithEventUsageLimitsAndBundleInfo:postParameters];
+    [GBUtility updateParametersWithEventUsageLimitsAndBundleInfo:postParameters];
 }
 
-- (BOOL)doesSessionHaveUserToken:(FBSession *)session {
+- (BOOL)doesSessionHaveUserToken:(GBSession *)session {
     // Assume that if we're not using an appAuthSession (built from the Client Token) or the anonymous session,
     // then we have a logged in user token.
-    FBSession *appAuthSession = [self.appAuthSessions objectForKey:session.appID];
+    GBSession *appAuthSession = [self.appAuthSessions objectForKey:session.appID];
     return session != appAuthSession && session != self.anonymousSession;
 }
 
 
-// Given a candidate session (which may be nil), find the real session to send the FBRequest to (with an access token).
+// Given a candidate session (which may be nil), find the real session to send the GBRequest to (with an access token).
 // Precedence: 1) provided session, 2) activeSession, 3) app authenticated session, 4) fully anonymous session.
 // When clientToken-annotated calls move outside of the domain of stuff handled in this file, we may want to move this as a
-// helper into FBSession.
-- (FBSession *)sessionToSendRequestTo:(FBSession *)session {
+// helper into GBSession.
+- (GBSession *)sessionToSendRequestTo:(GBSession *)session {
 
     if (!session) {
-        // Note: activeSession's appID will be [FBSettings defaultAppID] unless otherwise established.
-        session = [FBSession activeSession];
+        // Note: activeSession's appID will be [GBSettings defaultAppID] unless otherwise established.
+        session = [GBSession activeSession];
     }
 
     if (!session.accessTokenData.accessToken) {
 
-        NSString *clientToken = [FBSettings clientToken];
+        NSString *clientToken = [GBSettings clientToken];
         NSString *appID = session.appID;
 
         if (clientToken && appID) {
 
-            FBSession *appAuthSession = [self.appAuthSessions objectForKey:appID];
+            GBSession *appAuthSession = [self.appAuthSessions objectForKey:appID];
             if (!appAuthSession) {
 
                 @synchronized(self) {
@@ -795,12 +795,12 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
                     appAuthSession = [self.appAuthSessions objectForKey:appID];  // in case it snuck in
                     if (!appAuthSession) {
 
-                        FBSessionManualTokenCachingStrategy *tokenCaching = [[FBSessionManualTokenCachingStrategy alloc] init];
+                        GBSessionManualTokenCachingStrategy *tokenCaching = [[GBSessionManualTokenCachingStrategy alloc] init];
                         tokenCaching.accessToken = [NSString stringWithFormat:@"%@|%@", appID, clientToken];
                         tokenCaching.expirationDate = [NSDate dateWithTimeIntervalSinceNow:315360000]; // 10 years from now
 
                         // Create session with explicit token and stash with appID.
-                        appAuthSession = [FBAppEvents unaffinitizedSessionFromToken:tokenCaching
+                        appAuthSession = [GBAppEvents unaffinitizedSessionFromToken:tokenCaching
                                                                               appID:appID];
                         [tokenCaching release];
 
@@ -819,7 +819,7 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
                 @synchronized(self) {
 
                     if (!self.anonymousSession) {  // in case it snuck in
-                        self.anonymousSession = [FBAppEvents unaffinitizedSessionFromToken:[FBSessionTokenCachingStrategy nullCacheInstance]
+                        self.anonymousSession = [GBAppEvents unaffinitizedSessionFromToken:[GBSessionTokenCachingStrategy nullCacheInstance]
                                                                                      appID:appID];
                     }
                 }
@@ -832,12 +832,12 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
     return session;
 }
 
-+ (FBSession *)unaffinitizedSessionFromToken:(FBSessionTokenCachingStrategy *)tokenCachingStrategy
++ (GBSession *)unaffinitizedSessionFromToken:(GBSessionTokenCachingStrategy *)tokenCachingStrategy
                                        appID:(NSString *)appID {
 
-    // Passing in nil for appID will result in using [FBSettings defaultAppID], and the right exception
+    // Passing in nil for appID will result in using [GBSettings defaultAppID], and the right exception
     // behavior will happen if that is null.
-    FBSession *session = [[[FBSession alloc] initWithAppID:appID
+    GBSession *session = [[[GBSession alloc] initWithAppID:appID
                                                permissions:nil
                                            urlSchemeSuffix:nil
                                         tokenCacheStrategy:tokenCachingStrategy]
@@ -857,7 +857,7 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 
 - (void)handleActivitiesPostCompletion:(NSError *)error
                           loggingEntry:(NSString *)loggingEntry
-                               session:(FBSession *)session {
+                               session:(GBSession *)session {
 
     typedef enum {
         FlushResultSuccess,
@@ -865,24 +865,24 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
         FlushResultNoConnectivity
     } FlushResult;
 
-    [FBAppEvents ensureOnMainThread];
+    [GBAppEvents ensureOnMainThread];
 
     FlushResult flushResult = FlushResultSuccess;
     if (error) {
 
-        NSInteger errorCode = [[[error userInfo] objectForKey:FBErrorHTTPStatusCodeKey] integerValue];
+        NSInteger errorCode = [[[error userInfo] objectForKey:GBErrorHTTPStatusCodeKey] integerValue];
 
-        // We interpret a 400 coming back from FBRequestConnection as a server error due to improper data being
+        // We interpret a 400 coming back from GBRequestConnection as a server error due to improper data being
         // sent down.  Otherwise we assume no connectivity, or another condition where we could treat it as no connectivity.
         flushResult = errorCode == 400 ? FlushResultServerError : FlushResultNoConnectivity;
     }
 
-    FBSessionAppEventsState *appEventsState = session.appEventsState;
+    GBSessionAppEventsState *appEventsState = session.appEventsState;
     BOOL allEventsAreImplicit = YES;
     @synchronized (appEventsState) {
         if (flushResult != FlushResultNoConnectivity) {
             for (NSDictionary *eventAndImplicitFlag in appEventsState.inFlightEvents) {
-                if (![eventAndImplicitFlag[kFBAppEventIsImplicit] boolValue]) {
+                if (![eventAndImplicitFlag[kGBAppEventIsImplicit] boolValue]) {
                     allEventsAreImplicit = NO;
                     break;
                 }
@@ -896,7 +896,7 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
     }
 
     if (flushResult == FlushResultServerError) {
-        [FBAppEvents logAndNotify:[error description] allowLogAsDeveloperError:!allEventsAreImplicit];
+        [GBAppEvents logAndNotify:[error description] allowLogAsDeveloperError:!allEventsAreImplicit];
     }
 
     NSString *resultString = @"<unknown>";
@@ -914,20 +914,20 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
             break;
     }
 
-    [FBLogger singleShotLogEntry:FBLoggingBehaviorAppEvents
+    [GBLogger singleShotLogEntry:GBLoggingBehaviorAppEvents
                     formatString:@"%@\nFlush Result : %@", loggingEntry, resultString];
 }
 
 
 - (void)flushTimerFired:(id)arg {
-    [FBAppEvents ensureOnMainThread];
+    [GBAppEvents ensureOnMainThread];
 
     @synchronized (self) {
-        if (self.flushBehavior != FBAppEventsFlushBehaviorExplicitOnly) {
+        if (self.flushBehavior != GBAppEventsFlushBehaviorExplicitOnly) {
             if (self.lastSessionLoggedTo.appEventsState.inFlightEvents.count > 0 ||
                 self.lastSessionLoggedTo.appEventsState.accumulatedEvents.count > 0) {
 
-                [self flush:FBAppEventsFlushReasonTimer session:self.lastSessionLoggedTo];
+                [self flush:GBAppEventsFlushReasonTimer session:self.lastSessionLoggedTo];
             }
         }
     }
@@ -940,7 +940,7 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 
 - (void)applicationDidBecomeActive {
 
-    [FBAppEvents ensureOnMainThread];
+    [GBAppEvents ensureOnMainThread];
 
     // We associate the deserialized persisted data with the current session.
     // It's possible we'll get false attribution if the user identity has changed
@@ -953,8 +953,8 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 
         BOOL eventsRetrieved = [self updateAppEventsStateWithPersistedData:self.lastSessionLoggedTo];
 
-        if (eventsRetrieved && self.flushBehavior != FBAppEventsFlushBehaviorExplicitOnly) {
-            [self flush:FBAppEventsFlushReasonPersistedEvents session:self.lastSessionLoggedTo];
+        if (eventsRetrieved && self.flushBehavior != GBAppEventsFlushBehaviorExplicitOnly) {
+            [self flush:GBAppEventsFlushReasonPersistedEvents session:self.lastSessionLoggedTo];
         }
 
     } else {
@@ -965,18 +965,18 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 }
 
 // Read back previously persisted events, if any, into specified session, returning whether any events were retrieved.
-- (BOOL)updateAppEventsStateWithPersistedData:(FBSession *)session {
+- (BOOL)updateAppEventsStateWithPersistedData:(GBSession *)session {
 
     BOOL eventsRetrieved = NO;
-    NSDictionary *persistedData = [FBAppEvents retrievePersistedAppEventData];
+    NSDictionary *persistedData = [GBAppEvents retrievePersistedAppEventData];
     if (persistedData) {
 
-        [FBAppEvents clearPersistedAppEventData];
+        [GBAppEvents clearPersistedAppEventData];
 
-        FBSessionAppEventsState *appEventsState = session.appEventsState;
+        GBSessionAppEventsState *appEventsState = session.appEventsState;
         @synchronized (appEventsState) {
-            appEventsState.numSkippedEventsDueToFullBuffer += [[persistedData objectForKey:FBAppEventsPersistKeyNumSkipped] integerValue];
-            NSArray *retrievedObjects = [persistedData objectForKey:FBAppEventsPersistKeyEvents];
+            appEventsState.numSkippedEventsDueToFullBuffer += [[persistedData objectForKey:GBAppEventsPersistKeyNumSkipped] integerValue];
+            NSArray *retrievedObjects = [persistedData objectForKey:GBAppEventsPersistKeyEvents];
             if (retrievedObjects.count) {
                 [appEventsState.inFlightEvents addObjectsFromArray:retrievedObjects];
                 eventsRetrieved = YES;
@@ -1000,51 +1000,51 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 }
 
 - (void)persistDataIfNotInFlight {
-    [FBAppEvents ensureOnMainThread];
+    [GBAppEvents ensureOnMainThread];
 
-    FBSessionAppEventsState *appEventsState = self.lastSessionLoggedTo.appEventsState;
+    GBSessionAppEventsState *appEventsState = self.lastSessionLoggedTo.appEventsState;
     if (appEventsState.requestInFlight) {
         // In flight request may or may not succeed, so there's no right thing to do here.  Err by just not doing anything on termination;
         return;
     }
 
     // Persist right away if needed (rather than trying one last sync) since we're about to be booted out.
-    [FBAppEvents persistAppEventsData:appEventsState];
+    [GBAppEvents persistAppEventsData:appEventsState];
 }
 
 + (void)logAndNotify:(NSString *)msg allowLogAsDeveloperError:(BOOL *)allowLogAsDeveloperError {
 
     // capture reason and nested code as user info
-    NSDictionary* userinfo = [NSDictionary dictionaryWithObject:msg forKey:FBErrorAppEventsReasonKey];
+    NSDictionary* userinfo = [NSDictionary dictionaryWithObject:msg forKey:GBErrorAppEventsReasonKey];
 
     // create error object
     NSError *err = [NSError errorWithDomain:FacebookSDKDomain
-                                       code:FBErrorAppEvents
+                                       code:GBErrorAppEvents
                                    userInfo:userinfo];
 
-    NSString *behaviorToLog = FBLoggingBehaviorAppEvents;
+    NSString *behaviorToLog = GBLoggingBehaviorAppEvents;
     if (allowLogAsDeveloperError) {
-        if ([[FBSettings loggingBehavior] containsObject:FBLoggingBehaviorDeveloperErrors]) {
+        if ([[GBSettings loggingBehavior] containsObject:GBLoggingBehaviorDeveloperErrors]) {
             // Rather than log twice, prefer 'DeveloperErrors' if it's set over AppEvents.
-            behaviorToLog = FBLoggingBehaviorDeveloperErrors;
+            behaviorToLog = GBLoggingBehaviorDeveloperErrors;
         }
     }
 
-    [FBLogger singleShotLogEntry:behaviorToLog logEntry:msg];
+    [GBLogger singleShotLogEntry:behaviorToLog logEntry:msg];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:FBAppEventsLoggingResultNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:GBAppEventsLoggingResultNotification
                                                         object:err];
 }
 
 + (void)logAndNotify:(NSString *)msg {
-    [FBAppEvents logAndNotify:msg allowLogAsDeveloperError:YES];
+    [GBAppEvents logAndNotify:msg allowLogAsDeveloperError:YES];
 }
 
 #pragma mark - event log persistence
 
-+ (void)persistAppEventsData:(FBSessionAppEventsState *)appEventsState {
++ (void)persistAppEventsData:(GBSessionAppEventsState *)appEventsState {
 
-    [FBAppEvents ensureOnMainThread];
+    [GBAppEvents ensureOnMainThread];
     NSString *content;
 
     // We just persist from the last session being logged to.  When we switch sessions, we flush out
@@ -1055,25 +1055,25 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
         [appEventsState.inFlightEvents addObjectsFromArray:appEventsState.accumulatedEvents];
         [appEventsState.accumulatedEvents removeAllObjects];
 
-        [FBLogger singleShotLogEntry:FBLoggingBehaviorAppEvents
-                        formatString:@"FBAppEvents Persist: Writing %lu events", (unsigned long)appEventsState.inFlightEvents.count];
+        [GBLogger singleShotLogEntry:GBLoggingBehaviorAppEvents
+                        formatString:@"GBAppEvents Persist: Writing %lu events", (unsigned long)appEventsState.inFlightEvents.count];
 
         if (!appEventsState.inFlightEvents.count) {
             return;
         }
 
         NSDictionary *appEventData = @{
-            FBAppEventsPersistKeyNumSkipped   : [NSNumber numberWithInt:appEventsState.numSkippedEventsDueToFullBuffer],
-            FBAppEventsPersistKeyEvents       : appEventsState.inFlightEvents,
+            GBAppEventsPersistKeyNumSkipped   : [NSNumber numberWithInt:appEventsState.numSkippedEventsDueToFullBuffer],
+            GBAppEventsPersistKeyEvents       : appEventsState.inFlightEvents,
         };
 
-        content = [FBUtility simpleJSONEncode:appEventData];
+        content = [GBUtility simpleJSONEncode:appEventData];
 
         [appEventsState clearInFlightAndStats];
     }
 
     //save content to the documents directory
-    [content writeToFile:[FBAppEvents persistenceFilePath]
+    [content writeToFile:[GBAppEvents persistenceFilePath]
               atomically:YES
                 encoding:NSStringEncodingConversionAllowLossy
                    error:nil];
@@ -1082,46 +1082,46 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 
 + (NSDictionary *)retrievePersistedAppEventData {
 
-    NSString *content = [[NSString alloc] initWithContentsOfFile:[FBAppEvents persistenceFilePath]
+    NSString *content = [[NSString alloc] initWithContentsOfFile:[GBAppEvents persistenceFilePath]
                                                     usedEncoding:nil
                                                            error:nil];
-    NSDictionary *results = [FBUtility simpleJSONDecode:content];
+    NSDictionary *results = [GBUtility simpleJSONDecode:content];
     [content release];
 
-    [FBLogger singleShotLogEntry:FBLoggingBehaviorAppEvents
-                    formatString:@"FBAppEvents Persist: Read %lu events",
-                    (unsigned long)(results ? [[results objectForKey:FBAppEventsPersistKeyEvents] count] : 0)];
+    [GBLogger singleShotLogEntry:GBLoggingBehaviorAppEvents
+                    formatString:@"GBAppEvents Persist: Read %lu events",
+                    (unsigned long)(results ? [[results objectForKey:GBAppEventsPersistKeyEvents] count] : 0)];
     return results;
 }
 
 + (void)clearPersistedAppEventData {
 
-    [FBLogger singleShotLogEntry:FBLoggingBehaviorAppEvents
-                        logEntry:@"FBAppEvents Persist: Clearing"];
-    [[NSFileManager defaultManager] removeItemAtPath:[FBAppEvents persistenceFilePath] error:nil];
+    [GBLogger singleShotLogEntry:GBLoggingBehaviorAppEvents
+                        logEntry:@"GBAppEvents Persist: Clearing"];
+    [[NSFileManager defaultManager] removeItemAtPath:[GBAppEvents persistenceFilePath] error:nil];
 }
 
 + (NSString *)persistenceFilePath {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docDirectory = [paths objectAtIndex:0];
-    return [docDirectory stringByAppendingPathComponent:FBAppEventsPersistedEventsFilename];
+    return [docDirectory stringByAppendingPathComponent:GBAppEventsPersistedEventsFilename];
 }
 
 + (void)ensureOnMainThread {
-    FBConditionalLog([NSThread isMainThread], @"*** This method expected to be called on the main thread.");
+    GBConditionalLog([NSThread isMainThread], @"*** This method expected to be called on the main thread.");
 }
 
 #pragma mark - Custom Audience token stuff
 
-// This code lives here in FBAppEvents because it shares many of the runtime characteristics of the FBAppEvents logging,
+// This code lives here in GBAppEvents because it shares many of the runtime characteristics of the GBAppEvents logging,
 // even though the public exposure is elsewhere
 
-+ (FBRequest *)customAudienceThirdPartyIDRequest:(FBSession *)session {
-    return [FBAppEvents.singleton instanceCustomAudienceThirdPartyIDRequest:session];
++ (GBRequest *)customAudienceThirdPartyIDRequest:(GBSession *)session {
+    return [GBAppEvents.singleton instanceCustomAudienceThirdPartyIDRequest:session];
 }
 
 
-- (FBRequest *)instanceCustomAudienceThirdPartyIDRequest:(FBSession *)session {
+- (GBRequest *)instanceCustomAudienceThirdPartyIDRequest:(GBSession *)session {
 
     // Rules for how we use the attribution ID / advertiser ID for an 'custom_audience_third_party_id' Graph API request
     // 1) if the OS tells us that the user has Limited Ad Tracking, then just don't send, and return a nil in the token.
@@ -1130,19 +1130,19 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
     // 3) if we have a user session token, then no need to send attribution ID / advertiser ID back as the udid parameter
     // 4) otherwise, send back the udid parameter.
 
-    if ([FBUtility advertisingTrackingStatus] == AdvertisingTrackingDisallowed || [FBSettings limitEventAndDataUsage]) {
+    if ([GBUtility advertisingTrackingStatus] == AdvertisingTrackingDisallowed || [GBSettings limitEventAndDataUsage]) {
         return nil;
     }
 
-    FBSession *sessionToSendRequestTo = [self sessionToSendRequestTo:session];
+    GBSession *sessionToSendRequestTo = [self sessionToSendRequestTo:session];
     NSString *udid = nil;
     if (![self doesSessionHaveUserToken:sessionToSendRequestTo]) {
 
         // We don't have a logged in user, so we need some form of udid representation.  Prefer
         // advertiser ID if available, and back off to attribution ID if not.
-        udid = [FBUtility advertiserID];
+        udid = [GBUtility advertiserID];
         if (!udid) {
-            udid = [FBUtility attributionID];
+            udid = [GBUtility attributionID];
         }
 
         if (!udid) {
@@ -1157,7 +1157,7 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
     }
 
     NSString *graphPath = [NSString stringWithFormat:@"%@/custom_audience_third_party_id", sessionToSendRequestTo.appID];
-    FBRequest *request = [[[FBRequest alloc] initWithSession:sessionToSendRequestTo
+    GBRequest *request = [[[GBRequest alloc] initWithSession:sessionToSendRequestTo
                                                    graphPath:graphPath
                                                   parameters:parameters
                                                   HTTPMethod:nil]
@@ -1167,31 +1167,31 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
     return request;
 }
 
-+ (NSString *)flushReasonToString:(FBAppEventsFlushReason)flushReason {
++ (NSString *)flushReasonToString:(GBAppEventsFlushReason)flushReason {
 
     NSString *result = @"Unknown";
     switch (flushReason) {
-        case FBAppEventsFlushReasonExplicit:
+        case GBAppEventsFlushReasonExplicit:
             result = @"Explicit";
             break;
 
-        case FBAppEventsFlushReasonTimer:
+        case GBAppEventsFlushReasonTimer:
             result = @"Timer";
             break;
 
-        case FBAppEventsFlushReasonSessionChange:
+        case GBAppEventsFlushReasonSessionChange:
             result = @"SessionChange";
             break;
 
-        case FBAppEventsFlushReasonPersistedEvents:
+        case GBAppEventsFlushReasonPersistedEvents:
             result = @"PersistedEvents";
             break;
 
-        case FBAppEventsFlushReasonEventThreshold:
+        case GBAppEventsFlushReasonEventThreshold:
             result = @"EventCountThreshold";
             break;
 
-        case FBAppEventsFlushReasonEagerlyFlushingEvent:
+        case GBAppEventsFlushReasonEagerlyFlushingEvent:
             result = @"EagerlyFlushingEvent";
             break;
     }

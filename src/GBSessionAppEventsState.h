@@ -16,13 +16,13 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString *const kFBAppEventIsImplicit;
+extern NSString *const kGBAppEventIsImplicit;
 
 /**
- Internal class that holds all the state associated with FBAppEvents for a particular FBSession.  An
- instance of this lives on FBSession.
+ Internal class that holds all the state associated with GBAppEvents for a particular GBSession.  An
+ instance of this lives on GBSession.
  */
-@interface FBSessionAppEventsState : NSObject
+@interface GBSessionAppEventsState : NSObject
 
 @property (readonly, retain) NSMutableArray *accumulatedEvents;
 @property (readonly, retain) NSMutableArray *inFlightEvents;

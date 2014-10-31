@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-#import "FBRequest.h"
+#import "GBRequest.h"
 
-@interface FBRequest(Internal)
+@interface GBRequest(Internal)
 
 /*!
  @abstract

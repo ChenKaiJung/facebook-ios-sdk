@@ -17,22 +17,22 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "FBSession.h"
+#import "GBSession.h"
 
-@class FBCacheIndex;
+@class GBCacheIndex;
 
 // This is a Disk based cache used internally by Facebook SDK
-@interface FBDataDiskCache : NSObject
+@interface GBDataDiskCache : NSObject
 {
 @private
     NSCache* _inMemoryCache;
-    FBCacheIndex* _cacheIndex;
+    GBCacheIndex* _cacheIndex;
     NSString* _dataCachePath;
 
     dispatch_queue_t _fileQueue;
 }
 
-+ (FBDataDiskCache*)sharedCache;
++ (GBDataDiskCache*)sharedCache;
 
 @property (nonatomic, assign) NSUInteger cacheSizeMemory;
 @property (nonatomic, readonly) dispatch_queue_t fileQueue;
@@ -40,6 +40,6 @@
 - (NSData*)dataForURL:(NSURL*)dataURL;
 - (void)setData:(NSData*)data forURL:(NSURL*)url;
 - (void)removeDataForUrl:(NSURL*)url;
-- (void)removeDataForSession:(FBSession*)session;
+- (void)removeDataForSession:(GBSession*)session;
 
 @end

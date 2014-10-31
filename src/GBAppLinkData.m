@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-#import "FBAppLinkData+Internal.h"
+#import "GBAppLinkData+Internal.h"
 
-#import "FBUtility.h"
+#import "GBUtility.h"
 
-@interface FBAppLinkData ()
+@interface GBAppLinkData ()
 
 @property (readwrite, retain) NSURL *targetURL;
 @property (readwrite, copy) NSArray *actionTypes;
@@ -29,17 +29,17 @@
 @property (readwrite, copy) NSDictionary *arguments;
 @end
 
-@implementation FBAppLinkData
+@implementation GBAppLinkData
 
 - (id)initWithURL:(NSURL*)url {
-    NSDictionary *params = [FBUtility queryParamsDictionaryFromFBURL:url];
+    NSDictionary *params = [GBUtility queryParamsDictionaryFromGBURL:url];
     NSURL *targetURL = (params[@"target_url"]) ? [[[NSURL alloc] initWithString:params[@"target_url"]] autorelease] : nil;
-    NSArray *ref = [params[@"fb_ref"] componentsSeparatedByString:@","];
+    NSArray *ref = [params[@"gb_ref"] componentsSeparatedByString:@","];
     NSDictionary *originalQueryParameters = params;
 
     if (self = [self initWithURL:url targetURL:targetURL ref:ref originalQueryParameters:originalQueryParameters arguments:nil]) {
-        self.actionIDs = [params[@"fb_action_ids"] componentsSeparatedByString:@","];
-        self.actionTypes = [params[@"fb_action_types"] componentsSeparatedByString:@","];
+        self.actionIDs = [params[@"gb_action_ids"] componentsSeparatedByString:@","];
+        self.actionTypes = [params[@"gb_action_types"] componentsSeparatedByString:@","];
     }
     return self;
 }
@@ -73,8 +73,8 @@
             self.ref);
 }
 
-+ (FBAppLinkData *)createFromURL:(NSURL *)url {
-    FBAppLinkData *appLinkData = [[[FBAppLinkData alloc] initWithURL:url] autorelease];
++ (GBAppLinkData *)createFromURL:(NSURL *)url {
+    GBAppLinkData *appLinkData = [[[GBAppLinkData alloc] initWithURL:url] autorelease];
     if (!appLinkData.isValid) {
         // Not an app link!
         appLinkData = nil;

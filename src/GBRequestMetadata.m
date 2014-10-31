@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-#import "FBRequestMetadata.h"
+#import "GBRequestMetadata.h"
 
-#import "FBRequest+Internal.h"
-#import "FBRequestHandlerFactory.h"
+#import "GBRequest+Internal.h"
+#import "GBRequestHandlerFactory.h"
 
-const int FBREQUEST_DEFAULT_MAX_RETRY_LIMIT = 1;
+const int GBREQUEST_DEFAULT_MAX_RETRY_LIMIT = 1;
 
-@implementation FBRequestMetadata
+@implementation GBRequestMetadata
 
-- (id) initWithRequest:(FBRequest *)request
-     completionHandler:(FBRequestHandler)handler
+- (id) initWithRequest:(GBRequest *)request
+     completionHandler:(GBRequestHandler)handler
        batchParameters:(NSDictionary *)batchParameters
-              behavior:(FBRequestConnectionErrorBehavior) behavior {
+              behavior:(GBRequestConnectionErrorBehavior) behavior {
 
     if ((self = [super init])) {
         _request = [request retain];
@@ -40,14 +40,14 @@ const int FBREQUEST_DEFAULT_MAX_RETRY_LIMIT = 1;
         if (request.canCloseSessionOnError) {
             // Note the order of composing these retry handlers is significant and
             // is like a stack (last wrapping handler is invoked first).
-            if (behavior & FBRequestConnectionErrorBehaviorReconnectSession) {
-                handler = [FBRequestHandlerFactory handlerThatReconnects:handler forRequest:request];
+            if (behavior & GBRequestConnectionErrorBehaviorReconnectSession) {
+                handler = [GBRequestHandlerFactory handlerThatReconnects:handler forRequest:request];
             }
-            if (behavior & FBRequestConnectionErrorBehaviorAlertUser) {
-                handler = [FBRequestHandlerFactory handlerThatAlertsUser:handler forRequest:request];
+            if (behavior & GBRequestConnectionErrorBehaviorAlertUser) {
+                handler = [GBRequestHandlerFactory handlerThatAlertsUser:handler forRequest:request];
             }
-            if (behavior & FBRequestConnectionErrorBehaviorRetry) {
-                handler = [FBRequestHandlerFactory handlerThatRetries:handler forRequest:request];
+            if (behavior & GBRequestConnectionErrorBehaviorRetry) {
+                handler = [GBRequestHandlerFactory handlerThatRetries:handler forRequest:request];
             }
         }
 
@@ -68,7 +68,7 @@ const int FBREQUEST_DEFAULT_MAX_RETRY_LIMIT = 1;
     [super dealloc];
 }
 
-- (void)invokeCompletionHandlerForConnection:(FBRequestConnection *)connection
+- (void)invokeCompletionHandlerForConnection:(GBRequestConnection *)connection
                                  withResults:(id)results
                                        error:(NSError *)error {
     if (self.completionHandler) {

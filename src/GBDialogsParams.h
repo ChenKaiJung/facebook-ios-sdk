@@ -17,12 +17,12 @@
 #import <Foundation/Foundation.h>
 
 /*!
- @class FBDialogsParams
+ @class GBDialogsParams
 
  @abstract
  This object is used as a base class for parameters passed to native dialogs that
  open in the Facebook app.
  */
-@interface FBDialogsParams : NSObject
+@interface GBDialogsParams : NSObject
 
 @end

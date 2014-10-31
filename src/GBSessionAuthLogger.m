@@ -14,58 +14,58 @@
  * limitations under the License.
  */
 
-#import "FBSessionAuthLogger.h"
+#import "GBSessionAuthLogger.h"
 
-#import "FBAppEvents+Internal.h"
-#import "FBError.h"
-#import "FBUtility.h"
+#import "GBAppEvents+Internal.h"
+#import "GBError.h"
+#import "GBUtility.h"
 
 // NOTE: The parameters are prefixed with a number (0-9) to allow us to determine sort order.
 // These keys are sorted on the backend before being mapped to custom columns. Determining the order
 // on the client will make it easier to parse through logs, and will allow future columns to be mapped
 // predictably on the backend.
-NSString *const FBSessionAuthLoggerParamIDKey = @"0_auth_logger_id";
-NSString *const FBSessionAuthLoggerParamTimestampKey = @"1_timestamp_ms";
-NSString *const FBSessionAuthLoggerParamResultKey = @"2_result";
-NSString *const FBSessionAuthLoggerParamAuthMethodKey = @"3_method";
-NSString *const FBSessionAuthLoggerParamErrorCodeKey = @"4_error_code";
-NSString *const FBSessionAuthLoggerParamErrorMessageKey = @"5_error_message";
-NSString *const FBSessionAuthLoggerParamExtrasKey = @"6_extras";
+NSString *const GBSessionAuthLoggerParamIDKey = @"0_auth_logger_id";
+NSString *const GBSessionAuthLoggerParamTimestampKey = @"1_timestamp_ms";
+NSString *const GBSessionAuthLoggerParamResultKey = @"2_result";
+NSString *const GBSessionAuthLoggerParamAuthMethodKey = @"3_method";
+NSString *const GBSessionAuthLoggerParamErrorCodeKey = @"4_error_code";
+NSString *const GBSessionAuthLoggerParamErrorMessageKey = @"5_error_message";
+NSString *const GBSessionAuthLoggerParamExtrasKey = @"6_extras";
 
-NSString *const FBSessionAuthLoggerAuthMethodIntegrated = @"integrated_auth";
-NSString *const FBSessionAuthLoggerAuthMethodFBApplicationNative = @"fb_application_native_auth";
-NSString *const FBSessionAuthLoggerAuthMethodFBApplicationWeb = @"fb_application_web_auth";
-NSString *const FBSessionAuthLoggerAuthMethodBrowser = @"browser_auth";
-NSString *const FBSessionAuthLoggerAuthMethodFallback = @"fallback_auth";
+NSString *const GBSessionAuthLoggerAuthMethodIntegrated = @"integrated_auth";
+NSString *const GBSessionAuthLoggerAuthMethodGBApplicationNative = @"fb_application_native_auth";
+NSString *const GBSessionAuthLoggerAuthMethodGBApplicationWeb = @"fb_application_web_auth";
+NSString *const GBSessionAuthLoggerAuthMethodBrowser = @"browser_auth";
+NSString *const GBSessionAuthLoggerAuthMethodFallback = @"fallback_auth";
 
-NSString *const FBSessionAuthLoggerResultSuccess = @"success";
-NSString *const FBSessionAuthLoggerResultError = @"error";
-NSString *const FBSessionAuthLoggerResultCancelled = @"cancelled";
-NSString *const FBSessionAuthLoggerResultSkipped = @"skipped";
+NSString *const GBSessionAuthLoggerResultSuccess = @"success";
+NSString *const GBSessionAuthLoggerResultError = @"error";
+NSString *const GBSessionAuthLoggerResultCancelled = @"cancelled";
+NSString *const GBSessionAuthLoggerResultSkipped = @"skipped";
 
-NSString *const FBSessionAuthLoggerParamEmptyValue = @"";
+NSString *const GBSessionAuthLoggerParamEmptyValue = @"";
 
-@interface FBSessionAuthLogger ()
+@interface GBSessionAuthLogger ()
 
 @property (nonatomic, readwrite, copy) NSString *ID;
 @property (nonatomic, retain) NSMutableDictionary *extras;
-@property (nonatomic, assign) FBSession *session;
+@property (nonatomic, assign) GBSession *session;
 @property (nonatomic, copy) NSString *authMethod;
 
 @end
 
-@implementation FBSessionAuthLogger
+@implementation GBSessionAuthLogger
 
-- (id)initWithSession:(FBSession *)session {
+- (id)initWithSession:(GBSession *)session {
     return [self initWithSession:session
                               ID:nil
                       authMethod:nil];
 }
 
-- (id)initWithSession:(FBSession *)session ID:(NSString *)ID authMethod:(NSString *)authMethod {
+- (id)initWithSession:(GBSession *)session ID:(NSString *)ID authMethod:(NSString *)authMethod {
     self = [super init];
     if (self) {
-        self.ID = ID ?: [[FBUtility newUUIDString] autorelease];
+        self.ID = ID ?: [[GBUtility newUUIDString] autorelease];
         self.authMethod = authMethod;
         self.extras = [NSMutableDictionary dictionary];
         self.session = session;
@@ -90,82 +90,82 @@ NSString *const FBSessionAuthLoggerParamEmptyValue = @"";
         return;
     }
 
-    NSString *extrasJSONString = [FBUtility simpleJSONEncode:self.extras];
+    NSString *extrasJSONString = [GBUtility simpleJSONEncode:self.extras];
     if (extrasJSONString) {
-        params[FBSessionAuthLoggerParamExtrasKey] = extrasJSONString;
+        params[GBSessionAuthLoggerParamExtrasKey] = extrasJSONString;
     }
 
     [self.extras removeAllObjects];
 
-    [FBAppEvents logImplicitEvent:eventName valueToSum:nil parameters:params session:self.session];
+    [GBAppEvents logImplicitEvent:eventName valueToSum:nil parameters:params session:self.session];
 }
 
 - (void)logEvent:(NSString *)eventName result:(NSString *)result error:(NSError *)error {
     NSMutableDictionary *params = [[self newEventParameters] autorelease];
 
-    params[FBSessionAuthLoggerParamResultKey] = result;
+    params[GBSessionAuthLoggerParamResultKey] = result;
 
     if ([error.domain isEqualToString:FacebookSDKDomain]) {
         // tease apart the structure.
 
         // first see if there is an explicit message in the error's userInfo. If not, default to the reason,
         // which is less useful.
-        NSString *value = error.userInfo[@"error_message"] ?: error.userInfo[FBErrorLoginFailedReason];
+        NSString *value = error.userInfo[@"error_message"] ?: error.userInfo[GBErrorLoginFailedReason];
         if (value) {
-            params[FBSessionAuthLoggerParamErrorMessageKey] = value;
+            params[GBSessionAuthLoggerParamErrorMessageKey] = value;
         }
 
-        value = error.userInfo[FBErrorLoginFailedOriginalErrorCode] ?: [NSString stringWithFormat:@"%ld", (long)error.code];
+        value = error.userInfo[GBErrorLoginFailedOriginalErrorCode] ?: [NSString stringWithFormat:@"%ld", (long)error.code];
         if (value) {
-            params[FBSessionAuthLoggerParamErrorCodeKey] = value;
+            params[GBSessionAuthLoggerParamErrorCodeKey] = value;
         }
 
-        NSError *innerError = error.userInfo[FBErrorInnerErrorKey];
-        value = innerError.userInfo[@"error_message"] ?: innerError.userInfo[FBErrorLoginFailedReason];
+        NSError *innerError = error.userInfo[GBErrorInnerErrorKey];
+        value = innerError.userInfo[@"error_message"] ?: innerError.userInfo[GBErrorLoginFailedReason];
         if (value) {
             [self addExtrasForNextEvent:@{@"inner_error_message": value}];
         }
 
-        value = innerError.userInfo[FBErrorLoginFailedOriginalErrorCode] ?: [NSString stringWithFormat:@"%ld", (long)innerError.code];
+        value = innerError.userInfo[GBErrorLoginFailedOriginalErrorCode] ?: [NSString stringWithFormat:@"%ld", (long)innerError.code];
         if (value) {
             [self addExtrasForNextEvent:@{@"inner_error_code": value}];
         }
     } else if (error) {
-        params[FBSessionAuthLoggerParamErrorCodeKey] = [NSNumber numberWithInteger:error.code];
+        params[GBSessionAuthLoggerParamErrorCodeKey] = [NSNumber numberWithInteger:error.code];
     }
 
     [self logEvent:eventName params:params];
 }
 
 - (void)logStartAuth {
-    [self logEvent:FBAppEventNameFBSessionAuthStart params:[[self newEventParameters] autorelease]];
+    [self logEvent:GBAppEventNameGBSessionAuthStart params:[[self newEventParameters] autorelease]];
 }
 
 - (void)logStartAuthMethod:(NSString *)authMethodName {
     self.authMethod = authMethodName;
-    [self logEvent:FBAppEventNameFBSessionAuthMethodStart params:[[self newEventParameters] autorelease]];
+    [self logEvent:GBAppEventNameGBSessionAuthMethodStart params:[[self newEventParameters] autorelease]];
 }
 
 - (void)logEndAuthMethodWithResult:(NSString *)result error:(NSError *)error {
-    [self logEvent:FBAppEventNameFBSessionAuthMethodEnd result:result error:error];
+    [self logEvent:GBAppEventNameGBSessionAuthMethodEnd result:result error:error];
     self.authMethod = nil;
 }
 
 - (void)logEndAuthWithResult:(NSString *)result error:(NSError *)error {
-    [self logEvent:FBAppEventNameFBSessionAuthEnd result:result error:error];
+    [self logEvent:GBAppEventNameGBSessionAuthEnd result:result error:error];
 }
 
 - (NSMutableDictionary *)newEventParameters {
     NSMutableDictionary *eventParameters = [[NSMutableDictionary alloc] init];
 
     // NOTE: We ALWAYS add all params to each event, to ensure predictable mapping on the backend.
-    eventParameters[FBSessionAuthLoggerParamIDKey] = self.ID ?: FBSessionAuthLoggerParamEmptyValue;
-    eventParameters[FBSessionAuthLoggerParamTimestampKey] = [NSNumber numberWithDouble:round(1000 * [[NSDate date] timeIntervalSince1970])];
-    eventParameters[FBSessionAuthLoggerParamResultKey] = FBSessionAuthLoggerParamEmptyValue;
-    eventParameters[FBSessionAuthLoggerParamAuthMethodKey] = self.authMethod ?: FBSessionAuthLoggerParamEmptyValue;
-    eventParameters[FBSessionAuthLoggerParamErrorCodeKey] = FBSessionAuthLoggerParamEmptyValue;
-    eventParameters[FBSessionAuthLoggerParamErrorMessageKey] = FBSessionAuthLoggerParamEmptyValue;
-    eventParameters[FBSessionAuthLoggerParamExtrasKey] = FBSessionAuthLoggerParamEmptyValue;
+    eventParameters[GBSessionAuthLoggerParamIDKey] = self.ID ?: GBSessionAuthLoggerParamEmptyValue;
+    eventParameters[GBSessionAuthLoggerParamTimestampKey] = [NSNumber numberWithDouble:round(1000 * [[NSDate date] timeIntervalSince1970])];
+    eventParameters[GBSessionAuthLoggerParamResultKey] = GBSessionAuthLoggerParamEmptyValue;
+    eventParameters[GBSessionAuthLoggerParamAuthMethodKey] = self.authMethod ?: GBSessionAuthLoggerParamEmptyValue;
+    eventParameters[GBSessionAuthLoggerParamErrorCodeKey] = GBSessionAuthLoggerParamEmptyValue;
+    eventParameters[GBSessionAuthLoggerParamErrorMessageKey] = GBSessionAuthLoggerParamEmptyValue;
+    eventParameters[GBSessionAuthLoggerParamExtrasKey] = GBSessionAuthLoggerParamEmptyValue;
 
     return eventParameters;
 }

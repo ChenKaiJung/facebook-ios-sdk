@@ -14,29 +14,29 @@
  * limitations under the License.
  */
 
-#import "FBSessionUtility.h"
+#import "GBSessionUtility.h"
 
-#import "FBLogger.h"
-#import "FBSession+Internal.h"
-#import "FBUtility.h"
+#import "GBLogger.h"
+#import "GBSession+Internal.h"
+#import "GBUtility.h"
 
-@implementation FBSessionUtility
+@implementation GBSessionUtility
 
 + (BOOL)isOpenSessionResponseURL:(NSURL *)url {
-    NSDictionary *params = [FBSessionUtility queryParamsFromLoginURL:url appID:nil urlSchemeSuffix:nil];
-    NSDictionary *clientState = [FBSessionUtility clientStateFromQueryParams:params];
+    NSDictionary *params = [GBSessionUtility queryParamsFromLoginURL:url appID:nil urlSchemeSuffix:nil];
+    NSDictionary *clientState = [GBSessionUtility clientStateFromQueryParams:params];
     if (!clientState) {
         return NO;
     }
 
-    NSNumber *isOpenSessionBit = clientState[FBLoginUXClientStateIsOpenSession];
+    NSNumber *isOpenSessionBit = clientState[GBLoginUXClientStateIsOpenSession];
     return [isOpenSessionBit boolValue];
 }
 
 + (NSDictionary *)queryParamsFromLoginURL:(NSURL *)url appID:(NSString *)appID urlSchemeSuffix:(NSString *)urlSchemeSuffix {
     // if the URL's structure doesn't match the structure used for Facebook authorization, abort.
     if (appID) {
-        NSString* expectedUrlPrefix = [FBUtility stringAppBaseUrlFromAppId:appID urlSchemeSuffix:urlSchemeSuffix];
+        NSString* expectedUrlPrefix = [GBUtility stringAppBaseUrlFromAppId:appID urlSchemeSuffix:urlSchemeSuffix];
         if (![[url absoluteString] hasPrefix:expectedUrlPrefix]) {
             return nil;
         }
@@ -48,40 +48,40 @@
         }
     }
 
-    return [FBUtility queryParamsDictionaryFromFBURL:url];
+    return [GBUtility queryParamsDictionaryFromGBURL:url];
 }
 
 + (NSDictionary *)clientStateFromQueryParams:(NSDictionary *)params {
-    NSDictionary *clientState = [FBUtility simpleJSONDecode:params[FBLoginUXClientState]];
-    if (!clientState[FBLoginUXClientStateIsClientState]) {
+    NSDictionary *clientState = [GBUtility simpleJSONDecode:params[GBLoginUXClientState]];
+    if (!clientState[GBLoginUXClientStateIsClientState]) {
         return nil;
     }
     return clientState;
 }
 
-+ (NSString *)sessionStateDescription:(FBSessionState)sessionState {
++ (NSString *)sessionStateDescription:(GBSessionState)sessionState {
     NSString *stateDescription = nil;
     switch (sessionState) {
-        case FBSessionStateCreated:
-            stateDescription = @"FBSessionStateCreated";
+        case GBSessionStateCreated:
+            stateDescription = @"GBSessionStateCreated";
             break;
-        case FBSessionStateCreatedTokenLoaded:
-            stateDescription = @"FBSessionStateCreatedTokenLoaded";
+        case GBSessionStateCreatedTokenLoaded:
+            stateDescription = @"GBSessionStateCreatedTokenLoaded";
             break;
-        case FBSessionStateCreatedOpening:
-            stateDescription = @"FBSessionStateCreatedOpening";
+        case GBSessionStateCreatedOpening:
+            stateDescription = @"GBSessionStateCreatedOpening";
             break;
-        case FBSessionStateOpen:
-            stateDescription = @"FBSessionStateOpen";
+        case GBSessionStateOpen:
+            stateDescription = @"GBSessionStateOpen";
             break;
-        case FBSessionStateOpenTokenExtended:
-            stateDescription = @"FBSessionStateOpenTokenExtended";
+        case GBSessionStateOpenTokenExtended:
+            stateDescription = @"GBSessionStateOpenTokenExtended";
             break;
-        case FBSessionStateClosedLoginFailed:
-            stateDescription = @"FBSessionStateClosedLoginFailed";
+        case GBSessionStateClosedLoginFailed:
+            stateDescription = @"GBSessionStateClosedLoginFailed";
             break;
-        case FBSessionStateClosed:
-            stateDescription = @"FBSessionStateClosed";
+        case GBSessionStateClosed:
+            stateDescription = @"GBSessionStateClosed";
             break;
         default:
             stateDescription = @"[Unknown]";
@@ -93,7 +93,7 @@
 
 + (void)addWebLoginStartTimeToParams:(NSMutableDictionary *)params {
     NSNumber *timeValue = [NSNumber numberWithDouble:round(1000 * [[NSDate date] timeIntervalSince1970])];
-    NSString *e2eTimestampString = [FBUtility simpleJSONEncode:@{@"init":timeValue}];
+    NSString *e2eTimestampString = [GBUtility simpleJSONEncode:@{@"init":timeValue}];
     [params setObject:e2eTimestampString forKey:@"e2e"];
 }
 
@@ -102,10 +102,10 @@
     NSDate *expirationDate = nil;
     if (expTime) {
         // If we have an interval, it is assumed to be since now. (e.g. 60 days)
-        expirationDate = [FBUtility expirationDateFromExpirationTimeIntervalString:expTime];
+        expirationDate = [GBUtility expirationDateFromExpirationTimeIntervalString:expTime];
     } else {
         // If we have an actual timestamp, create the date from that instead.
-        expirationDate = [FBUtility expirationDateFromExpirationUnixTimeString:parameters[@"expires"]];
+        expirationDate = [GBUtility expirationDateFromExpirationUnixTimeString:parameters[@"expires"]];
     }
 
     if (!expirationDate) {
@@ -124,22 +124,22 @@
 
 
 + (void)validateRequestForPermissions:(NSArray*)permissions
-                      defaultAudience:(FBSessionDefaultAudience)defaultAudience
+                      defaultAudience:(GBSessionDefaultAudience)defaultAudience
                    allowSystemAccount:(BOOL)allowSystemAccount
                                isRead:(BOOL)isRead {
     // validate audience argument
     if ([permissions count]) {
         if (allowSystemAccount && !isRead) {
             switch (defaultAudience) {
-                case FBSessionDefaultAudienceEveryone:
-                case FBSessionDefaultAudienceFriends:
-                case FBSessionDefaultAudienceOnlyMe:
+                case GBSessionDefaultAudienceEveryone:
+                case GBSessionDefaultAudienceFriends:
+                case GBSessionDefaultAudienceOnlyMe:
                     break;
                 default:
-                    [[NSException exceptionWithName:FBInvalidOperationException
-                                             reason:@"FBSession: Publish permissions were requested "
-                      @"without specifying an audience; use FBSessionDefaultAudienceJustMe, "
-                      @"FBSessionDefaultAudienceFriends, or FBSessionDefaultAudienceEveryone"
+                    [[NSException exceptionWithName:GBInvalidOperationException
+                                             reason:@"GBSession: Publish permissions were requested "
+                      @"without specifying an audience; use GBSessionDefaultAudienceJustMe, "
+                      @"GBSessionDefaultAudienceFriends, or GBSessionDefaultAudienceEveryone"
                                            userInfo:nil]
                      raise];
                     break;
@@ -147,10 +147,10 @@
         }
         // log unexpected permissions, and throw on read w/publish permissions
         if (allowSystemAccount &&
-            [FBSessionUtility logIfFoundUnexpectedPermissions:permissions isRead:isRead] &&
+            [GBSessionUtility logIfFoundUnexpectedPermissions:permissions isRead:isRead] &&
             isRead) {
-            [[NSException exceptionWithName:FBInvalidOperationException
-                                     reason:@"FBSession: Publish or manage permissions are not permitted to "
+            [[NSException exceptionWithName:GBInvalidOperationException
+                                     reason:@"GBSession: Publish or manage permissions are not permitted to "
               @"to be requested with read permissions."
                                    userInfo:nil]
              raise];
@@ -164,7 +164,7 @@
     BOOL readPermissionFound = NO;
     BOOL result = NO;
     for (NSString *p in permissions) {
-        if ([FBUtility isPublishPermission:p]) {
+        if ([GBUtility isPublishPermission:p]) {
             publishPermissionFound = YES;
         } else {
             readPermissionFound = YES;
@@ -177,11 +177,11 @@
     }
 
     if (!isRead && readPermissionFound) {
-        [FBLogger singleShotLogEntry:FBLoggingBehaviorDeveloperErrors logEntry:@"FBSession: a permission request for publish or manage permissions contains unexpected read permissions"];
+        [GBLogger singleShotLogEntry:GBLoggingBehaviorDeveloperErrors logEntry:@"GBSession: a permission request for publish or manage permissions contains unexpected read permissions"];
         result = YES;
     }
     if (isRead && publishPermissionFound) {
-        [FBLogger singleShotLogEntry:FBLoggingBehaviorDeveloperErrors logEntry:@"FBSession: a permission request for read permissions contains unexpected publish or manage permissions"];
+        [GBLogger singleShotLogEntry:GBLoggingBehaviorDeveloperErrors logEntry:@"GBSession: a permission request for read permissions contains unexpected publish or manage permissions"];
         result = YES;
     }
 

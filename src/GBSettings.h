@@ -18,34 +18,34 @@
 #import <CoreGraphics/CGBase.h>
 
 /*
- * Constants defining logging behavior.  Use with <[FBSettings setLoggingBehavior]>.
+ * Constants defining logging behavior.  Use with <[GBSettings setLoggingBehavior]>.
  */
 
-/*! Log requests from FBRequest* classes */
-extern NSString *const FBLoggingBehaviorFBRequests;
+/*! Log requests from GBRequest* classes */
+extern NSString *const GBLoggingBehaviorGBRequests;
 
-/*! Log requests from FBURLConnection* classes */
-extern NSString *const FBLoggingBehaviorFBURLConnections;
+/*! Log requests from GBURLConnection* classes */
+extern NSString *const GBLoggingBehaviorGBURLConnections;
 
 /*! Include access token in logging. */
-extern NSString *const FBLoggingBehaviorAccessTokens;
+extern NSString *const GBLoggingBehaviorAccessTokens;
 
 /*! Log session state transitions. */
-extern NSString *const FBLoggingBehaviorSessionStateTransitions;
+extern NSString *const GBLoggingBehaviorSessionStateTransitions;
 
 /*! Log performance characteristics */
-extern NSString *const FBLoggingBehaviorPerformanceCharacteristics;
+extern NSString *const GBLoggingBehaviorPerformanceCharacteristics;
 
-/*! Log FBAppEvents interactions */
-extern NSString *const FBLoggingBehaviorAppEvents;
+/*! Log GBAppEvents interactions */
+extern NSString *const GBLoggingBehaviorAppEvents;
 
 /*! Log Informational occurrences */
-extern NSString *const FBLoggingBehaviorInformational;
+extern NSString *const GBLoggingBehaviorInformational;
 
 /*! Log errors likely to be preventable by the developer. This is in the default set of enabled logging behaviors. */
-extern NSString *const FBLoggingBehaviorDeveloperErrors;
+extern NSString *const GBLoggingBehaviorDeveloperErrors;
 
-@class FBGraphObject;
+@class GBGraphObject;
 
 /*!
  @typedef
@@ -53,7 +53,7 @@ extern NSString *const FBLoggingBehaviorDeveloperErrors;
  @abstract Block type used to get install data that is returned by server when publishInstall is called
  @discussion
  */
-typedef void (^FBInstallResponseDataHandler)(FBGraphObject *response, NSError *error);
+typedef void (^GBInstallResponseDataHandler)(GBGraphObject *response, NSError *error);
 
 /*!
  @typedef
@@ -63,14 +63,14 @@ typedef void (^FBInstallResponseDataHandler)(FBGraphObject *response, NSError *e
  in release builds.
  */
 typedef enum : NSUInteger {
-    FBBetaFeaturesNone                  = 0,
-#if defined(DEBUG) || defined(FB_BUILD_ONLY)
-    FBBetaFeaturesShareDialog           = 1 << 0,
-    FBBetaFeaturesOpenGraphShareDialog  = 1 << 1,
+    GBBetaFeaturesNone                  = 0,
+#if defined(DEBUG) || defined(GB_BUILD_ONLY)
+    GBBetaFeaturesShareDialog           = 1 << 0,
+    GBBetaFeaturesOpenGraphShareDialog  = 1 << 1,
 #endif
-} FBBetaFeatures;
+} GBBetaFeatures;
 
-@interface FBSettings : NSObject
+@interface GBSettings : NSObject
 
 /*!
  @method
@@ -92,7 +92,7 @@ typedef enum : NSUInteger {
  @method
 
  @abstract Set the current Facebook SDK logging behavior.  This should consist of strings defined as
- constants with FBLogBehavior*, and can be constructed with, e.g., [NSSet initWithObjects:].
+ constants with GBLogBehavior*, and can be constructed with, e.g., [NSSet initWithObjects:].
 
  @param loggingBehavior A set of strings indicating what information should be logged.  If nil is provided, the logging
  behavior is reset to the default set of enabled behaviors.  Set in an empty set in order to disable all logging.
@@ -108,8 +108,8 @@ typedef enum : NSUInteger {
 /*!
  @method
 
- @abstract This method has been replaced by [FBAppEvents activateApp] */
-+ (void)publishInstall:(NSString *)appID __attribute__ ((deprecated("use [FBAppEvents activateApp] instead")));
+ @abstract This method has been replaced by [GBAppEvents activateApp] */
++ (void)publishInstall:(NSString *)appID __attribute__ ((deprecated("use [GBAppEvents activateApp] instead")));
 
 /*!
  @method
@@ -119,18 +119,18 @@ typedef enum : NSUInteger {
  current attribution id from the facebook application, queries the graph API to determine if the application
  has install attribution enabled, publishes the id, and records success to avoid reporting more than once.
 
- @param appID   A specific appID to publish an install for.  If nil, uses [FBSession defaultAppID].
+ @param appID   A specific appID to publish an install for.  If nil, uses [GBSession defaultAppID].
  @param handler A block to call with the server's response.
  */
 + (void)publishInstall:(NSString *)appID
-           withHandler:(FBInstallResponseDataHandler)handler __attribute__ ((deprecated));
+           withHandler:(GBInstallResponseDataHandler)handler __attribute__ ((deprecated));
 
 
 /*!
  @method
 
  @abstract
- Gets the application version to the provided string.  `FBAppEvents`, for instance, attaches the app version to
+ Gets the application version to the provided string.  `GBAppEvents`, for instance, attaches the app version to
  events that it logs, which are then available in App Insights.
  */
 + (NSString *)appVersion;
@@ -139,7 +139,7 @@ typedef enum : NSUInteger {
  @method
 
  @abstract
- Sets the application version to the provided string.  `FBAppEvents`, for instance, attaches the app version to
+ Sets the application version to the provided string.  `GBAppEvents`, for instance, attaches the app version to
  events that it logs, which are then available in App Insights.
 
  @param appVersion  The version identifier of the iOS app.
@@ -149,7 +149,7 @@ typedef enum : NSUInteger {
 /*!
  @method
 
- @abstract Retrieve the Client Token that has been set via [FBSettings setClientToken]
+ @abstract Retrieve the Client Token that has been set via [GBSettings setClientToken]
  */
 + (NSString *)clientToken;
 
@@ -188,7 +188,7 @@ typedef enum : NSUInteger {
  @method
 
  @abstract Set the default Facebook App ID to use for sessions. The SDK allows the appID
- to be overridden per instance in certain cases (e.g. per instance of FBSession)
+ to be overridden per instance in certain cases (e.g. per instance of GBSession)
 
  @param appID The default Facebook App ID to be used by the SDK.
  */
@@ -199,7 +199,7 @@ typedef enum : NSUInteger {
 
  @abstract Get the default Facebook App ID used by the SDK. If not explicitly
  set, the default will be read from the application's plist. The SDK allows the appID
- to be overridden per instance in certain cases (e.g. per instance of FBSession)
+ to be overridden per instance in certain cases (e.g. per instance of GBSession)
  */
 + (NSString*)defaultAppID;
 
@@ -225,7 +225,7 @@ typedef enum : NSUInteger {
 
  @abstract Set the bundle name from the SDK will try and load overrides of images and text
 
- @param bundleName The name of the bundle (MyFBBundle).
+ @param bundleName The name of the bundle (MyGBBundle).
  */
 + (void)setResourceBundleName:(NSString*)bundleName;
 
@@ -259,7 +259,7 @@ typedef enum : NSUInteger {
  and are therefore only enabled for debug builds. Beta features should not be enabled
  in release builds.
 
- @param betaFeatures The beta features to enable (expects a bitwise OR of FBBetaFeatures)
+ @param betaFeatures The beta features to enable (expects a bitwise OR of GBBetaFeatures)
  */
 + (void)enableBetaFeatures:(NSUInteger)betaFeatures;
 
@@ -272,7 +272,7 @@ typedef enum : NSUInteger {
 
  @param betaFeature The beta feature to enable.
  */
-+ (void)enableBetaFeature:(FBBetaFeatures)betaFeature;
++ (void)enableBetaFeature:(GBBetaFeatures)betaFeature;
 
 /*!
  @method
@@ -281,7 +281,7 @@ typedef enum : NSUInteger {
 
  @param betaFeature The beta feature to disable.
  */
-+ (void)disableBetaFeature:(FBBetaFeatures)betaFeature;
++ (void)disableBetaFeature:(GBBetaFeatures)betaFeature;
 
 /*!
  @method
@@ -292,13 +292,13 @@ typedef enum : NSUInteger {
 
  @return YES if the beta feature is enabled, NO if not.
  */
-+ (BOOL)isBetaFeatureEnabled:(FBBetaFeatures)betaFeature;
++ (BOOL)isBetaFeatureEnabled:(GBBetaFeatures)betaFeature;
 
 /*!
  @method
 
  @abstract
- Gets whether data such as that generated through FBAppEvents and sent to Facebook should be restricted from being used for other than analytics and conversions.  Defaults to NO.  This value is stored on the device and persists across app launches.
+ Gets whether data such as that generated through GBAppEvents and sent to Facebook should be restricted from being used for other than analytics and conversions.  Defaults to NO.  This value is stored on the device and persists across app launches.
  */
 + (BOOL)limitEventAndDataUsage;
 
@@ -306,7 +306,7 @@ typedef enum : NSUInteger {
  @method
 
  @abstract
- Sets whether data such as that generated through FBAppEvents and sent to Facebook should be restricted from being used for other than analytics and conversions.  Defaults to NO.  This value is stored on the device and persists across app launches.
+ Sets whether data such as that generated through GBAppEvents and sent to Facebook should be restricted from being used for other than analytics and conversions.  Defaults to NO.  This value is stored on the device and persists across app launches.
 
  @param limitEventAndDataUsage   The desired value.
  */

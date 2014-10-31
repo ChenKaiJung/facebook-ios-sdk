@@ -16,35 +16,35 @@
 
 #import <UIKit/UIKit.h>
 
-@class FBViewController;
+@class GBViewController;
 
 /*!
- @typedef FBModalCompletionHandler
+ @typedef GBModalCompletionHandler
 
  @abstract
- A block that is passed to [FBViewController presentModallyInViewController:animated:handler:]
+ A block that is passed to [GBViewController presentModallyInViewController:animated:handler:]
  and called when the view controller is dismissed via either Done or Cancel.
 
- @param sender          The <FBViewController> that is being dismissed.
+ @param sender          The <GBViewController> that is being dismissed.
 
  @param donePressed     If YES, Done was pressed. If NO, Cancel was pressed.
  */
-typedef void (^FBModalCompletionHandler)(FBViewController *sender, BOOL donePressed);
+typedef void (^GBModalCompletionHandler)(GBViewController *sender, BOOL donePressed);
 
 /*!
  @protocol
 
  @abstract
- The `FBViewControllerDelegate` protocol defines the methods called when the Cancel or Done
- buttons are pressed in a <FBViewController>.
+ The `GBViewControllerDelegate` protocol defines the methods called when the Cancel or Done
+ buttons are pressed in a <GBViewController>.
  */
-@protocol FBViewControllerDelegate <NSObject>
+@protocol GBViewControllerDelegate <NSObject>
 
 @optional
 
 /*!
  @abstract
- Called when the Cancel button is pressed on a modally-presented <FBViewController>.
+ Called when the Cancel button is pressed on a modally-presented <GBViewController>.
 
  @param sender          The view controller sending the message.
  */
@@ -52,7 +52,7 @@ typedef void (^FBModalCompletionHandler)(FBViewController *sender, BOOL donePres
 
 /*!
  @abstract
- Called when the Done button is pressed on a modally-presented <FBViewController>.
+ Called when the Done button is pressed on a modally-presented <GBViewController>.
 
  @param sender          The view controller sending the message.
  */
@@ -62,14 +62,14 @@ typedef void (^FBModalCompletionHandler)(FBViewController *sender, BOOL donePres
 
 
 /*!
- @class FBViewController
+ @class GBViewController
 
  @abstract
- The `FBViewController` class is a base class encapsulating functionality common to several
+ The `GBViewController` class is a base class encapsulating functionality common to several
  other view controller classes. Specifically, it provides UI when a view controller is presented
  modally, in the form of optional Cancel and Done buttons.
  */
-@interface FBViewController : UIViewController
+@interface GBViewController : UIViewController
 
 /*!
  @abstract
@@ -92,7 +92,7 @@ typedef void (^FBModalCompletionHandler)(FBViewController *sender, BOOL donePres
  The delegate that will be called when Cancel or Done is pressed. Derived classes may specify
  derived types for their delegates that provide additional functionality.
  */
-@property (nonatomic, assign) IBOutlet id<FBViewControllerDelegate> delegate;
+@property (nonatomic, assign) IBOutlet id<GBViewControllerDelegate> delegate;
 
 /*!
  @abstract
@@ -112,7 +112,7 @@ typedef void (^FBModalCompletionHandler)(FBViewController *sender, BOOL donePres
  */
 - (void)presentModallyFromViewController:(UIViewController*)viewController
                                 animated:(BOOL)animated
-                                 handler:(FBModalCompletionHandler)handler;
+                                 handler:(GBModalCompletionHandler)handler;
 
 @end
 

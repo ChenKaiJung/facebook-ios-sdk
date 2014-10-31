@@ -14,30 +14,30 @@
  * limitations under the License.
  */
 
-#import "FBSessionAppSwitchingLoginStategy.h"
+#import "GBSessionAppSwitchingLoginStategy.h"
 
-#import "FBLogger.h"
-#import "FBSession+Internal.h"
-#import "FBSessionAuthLogger.h"
-#import "FBSessionFacebookAppNativeLoginStategy.h"
-#import "FBSessionFacebookAppWebLoginStategy.h"
-#import "FBSessionLoginStrategy.h"
-#import "FBSessionSafariLoginStategy.h"
-#import "FBUtility.h"
+#import "GBLogger.h"
+#import "GBSession+Internal.h"
+#import "GBSessionAuthLogger.h"
+#import "GBSessionFacebookAppNativeLoginStategy.h"
+#import "GBSessionFacebookAppWebLoginStategy.h"
+#import "GBSessionLoginStrategy.h"
+#import "GBSessionSafariLoginStategy.h"
+#import "GBUtility.h"
 
 // A composite login strategy that tries strategies that require app switching
 // (e.g., native gdp, native web gdp, safari)
-@interface FBSessionAppSwitchingLoginStategy()
+@interface GBSessionAppSwitchingLoginStategy()
 
 @property (copy, nonatomic, readwrite) NSString *methodName;
 
 @end
 
-@implementation FBSessionAppSwitchingLoginStategy
+@implementation GBSessionAppSwitchingLoginStategy
 
 - (id)init {
     if ((self = [super init])){
-        self.methodName = FBSessionAuthLoggerAuthMethodFBApplicationNative;
+        self.methodName = GBSessionAuthLoggerAuthMethodGBApplicationNative;
     }
     return self;
 }
@@ -47,7 +47,7 @@
     [super dealloc];
 }
 
-- (BOOL)tryPerformAuthorizeWithParams:(FBSessionLoginStrategyParams *)params session:(FBSession *)session logger:(FBSessionAuthLogger *)logger {
+- (BOOL)tryPerformAuthorizeWithParams:(GBSessionLoginStrategyParams *)params session:(GBSession *)session logger:(GBSessionAuthLogger *)logger {
     // if the device is running a version of iOS that supports multitasking,
     // try to obtain the access token from the Facebook app installed
     // on the device.
@@ -55,7 +55,7 @@
     // the fbauth:// URL scheme, fall back on Safari for obtaining the access token.
     // This minimizes the chance that the user will have to enter his or
     // her credentials in order to authorize the application.
-    BOOL isMultitaskingSupported = [FBUtility isMultitaskingSupported];
+    BOOL isMultitaskingSupported = [GBUtility isMultitaskingSupported];
     BOOL isURLSchemeRegistered = [session isURLSchemeRegistered];;
 
     [logger addExtrasForNextEvent:@{
@@ -67,11 +67,11 @@
         isURLSchemeRegistered &&
         !TEST_DISABLE_MULTITASKING_LOGIN) {
 
-        NSArray *loginStrategies = @[ [[[FBSessionFacebookAppNativeLoginStategy alloc] init] autorelease],
-                                      [[[FBSessionFacebookAppWebLoginStategy alloc] init] autorelease],
-                                      [[[FBSessionSafariLoginStategy alloc] init] autorelease] ];
+        NSArray *loginStrategies = @[ [[[GBSessionFacebookAppNativeLoginStategy alloc] init] autorelease],
+                                      [[[GBSessionFacebookAppWebLoginStategy alloc] init] autorelease],
+                                      [[[GBSessionSafariLoginStategy alloc] init] autorelease] ];
 
-        for (id<FBSessionLoginStrategy> loginStrategy in loginStrategies) {
+        for (id<GBSessionLoginStrategy> loginStrategy in loginStrategies) {
 
             if ([loginStrategy tryPerformAuthorizeWithParams:params session:session logger:logger]) {
                 self.methodName = loginStrategy.methodName;
@@ -79,7 +79,7 @@
             }
         }
 
-        [session setLoginTypeOfPendingOpenUrlCallback:FBSessionLoginTypeNone];
+        [session setLoginTypeOfPendingOpenUrlCallback:GBSessionLoginTypeNone];
     }
     return NO;
 }
