@@ -19,8 +19,8 @@
 #import "GBLogger.h"
 #import "GBSession+Internal.h"
 #import "GBSessionAuthLogger.h"
-#import "GBSessionFacebookAppNativeLoginStategy.h"
-#import "GBSessionFacebookAppWebLoginStategy.h"
+#import "GBSessionGbombAppNativeLoginStategy.h"
+#import "GBSessionGbombAppWebLoginStategy.h"
 #import "GBSessionLoginStrategy.h"
 #import "GBSessionSafariLoginStategy.h"
 #import "GBUtility.h"
@@ -67,8 +67,8 @@
         isURLSchemeRegistered &&
         !TEST_DISABLE_MULTITASKING_LOGIN) {
 
-        NSArray *loginStrategies = @[ [[[GBSessionFacebookAppNativeLoginStategy alloc] init] autorelease],
-                                      [[[GBSessionFacebookAppWebLoginStategy alloc] init] autorelease],
+        NSArray *loginStrategies = @[ [[[GBSessionGbombAppNativeLoginStategy alloc] init] autorelease],
+                                      [[[GBSessionGbombAppWebLoginStategy alloc] init] autorelease],
                                       [[[GBSessionSafariLoginStategy alloc] init] autorelease] ];
 
         for (id<GBSessionLoginStrategy> loginStrategy in loginStrategies) {
