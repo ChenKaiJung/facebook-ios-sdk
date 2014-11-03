@@ -131,10 +131,10 @@
 		745D49941A0321EB00EF00EE /* GBSessionAppSwitchingLoginStategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D491A1A0321EB00EF00EE /* GBSessionAppSwitchingLoginStategy.m */; };
 		745D49951A0321EB00EF00EE /* GBSessionAuthLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D491B1A0321EB00EF00EE /* GBSessionAuthLogger.h */; };
 		745D49961A0321EB00EF00EE /* GBSessionAuthLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D491C1A0321EB00EF00EE /* GBSessionAuthLogger.m */; };
-		745D49971A0321EB00EF00EE /* GBSessionFacebookAppNativeLoginStategy.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D491D1A0321EB00EF00EE /* GBSessionFacebookAppNativeLoginStategy.h */; };
-		745D49981A0321EB00EF00EE /* GBSessionFacebookAppNativeLoginStategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D491E1A0321EB00EF00EE /* GBSessionFacebookAppNativeLoginStategy.m */; };
-		745D49991A0321EB00EF00EE /* GBSessionFacebookAppWebLoginStategy.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D491F1A0321EB00EF00EE /* GBSessionFacebookAppWebLoginStategy.h */; };
-		745D499A1A0321EB00EF00EE /* GBSessionFacebookAppWebLoginStategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49201A0321EB00EF00EE /* GBSessionFacebookAppWebLoginStategy.m */; };
+		745D49971A0321EB00EF00EE /* GBSessionGbombAppNativeLoginStategy.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D491D1A0321EB00EF00EE /* GBSessionGbombAppNativeLoginStategy.h */; };
+		745D49981A0321EB00EF00EE /* GBSessionGbombAppNativeLoginStategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D491E1A0321EB00EF00EE /* GBSessionGbombAppNativeLoginStategy.m */; };
+		745D49991A0321EB00EF00EE /* GBSessionGbombAppWebLoginStategy.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D491F1A0321EB00EF00EE /* GBSessionGbombAppWebLoginStategy.h */; };
+		745D499A1A0321EB00EF00EE /* GBSessionGbombAppWebLoginStategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49201A0321EB00EF00EE /* GBSessionGbombAppWebLoginStategy.m */; };
 		745D499B1A0321EB00EF00EE /* GBSessionInlineWebViewLoginStategy.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49211A0321EB00EF00EE /* GBSessionInlineWebViewLoginStategy.h */; };
 		745D499C1A0321EB00EF00EE /* GBSessionInlineWebViewLoginStategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49221A0321EB00EF00EE /* GBSessionInlineWebViewLoginStategy.m */; };
 		745D499D1A0321EB00EF00EE /* GBSessionLoginStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49231A0321EB00EF00EE /* GBSessionLoginStrategy.h */; };
@@ -735,10 +735,10 @@
 		745D491A1A0321EB00EF00EE /* GBSessionAppSwitchingLoginStategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBSessionAppSwitchingLoginStategy.m; sourceTree = "<group>"; };
 		745D491B1A0321EB00EF00EE /* GBSessionAuthLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBSessionAuthLogger.h; sourceTree = "<group>"; };
 		745D491C1A0321EB00EF00EE /* GBSessionAuthLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBSessionAuthLogger.m; sourceTree = "<group>"; };
-		745D491D1A0321EB00EF00EE /* GBSessionFacebookAppNativeLoginStategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBSessionFacebookAppNativeLoginStategy.h; sourceTree = "<group>"; };
-		745D491E1A0321EB00EF00EE /* GBSessionFacebookAppNativeLoginStategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBSessionFacebookAppNativeLoginStategy.m; sourceTree = "<group>"; };
-		745D491F1A0321EB00EF00EE /* GBSessionFacebookAppWebLoginStategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBSessionFacebookAppWebLoginStategy.h; sourceTree = "<group>"; };
-		745D49201A0321EB00EF00EE /* GBSessionFacebookAppWebLoginStategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBSessionFacebookAppWebLoginStategy.m; sourceTree = "<group>"; };
+		745D491D1A0321EB00EF00EE /* GBSessionGbombAppNativeLoginStategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBSessionGbombAppNativeLoginStategy.h; sourceTree = "<group>"; };
+		745D491E1A0321EB00EF00EE /* GBSessionGbombAppNativeLoginStategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBSessionGbombAppNativeLoginStategy.m; sourceTree = "<group>"; };
+		745D491F1A0321EB00EF00EE /* GBSessionGbombAppWebLoginStategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBSessionGbombAppWebLoginStategy.h; sourceTree = "<group>"; };
+		745D49201A0321EB00EF00EE /* GBSessionGbombAppWebLoginStategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBSessionGbombAppWebLoginStategy.m; sourceTree = "<group>"; };
 		745D49211A0321EB00EF00EE /* GBSessionInlineWebViewLoginStategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBSessionInlineWebViewLoginStategy.h; sourceTree = "<group>"; };
 		745D49221A0321EB00EF00EE /* GBSessionInlineWebViewLoginStategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBSessionInlineWebViewLoginStategy.m; sourceTree = "<group>"; };
 		745D49231A0321EB00EF00EE /* GBSessionLoginStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBSessionLoginStrategy.h; sourceTree = "<group>"; };
@@ -1362,25 +1362,11 @@
 				745D49161A0321EB00EF00EE /* GBSession+Protected.h */,
 				745D49171A0321EB00EF00EE /* GBSessionAppEventsState.h */,
 				745D49181A0321EB00EF00EE /* GBSessionAppEventsState.m */,
-				745D49191A0321EB00EF00EE /* GBSessionAppSwitchingLoginStategy.h */,
-				745D491A1A0321EB00EF00EE /* GBSessionAppSwitchingLoginStategy.m */,
 				745D491B1A0321EB00EF00EE /* GBSessionAuthLogger.h */,
 				745D491C1A0321EB00EF00EE /* GBSessionAuthLogger.m */,
-				745D491D1A0321EB00EF00EE /* GBSessionFacebookAppNativeLoginStategy.h */,
-				745D491E1A0321EB00EF00EE /* GBSessionFacebookAppNativeLoginStategy.m */,
-				745D491F1A0321EB00EF00EE /* GBSessionFacebookAppWebLoginStategy.h */,
-				745D49201A0321EB00EF00EE /* GBSessionFacebookAppWebLoginStategy.m */,
-				745D49211A0321EB00EF00EE /* GBSessionInlineWebViewLoginStategy.h */,
-				745D49221A0321EB00EF00EE /* GBSessionInlineWebViewLoginStategy.m */,
-				745D49231A0321EB00EF00EE /* GBSessionLoginStrategy.h */,
-				745D49241A0321EB00EF00EE /* GBSessionLoginStrategyParams.h */,
-				745D49251A0321EB00EF00EE /* GBSessionLoginStrategyParams.m */,
+				745D49C41A0653C000EF00EE /* GBSessionLoginStrategy */,
 				745D49261A0321EB00EF00EE /* GBSessionManualTokenCachingStrategy.h */,
 				745D49271A0321EB00EF00EE /* GBSessionManualTokenCachingStrategy.m */,
-				745D49281A0321EB00EF00EE /* GBSessionSafariLoginStategy.h */,
-				745D49291A0321EB00EF00EE /* GBSessionSafariLoginStategy.m */,
-				745D492A1A0321EB00EF00EE /* GBSessionSystemLoginStategy.h */,
-				745D492B1A0321EB00EF00EE /* GBSessionSystemLoginStategy.m */,
 				745D492C1A0321EB00EF00EE /* GBSessionTokenCachingStrategy.h */,
 				745D492D1A0321EB00EF00EE /* GBSessionTokenCachingStrategy.m */,
 				745D492E1A0321EB00EF00EE /* GBSessionUtility.h */,
@@ -1392,11 +1378,7 @@
 				745D49341A0321EB00EF00EE /* GBShareDialogParams.m */,
 				745D49351A0321EB00EF00EE /* GBSystemAccountStoreAdapter.h */,
 				745D49361A0321EB00EF00EE /* GBSystemAccountStoreAdapter.m */,
-				745D49371A0321EB00EF00EE /* GBTask.h */,
-				745D49381A0321EB00EF00EE /* GBTask.m */,
-				745D49391A0321EB00EF00EE /* GBTask+Private.h */,
-				745D493A1A0321EB00EF00EE /* GBTaskCompletionSource.h */,
-				745D493B1A0321EB00EF00EE /* GBTaskCompletionSource.m */,
+				745D49C51A0656BA00EF00EE /* GBTask */,
 				745D493C1A0321EB00EF00EE /* GBTestSession.h */,
 				745D493D1A0321EB00EF00EE /* GBTestSession.m */,
 				745D493E1A0321EB00EF00EE /* GBTestSession+Internal.h */,
@@ -1455,6 +1437,40 @@
 				745D48841A0256CE00EF00EE /* GBSession.m */,
 			);
 			name = GbombSDK;
+			sourceTree = "<group>";
+		};
+		745D49C41A0653C000EF00EE /* GBSessionLoginStrategy */ = {
+			isa = PBXGroup;
+			children = (
+				745D49231A0321EB00EF00EE /* GBSessionLoginStrategy.h */,
+				745D49241A0321EB00EF00EE /* GBSessionLoginStrategyParams.h */,
+				745D49251A0321EB00EF00EE /* GBSessionLoginStrategyParams.m */,
+				745D49191A0321EB00EF00EE /* GBSessionAppSwitchingLoginStategy.h */,
+				745D491A1A0321EB00EF00EE /* GBSessionAppSwitchingLoginStategy.m */,
+				745D491D1A0321EB00EF00EE /* GBSessionGbombAppNativeLoginStategy.h */,
+				745D491E1A0321EB00EF00EE /* GBSessionGbombAppNativeLoginStategy.m */,
+				745D491F1A0321EB00EF00EE /* GBSessionGbombAppWebLoginStategy.h */,
+				745D49201A0321EB00EF00EE /* GBSessionGbombAppWebLoginStategy.m */,
+				745D49211A0321EB00EF00EE /* GBSessionInlineWebViewLoginStategy.h */,
+				745D49221A0321EB00EF00EE /* GBSessionInlineWebViewLoginStategy.m */,
+				745D49281A0321EB00EF00EE /* GBSessionSafariLoginStategy.h */,
+				745D49291A0321EB00EF00EE /* GBSessionSafariLoginStategy.m */,
+				745D492A1A0321EB00EF00EE /* GBSessionSystemLoginStategy.h */,
+				745D492B1A0321EB00EF00EE /* GBSessionSystemLoginStategy.m */,
+			);
+			name = GBSessionLoginStrategy;
+			sourceTree = "<group>";
+		};
+		745D49C51A0656BA00EF00EE /* GBTask */ = {
+			isa = PBXGroup;
+			children = (
+				745D49371A0321EB00EF00EE /* GBTask.h */,
+				745D49381A0321EB00EF00EE /* GBTask.m */,
+				745D49391A0321EB00EF00EE /* GBTask+Private.h */,
+				745D493A1A0321EB00EF00EE /* GBTaskCompletionSource.h */,
+				745D493B1A0321EB00EF00EE /* GBTaskCompletionSource.m */,
+			);
+			name = GBTask;
 			sourceTree = "<group>";
 		};
 		85A44BA316A8CE05007BE80E /* FacebookSDKIntegrationTests */ = {
@@ -1782,7 +1798,7 @@
 				84D0A6591581A20400A2FA5E /* FBFriendPickerCacheDescriptor.h in Headers */,
 				745D49BB1A0321EB00EF00EE /* GBUserSettingsViewController.h in Headers */,
 				84D0A65A1581A20A00A2FA5E /* FBPlacePickerCacheDescriptor.h in Headers */,
-				745D49971A0321EB00EF00EE /* GBSessionFacebookAppNativeLoginStategy.h in Headers */,
+				745D49971A0321EB00EF00EE /* GBSessionGbombAppNativeLoginStategy.h in Headers */,
 				84E3132C1589948C004C4169 /* FBPlacePickerViewController+Internal.h in Headers */,
 				745D49541A0321EB00EF00EE /* GBFrictionlessRequestSettings.h in Headers */,
 				745D497A1A0321EB00EF00EE /* GBPlacePickerCacheDescriptor.h in Headers */,
@@ -1878,7 +1894,7 @@
 				745D49BD1A0321EB00EF00EE /* GBUtility.h in Headers */,
 				9D366B20178C7798007B4CEC /* FBRequestHandlerFactory.h in Headers */,
 				745D49A41A0321EB00EF00EE /* GBSessionSystemLoginStategy.h in Headers */,
-				745D49991A0321EB00EF00EE /* GBSessionFacebookAppWebLoginStategy.h in Headers */,
+				745D49991A0321EB00EF00EE /* GBSessionGbombAppWebLoginStategy.h in Headers */,
 				9D366B26178DC002007B4CEC /* FBRequestConnectionRetryManager.h in Headers */,
 				745D494A1A0321EB00EF00EE /* GBError.h in Headers */,
 				B549647517A8703E002C9284 /* FBSessionAuthLogger.h in Headers */,
@@ -2365,7 +2381,7 @@
 				84AD5AAE169602670026E6C3 /* FBWebDialogs.m in Sources */,
 				745D495D1A0321EB00EF00EE /* GBGraphObject.m in Sources */,
 				745D49B71A0321EB00EF00EE /* GBTestSession.m in Sources */,
-				745D499A1A0321EB00EF00EE /* GBSessionFacebookAppWebLoginStategy.m in Sources */,
+				745D499A1A0321EB00EF00EE /* GBSessionGbombAppWebLoginStategy.m in Sources */,
 				B58DFD8C168402B30030A947 /* FBAppBridge.m in Sources */,
 				B5B7702F16C3101D00729340 /* FBBase64.m in Sources */,
 				B51484E416C622370041257D /* FBCrypto.m in Sources */,
@@ -2405,7 +2421,7 @@
 				9D3FC9AC17BA971C0072D6BC /* FBSessionUtility.m in Sources */,
 				9D3B0D8317BC230B00CA3C04 /* FBSessionLoginStrategyParams.m in Sources */,
 				9D5B914D17BD3761009DBABB /* FBSessionSystemLoginStategy.m in Sources */,
-				745D49981A0321EB00EF00EE /* GBSessionFacebookAppNativeLoginStategy.m in Sources */,
+				745D49981A0321EB00EF00EE /* GBSessionGbombAppNativeLoginStategy.m in Sources */,
 				9D5B915317BD3773009DBABB /* FBSessionAppSwitchingLoginStategy.m in Sources */,
 				9D3D36AB17CBE6C500B9B049 /* FBTaskCompletionSource.m in Sources */,
 				745D48961A028CCB00EF00EE /* GBAppEvents.m in Sources */,

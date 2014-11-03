@@ -18,8 +18,8 @@
 
 #import "GBAppBridgeTypeToJSONConverter.h"
 #import "GBAppCall+Internal.h"
-#import "GBBase64.h"
-#import "GBCrypto.h"
+#import "FBBase64.h"
+#import "FBCrypto.h"
 #import "GBDialogsData+Internal.h"
 #import "GBError.h"
 #import "GBSession+Internal.h"

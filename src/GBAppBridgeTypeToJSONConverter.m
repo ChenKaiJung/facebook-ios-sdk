@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-#import "FBAppBridgeTypeToJSONConverter.h"
+#import "GBAppBridgeTypeToJSONConverter.h"
 
 #import <UIKit/UIKit.h>
 
 #import "FBBase64.h"
-#import "FBError.h"
-#import "FBSettings+Internal.h"
+#import "GBError.h"
+#import "GBSettings+Internal.h"
 
 /*
  jsonReadyValue: A representation of the extended type that is safe for JSON serialization.
@@ -35,8 +35,8 @@ static const struct {
     NSString *isPasteboard;
     NSString *isBase64;
     NSString *tag;
-} FBAppBridgeTypesMetadata = {
-    .jsonReadyValue = @"fbAppBridgeType_jsonReadyValue",
+} GBAppBridgeTypesMetadata = {
+    .jsonReadyValue = @"gbAppBridgeType_jsonReadyValue",
     .isBase64 = @"isBase64",
     .isPasteboard = @"isPasteboard",
     .tag = @"tag",
@@ -49,14 +49,14 @@ static const struct {
 static const struct {
     NSString *data;
     NSString *png;
-} FBAppBridgeTypesTags = {
+} GBAppBridgeTypesTags = {
     .data = @"data",
     .png = @"png",
 };
 
-static NSString *const FBAppBridgeTypeIdentifier = @"com.facebook.Facebook.FBAppBridgeType";
+static NSString *const GBAppBridgeTypeIdentifier = @"com.facebook.Facebook.GBAppBridgeType";
 
-@implementation FBAppBridgeTypeToJSONConverter
+@implementation GBAppBridgeTypeToJSONConverter
 
 @synthesize createdPasteboardNames = _createdPasteboardNames;
 
@@ -81,8 +81,8 @@ static NSString *const FBAppBridgeTypeIdentifier = @"com.facebook.Facebook.FBApp
 - (id)convertedObjectFromObject:(id)object convertingToJSON:(BOOL)convertingToJSON {
     if ([object isKindOfClass:[NSDictionary class]]) {
         NSDictionary *dictionary = (NSDictionary *)object;
-        if (!convertingToJSON && dictionary[FBAppBridgeTypesMetadata.jsonReadyValue]) {
-            return [FBAppBridgeTypeToJSONConverter appBridgeTypeFromJSON:dictionary];
+        if (!convertingToJSON && dictionary[GBAppBridgeTypesMetadata.jsonReadyValue]) {
+            return [GBAppBridgeTypeToJSONConverter appBridgeTypeFromJSON:dictionary];
         } else {
             return [self convertedDictionaryFromDictionary:dictionary
                                           convertingToJSON:convertingToJSON];
@@ -93,11 +93,11 @@ static NSString *const FBAppBridgeTypeIdentifier = @"com.facebook.Facebook.FBApp
     } else if (convertingToJSON) {
         if ([object isKindOfClass:[NSData class]]) {
             return [self jsonFromData:(NSData *)object
-                                  tag:FBAppBridgeTypesTags.data];
+                                  tag:GBAppBridgeTypesTags.data];
         } else if ([object isKindOfClass:[UIImage class]]) {
             UIImage *image = (UIImage *)object;
-            return [self jsonFromData:UIImageJPEGRepresentation(image, [FBSettings defaultJPEGCompressionQuality])
-                                  tag:FBAppBridgeTypesTags.png];
+            return [self jsonFromData:UIImageJPEGRepresentation(image, [GBSettings defaultJPEGCompressionQuality])
+                                  tag:GBAppBridgeTypesTags.png];
         }
     }
 
@@ -146,30 +146,30 @@ static NSString *const FBAppBridgeTypeIdentifier = @"com.facebook.Facebook.FBApp
 - (NSMutableDictionary *)jsonFromData:(NSData *)data tag:(NSString *)tag {
     NSMutableDictionary *json = [NSMutableDictionary dictionary];
     NSString *jsonReadyValue = FBEncodeBase64(data);
-    json[FBAppBridgeTypesMetadata.isBase64] = [NSNumber numberWithBool:YES];
+    json[GBAppBridgeTypesMetadata.isBase64] = [NSNumber numberWithBool:YES];
 
-    json[FBAppBridgeTypesMetadata.tag] = tag ?: @"";
-    json[FBAppBridgeTypesMetadata.jsonReadyValue] = jsonReadyValue ?: @"";
+    json[GBAppBridgeTypesMetadata.tag] = tag ?: @"";
+    json[GBAppBridgeTypesMetadata.jsonReadyValue] = jsonReadyValue ?: @"";
 
     return json;
 }
 
 + (id)appBridgeTypeFromJSON:(NSDictionary *)dictionary {
-    NSString *jsonReadyValue = dictionary[FBAppBridgeTypesMetadata.jsonReadyValue];
-    NSNumber *hasBase64 = dictionary[FBAppBridgeTypesMetadata.isBase64];
-    NSNumber *hasPasteboard = dictionary[FBAppBridgeTypesMetadata.isPasteboard];
+    NSString *jsonReadyValue = dictionary[GBAppBridgeTypesMetadata.jsonReadyValue];
+    NSNumber *hasBase64 = dictionary[GBAppBridgeTypesMetadata.isBase64];
+    NSNumber *hasPasteboard = dictionary[GBAppBridgeTypesMetadata.isPasteboard];
     id appBridgeType = nil;
     if (hasBase64) {
         appBridgeType = FBDecodeBase64(jsonReadyValue);
     } else if (hasPasteboard) {
         UIPasteboard *board = [UIPasteboard pasteboardWithName:jsonReadyValue create:NO];
         if (board) {
-            appBridgeType = [board valueForPasteboardType:FBAppBridgeTypeIdentifier];
+            appBridgeType = [board valueForPasteboardType:GBAppBridgeTypeIdentifier];
             [UIPasteboard removePasteboardWithName:board.name];
         }
     }
 
-    if (appBridgeType && [dictionary[FBAppBridgeTypesMetadata.tag] isEqualToString:FBAppBridgeTypesTags.png]) {
+    if (appBridgeType && [dictionary[GBAppBridgeTypesMetadata.tag] isEqualToString:GBAppBridgeTypesTags.png]) {
         appBridgeType = [UIImage imageWithData:appBridgeType];
     }
 

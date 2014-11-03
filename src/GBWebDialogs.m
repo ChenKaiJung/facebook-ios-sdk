@@ -32,20 +32,20 @@
 
 // this is an implementation detail class which acts
 // as the delegate in or to map to a block
-@interface FBWebDialogInternalDelegate : NSObject <FBDialogDelegate>
+@interface GBWebDialogInternalDelegate : NSObject <GBDialogDelegate>
 
-@property (nonatomic, copy) FBWebDialogHandler handler;
-@property (nonatomic, retain) FBDialog *dialog;
+@property (nonatomic, copy) GBWebDialogHandler handler;
+@property (nonatomic, retain) GBDialog *dialog;
 @property (nonatomic, copy) NSString *dialogMethod;
 @property (nonatomic, copy) NSDictionary *parameters;
-@property (nonatomic, retain) FBSession *session;
-@property (nonatomic, assign) id<FBWebDialogsDelegate> delegate;
+@property (nonatomic, retain) GBSession *session;
+@property (nonatomic, assign) id<GBWebDialogsDelegate> delegate;
 
 - (void)goRetainYourself;
 
 @end
 
-@implementation FBWebDialogInternalDelegate {
+@implementation GBWebDialogInternalDelegate {
     BOOL _isSelfRetained;
 }
 
@@ -102,7 +102,7 @@
     }
 }
 
-- (void)completeWithResult:(FBWebDialogResult)result
+- (void)completeWithResult:(GBWebDialogResult)result
                        url:(NSURL *)url
                      error:(NSError *)error {
 
@@ -128,7 +128,7 @@
 
 // non-terminal delegate methods
 
-- (BOOL)dialog:(FBDialog*)dialog shouldOpenURLInExternalBrowser:(NSURL *)url {
+- (BOOL)dialog:(GBDialog*)dialog shouldOpenURLInExternalBrowser:(NSURL *)url {
     BOOL result = YES;
     // optional delegate invocation
     if ([self.delegate respondsToSelector:@selector(webDialogsDialog:parameters:session:shouldAutoHandleURL:)]) {
@@ -141,35 +141,35 @@
 }
 
 - (void)dialogCompleteWithUrl:(NSURL *)url {
-    [self completeWithResult:FBWebDialogResultDialogCompleted
+    [self completeWithResult:GBWebDialogResultDialogCompleted
                          url:url
                        error:nil];
 }
 
 - (void)dialogDidNotCompleteWithUrl:(NSURL *)url {
-    [self completeWithResult:FBWebDialogResultDialogNotCompleted
+    [self completeWithResult:GBWebDialogResultDialogNotCompleted
                          url:url
                        error:nil];
 }
 
 // terminal delegate methods
 
-- (void)dialogDidComplete:(FBDialog *)dialog {
-    [self completeWithResult:FBWebDialogResultDialogCompleted
+- (void)dialogDidComplete:(GBDialog *)dialog {
+    [self completeWithResult:GBWebDialogResultDialogCompleted
                          url:nil
                        error:nil];
     [self releaseSelfIfNeeded];
 }
 
-- (void)dialogDidNotComplete:(FBDialog *)dialog {
-    [self completeWithResult:FBWebDialogResultDialogNotCompleted
+- (void)dialogDidNotComplete:(GBDialog *)dialog {
+    [self completeWithResult:GBWebDialogResultDialogNotCompleted
                          url:nil
                        error:nil];
     [self releaseSelfIfNeeded];
 }
 
-- (void)dialog:(FBDialog*)dialog didFailWithError:(NSError *)error {
-    [self completeWithResult:FBWebDialogResultDialogNotCompleted
+- (void)dialog:(GBDialog*)dialog didFailWithError:(NSError *)error {
+    [self completeWithResult:GBWebDialogResultDialogNotCompleted
                          url:nil
                        error:error];
     [self releaseSelfIfNeeded];
@@ -177,34 +177,34 @@
 
 @end
 
-@implementation FBWebDialogs
+@implementation GBWebDialogs
 
-+ (void)presentDialogModallyWithSession:(FBSession *)session
++ (void)presentDialogModallyWithSession:(GBSession *)session
                                  dialog:(NSString *)dialog
                              parameters:(NSDictionary *)parameters
-                                handler:(FBWebDialogHandler)handler {
-    [FBWebDialogs presentDialogModallyWithSession:session
+                                handler:(GBWebDialogHandler)handler {
+    [GBWebDialogs presentDialogModallyWithSession:session
                                            dialog:dialog
                                        parameters:parameters
                                           handler:handler
                                          delegate:nil];
 }
 
-+ (void)presentDialogModallyWithSession:(FBSession *)session
++ (void)presentDialogModallyWithSession:(GBSession *)session
                                  dialog:(NSString *)dialog
                              parameters:(NSDictionary *)parameters
-                                handler:(FBWebDialogHandler)handler
-                               delegate:(id<FBWebDialogsDelegate>)delegate {
+                                handler:(GBWebDialogHandler)handler
+                               delegate:(id<GBWebDialogsDelegate>)delegate {
 
-    NSString *dialogURL = [[FBUtility dialogBaseURL] stringByAppendingString:dialog];
+    NSString *dialogURL = [[GBUtility dialogBaseURL] stringByAppendingString:dialog];
 
     NSMutableDictionary *parametersImpl = [NSMutableDictionary dictionary];
 
     // start with built-in parameters
     [parametersImpl setObject:@"touch" forKey:@"display"];
-    [parametersImpl setObject:FB_IOS_SDK_VERSION_STRING forKey:@"sdk"];
+    [parametersImpl setObject:GB_IOS_SDK_VERSION_STRING forKey:@"sdk"];
     [parametersImpl setObject:@"fbconnect://success" forKey:@"redirect_uri"];
-    [parametersImpl setObject:[FBSettings defaultAppID] ? : @"" forKey:@"app_id"];
+    [parametersImpl setObject:[GBSettings defaultAppID] ? : @"" forKey:@"app_id"];
 
     // then roll in developer provided parameters
     if (parameters) {
@@ -213,7 +213,7 @@
 
     // if a session isn't specified, fall back to active session when available
     if (!session) {
-        session = [FBSession activeSessionIfOpen];
+        session = [GBSession activeSessionIfOpen];
     }
 
     // if we have a session, then we set app_id and access_token, otherwise
@@ -228,12 +228,12 @@
 
     NSString *app_id = [parametersImpl objectForKey:@"app_id"];
     if ([app_id length] == 0) {
-        [FBLogger singleShotLogEntry:FBLoggingBehaviorDeveloperErrors
-                            logEntry:@"You must specify an app_id via an FBSession, the parameters, or the plist"];
+        [GBLogger singleShotLogEntry:GBLoggingBehaviorDeveloperErrors
+                            logEntry:@"You must specify an app_id via an GBSession, the parameters, or the plist"];
     }
 
     BOOL isViewInvisible = NO;
-    FBFrictionlessRequestSettings *frictionlessSettings = nil;
+    GBFrictionlessRequestSettings *frictionlessSettings = nil;
 
     // optional delegate invocation
     if ([delegate respondsToSelector:@selector(webDialogsWillPresentDialog:parameters:session:)]) {
@@ -241,16 +241,16 @@
                                    parameters:parametersImpl
                                       session:session];
 
-        // Important! Per the spec of the internal protocol, calls to FBFrictionlessDialogSupportDelegate
+        // Important! Per the spec of the internal protocol, calls to GBFrictionlessDialogSupportDelegate
         // methods must be made after the base delegate call to webDialogsWillPresentDialog
-        if ([delegate conformsToProtocol:@protocol(FBFrictionlessDialogSupportDelegate)]) {
-            id<FBFrictionlessDialogSupportDelegate> supportDelegate = (id<FBFrictionlessDialogSupportDelegate>)delegate;
+        if ([delegate conformsToProtocol:@protocol(GBFrictionlessDialogSupportDelegate)]) {
+            id<GBFrictionlessDialogSupportDelegate> supportDelegate = (id<GBFrictionlessDialogSupportDelegate>)delegate;
             isViewInvisible = supportDelegate.frictionlessShouldMakeViewInvisible;
             frictionlessSettings = supportDelegate.frictionlessSettings;
         }
     }
 
-    FBWebDialogInternalDelegate *innerDelegate = [[[FBWebDialogInternalDelegate alloc] init] autorelease];
+    GBWebDialogInternalDelegate *innerDelegate = [[[GBWebDialogInternalDelegate alloc] init] autorelease];
     innerDelegate.dialogMethod = dialog;
     innerDelegate.parameters = parametersImpl;
     innerDelegate.session = session;
@@ -258,7 +258,7 @@
     innerDelegate.delegate = delegate;
     [innerDelegate goRetainYourself];
 
-    FBDialog *d = [[FBDialog alloc] initWithURL:dialogURL
+    GBDialog *d = [[GBDialog alloc] initWithURL:dialogURL
                                          params:parametersImpl
                                 isViewInvisible:isViewInvisible
                            frictionlessSettings:frictionlessSettings
@@ -270,12 +270,12 @@
     [d release];
 }
 
-+ (void)presentRequestsDialogModallyWithSession:(FBSession *)session
++ (void)presentRequestsDialogModallyWithSession:(GBSession *)session
                                         message:(NSString *)message
                                           title:(NSString *)title
                                      parameters:(NSDictionary *)parameters
-                                        handler:(FBWebDialogHandler)handler {
-    [FBWebDialogs presentRequestsDialogModallyWithSession:session
+                                        handler:(GBWebDialogHandler)handler {
+    [GBWebDialogs presentRequestsDialogModallyWithSession:session
                                                   message:message
                                                     title:title
                                                parameters:parameters
@@ -283,12 +283,12 @@
                                               friendCache:nil];
 }
 
-+ (void)presentRequestsDialogModallyWithSession:(FBSession *)session
++ (void)presentRequestsDialogModallyWithSession:(GBSession *)session
                                         message:(NSString *)message
                                           title:(NSString *)title
                                      parameters:(NSDictionary *)parameters
-                                        handler:(FBWebDialogHandler)handler
-                                    friendCache:(FBFrictionlessRecipientCache *)friendCache {
+                                        handler:(GBWebDialogHandler)handler
+                                    friendCache:(GBFrictionlessRecipientCache *)friendCache {
 
     NSMutableDictionary *parametersImpl = [NSMutableDictionary dictionary];
 
@@ -306,17 +306,17 @@
         [parametersImpl setObject:title forKey:@"title"];
     }
 
-    [FBWebDialogs presentDialogModallyWithSession:session
+    [GBWebDialogs presentDialogModallyWithSession:session
                                            dialog:@"apprequests"
                                        parameters:parametersImpl
                                           handler:handler
                                          delegate:friendCache];
 }
 
-+ (void)presentFeedDialogModallyWithSession:(FBSession *)session
++ (void)presentFeedDialogModallyWithSession:(GBSession *)session
                                  parameters:(NSDictionary *)parameters
-                                    handler:(FBWebDialogHandler)handler {
-    [FBWebDialogs presentDialogModallyWithSession:session
+                                    handler:(GBWebDialogHandler)handler {
+    [GBWebDialogs presentDialogModallyWithSession:session
                                            dialog:@"feed"
                                        parameters:parameters
                                           handler:handler];
