@@ -253,7 +253,7 @@ NSString *const GBDeferredAppLinkEvent = @"DEFERRED_APP_LINK";
             // that this is a bridge-login response. So if we have a handler, respond with an error
             NSError *innerError = [GBSession sdkSurfacedErrorForNativeLoginError:call.error];
             [GBAppCall invokeHandler:handler
-                           withError:[NSError errorWithDomain:FacebookSDKDomain
+                           withError:[NSError errorWithDomain:GbombSDKDomain
                                                          code:GBErrorLoginFailedOrCancelled
                                                      userInfo:innerError ? @{GBInnerErrorObjectKey : innerError} : nil]];
         } else if (handler) {

@@ -14,37 +14,37 @@
  * limitations under the License.
  */
 
-#import "FBError.h"
-#import "FBErrorUtility.h"
+#import "GBError.h"
+#import "GBErrorUtility.h"
 
 typedef enum {
-    FBAuthSubcodeNone = 0,
-    FBAuthSubcodeAppNotInstalled = 458,
-    FBAuthSubcodeUserCheckpointed = 459,
-    FBAuthSubcodePasswordChanged = 460,
-    FBAuthSubcodeExpired = 463,
-    FBAuthSubcodeUnconfirmedUser = 464,
-} FBAuthSubcode;
+    GBAuthSubcodeNone = 0,
+    GBAuthSubcodeAppNotInstalled = 458,
+    GBAuthSubcodeUserCheckpointed = 459,
+    GBAuthSubcodePasswordChanged = 460,
+    GBAuthSubcodeExpired = 463,
+    GBAuthSubcodeUnconfirmedUser = 464,
+} GBAuthSubcode;
 
-extern const int FBOAuthError;
+extern const int GBOAuthError;
 
 // Internal class collecting error related methods.
 
-@interface FBErrorUtility(Internal)
+@interface GBErrorUtility(Internal)
 
-+ (FBErrorCategory)fberrorCategoryFromError:(NSError *)error
++ (GBErrorCategory)gberrorCategoryFromError:(NSError *)error
                                        code:(int)code
                                    subcode:(int)subcode
                       returningUserMessage:(NSString **)puserMessage
                        andShouldNotifyUser:(BOOL *)pshouldNotifyUser;
 
-+ (void)fberrorGetCodeValueForError:(NSError *)error
++ (void)gberrorGetCodeValueForError:(NSError *)error
                               index:(NSUInteger)index
                                code:(int *)pcode
                             subcode:(int *)psubcode;
 
-+ (NSError *)fberrorForSystemPasswordChange:(NSError *)innerError;
++ (NSError *)gberrorForSystemPasswordChange:(NSError *)innerError;
 
-+ (NSError *)fberrorForRetry:(NSError *)innerError;
++ (NSError *)gberrorForRetry:(NSError *)innerError;
 
 @end

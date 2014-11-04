@@ -272,7 +272,7 @@ forFailedAppCall:(GBAppCall *)appCall
         return;
     }
 
-    appCall.error = [NSError errorWithDomain:FacebookSDKDomain
+    appCall.error = [NSError errorWithDomain:GbombSDKDomain
                                         code:GBErrorDialog
                                     userInfo:@{@"message":message}];
 
@@ -332,7 +332,7 @@ forFailedAppCall:(GBAppCall *)appCall
     }
 
     if (!success && fallbackHandler) {
-        NSError *preProcessError = [NSError errorWithDomain:FacebookSDKDomain
+        NSError *preProcessError = [NSError errorWithDomain:GbombSDKDomain
                                                        code:preProcessErrorCode ?: GBErrorMalformedURL
                                                    userInfo:@{
                                   GBErrorUnprocessedURLKey : url,
@@ -367,7 +367,7 @@ forFailedAppCall:(GBAppCall *)appCall
         @try {
             if (handler) {
                 if (!error) {
-                    error = [NSError errorWithDomain:FacebookSDKDomain
+                    error = [NSError errorWithDomain:GbombSDKDomain
                                                      code:GBErrorAppActivatedWhilePendingAppCall
                                                  userInfo:@{NSLocalizedDescriptionKey : @"The user navigated away from "
                                   @"the Facebook app prior to completing this AppCall. This AppCall is now cancelled "
@@ -463,7 +463,7 @@ forFailedAppCall:(GBAppCall *)appCall
     NSString *additionalData = [additionalDataComponents componentsJoinedByString:@":"];
 
     // Now that we have all required info, decrypt!
-    GBCrypto *crypto = [[GBCrypto alloc] initWithMasterKey:symmetricKey];
+    FBCrypto *crypto = [[FBCrypto alloc] initWithMasterKey:symmetricKey];
     NSData *decryptedData = [crypto decrypt:cipherText
                        additionalSignedData:[additionalData dataUsingEncoding:NSUTF8StringEncoding]];
     [crypto release];
@@ -487,7 +487,7 @@ forFailedAppCall:(GBAppCall *)appCall
     NSString *symmetricKey = [defaults objectForKey:GBBridgeURLParams.cipherKey];
     if (!symmetricKey || forceRefresh) {
         // Generate keys
-        symmetricKey = [GBCrypto makeMasterKey];
+        symmetricKey = [FBCrypto makeMasterKey];
 
         // Store the keys
         [defaults setObject:symmetricKey forKey:GBBridgeURLParams.cipherKey];

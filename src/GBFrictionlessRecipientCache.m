@@ -55,15 +55,15 @@
 
 - (BOOL)isFrictionlessRecipient:(id)gbid {
     // we support NSString, NSNumber and dictionary with id-key of string or number
-    return [self.frictionlessSettings isFrictionlessEnabledForRecipient:[GBUtility stringGBIDFromObject:fbid]];
+    return [self.frictionlessSettings isFrictionlessEnabledForRecipient:[GBUtility stringGBIDFromObject:gbid]];
 }
 
 - (BOOL)areFrictionlessRecipients:(NSArray*)gbids {
     // we handle arrays of NSString, NSNumber, or dictionary with id-key of string or number
     // and return NO on anything else
-    for (id fbid in gbids) {
+    for (id gbid in gbids) {
         // if we miss our cache once, we fail the set
-        if (![self isFrictionlessRecipient:fbid]) {
+        if (![self isFrictionlessRecipient:gbid]) {
             return NO;
         }
     }
@@ -113,9 +113,9 @@
 
         // set invisible if all recipients are enabled for frictionless requests
         id gbid = [parameters objectForKey:@"to"];
-        if (fbid != nil) {
+        if (gbid != nil) {
             // if value parses as a json array expression get the list that way
-            id gbids = [GBUtility simpleJSONDecode:fbid];
+            id gbids = [GBUtility simpleJSONDecode:gbid];
             if (![gbids isKindOfClass:[NSArray class]]) {
                 // otherwise separate by commas (handles the singleton case too)
                 gbids = [gbid componentsSeparatedByString:@","];

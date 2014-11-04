@@ -194,7 +194,7 @@
             [self.delegate pagingLoader:self willLoadURL:self.nextLink];
         }
 
-        FBRequest *request = [[GBRequest alloc] initWithSession:self.session
+        GBRequest *request = [[GBRequest alloc] initWithSession:self.session
                                                       graphPath:nil];
 
         GBRequestConnection *connection = [[GBRequestConnection alloc] init];
@@ -282,7 +282,7 @@
         if (self.session) {
             userInfo[GBErrorSessionKey] = self.session;
         }
-        error = [[[NSError alloc] initWithDomain:FacebookSDKDomain
+        error = [[[NSError alloc] initWithDomain:GbombSDKDomain
                                             code:GBErrorProtocolMismatch
                                         userInfo:userInfo]
                  autorelease];
@@ -291,7 +291,7 @@
     BOOL cancelled = NO;
     if (error) {
         // Cancellation is not really an error we want to bother the delegate with.
-        cancelled = [error.domain isEqualToString:FacebookSDKDomain] &&
+        cancelled = [error.domain isEqualToString:GbombSDKDomain] &&
             error.code == GBErrorOperationCancelled;
 
         if (cancelled) {
@@ -311,7 +311,7 @@
 #pragma mark GBGraphObjectDataSourceDataNeededDelegate methods
 
 - (void)graphObjectTableDataSourceNeedsData:(GBGraphObjectTableDataSource *)dataSource triggeredByIndexPath:(NSIndexPath*)indexPath {
-    if (self.pagingMode == FBGraphObjectPagingModeAsNeeded) {
+    if (self.pagingMode == GBGraphObjectPagingModeAsNeeded) {
         [self followNextLink];
     }
 }

@@ -187,7 +187,7 @@ static NSArray* _cdnHosts;
         return;
     }
 
-    NSError *error = [[NSError alloc] initWithDomain:FacebookSDKDomain
+    NSError *error = [[NSError alloc] initWithDomain:GbombSDKDomain
                                                 code:GBErrorOperationCancelled
                                             userInfo:nil];
 

@@ -164,7 +164,7 @@ typedef enum GBRequestConnectionState {
     return self;
 }
 
-// internal constructor used for initializing with existing metadata/fbrequest instances,
+// internal constructor used for initializing with existing metadata/GBrequest instances,
 // ostensibly for the retry flow.
 - (id)initWithMetadata:(NSArray *)metadataArray
 {
@@ -852,7 +852,7 @@ typedef enum GBRequestConnectionState {
         } else {
             // Normal case is passing objects by reference, so just pass the ID or URL, if any.
             NSString *subValue;
-            if ((subValue = [refObject objectForKey:@"id"])) {          // fbid
+            if ((subValue = [refObject objectForKey:@"id"])) {          // GBid
                 if ([subValue isKindOfClass:[NSDecimalNumber class]]) {
                     subValue = [(NSDecimalNumber*)subValue stringValue];
                 }
@@ -1228,7 +1228,7 @@ typedef enum GBRequestConnectionState {
                                     [metadata.request.session refreshAccessToken:task.result expirationDate:[NSDate distantFuture]];
                                     [metadata invokeCompletionHandlerForConnection:self
                                                                        withResults:body
-                                                                             error:[GBErrorUtility fberrorForRetry:unpackedError]];
+                                                                             error:[GBErrorUtility gberrorForRetry:unpackedError]];
                                     return [GBTask cancelledTask];
                                 }
                                 return [GBTask taskWithError:nil];
@@ -1364,7 +1364,7 @@ typedef enum GBRequestConnectionState {
     }
 
     NSError *error = [[[NSError alloc]
-                       initWithDomain:FacebookSDKDomain
+                       initWithDomain:GbombSDKDomain
                        code:code
                        userInfo:userInfo]
                       autorelease];
@@ -1378,7 +1378,7 @@ typedef enum GBRequestConnectionState {
 {
     // We don't want to re-wrap our own errors.
     if (innerError &&
-        [innerError.domain isEqualToString:FacebookSDKDomain]) {
+        [innerError.domain isEqualToString:GbombSDKDomain]) {
         return innerError;
     }
     NSError *result = nil;
@@ -1396,7 +1396,7 @@ typedef enum GBRequestConnectionState {
 - (BOOL)isInsufficientPermissionError:(NSError *)error
                           resultIndex:(NSUInteger)index {
     int code;
-    [GBErrorUtility fberrorGetCodeValueForError:error
+    [GBErrorUtility gberrorGetCodeValueForError:error
                                    index:index
                                     code:&code
                                  subcode:nil];
@@ -1410,12 +1410,12 @@ typedef enum GBRequestConnectionState {
     // to conditions that trigger `closeAndClearTokenInformation` will probably
     // need to replicate to the GBRequestHandlerFactory.
     int code = 0, subcode = 0;
-    [GBErrorUtility fberrorGetCodeValueForError:error
+    [GBErrorUtility gberrorGetCodeValueForError:error
                                           index:index
                                            code:&code
                                         subcode:&subcode];
 
-    return [GBErrorUtility fberrorCategoryFromError:error
+    return [GBErrorUtility gberrorCategoryFromError:error
                                                code:code
                                             subcode:subcode
                                returningUserMessage:nil
@@ -1425,12 +1425,12 @@ typedef enum GBRequestConnectionState {
 - (BOOL)isPasswordChangeError:(NSError *)error
                   resultIndex:(NSUInteger)index {
     int code = 0, subcode = 0;
-    [GBErrorUtility fberrorGetCodeValueForError:error
+    [GBErrorUtility gberrorGetCodeValueForError:error
                                           index:index
                                            code:&code
                                         subcode:&subcode];
 
-    [GBErrorUtility fberrorCategoryFromError:error
+    [GBErrorUtility gberrorCategoryFromError:error
                                         code:code
                                      subcode:subcode
                         returningUserMessage:nil
@@ -1441,12 +1441,12 @@ typedef enum GBRequestConnectionState {
 - (BOOL)isExpiredTokenError:(NSError *)error
                 resultIndex:(NSUInteger)index {
     int code = 0, subcode = 0;
-    [GBErrorUtility fberrorGetCodeValueForError:error
+    [GBErrorUtility gberrorGetCodeValueForError:error
                                           index:index
                                            code:&code
                                         subcode:&subcode];
 
-    [GBErrorUtility fberrorCategoryFromError:error
+    [GBErrorUtility GBerrorCategoryFromError:error
                                         code:code
                                      subcode:subcode
                         returningUserMessage:nil

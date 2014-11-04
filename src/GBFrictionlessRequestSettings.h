@@ -47,13 +47,13 @@
  *   1. query and cache the current set of frictionless recipients
  *   2. flag other facets of the sdk to behave in a frictionless way
  */
-- (void)enableWithFacebook:(Facebook*)facebook;
+- (void)enableWithFacebook:(Gbomb*)gbomb;
 
 /**
  * Reload recipient cache; called by the sdk to keep the cache fresh;
  * method makes graph request: me/apprequestformerrecipients
  */
-- (void)reloadRecipientCacheWithFacebook:(Facebook*)facebook;
+- (void)reloadRecipientCacheWithFacebook:(Gbomb*)gbomb;
 
 /**
  * Update the recipient cache; called by the sdk to keep the cache fresh;

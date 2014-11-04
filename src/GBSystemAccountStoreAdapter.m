@@ -287,13 +287,13 @@ static GBSystemAccountStoreAdapter* _singletonInstance = nil;
         // If there is a handler and we didn't return earlier (i.e, no renew call), determine an appropriate error to surface.
         NSError *error;
         if (self.accountTypeGB && !self.accountTypeGB.accessGranted) {
-            error = [[NSError errorWithDomain:FacebookSDKDomain
+            error = [[NSError errorWithDomain:GbombSDKDomain
                                                  code:GBErrorSystemAPI
                                              userInfo:@{ NSLocalizedDescriptionKey : @"Access has not been granted to the Facebook account. Verify device settings."}]
                      retain];
 
         } else {
-            error = [[NSError errorWithDomain:FacebookSDKDomain
+            error = [[NSError errorWithDomain:GbombSDKDomain
                                         code:GBErrorSystemAPI
                                     userInfo:@{ NSLocalizedDescriptionKey : @"The Facebook account has not been configured on the device."}]
                      retain];

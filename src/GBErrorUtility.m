@@ -104,7 +104,7 @@ static const int GBSDKSystemPasswordErrorSubcode = 65001;
     GBErrorCategory category = GBErrorCategoryInvalid;
 
     // determine if we have a facebook error category here
-    if ([[error domain] isEqualToString:FacebookSDKDomain]) {
+    if ([[error domain] isEqualToString:GbombSDKDomain]) {
         // now defaulting to an unknown (future) facebook category
         category = GBErrorCategoryFacebookOther;
         if ([error code] == GBErrorLoginFailedOrCancelled) {
@@ -174,7 +174,7 @@ static const int GBSDKSystemPasswordErrorSubcode = 65001;
                     userMessageDefault = @"Please log into this app again to reconnect your Facebook account.";
                     break;
                 default:
-                    if ([GBErrorUtility gberrorIsErrorFromSystemSession:error] && errorCode == FBOAuthError) {
+                    if ([GBErrorUtility gberrorIsErrorFromSystemSession:error] && errorCode == GBOAuthError) {
                         // This would include the case where the user has toggled the app slider in iOS 6 (and the session
                         //  had already been open).
                         userMessageKey = @"FBE:OAuthDevice";
@@ -309,7 +309,7 @@ static const int GBSDKSystemPasswordErrorSubcode = 65001;
     if (innerError) {
         [userInfoDictionary setObject:innerError forKey:GBErrorInnerErrorKey];
     }
-    return [NSError errorWithDomain:FacebookSDKDomain
+    return [NSError errorWithDomain:GbombSDKDomain
                                code:GBErrorHTTPError
                            userInfo:userInfoDictionary];
 }

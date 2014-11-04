@@ -56,7 +56,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-@interface Facebook () <GBRequestDelegate>
+@interface Gbomb () <GBRequestDelegate>
 
 // private properties
 @property (nonatomic, copy) NSString* appId;
@@ -69,7 +69,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-@implementation Facebook
+@implementation Gbomb
 
 
 @synthesize sessionDelegate = _sessionDelegate,
@@ -163,8 +163,8 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
     }
     [_lastAccessTokenUpdate release];
     [_requests release];
-    _fbDialog.delegate = nil;
-    [_fbDialog release];
+    _gbDialog.delegate = nil;
+    [_gbDialog release];
     [_appId release];
     [_urlSchemeSuffix release];
     [_frictionlessRequestSettings release];
@@ -193,7 +193,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
         if ([_request sessionDidExpire]) {
             [self invalidateSession];
             if ([self.sessionDelegate respondsToSelector:@selector(fbSessionInvalidated)]) {
-                [self.sessionDelegate fbSessionInvalidated];
+                [self.sessionDelegate gbSessionInvalidated];
             }
         }
         [_request removeObserver:self forKeyPath:requestFinishedKeyPath];
@@ -446,7 +446,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
     [self invalidateSession];
     
     if ([self.sessionDelegate respondsToSelector:@selector(fbDidLogout)]) {
-        [self.sessionDelegate fbDidLogout];
+        [self.sessionDelegate gbDidLogout];
     }
 }
 
@@ -462,7 +462,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
     // avoid calling twice if the passed and cached delegates are the same
     if (delegate != self.sessionDelegate &&
         [delegate respondsToSelector:@selector(fbDidLogout)]) {
-        [delegate fbDidLogout];
+        [delegate gbDidLogout];
     }
 }
 
@@ -671,7 +671,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
      andParams:(NSMutableDictionary *)params
    andDelegate:(id <GBDialogDelegate>)delegate {
 
-    [_fbDialog release];
+    [_gbDialog release];
 
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString *redirectURI = [infoDict objectForKey:@"FacebookRedirectUri"];
@@ -683,7 +683,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
 
     if ([action isEqualToString:kLogin]) {
         [params setObject:GBLoginUXResponseTypeToken forKey:GBLoginUXResponseType];
-        _fbDialog = [[GBLoginDialog alloc] initWithURL:dialogURL loginParams:params delegate:self];
+        _gbDialog = [[GBLoginDialog alloc] initWithURL:dialogURL loginParams:params delegate:self];
     } else {
         [params setObject:_appId forKey:@"app_id"];
         if ([self isSessionValid]) {
@@ -719,14 +719,14 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
             }
         }
 
-        _fbDialog = [[GBDialog alloc] initWithURL:dialogURL
+        _gbDialog = [[GBDialog alloc] initWithURL:dialogURL
                                            params:params
                                   isViewInvisible:invisible
                              frictionlessSettings:_frictionlessRequestSettings
                                          delegate:delegate];
     }
 
-    [_fbDialog show];
+    [_gbDialog show];
 }
 
 - (BOOL)isFrictionlessRequestsEnabled {
@@ -770,7 +770,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
     _lastAccessTokenUpdate = [[NSDate date] retain];
     [self reloadFrictionlessRecipientCache];
     if ([self.sessionDelegate respondsToSelector:@selector(fbDidLogin)]) {
-        [self.sessionDelegate fbDidLogin];
+        [self.sessionDelegate gbDidLogin];
     }
 }
 
@@ -779,7 +779,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
  */
 - (void)fbDialogNotLogin:(BOOL)cancelled {
     if ([self.sessionDelegate respondsToSelector:@selector(fbDidNotLogin:)]) {
-        [self.sessionDelegate fbDidNotLogin:cancelled];
+        [self.sessionDelegate gbDidNotLogin:cancelled];
     }
 }
 
@@ -790,7 +790,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
 - (void)fbDialogLoginError:(NSError *)error {
     self.error = error;
     if ([self.sessionDelegate respondsToSelector:@selector(fbDidLoginError:)]) {
-        [_sessionDelegate fbDidLoginError:error];
+        [_sessionDelegate gbDidLoginError:error];
     }
 }
 
@@ -800,7 +800,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
 - (void)fbDialogLogin:(NSString *)code {
     self.code = code;
     if ([self.sessionDelegate respondsToSelector:@selector(fbDidLogin)]) {
-        [_sessionDelegate fbDidLogin];
+        [_sessionDelegate gbDidLogin];
     }
     
 }
@@ -810,7 +810,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
     self.accessToken = token;
     self.sessionKey = sessionKey;
     if ([self.sessionDelegate respondsToSelector:@selector(fbDidLogin)]) {
-        [_sessionDelegate fbDidLogin];
+        [_sessionDelegate gbDidLogin];
     }    
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -848,7 +848,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
     [self updateSessionIfTokenUpdated];
 
     if ([self.sessionDelegate respondsToSelector:@selector(fbDidExtendToken:expiresAt:)]) {
-        [self.sessionDelegate fbDidExtendToken:accessToken expiresAt:expirationDate];
+        [self.sessionDelegate gbDidExtendToken:accessToken expiresAt:expirationDate];
     }
 }
 

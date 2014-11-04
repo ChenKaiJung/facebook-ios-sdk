@@ -16,7 +16,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "FBGraphObject.h"
+#import "GBGraphObject.h"
 
 @protocol GBGraphObjectViewControllerDelegate;
 @protocol GBGraphObjectSelectionQueryDelegate;

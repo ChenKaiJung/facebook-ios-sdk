@@ -25,9 +25,9 @@
 @protocol GBGraphObject;
 
 typedef enum GBAdvertisingTrackingStatus {
-    AdvertisingTrackingAllowed,
-    AdvertisingTrackingDisallowed,
-    AdvertisingTrackingUnspecified
+    GBAdvertisingTrackingAllowed,
+    GBAdvertisingTrackingDisallowed,
+    GBAdvertisingTrackingUnspecified
 } GBAdvertisingTrackingStatus;
 
 @interface GBUtility : NSObject

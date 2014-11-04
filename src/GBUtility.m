@@ -341,12 +341,12 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
 }
 
 + (GBAdvertisingTrackingStatus)advertisingTrackingStatus {
-    GBAdvertisingTrackingStatus status = AdvertisingTrackingUnspecified;
+    GBAdvertisingTrackingStatus status = GBAdvertisingTrackingUnspecified;
     Class ASIdentifierManagerClass = [GBDynamicFrameworkLoader loadClass:@"ASIdentifierManager" withFramework:@"AdSupport"];
     if ([ASIdentifierManagerClass class]) {
         ASIdentifierManager *manager = [ASIdentifierManagerClass sharedManager];
         if (manager) {
-            status = [manager isAdvertisingTrackingEnabled] ? AdvertisingTrackingAllowed : AdvertisingTrackingDisallowed;
+            status = [manager isAdvertisingTrackingEnabled] ? GBAdvertisingTrackingAllowed : GBAdvertisingTrackingDisallowed;
         }
     }
     return status;
@@ -356,8 +356,8 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
   // Only add the iOS global value if we have a definitive allowed/disallowed on advertising tracking.  Otherwise,
   // absence of this parameter is to be interpreted as 'unspecified'.
   GBAdvertisingTrackingStatus advertisingTrackingStatus = [GBUtility advertisingTrackingStatus];
-  if (advertisingTrackingStatus != AdvertisingTrackingUnspecified) {
-      BOOL allowed = (advertisingTrackingStatus == AdvertisingTrackingAllowed);
+  if (advertisingTrackingStatus != GBAdvertisingTrackingUnspecified) {
+      BOOL allowed = (advertisingTrackingStatus == GBAdvertisingTrackingAllowed);
       [parameters setObject:[[NSNumber numberWithBool:allowed] stringValue]
                      forKey:@"advertiser_tracking_enabled"];
   }

@@ -24,7 +24,7 @@
 #import "GBRequest.h"
 #import "GBSession.h"
 #import "GBUtility.h"
-#import "FacebookSDK.h"
+#import "GbombSDK.h"
 
 // Keys to get App-specific info from mainBundle
 static NSString *const GBPLISTDisplayNameKey = @"FacebookDisplayName";
@@ -283,7 +283,7 @@ static NSUInteger g_betaFeatures = 0;
             if (handler) {
                 handler(
                     nil,
-                    [NSError errorWithDomain:FacebookSDKDomain
+                    [NSError errorWithDomain:GbombSDKDomain
                                         code:GBErrorPublishInstallResponse
                                     userInfo:@{ NSLocalizedDescriptionKey : @"A valid App ID was not supplied or detected.  Please call with a valid App ID or configure the app correctly to include GB App ID."}]
                 );
@@ -320,7 +320,7 @@ static NSUInteger g_betaFeatures = 0;
           if (handler) {
               handler(
                 nil,
-                [NSError errorWithDomain:FacebookSDKDomain
+                [NSError errorWithDomain:GbombSDKDomain
                                     code:GBErrorPublishInstallResponse
                                 userInfo:@{ NSLocalizedDescriptionKey : @"A valid attribution ID or advertiser ID was not found.  Publishing install when neither of them is present is a no-op."}]
               );
@@ -382,7 +382,7 @@ static NSUInteger g_betaFeatures = 0;
                         if (handler) {
                           handler(
                             nil,
-                            [NSError errorWithDomain:FacebookSDKDomain
+                            [NSError errorWithDomain:GbombSDKDomain
                                                 code:GBErrorPublishInstallResponse
                                             userInfo:@{ NSLocalizedDescriptionKey : @"The application has not enabled install insights.  To turn this on, go to developers.facebook.com and enable install insights for the app."}]
                           );
@@ -394,7 +394,7 @@ static NSUInteger g_betaFeatures = 0;
                     if (handler) {
                         handler(
                             nil,
-                            [NSError errorWithDomain:FacebookSDKDomain
+                            [NSError errorWithDomain:GbombSDKDomain
                                                 code:GBErrorPublishInstallResponse
                                             userInfo:@{ NSLocalizedDescriptionKey : errorMessage}]
                         );
@@ -409,7 +409,7 @@ static NSUInteger g_betaFeatures = 0;
         if (handler) {
             handler(
                 nil,
-                [NSError errorWithDomain:FacebookSDKDomain
+                [NSError errorWithDomain:GbombSDKDomain
                                     code:GBErrorPublishInstallResponse
                                 userInfo:@{ NSLocalizedDescriptionKey : errorMessage}]
             );

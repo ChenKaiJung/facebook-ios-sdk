@@ -309,7 +309,7 @@ params   = _params;
                                    autorelease];
             for (id recipient in recipients) {
                 NSString *gbid = [NSString stringWithFormat:@"%@", recipient];
-                [ids addObject:GBid];
+                [ids addObject:gbid];
             }
             // we may be tempted to terminate outstanding requests before this
             // point, but that would cause problems if the user cancelled a dialog

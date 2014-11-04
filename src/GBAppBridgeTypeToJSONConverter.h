@@ -16,7 +16,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FBAppBridgeTypeToJSONConverter : NSObject
+@interface GBAppBridgeTypeToJSONConverter : NSObject
 
 /*!
  @abstract
@@ -28,9 +28,9 @@
 /*!
  @abstract
  Call this method to convert a dictionary containing types that are not supported by JSON, but are
- supported by FBAppBridge to a dictionary that can be safely serialized to JSON
+ supported by GBAppBridge to a dictionary that can be safely serialized to JSON
 
- @param dictionaryWithAppBridgeTypes An NSDictionary that contains types supported by FBAppBridge, either
+ @param dictionaryWithAppBridgeTypes An NSDictionary that contains types supported by GBAppBridge, either
  as direct descendents or further nested in dictionaries and arrays.
 
  @return A dictionary that is ready for JSON serialization

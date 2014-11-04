@@ -45,18 +45,18 @@
     return self;
 }
 
-- (void)enableWithFacebook:(Facebook*)facebook {
+- (void)enableWithFacebook:(Gbomb*)gbomb {
     if (!_enabled) {
         _enabled = YES;
-        if (facebook) {
-            [self reloadRecipientCacheWithFacebook:facebook];
+        if (gbomb) {
+            [self reloadRecipientCacheWithFacebook:gbomb];
         }
     }
 }
 
-- (void)reloadRecipientCacheWithFacebook:(Facebook *)facebook {
+- (void)reloadRecipientCacheWithFacebook:(Gbomb *)gbomb {
     // request the list of frictionless recipients from the server
-    id request = [facebook requestWithGraphPath:@"me/apprequestformerrecipients"
+    id request = [gbomb requestWithGraphPath:@"me/apprequestformerrecipients"
                                     andDelegate:self];
     if (request) {
         self.activeRequest = request;

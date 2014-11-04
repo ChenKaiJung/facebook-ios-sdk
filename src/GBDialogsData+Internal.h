@@ -13,7 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#import "GBSessionLoginStrategy.h"
 
-@interface GBSessionAppSwitchingLoginStategy : NSObject<GBSessionLoginStrategy>
+#import "GBDialogsData.h"
+
+@interface GBDialogsData (Internal)
+
+@property (readonly) BOOL isValid;
+
+@property (nonatomic, readwrite, copy) NSDictionary *clientState;
+@property (nonatomic, readwrite, copy) NSDictionary *results;
+
+- (id)initWithMethod:(NSString *)method arguments:(NSDictionary *)arguments;
+
 @end

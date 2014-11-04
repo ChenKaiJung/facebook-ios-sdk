@@ -41,7 +41,7 @@
  * and Graph APIs, and start user interface interactions (such as
  * pop-ups promoting for credentials, permissions, stream posts, etc.)
  */
-@interface Facebook : NSObject<GBLoginDialogDelegate>{
+@interface Gbomb : NSObject<GBLoginDialogDelegate>{
     id<GBSessionDelegate> _sessionDelegate;
     NSMutableSet* _requests;
     GBSession* _session;

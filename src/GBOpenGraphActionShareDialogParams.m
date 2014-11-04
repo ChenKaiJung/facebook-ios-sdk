@@ -84,7 +84,7 @@ NSString *const kGBAppBridgeImageSupportVersion = @"20130410";
     if (errorReason) {
         NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
         userInfo[GBErrorDialogReasonKey] = errorReason;
-        return [NSError errorWithDomain:FacebookSDKDomain
+        return [NSError errorWithDomain:GbombSDKDomain
                                    code:GBErrorDialog
                                userInfo:userInfo];
     }

@@ -1018,7 +1018,7 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
     NSDictionary* userinfo = [NSDictionary dictionaryWithObject:msg forKey:GBErrorAppEventsReasonKey];
 
     // create error object
-    NSError *err = [NSError errorWithDomain:FacebookSDKDomain
+    NSError *err = [NSError errorWithDomain:GbombSDKDomain
                                        code:GBErrorAppEvents
                                    userInfo:userinfo];
 
@@ -1130,7 +1130,7 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
     // 3) if we have a user session token, then no need to send attribution ID / advertiser ID back as the udid parameter
     // 4) otherwise, send back the udid parameter.
 
-    if ([GBUtility advertisingTrackingStatus] == AdvertisingTrackingDisallowed || [GBSettings limitEventAndDataUsage]) {
+    if ([GBUtility advertisingTrackingStatus] == GBAdvertisingTrackingDisallowed || [GBSettings limitEventAndDataUsage]) {
         return nil;
     }
 

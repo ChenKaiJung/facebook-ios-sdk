@@ -374,7 +374,7 @@
     if (session) {
         userInfo[GBErrorSessionKey] = session;
     }
-    NSError *error = [NSError errorWithDomain:FacebookSDKDomain
+    NSError *error = [NSError errorWithDomain:GbombSDKDomain
                                          code:GBErrorDialog
                                      userInfo:userInfo];
     return error;

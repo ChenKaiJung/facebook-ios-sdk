@@ -105,7 +105,7 @@ NSString *const GBSessionAuthLoggerParamEmptyValue = @"";
 
     params[GBSessionAuthLoggerParamResultKey] = result;
 
-    if ([error.domain isEqualToString:FacebookSDKDomain]) {
+    if ([error.domain isEqualToString:GbombSDKDomain]) {
         // tease apart the structure.
 
         // first see if there is an explicit message in the error's userInfo. If not, default to the reason,
