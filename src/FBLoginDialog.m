@@ -54,11 +54,11 @@
   NSDate *expirationDate =nil;
     
   NSString * access_token = [self getStringFromUrl:[url absoluteString] needle:@"access_token="];
-  NSString * session_key = [self getStringFromUrl:[url absoluteString] needle:@"session_key="];
+  //NSString * session_key = [self getStringFromUrl:[url absoluteString] needle:@"session_key="];
   NSString *code = [self getStringFromUrl:q needle:@"code="];
     
 #ifdef DEBUG
-  NSLog(@"dialogDidSucceed : sessionkey = %@, accessToken = %@",session_key, access_token);
+  NSLog(@"dialogDidSucceed : accessToken = %@",access_token);
 #endif
     
   if (expTime != nil) {
@@ -80,9 +80,9 @@
         if ( code != (NSString *) [NSNull null] && code.length != 0) {
             [_loginDelegate fbDialogLogin:access_token expirationDate:expirationDate params:params];
         }
-        else if (session_key == (NSString *) [NSNull null]){
-            [_loginDelegate fbDialogLogin:access_token expirationDate:expirationDate params:params];
-        }
+        //else if (session_key == (NSString *) [NSNull null]){
+        //    [_loginDelegate fbDialogLogin:access_token expirationDate:expirationDate params:params];
+        //}
         else {
             [_loginDelegate fbDialogLogin:access_token expirationDate:expirationDate params:params];
         }

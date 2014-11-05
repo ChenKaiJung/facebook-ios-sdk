@@ -481,19 +481,20 @@ params   = _params;
     }
     return NO;
   
-  }else if ([url.path isEqualToString:@"/oauth/login_success.html"]) {
+  }else if ([url.path isEqualToString:@"/login_success.html"]) {
 #ifdef DEBUG      
-      NSLog(@"url.path EqualToString : /oauth/login_success.html");
+      NSLog(@"url.path EqualToString : /login_success.html");
 #endif
       NSString * error = [self getStringFromUrl:[url absoluteString] needle:@"error="];
       NSString * errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];
       NSString * errorDes = [self getStringFromUrl:[url absoluteString] needle:@"error_description="];
       NSString * access_token = [self getStringFromUrl:[url absoluteString] needle:@"access_token="];
-      NSString * session_key = [self getStringFromUrl:[url absoluteString] needle:@"session_key="];
-      if (session_key!=(NSString *) [NSNull null] && access_token!=(NSString *) [NSNull null]) {
-          [self dialogDidSucceed:url];
-      }
-      else if (error) {
+//      NSString * session_key = [self getStringFromUrl:[url absoluteString] needle:@"session_key="];
+//      if (session_key!=(NSString *) [NSNull null] && access_token!=(NSString *) [NSNull null]) {
+//          [self dialogDidSucceed:url];
+//      }
+//      else if (error) {
+      if (error) {
           NSDictionary * errorData = [NSDictionary dictionaryWithObject:errorDes forKey:@"error_description"];
           NSError * errorStr = [NSError errorWithDomain:@"OAuthErrDomain"
                                                    code:[errorCode intValue]
