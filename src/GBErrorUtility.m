@@ -151,34 +151,34 @@ static const int GBSDKSystemPasswordErrorSubcode = 65001;
                     if (subcode == GBSDKSystemPasswordErrorSubcode
                         || [GBErrorUtility gberrorIsErrorFromSystemSession:error]) {
                         userMessageKey = @"GBE:PasswordChangedDevice";
-                        userMessageDefault = @"Your Facebook password has changed. To confirm your password, open Settings > Facebook and tap your name.";
+                        userMessageDefault = @"Your Gbomb password has changed. To confirm your password, open Settings > Gbomb and tap your name.";
                         shouldNotifyUser = YES;
                     } else {
                         userMessageKey = @"GBE:PasswordChanged";
-                        userMessageDefault = @"Your Facebook password has changed. Please log into this app again to reconnect your Facebook account.";
+                        userMessageDefault = @"Your Gbomb password has changed. Please log into this app again to reconnect your Gbomb account.";
                     }
                     break;
                 case GBAuthSubcodeUserCheckpointed:
                     userMessageKey = @"GBE:WebLogIn";
-                    userMessageDefault = @"Your Facebook account is locked. Please log into www.facebook.com to continue.";
+                    userMessageDefault = @"Your Gbomb account is locked. Please log into www.gbombgames.com to continue.";
                     shouldNotifyUser = YES;
                     category = GBErrorCategoryRetry;
                     break;
                 case GBAuthSubcodeUnconfirmedUser:
                     userMessageKey = @"GBE:Unconfirmed";
-                    userMessageDefault = @"Your Facebook account is locked. Please log into www.facebook.com to continue.";
+                    userMessageDefault = @"Your Gbomb account is locked. Please log into  www.gbombgames.com to continue.";
                     shouldNotifyUser = YES;
                     break;
                 case GBAuthSubcodeAppNotInstalled:
                     userMessageKey = @"GBE:AppNotInstalled";
-                    userMessageDefault = @"Please log into this app again to reconnect your Facebook account.";
+                    userMessageDefault = @"Please log into this app again to reconnect your Gbomb account.";
                     break;
                 default:
                     if ([GBErrorUtility gberrorIsErrorFromSystemSession:error] && errorCode == GBOAuthError) {
                         // This would include the case where the user has toggled the app slider in iOS 6 (and the session
                         //  had already been open).
                         userMessageKey = @"FBE:OAuthDevice";
-                        userMessageDefault = @"To use your Facebook account with this app, open Settings > Facebook and make sure this app is turned on.";
+                        userMessageDefault = @"To use your Gbomb account with this app, open Settings > Facebook and make sure this app is turned on.";
                         shouldNotifyUser = YES;
                     }
                     break;
@@ -193,7 +193,7 @@ static const int GBSDKSystemPasswordErrorSubcode = 65001;
                 if ([[error userInfo][GBErrorLoginFailedReason] isEqualToString:GBErrorLoginFailedReasonSystemDisallowedWithoutErrorValue]) {
                     // This maps to the iOS 6 slider disabled case.
                     userMessageKey = @"GBE:OAuthDevice";
-                    userMessageDefault = @"To use your Facebook account with this app, open Settings > Facebook and make sure this app is turned on.";
+                    userMessageDefault = @"To use your Gbomb account with this app, open Settings > Gbomb and make sure this app is turned on.";
                     shouldNotifyUser = YES;
                     category = GBErrorCategoryServer;
                 } else if ([[error userInfo][GBErrorLoginFailedReason] isEqualToString:GBErrorLoginFailedReasonSystemError]) {
