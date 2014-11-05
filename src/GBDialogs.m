@@ -243,7 +243,7 @@
     params.link = link;
     params.name = name;
     params.caption = caption;
-    params.description = description;
+    params.objectDescription = description;
     params.picture = picture;
 
     return [self presentShareDialogWithParams:params

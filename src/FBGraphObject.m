@@ -166,7 +166,7 @@ typedef enum _SelectorInferredImplType {
         ogo.url = url;
     }
     if (description) {
-        ogo.description = description;
+        ogo.objectDescription = description;
     }
     return ogo;
 }
