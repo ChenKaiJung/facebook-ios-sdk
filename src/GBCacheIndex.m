@@ -86,7 +86,7 @@ static void initializeStatement(
 {
     if (*statement == nil) {
         CHECK_SQLITE_SUCCESS(
-            GBdfl_sqlite3_prepare_v2(database, statementText, -1, statement, nil),
+            gbdfl_sqlite3_prepare_v2(database, statementText, -1, statement, nil),
             database
         );
     } else {
@@ -498,7 +498,7 @@ static void releaseStatement(sqlite3_stmt* statement, sqlite3* database)
     const unsigned char* key =
     gbdfl_sqlite3_column_text(selectStatement, 1);
     CFTimeInterval accessTime =
-    GBdfl_sqlite3_column_double(selectStatement, 2);
+    gbdfl_sqlite3_column_double(selectStatement, 2);
     NSUInteger fileSize = gbdfl_sqlite3_column_int(selectStatement, 3);
 
     GBCacheEntityInfo* entry = [[GBCacheEntityInfo alloc]
@@ -561,7 +561,7 @@ static void releaseStatement(sqlite3_stmt* statement, sqlite3* database)
     static const char* trimDropQuery = "DROP TABLE IF EXISTS trimmed";
     initializeStatement(_database, &trimCleanStatement, trimDropQuery);
 
-    CHECK_SQLITE_DONE(GBdfl_sqlite3_step(trimCleanStatement), _database);
+    CHECK_SQLITE_DONE(gbdfl_sqlite3_step(trimCleanStatement), _database);
     releaseStatement(trimCleanStatement, _database);
 }
 
@@ -606,7 +606,7 @@ static void releaseStatement(sqlite3_stmt* statement, sqlite3* database)
         trimSelectQuery);
 
     NSUInteger spaceCleaned = 0;
-    while (GBdfl_sqlite3_step(trimSelectStatement) == SQLITE_ROW) {
+    while (gbdfl_sqlite3_step(trimSelectStatement) == SQLITE_ROW) {
         const unsigned char* uuidStr =
             gbdfl_sqlite3_column_text(trimSelectStatement, 0);
         const unsigned char* keyStr =
