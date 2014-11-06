@@ -23,45 +23,50 @@
 		5FC7ABA9178C7D1900829DD1 /* FBInsights.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC7ABA7178C7A8E00829DD1 /* FBInsights.m */; };
 		5FC7ABAA178C7D1A00829DD1 /* FBInsights.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC7ABA7178C7A8E00829DD1 /* FBInsights.m */; };
 		5FC7ABAB178C7D2500829DD1 /* FBInsights.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FC7ABA1178C7A4900829DD1 /* FBInsights.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		745D48861A02572100EF00EE /* GBSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48851A02572100EF00EE /* GBSession.h */; };
+		74045ABF1A0A4D970084231F /* GBSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48841A0256CE00EF00EE /* GBSession.m */; };
+		74045AC01A0B15BF0084231F /* GBAppLinkData.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48B51A029F4400EF00EE /* GBAppLinkData.m */; };
+		74045AC91A0B8CC20084231F /* NSError+GBError.h in Headers */ = {isa = PBXBuildFile; fileRef = 74045AC71A0B8CC20084231F /* NSError+GBError.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		74045ACA1A0B8CC20084231F /* NSError+GBError.m in Sources */ = {isa = PBXBuildFile; fileRef = 74045AC81A0B8CC20084231F /* NSError+GBError.m */; };
+		74045ACB1A0B8DFC0084231F /* GBAppEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48941A02864100EF00EE /* GBAppEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		745D48861A02572100EF00EE /* GBSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48851A02572100EF00EE /* GBSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D48891A027F2200EF00EE /* GBSDKVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48881A027F2200EF00EE /* GBSDKVersion.h */; };
 		745D488B1A027FB300EF00EE /* GBAccessTokenData+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D488A1A027FB300EF00EE /* GBAccessTokenData+Internal.h */; };
 		745D488D1A027FE900EF00EE /* GBAppBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D488C1A027FE900EF00EE /* GBAppBridge.h */; };
 		745D488F1A02802D00EF00EE /* GBAppBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D488E1A02802D00EF00EE /* GBAppBridge.m */; };
-		745D48921A02818F00EF00EE /* GBAppCall.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48911A02818F00EF00EE /* GBAppCall.h */; };
+		745D48921A02818F00EF00EE /* GBAppCall.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48911A02818F00EF00EE /* GBAppCall.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D48961A028CCB00EF00EE /* GBAppEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48951A028CCB00EF00EE /* GBAppEvents.m */; };
 		745D48981A028E7200EF00EE /* GBDataDiskCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48971A028E7200EF00EE /* GBDataDiskCache.h */; };
 		745D489A1A028E8800EF00EE /* GBDataDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48991A028E8800EF00EE /* GBDataDiskCache.m */; };
-		745D489D1A02927A00EF00EE /* GBDialogs.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D489C1A02927A00EF00EE /* GBDialogs.h */; };
+		745D489D1A02927A00EF00EE /* GBDialogs.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D489C1A02927A00EF00EE /* GBDialogs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D489F1A02928D00EF00EE /* GBDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D489E1A02928D00EF00EE /* GBDialog.m */; };
 		745D48A11A0293AF00EF00EE /* Gbomb.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48A01A0293AF00EF00EE /* Gbomb.h */; };
 		745D48A31A0293C200EF00EE /* Gbomb.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48A21A0293C200EF00EE /* Gbomb.m */; };
-		745D48A71A02976800EF00EE /* GBAccessTokenData.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48A61A02976800EF00EE /* GBAccessTokenData.h */; };
+		745D48A71A02976800EF00EE /* GBAccessTokenData.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48A61A02976800EF00EE /* GBAccessTokenData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D48A91A0297AA00EF00EE /* GBAccessTokenData.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48A81A0297AA00EF00EE /* GBAccessTokenData.m */; };
 		745D48AC1A029ADF00EF00EE /* GBAppBridgeTypeToJSONConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48AB1A029ADF00EF00EE /* GBAppBridgeTypeToJSONConverter.m */; };
 		745D48AE1A029B3900EF00EE /* GBAppCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48AD1A029B3900EF00EE /* GBAppCall.m */; };
 		745D48B01A029D1C00EF00EE /* GBAppLinkData+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48AF1A029D1C00EF00EE /* GBAppLinkData+Internal.h */; };
-		745D48B21A029D5F00EF00EE /* GBAppLinkData.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48B11A029D5F00EF00EE /* GBAppLinkData.h */; };
-		745D48B41A029E4000EF00EE /* GbombSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48B31A029E4000EF00EE /* GbombSDK.h */; };
-		745D48B91A02A12500EF00EE /* GBCacheIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48B81A02A12500EF00EE /* GBCacheIndex.h */; };
+		745D48B21A029D5F00EF00EE /* GBAppLinkData.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48B11A029D5F00EF00EE /* GBAppLinkData.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		745D48B41A029E4000EF00EE /* GbombSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48B31A029E4000EF00EE /* GbombSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		745D48B91A02A12500EF00EE /* GBCacheIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48B81A02A12500EF00EE /* GBCacheIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D48BB1A02A15E00EF00EE /* GBCacheIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48BA1A02A15E00EF00EE /* GBCacheIndex.m */; };
 		745D48BF1A02A47D00EF00EE /* GBDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48BE1A02A47D00EF00EE /* GBDialog.h */; };
 		745D48C11A02A4F100EF00EE /* GBDialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48C01A02A4F100EF00EE /* GBDialogs.m */; };
-		745D48C31A02A5A000EF00EE /* GBDialogsData.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48C21A02A5A000EF00EE /* GBDialogsData.h */; };
+		745D48C31A02A5A000EF00EE /* GBDialogsData.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48C21A02A5A000EF00EE /* GBDialogsData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D48C51A02A62A00EF00EE /* GBDialogsData.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48C41A02A62A00EF00EE /* GBDialogsData.m */; };
 		745D48C71A02A66C00EF00EE /* GBDialogsParams+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48C61A02A66C00EF00EE /* GBDialogsParams+Internal.h */; };
-		745D48C91A02A77600EF00EE /* GBDialogsParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48C81A02A77600EF00EE /* GBDialogsParams.h */; };
+		745D48C91A02A77600EF00EE /* GBDialogsParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48C81A02A77600EF00EE /* GBDialogsParams.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D48CB1A02A7AC00EF00EE /* GBDialogsParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48CA1A02A7AC00EF00EE /* GBDialogsParams.m */; };
 		745D48CD1A02A85600EF00EE /* GBDynamicFrameworkLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48CC1A02A85600EF00EE /* GBDynamicFrameworkLoader.h */; };
 		745D48CF1A02A8A100EF00EE /* GBDynamicFrameworkLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48CE1A02A8A100EF00EE /* GBDynamicFrameworkLoader.m */; };
-		745D494A1A0321EB00EF00EE /* GBError.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48D01A0321EA00EF00EE /* GBError.h */; };
+		745D494A1A0321EB00EF00EE /* GBError.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48D01A0321EA00EF00EE /* GBError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D494B1A0321EB00EF00EE /* GBError.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48D11A0321EA00EF00EE /* GBError.m */; };
-		745D494C1A0321EB00EF00EE /* GBErrorUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48D21A0321EA00EF00EE /* GBErrorUtility.h */; };
+		745D494C1A0321EB00EF00EE /* GBErrorUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48D21A0321EA00EF00EE /* GBErrorUtility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D494D1A0321EB00EF00EE /* GBErrorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48D31A0321EA00EF00EE /* GBErrorUtility.m */; };
 		745D494E1A0321EB00EF00EE /* GBErrorUtility+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48D41A0321EA00EF00EE /* GBErrorUtility+Internal.h */; };
 		745D494F1A0321EB00EF00EE /* GBFetchedAppSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48D51A0321EA00EF00EE /* GBFetchedAppSettings.h */; };
 		745D49501A0321EB00EF00EE /* GBFetchedAppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48D61A0321EA00EF00EE /* GBFetchedAppSettings.m */; };
-		745D49511A0321EB00EF00EE /* GBFrictionlessDialogSupportDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48D71A0321EA00EF00EE /* GBFrictionlessDialogSupportDelegate.h */; };
+		745D49511A0321EB00EF00EE /* GBFrictionlessDialogSupportDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48D71A0321EA00EF00EE /* GBFrictionlessDialogSupportDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D49521A0321EB00EF00EE /* GBFrictionlessRecipientCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48D81A0321EA00EF00EE /* GBFrictionlessRecipientCache.h */; };
 		745D49531A0321EB00EF00EE /* GBFrictionlessRecipientCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48D91A0321EA00EF00EE /* GBFrictionlessRecipientCache.m */; };
 		745D49541A0321EB00EF00EE /* GBFrictionlessRequestSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48DA1A0321EA00EF00EE /* GBFrictionlessRequestSettings.h */; };
@@ -71,8 +76,8 @@
 		745D49581A0321EB00EF00EE /* GBFriendPickerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48DE1A0321EA00EF00EE /* GBFriendPickerViewController.h */; };
 		745D49591A0321EB00EF00EE /* GBFriendPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48DF1A0321EA00EF00EE /* GBFriendPickerViewController.m */; };
 		745D495A1A0321EB00EF00EE /* GBFriendPickerViewController+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48E01A0321EA00EF00EE /* GBFriendPickerViewController+Internal.h */; };
-		745D495B1A0321EB00EF00EE /* GBGraphLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48E11A0321EA00EF00EE /* GBGraphLocation.h */; };
-		745D495C1A0321EB00EF00EE /* GBGraphObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48E21A0321EA00EF00EE /* GBGraphObject.h */; };
+		745D495B1A0321EB00EF00EE /* GBGraphLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48E11A0321EA00EF00EE /* GBGraphLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		745D495C1A0321EB00EF00EE /* GBGraphObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48E21A0321EA00EF00EE /* GBGraphObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D495D1A0321EB00EF00EE /* GBGraphObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48E31A0321EA00EF00EE /* GBGraphObject.m */; };
 		745D495E1A0321EB00EF00EE /* GBGraphObjectPagingLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48E41A0321EA00EF00EE /* GBGraphObjectPagingLoader.h */; };
 		745D495F1A0321EB00EF00EE /* GBGraphObjectPagingLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48E51A0321EA00EF00EE /* GBGraphObjectPagingLoader.m */; };
@@ -82,11 +87,11 @@
 		745D49631A0321EB00EF00EE /* GBGraphObjectTableDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48E91A0321EA00EF00EE /* GBGraphObjectTableDataSource.m */; };
 		745D49641A0321EB00EF00EE /* GBGraphObjectTableSelection.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48EA1A0321EA00EF00EE /* GBGraphObjectTableSelection.h */; };
 		745D49651A0321EB00EF00EE /* GBGraphObjectTableSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48EB1A0321EA00EF00EE /* GBGraphObjectTableSelection.m */; };
-		745D49661A0321EB00EF00EE /* GBGraphPlace.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48EC1A0321EA00EF00EE /* GBGraphPlace.h */; };
-		745D49671A0321EB00EF00EE /* GBGraphUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48ED1A0321EB00EF00EE /* GBGraphUser.h */; };
+		745D49661A0321EB00EF00EE /* GBGraphPlace.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48EC1A0321EA00EF00EE /* GBGraphPlace.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		745D49671A0321EB00EF00EE /* GBGraphUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48ED1A0321EB00EF00EE /* GBGraphUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D49681A0321EB00EF00EE /* GBImageResourceLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48EE1A0321EB00EF00EE /* GBImageResourceLoader.h */; };
 		745D49691A0321EB00EF00EE /* GBImageResourceLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48EF1A0321EB00EF00EE /* GBImageResourceLoader.m */; };
-		745D496A1A0321EB00EF00EE /* GBInsights.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48F01A0321EB00EF00EE /* GBInsights.h */; };
+		745D496A1A0321EB00EF00EE /* GBInsights.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48F01A0321EB00EF00EE /* GBInsights.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D496B1A0321EB00EF00EE /* GBInsights.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48F11A0321EB00EF00EE /* GBInsights.m */; };
 		745D496C1A0321EB00EF00EE /* GBLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48F21A0321EB00EF00EE /* GBLogger.h */; };
 		745D496D1A0321EB00EF00EE /* GBLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48F31A0321EB00EF00EE /* GBLogger.m */; };
@@ -94,27 +99,27 @@
 		745D496F1A0321EB00EF00EE /* GBLoginDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48F51A0321EB00EF00EE /* GBLoginDialog.m */; };
 		745D49701A0321EB00EF00EE /* GBLoginDialogParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48F61A0321EB00EF00EE /* GBLoginDialogParams.h */; };
 		745D49711A0321EB00EF00EE /* GBLoginDialogParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48F71A0321EB00EF00EE /* GBLoginDialogParams.m */; };
-		745D49721A0321EB00EF00EE /* GBLoginView.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48F81A0321EB00EF00EE /* GBLoginView.h */; };
+		745D49721A0321EB00EF00EE /* GBLoginView.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48F81A0321EB00EF00EE /* GBLoginView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D49731A0321EB00EF00EE /* GBLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48F91A0321EB00EF00EE /* GBLoginView.m */; };
-		745D49741A0321EB00EF00EE /* GBNativeDialogs.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48FA1A0321EB00EF00EE /* GBNativeDialogs.h */; };
+		745D49741A0321EB00EF00EE /* GBNativeDialogs.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48FA1A0321EB00EF00EE /* GBNativeDialogs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D49751A0321EB00EF00EE /* GBNativeDialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48FB1A0321EB00EF00EE /* GBNativeDialogs.m */; };
-		745D49761A0321EB00EF00EE /* GBOpenGraphAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48FC1A0321EB00EF00EE /* GBOpenGraphAction.h */; };
-		745D49771A0321EB00EF00EE /* GBOpenGraphActionShareDialogParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48FD1A0321EB00EF00EE /* GBOpenGraphActionShareDialogParams.h */; };
+		745D49761A0321EB00EF00EE /* GBOpenGraphAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48FC1A0321EB00EF00EE /* GBOpenGraphAction.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		745D49771A0321EB00EF00EE /* GBOpenGraphActionShareDialogParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48FD1A0321EB00EF00EE /* GBOpenGraphActionShareDialogParams.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D49781A0321EB00EF00EE /* GBOpenGraphActionShareDialogParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48FE1A0321EB00EF00EE /* GBOpenGraphActionShareDialogParams.m */; };
-		745D49791A0321EB00EF00EE /* GBOpenGraphObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48FF1A0321EB00EF00EE /* GBOpenGraphObject.h */; };
+		745D49791A0321EB00EF00EE /* GBOpenGraphObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48FF1A0321EB00EF00EE /* GBOpenGraphObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D497A1A0321EB00EF00EE /* GBPlacePickerCacheDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49001A0321EB00EF00EE /* GBPlacePickerCacheDescriptor.h */; };
 		745D497B1A0321EB00EF00EE /* GBPlacePickerCacheDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49011A0321EB00EF00EE /* GBPlacePickerCacheDescriptor.m */; };
-		745D497C1A0321EB00EF00EE /* GBPlacePickerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49021A0321EB00EF00EE /* GBPlacePickerViewController.h */; };
+		745D497C1A0321EB00EF00EE /* GBPlacePickerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49021A0321EB00EF00EE /* GBPlacePickerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D497D1A0321EB00EF00EE /* GBPlacePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49031A0321EB00EF00EE /* GBPlacePickerViewController.m */; };
 		745D497E1A0321EB00EF00EE /* GBPlacePickerViewController+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49041A0321EB00EF00EE /* GBPlacePickerViewController+Internal.h */; };
-		745D497F1A0321EB00EF00EE /* GBProfilePictureView.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49051A0321EB00EF00EE /* GBProfilePictureView.h */; };
+		745D497F1A0321EB00EF00EE /* GBProfilePictureView.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49051A0321EB00EF00EE /* GBProfilePictureView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D49801A0321EB00EF00EE /* GBProfilePictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49061A0321EB00EF00EE /* GBProfilePictureView.m */; };
-		745D49811A0321EB00EF00EE /* GBRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49071A0321EB00EF00EE /* GBRequest.h */; };
+		745D49811A0321EB00EF00EE /* GBRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49071A0321EB00EF00EE /* GBRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D49821A0321EB00EF00EE /* GBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49081A0321EB00EF00EE /* GBRequest.m */; };
 		745D49831A0321EB00EF00EE /* GBRequest+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49091A0321EB00EF00EE /* GBRequest+Internal.h */; };
 		745D49841A0321EB00EF00EE /* GBRequestBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D490A1A0321EB00EF00EE /* GBRequestBody.h */; };
 		745D49851A0321EB00EF00EE /* GBRequestBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D490B1A0321EB00EF00EE /* GBRequestBody.m */; };
-		745D49861A0321EB00EF00EE /* GBRequestConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D490C1A0321EB00EF00EE /* GBRequestConnection.h */; };
+		745D49861A0321EB00EF00EE /* GBRequestConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D490C1A0321EB00EF00EE /* GBRequestConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D49871A0321EB00EF00EE /* GBRequestConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D490D1A0321EB00EF00EE /* GBRequestConnection.m */; };
 		745D49881A0321EB00EF00EE /* GBRequestConnection+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D490E1A0321EB00EF00EE /* GBRequestConnection+Internal.h */; };
 		745D49891A0321EB00EF00EE /* GBRequestConnectionRetryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D490F1A0321EB00EF00EE /* GBRequestConnectionRetryManager.h */; };
@@ -146,14 +151,14 @@
 		745D49A31A0321EB00EF00EE /* GBSessionSafariLoginStategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49291A0321EB00EF00EE /* GBSessionSafariLoginStategy.m */; };
 		745D49A41A0321EB00EF00EE /* GBSessionSystemLoginStategy.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D492A1A0321EB00EF00EE /* GBSessionSystemLoginStategy.h */; };
 		745D49A51A0321EB00EF00EE /* GBSessionSystemLoginStategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D492B1A0321EB00EF00EE /* GBSessionSystemLoginStategy.m */; };
-		745D49A61A0321EB00EF00EE /* GBSessionTokenCachingStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D492C1A0321EB00EF00EE /* GBSessionTokenCachingStrategy.h */; };
+		745D49A61A0321EB00EF00EE /* GBSessionTokenCachingStrategy.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D492C1A0321EB00EF00EE /* GBSessionTokenCachingStrategy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D49A71A0321EB00EF00EE /* GBSessionTokenCachingStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D492D1A0321EB00EF00EE /* GBSessionTokenCachingStrategy.m */; };
 		745D49A81A0321EB00EF00EE /* GBSessionUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D492E1A0321EB00EF00EE /* GBSessionUtility.h */; };
 		745D49A91A0321EB00EF00EE /* GBSessionUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D492F1A0321EB00EF00EE /* GBSessionUtility.m */; };
-		745D49AA1A0321EB00EF00EE /* GBSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49301A0321EB00EF00EE /* GBSettings.h */; };
+		745D49AA1A0321EB00EF00EE /* GBSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49301A0321EB00EF00EE /* GBSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D49AB1A0321EB00EF00EE /* GBSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49311A0321EB00EF00EE /* GBSettings.m */; };
 		745D49AC1A0321EB00EF00EE /* GBSettings+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49321A0321EB00EF00EE /* GBSettings+Internal.h */; };
-		745D49AD1A0321EB00EF00EE /* GBShareDialogParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49331A0321EB00EF00EE /* GBShareDialogParams.h */; };
+		745D49AD1A0321EB00EF00EE /* GBShareDialogParams.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49331A0321EB00EF00EE /* GBShareDialogParams.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D49AE1A0321EB00EF00EE /* GBShareDialogParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49341A0321EB00EF00EE /* GBShareDialogParams.m */; };
 		745D49AF1A0321EB00EF00EE /* GBSystemAccountStoreAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49351A0321EB00EF00EE /* GBSystemAccountStoreAdapter.h */; };
 		745D49B01A0321EB00EF00EE /* GBSystemAccountStoreAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49361A0321EB00EF00EE /* GBSystemAccountStoreAdapter.m */; };
@@ -162,19 +167,19 @@
 		745D49B31A0321EB00EF00EE /* GBTask+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49391A0321EB00EF00EE /* GBTask+Private.h */; };
 		745D49B41A0321EB00EF00EE /* GBTaskCompletionSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D493A1A0321EB00EF00EE /* GBTaskCompletionSource.h */; };
 		745D49B51A0321EB00EF00EE /* GBTaskCompletionSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D493B1A0321EB00EF00EE /* GBTaskCompletionSource.m */; };
-		745D49B61A0321EB00EF00EE /* GBTestSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D493C1A0321EB00EF00EE /* GBTestSession.h */; };
+		745D49B61A0321EB00EF00EE /* GBTestSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D493C1A0321EB00EF00EE /* GBTestSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D49B71A0321EB00EF00EE /* GBTestSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D493D1A0321EB00EF00EE /* GBTestSession.m */; };
 		745D49B81A0321EB00EF00EE /* GBTestSession+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D493E1A0321EB00EF00EE /* GBTestSession+Internal.h */; };
 		745D49B91A0321EB00EF00EE /* GBURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D493F1A0321EB00EF00EE /* GBURLConnection.h */; };
 		745D49BA1A0321EB00EF00EE /* GBURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49401A0321EB00EF00EE /* GBURLConnection.m */; };
-		745D49BB1A0321EB00EF00EE /* GBUserSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49411A0321EB00EF00EE /* GBUserSettingsViewController.h */; };
+		745D49BB1A0321EB00EF00EE /* GBUserSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49411A0321EB00EF00EE /* GBUserSettingsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D49BC1A0321EB00EF00EE /* GBUserSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49421A0321EB00EF00EE /* GBUserSettingsViewController.m */; };
 		745D49BD1A0321EB00EF00EE /* GBUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49431A0321EB00EF00EE /* GBUtility.h */; };
 		745D49BE1A0321EB00EF00EE /* GBUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49441A0321EB00EF00EE /* GBUtility.m */; };
-		745D49BF1A0321EB00EF00EE /* GBViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49451A0321EB00EF00EE /* GBViewController.h */; };
+		745D49BF1A0321EB00EF00EE /* GBViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49451A0321EB00EF00EE /* GBViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D49C01A0321EB00EF00EE /* GBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49461A0321EB00EF00EE /* GBViewController.m */; };
 		745D49C11A0321EB00EF00EE /* GBViewController+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49471A0321EB00EF00EE /* GBViewController+Internal.h */; };
-		745D49C21A0321EB00EF00EE /* GBWebDialogs.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49481A0321EB00EF00EE /* GBWebDialogs.h */; };
+		745D49C21A0321EB00EF00EE /* GBWebDialogs.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49481A0321EB00EF00EE /* GBWebDialogs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D49C31A0321EB00EF00EE /* GBWebDialogs.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D49491A0321EB00EF00EE /* GBWebDialogs.m */; };
 		745D49E11A07D67100EF00EE /* GBDialogsData+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D49E01A07D67100EF00EE /* GBDialogsData+Internal.h */; };
 		745D49F31A07DE6F00EF00EE /* GBDialogClose.png in Sources */ = {isa = PBXBuildFile; fileRef = 745D49E31A07D6C700EF00EE /* GBDialogClose.png */; };
@@ -623,6 +628,8 @@
 		5F8BE21C164A30FD006329D6 /* FBSessionAppEventsState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBSessionAppEventsState.m; sourceTree = "<group>"; };
 		5FC7ABA1178C7A4900829DD1 /* FBInsights.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBInsights.h; sourceTree = "<group>"; };
 		5FC7ABA7178C7A8E00829DD1 /* FBInsights.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBInsights.m; sourceTree = "<group>"; };
+		74045AC71A0B8CC20084231F /* NSError+GBError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+GBError.h"; sourceTree = "<group>"; };
+		74045AC81A0B8CC20084231F /* NSError+GBError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+GBError.m"; sourceTree = "<group>"; };
 		7421105E186404A2007611E4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		745D48841A0256CE00EF00EE /* GBSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBSession.m; sourceTree = "<group>"; };
 		745D48851A02572100EF00EE /* GBSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBSession.h; sourceTree = "<group>"; };
@@ -1456,6 +1463,8 @@
 				745D48871A027E6D00EF00EE /* GBSession+Internal.h */,
 				745D48851A02572100EF00EE /* GBSession.h */,
 				745D48841A0256CE00EF00EE /* GBSession.m */,
+				74045AC71A0B8CC20084231F /* NSError+GBError.h */,
+				74045AC81A0B8CC20084231F /* NSError+GBError.m */,
 			);
 			name = GbombSDK;
 			sourceTree = "<group>";
@@ -1814,16 +1823,48 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E23E5A0B1521161900A011A8 /* FBError.h in Headers */,
+				745D49C21A0321EB00EF00EE /* GBWebDialogs.h in Headers */,
+				745D48C91A02A77600EF00EE /* GBDialogsParams.h in Headers */,
+				745D48C31A02A5A000EF00EE /* GBDialogsData.h in Headers */,
+				745D496A1A0321EB00EF00EE /* GBInsights.h in Headers */,
+				745D49511A0321EB00EF00EE /* GBFrictionlessDialogSupportDelegate.h in Headers */,
+				745D489D1A02927A00EF00EE /* GBDialogs.h in Headers */,
+				745D48921A02818F00EF00EE /* GBAppCall.h in Headers */,
+				745D49761A0321EB00EF00EE /* GBOpenGraphAction.h in Headers */,
+				745D49771A0321EB00EF00EE /* GBOpenGraphActionShareDialogParams.h in Headers */,
+				74045ACB1A0B8DFC0084231F /* GBAppEvents.h in Headers */,
+				745D48B21A029D5F00EF00EE /* GBAppLinkData.h in Headers */,
+				745D494A1A0321EB00EF00EE /* GBError.h in Headers */,
+				745D497F1A0321EB00EF00EE /* GBProfilePictureView.h in Headers */,
+				745D48A71A02976800EF00EE /* GBAccessTokenData.h in Headers */,
+				745D49811A0321EB00EF00EE /* GBRequest.h in Headers */,
+				745D49861A0321EB00EF00EE /* GBRequestConnection.h in Headers */,
+				745D49A61A0321EB00EF00EE /* GBSessionTokenCachingStrategy.h in Headers */,
+				745D48861A02572100EF00EE /* GBSession.h in Headers */,
+				745D495C1A0321EB00EF00EE /* GBGraphObject.h in Headers */,
+				745D49661A0321EB00EF00EE /* GBGraphPlace.h in Headers */,
+				745D495B1A0321EB00EF00EE /* GBGraphLocation.h in Headers */,
+				745D49671A0321EB00EF00EE /* GBGraphUser.h in Headers */,
+				745D48B41A029E4000EF00EE /* GbombSDK.h in Headers */,
+				745D49AD1A0321EB00EF00EE /* GBShareDialogParams.h in Headers */,
+				745D49791A0321EB00EF00EE /* GBOpenGraphObject.h in Headers */,
+				745D497C1A0321EB00EF00EE /* GBPlacePickerViewController.h in Headers */,
+				745D49B61A0321EB00EF00EE /* GBTestSession.h in Headers */,
+				745D48B91A02A12500EF00EE /* GBCacheIndex.h in Headers */,
 				745D49721A0321EB00EF00EE /* GBLoginView.h in Headers */,
+				745D49AA1A0321EB00EF00EE /* GBSettings.h in Headers */,
+				745D49BB1A0321EB00EF00EE /* GBUserSettingsViewController.h in Headers */,
+				745D49BF1A0321EB00EF00EE /* GBViewController.h in Headers */,
+				745D49741A0321EB00EF00EE /* GBNativeDialogs.h in Headers */,
+				74045AC91A0B8CC20084231F /* NSError+GBError.h in Headers */,
+				745D494C1A0321EB00EF00EE /* GBErrorUtility.h in Headers */,
+				E23E5A0B1521161900A011A8 /* FBError.h in Headers */,
 				B9DC7F40151AB56100DF1158 /* FBProfilePictureView.h in Headers */,
 				9DF9B2FF16851828008B6CC0 /* FBAccessTokenData.h in Headers */,
 				9D3D36B217CBE6C500B9B049 /* FBTask.h in Headers */,
 				AEA93B0B11D5293B000A4545 /* FBRequest.h in Headers */,
 				849CB18C1523416B00112220 /* FBLoginDialog.h in Headers */,
-				745D49BF1A0321EB00EF00EE /* GBViewController.h in Headers */,
 				849CB18D1523416B00112220 /* FBDialog.h in Headers */,
-				745D48B21A029D5F00EF00EE /* GBAppLinkData.h in Headers */,
 				AA747D9F0F9514B9006C5449 /* facebook_ios_sdk_Prefix.pch in Headers */,
 				E29B4E65152631FB00D1BE21 /* FBRequestBody.h in Headers */,
 				745D498D1A0321EB00EF00EE /* GBRequestMetadata.h in Headers */,
@@ -1831,11 +1872,9 @@
 				E23E5A0F1521163C00A011A8 /* FBURLConnection.h in Headers */,
 				8446FDAD151CDB0B000BE007 /* FBSessionTokenCachingStrategy.h in Headers */,
 				84B2F69E1525096B00E93C17 /* FBSession.h in Headers */,
-				745D495C1A0321EB00EF00EE /* GBGraphObject.h in Headers */,
 				745D49881A0321EB00EF00EE /* GBRequestConnection+Internal.h in Headers */,
 				745D49B31A0321EB00EF00EE /* GBTask+Private.h in Headers */,
 				840FDCBD152B5D9200F9C927 /* FBFrictionlessRequestSettings.h in Headers */,
-				745D49811A0321EB00EF00EE /* GBRequest.h in Headers */,
 				745D48BF1A02A47D00EF00EE /* GBDialog.h in Headers */,
 				B9C6E1341525219600E46808 /* FBCacheIndex.h in Headers */,
 				745D48891A027F2200EF00EE /* GBSDKVersion.h in Headers */,
@@ -1843,17 +1882,16 @@
 				B966ADFC152D020E005FC07B /* FBGraphObjectTableCell.h in Headers */,
 				84AE5DA3152EA02500C4DE54 /* FBGraphObject.h in Headers */,
 				84E2DA28153492DE007F886C /* FBGraphPlace.h in Headers */,
-				745D49791A0321EB00EF00EE /* GBOpenGraphObject.h in Headers */,
 				84E2DA2C15353430007F886C /* FBGraphLocation.h in Headers */,
 				745D48A11A0293AF00EF00EE /* Gbomb.h in Headers */,
 				84E0C9F91535ED5A00778DA4 /* FBGraphUser.h in Headers */,
 				84E0CA04153618E500778DA4 /* FacebookSDK.h in Headers */,
 				7EE2A6E116DE7D15009C2BA4 /* FBShareDialogParams.h in Headers */,
-				745D48A71A02976800EF00EE /* GBAccessTokenData.h in Headers */,
 				84E0CA061536198400778DA4 /* FBConnect.h in Headers */,
 				9D3D36AE17CBE6C500B9B049 /* FBTaskCompletionSource.h in Headers */,
 				84E0CA0A153619D500778DA4 /* Facebook.h in Headers */,
 				84E0CA0C153619D500778DA4 /* FBDataDiskCache.h in Headers */,
+				745D499D1A0321EB00EF00EE /* GBSessionLoginStrategy.h in Headers */,
 				745D49891A0321EB00EF00EE /* GBRequestConnectionRetryManager.h in Headers */,
 				745D49701A0321EB00EF00EE /* GBLoginDialogParams.h in Headers */,
 				85AA4B8F1545C54800E5352E /* FBSession+Internal.h in Headers */,
@@ -1863,7 +1901,6 @@
 				843D2DD81547C33000873F7C /* FBUtility.h in Headers */,
 				E28B75541547D85A002E30C0 /* FBFriendPickerViewController.h in Headers */,
 				E2B99CF11549CD7F002AEA86 /* FBGraphObjectTableDataSource.h in Headers */,
-				745D49AD1A0321EB00EF00EE /* GBShareDialogParams.h in Headers */,
 				745D49931A0321EB00EF00EE /* GBSessionAppSwitchingLoginStategy.h in Headers */,
 				E2B99CF51549E02A002AEA86 /* FBGraphObjectTableSelection.h in Headers */,
 				5F7CB4201553ACC600C183CF /* FBLogger.h in Headers */,
@@ -1877,15 +1914,12 @@
 				745D49AC1A0321EB00EF00EE /* GBSettings+Internal.h in Headers */,
 				84C7F72D15806ADC00E4B78A /* FBRequestConnection+Internal.h in Headers */,
 				84D0A64D1581A0CF00A2FA5E /* FBCacheDescriptor.h in Headers */,
-				745D494C1A0321EB00EF00EE /* GBErrorUtility.h in Headers */,
 				84D0A6591581A20400A2FA5E /* FBFriendPickerCacheDescriptor.h in Headers */,
-				745D49BB1A0321EB00EF00EE /* GBUserSettingsViewController.h in Headers */,
 				84D0A65A1581A20A00A2FA5E /* FBPlacePickerCacheDescriptor.h in Headers */,
 				745D49971A0321EB00EF00EE /* GBSessionGbombAppNativeLoginStategy.h in Headers */,
 				84E3132C1589948C004C4169 /* FBPlacePickerViewController+Internal.h in Headers */,
 				745D49541A0321EB00EF00EE /* GBFrictionlessRequestSettings.h in Headers */,
 				745D497A1A0321EB00EF00EE /* GBPlacePickerCacheDescriptor.h in Headers */,
-				745D49741A0321EB00EF00EE /* GBNativeDialogs.h in Headers */,
 				745D48C71A02A66C00EF00EE /* GBDialogsParams+Internal.h in Headers */,
 				840F6595159B441D005D41AA /* FBLoginView.h in Headers */,
 				DDB7C34C15A6181100C8DCE6 /* FBSettings.h in Headers */,
@@ -1899,11 +1933,9 @@
 				745D48CD1A02A85600EF00EE /* GBDynamicFrameworkLoader.h in Headers */,
 				85F99E3F15C3751100D807A5 /* FBViewController+Internal.h in Headers */,
 				8440A81615E3F2B800565452 /* FBSDKVersion.h in Headers */,
-				745D49A61A0321EB00EF00EE /* GBSessionTokenCachingStrategy.h in Headers */,
 				85A928901611187F008699F1 /* FBNativeDialogs.h in Headers */,
 				8425CFAD1639BB2600472F98 /* NSError+FBError.h in Headers */,
 				84D0F15116653D9900466CD1 /* FBErrorUtility+Internal.h in Headers */,
-				745D497C1A0321EB00EF00EE /* GBPlacePickerViewController.h in Headers */,
 				745D499B1A0321EB00EF00EE /* GBSessionInlineWebViewLoginStategy.h in Headers */,
 				745D49B81A0321EB00EF00EE /* GBTestSession+Internal.h in Headers */,
 				745D488D1A027FE900EF00EE /* GBAppBridge.h in Headers */,
@@ -1916,17 +1948,13 @@
 				5F8BE21D164A30FD006329D6 /* FBSessionAppEventsState.h in Headers */,
 				9DF9B317168AD98A008B6CC0 /* FBAccessTokenData+Internal.h in Headers */,
 				5F5F7E6616B21A500031AA95 /* FBFetchedAppSettings.h in Headers */,
-				745D48C91A02A77600EF00EE /* GBDialogsParams.h in Headers */,
-				745D49C21A0321EB00EF00EE /* GBWebDialogs.h in Headers */,
 				745D494E1A0321EB00EF00EE /* GBErrorUtility+Internal.h in Headers */,
 				84AD5AAB169602490026E6C3 /* FBWebDialogs.h in Headers */,
 				745D49601A0321EB00EF00EE /* GBGraphObjectTableCell.h in Headers */,
 				B58DFD8B168402B30030A947 /* FBAppBridge.h in Headers */,
 				B5B7702B16C30EA500729340 /* FBBase64.h in Headers */,
-				745D48C31A02A5A000EF00EE /* GBDialogsData.h in Headers */,
 				745D499E1A0321EB00EF00EE /* GBSessionLoginStrategyParams.h in Headers */,
 				B51484E316C622370041257D /* FBCrypto.h in Headers */,
-				745D49861A0321EB00EF00EE /* GBRequestConnection.h in Headers */,
 				745D49621A0321EB00EF00EE /* GBGraphObjectTableDataSource.h in Headers */,
 				745D498B1A0321EB00EF00EE /* GBRequestHandlerFactory.h in Headers */,
 				B5E946E016D84FB700D55A25 /* FBAppBridgeTypeToJSONConverter.h in Headers */,
@@ -1934,13 +1962,10 @@
 				B5B4C19916F3C8B7006FF55B /* FBDialogs+Internal.h in Headers */,
 				745D496C1A0321EB00EF00EE /* GBLogger.h in Headers */,
 				841FA0C416DFF934002A51EA /* FBFrictionlessRecipientCache.h in Headers */,
-				745D49661A0321EB00EF00EE /* GBGraphPlace.h in Headers */,
-				745D49771A0321EB00EF00EE /* GBOpenGraphActionShareDialogParams.h in Headers */,
 				841FA0C816E1236F002A51EA /* FBFrictionlessDialogSupportDelegate.h in Headers */,
 				B5B4C1C516F7AAA1006FF55B /* FBLoginDialogParams.h in Headers */,
 				745D49E11A07D67100EF00EE /* GBDialogsData+Internal.h in Headers */,
 				745D49B91A0321EB00EF00EE /* GBURLConnection.h in Headers */,
-				745D49761A0321EB00EF00EE /* GBOpenGraphAction.h in Headers */,
 				B5B4C1D016F7AC28006FF55B /* FBDialogsParams.h in Headers */,
 				B5B4C1D516F7D3D7006FF55B /* FBDialogsParams+Internal.h in Headers */,
 				B5E8DC26170C22DA009A4590 /* FBAppCall.h in Headers */,
@@ -1949,29 +1974,19 @@
 				B5E8DC37170C22FC009A4590 /* FBDialogsData+Internal.h in Headers */,
 				745D488B1A027FB300EF00EE /* GBAccessTokenData+Internal.h in Headers */,
 				745D49681A0321EB00EF00EE /* GBImageResourceLoader.h in Headers */,
-				745D495B1A0321EB00EF00EE /* GBGraphLocation.h in Headers */,
 				745D49B11A0321EB00EF00EE /* GBTask.h in Headers */,
-				745D489D1A02927A00EF00EE /* GBDialogs.h in Headers */,
 				B59DA053170CE02300955BCD /* FBAppLinkData.h in Headers */,
-				745D496A1A0321EB00EF00EE /* GBInsights.h in Headers */,
-				745D48921A02818F00EF00EE /* GBAppCall.h in Headers */,
 				745D49581A0321EB00EF00EE /* GBFriendPickerViewController.h in Headers */,
 				B59DA057170CE02300955BCD /* FBAppLinkData+Internal.h in Headers */,
 				9D5D2996170F788A00FA5899 /* FBErrorUtility.h in Headers */,
-				745D48861A02572100EF00EE /* GBSession.h in Headers */,
 				84C1E2001717DD010037E406 /* FBDialogs.h in Headers */,
 				745D49561A0321EB00EF00EE /* GBFriendPickerCacheDescriptor.h in Headers */,
-				745D48B91A02A12500EF00EE /* GBCacheIndex.h in Headers */,
 				745D49AF1A0321EB00EF00EE /* GBSystemAccountStoreAdapter.h in Headers */,
-				745D48B41A029E4000EF00EE /* GbombSDK.h in Headers */,
 				84C1E2131718830F0037E406 /* FBOpenGraphObject.h in Headers */,
 				9942280D174C1EBF0096A70C /* FBDynamicFrameworkLoader.h in Headers */,
-				745D49B61A0321EB00EF00EE /* GBTestSession.h in Headers */,
-				745D49671A0321EB00EF00EE /* GBGraphUser.h in Headers */,
 				99A90A32176BC72D0025A7F7 /* FBImageResourceLoader.h in Headers */,
 				9DCFB2251779FFAE0079E85B /* FBRequest+Internal.h in Headers */,
 				745D498F1A0321EB00EF00EE /* GBSession+GBSessionLoginStrategy.h in Headers */,
-				745D497F1A0321EB00EF00EE /* GBProfilePictureView.h in Headers */,
 				5FC7ABAB178C7D2500829DD1 /* FBInsights.h in Headers */,
 				9D366B15178C7468007B4CEC /* FBRequestMetadata.h in Headers */,
 				745D49B41A0321EB00EF00EE /* GBTaskCompletionSource.h in Headers */,
@@ -1980,7 +1995,6 @@
 				745D49A41A0321EB00EF00EE /* GBSessionSystemLoginStategy.h in Headers */,
 				745D49991A0321EB00EF00EE /* GBSessionGbombAppWebLoginStategy.h in Headers */,
 				9D366B26178DC002007B4CEC /* FBRequestConnectionRetryManager.h in Headers */,
-				745D494A1A0321EB00EF00EE /* GBError.h in Headers */,
 				B549647517A8703E002C9284 /* FBSessionAuthLogger.h in Headers */,
 				9D3FC9AB17BA971C0072D6BC /* FBSessionUtility.h in Headers */,
 				9D393AE717BAEE5B00658BC5 /* FBSessionLoginStrategy.h in Headers */,
@@ -1988,10 +2002,7 @@
 				9D3B0D8217BC230B00CA3C04 /* FBSessionLoginStrategyParams.h in Headers */,
 				9D5B914417BD3570009DBABB /* FBSession+FBSessionLoginStrategy.h in Headers */,
 				745D495A1A0321EB00EF00EE /* GBFriendPickerViewController+Internal.h in Headers */,
-				745D49AA1A0321EB00EF00EE /* GBSettings.h in Headers */,
 				745D49641A0321EB00EF00EE /* GBGraphObjectTableSelection.h in Headers */,
-				745D499D1A0321EB00EF00EE /* GBSessionLoginStrategy.h in Headers */,
-				745D49511A0321EB00EF00EE /* GBFrictionlessDialogSupportDelegate.h in Headers */,
 				9D5B914C17BD3761009DBABB /* FBSessionSystemLoginStategy.h in Headers */,
 				745D49C11A0321EB00EF00EE /* GBViewController+Internal.h in Headers */,
 				745D48B01A029D1C00EF00EE /* GBAppLinkData+Internal.h in Headers */,
@@ -2376,6 +2387,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74045AC01A0B15BF0084231F /* GBAppLinkData.m in Sources */,
+				74045ABF1A0A4D970084231F /* GBSession.m in Sources */,
 				745D49F71A07DE6F00EF00EE /* GBLoginViewButtonPressed.png in Sources */,
 				745D49F51A07DE6F00EF00EE /* GBLoginViewButton.png in Sources */,
 				745D49FA1A07DE6F00EF00EE /* GBProfilePictureViewBlankProfilePortrait.png in Sources */,
@@ -2483,6 +2496,7 @@
 				8582701016E02E5600795734 /* FBOpenGraphActionShareDialogParams.m in Sources */,
 				841FA0C616DFF95F002A51EA /* FBFrictionlessRecipientCache.m in Sources */,
 				745D49A11A0321EB00EF00EE /* GBSessionManualTokenCachingStrategy.m in Sources */,
+				74045ACA1A0B8CC20084231F /* NSError+GBError.m in Sources */,
 				B5B4C1C616F7AAA1006FF55B /* FBLoginDialogParams.m in Sources */,
 				745D499F1A0321EB00EF00EE /* GBSessionLoginStrategyParams.m in Sources */,
 				B5B4C1D116F7AC28006FF55B /* FBDialogsParams.m in Sources */,

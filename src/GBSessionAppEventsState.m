@@ -28,7 +28,7 @@ NSString *const kGBAppEventIsImplicit = @"isImplicit";
 
 @implementation GBSessionAppEventsState
 
-const int MAX_ACCUMULATED_LOG_EVENTS                 = 1000;
+const int GB_MAX_ACCUMULATED_LOG_EVENTS                 = 1000;
 
 @synthesize accumulatedEvents = _accumulatedEvents;
 @synthesize inFlightEvents = _inFlightEvents;
@@ -54,7 +54,7 @@ const int MAX_ACCUMULATED_LOG_EVENTS                 = 1000;
       isImplicit:(BOOL)isImplicit {
 
     @synchronized (self) {
-        if (self.accumulatedEvents.count + self.inFlightEvents.count >= MAX_ACCUMULATED_LOG_EVENTS) {
+        if (self.accumulatedEvents.count + self.inFlightEvents.count >= GB_MAX_ACCUMULATED_LOG_EVENTS) {
             // Skip, but record that we've done so.  This gets sent in the post when we do flush.
             self.numSkippedEventsDueToFullBuffer++;
         } else {

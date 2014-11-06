@@ -2307,8 +2307,8 @@ static GBSession *g_activeSession = nil;
 // errors in a separate domain to avoid collisions.
 + (NSError *)sdkSurfacedErrorForNativeLoginError:(NSError *)nativeLoginError {
     NSError *error = nativeLoginError;
-    if ([nativeLoginError.domain isEqualToString:FacebookNativeApplicationDomain]) {
-        error = [NSError errorWithDomain:FacebookNativeApplicationLoginDomain
+    if ([nativeLoginError.domain isEqualToString:GbombNativeApplicationDomain]) {
+        error = [NSError errorWithDomain:GbombNativeApplicationLoginDomain
                                     code:nativeLoginError.code
                                 userInfo:nativeLoginError.userInfo];
     }

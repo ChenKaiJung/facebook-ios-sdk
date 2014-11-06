@@ -160,10 +160,10 @@ NSString *const GBAppEventsPersistKeyEvents          = @"events";
 
 #pragma mark - Constants
 
-const int NUM_LOG_EVENTS_TO_TRY_TO_FLUSH_AFTER       = 100;
-const int FLUSH_PERIOD_IN_SECONDS                    = 60;
-const int APP_SUPPORTS_ATTRIBUTION_ID_RECHECK_PERIOD = 60 * 60 * 24;
-const int MAX_IDENTIFIER_LENGTH                      = 40;
+const int GB_NUM_LOG_EVENTS_TO_TRY_TO_FLUSH_AFTER       = 100;
+const int GB_FLUSH_PERIOD_IN_SECONDS                    = 60;
+const int GB_APP_SUPPORTS_ATTRIBUTION_ID_RECHECK_PERIOD = 60 * 60 * 24;
+const int GB_MAX_IDENTIFIER_LENGTH                      = 40;
 
 
 
@@ -401,13 +401,13 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
         self.appAuthSessions = [[[NSMutableDictionary alloc] init] autorelease];
 
         // Timer fires unconditionally on a regular interval... handler decides whether to call flush.
-        self.flushTimer = [NSTimer scheduledTimerWithTimeInterval:FLUSH_PERIOD_IN_SECONDS
+        self.flushTimer = [NSTimer scheduledTimerWithTimeInterval:GB_FLUSH_PERIOD_IN_SECONDS
                                                            target:self
                                                          selector:@selector(flushTimerFired:)
                                                          userInfo:nil
                                                           repeats:YES];
 
-        self.attributionIDRecheckTimer = [NSTimer scheduledTimerWithTimeInterval:APP_SUPPORTS_ATTRIBUTION_ID_RECHECK_PERIOD
+        self.attributionIDRecheckTimer = [NSTimer scheduledTimerWithTimeInterval:GB_APP_SUPPORTS_ATTRIBUTION_ID_RECHECK_PERIOD
                                                                           target:self
                                                                         selector:@selector(attributionIDRecheckTimerFired:)
                                                                         userInfo:nil
@@ -443,9 +443,9 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 
 - (BOOL)validateIdentifier:(NSString *)identifier {
 
-    if (identifier == nil || identifier.length == 0 || identifier.length > MAX_IDENTIFIER_LENGTH || ![self regexValidateIdentifier:identifier]) {
+    if (identifier == nil || identifier.length == 0 || identifier.length > GB_MAX_IDENTIFIER_LENGTH || ![self regexValidateIdentifier:identifier]) {
         [GBAppEvents logAndNotify:[NSString stringWithFormat:@"Invalid identifier: '%@'.  Must be between 1 and %d characters, and must be contain only alphanumerics, _, - or spaces, starting with alphanumeric or _.",
-                                  identifier, MAX_IDENTIFIER_LENGTH]];
+                                  identifier, GB_MAX_IDENTIFIER_LENGTH]];
         return NO;
     }
 
@@ -574,7 +574,7 @@ const int MAX_IDENTIFIER_LENGTH                      = 40;
 
         if (self.flushBehavior != GBAppEventsFlushBehaviorExplicitOnly) {
 
-            if (appEventsState.getAccumulatedEventCount > NUM_LOG_EVENTS_TO_TRY_TO_FLUSH_AFTER) {
+            if (appEventsState.getAccumulatedEventCount > GB_NUM_LOG_EVENTS_TO_TRY_TO_FLUSH_AFTER) {
                 [self flush:GBAppEventsFlushReasonEventThreshold session:sessionToLogTo];
             } else if (eventsRetrievedFromPersistedData) {
                 [self flush:GBAppEventsFlushReasonPersistedEvents session:sessionToLogTo];

@@ -38,31 +38,31 @@
 #import "Gbomb.h"
 
 // URL construction constants
-NSString *const kGraphURLPrefix = @"https://graph.";
-NSString *const kGraphVideoURLPrefix = @"https://graph-video.";
-NSString *const kApiURLPrefix = @"https://api.";
-NSString *const kBatchKey = @"batch";
-NSString *const kBatchMethodKey = @"method";
-NSString *const kBatchRelativeURLKey = @"relative_url";
-NSString *const kBatchAttachmentKey = @"attached_files";
-NSString *const kBatchFileNamePrefix = @"file";
-NSString *const kBatchEntryName = @"name";
+NSString *const gbGraphURLPrefix = @"https://graph.";
+NSString *const gbGraphVideoURLPrefix = @"https://graph-video.";
+NSString *const gbApiURLPrefix = @"https://api.";
+NSString *const gbBatchKey = @"batch";
+NSString *const gbBatchMethodKey = @"method";
+NSString *const gbBatchRelativeURLKey = @"relative_url";
+NSString *const gbBatchAttachmentKey = @"attached_files";
+NSString *const gbBatchFileNamePrefix = @"file";
+NSString *const gbBatchEntryName = @"name";
 
-NSString *const kAccessTokenKey = @"access_token";
-NSString *const kSDK = @"ios";
-NSString *const kUserAgentBase = @"GBiOSSDK";
+NSString *const gbAccessTokenKey = @"access_token";
+NSString *const gbSDK = @"ios";
+NSString *const gbUserAgentBase = @"GBiOSSDK";
 
-NSString *const kExtendTokenRestMethod = @"auth.extendSSOAccessToken";
-NSString *const kBatchRestMethodBaseURL = @"method/";
+NSString *const gbExtendTokenRestMethod = @"auth.extendSSOAccessToken";
+NSString *const gbBatchRestMethodBaseURL = @"method/";
 
 // response object property/key
 NSString *const GBNonJSONResponseProperty = @"FACEBOOK_NON_JSON_RESULT";
 
-static const int kRESTAPIAccessTokenErrorCode = 190;
-static const int kRESTAPIPermissionErrorCode = 200;
-static const int kAPISessionNoLongerActiveErrorCode = 2500;
-static const NSTimeInterval kDefaultTimeout = 180.0;
-static const int kMaximumBatchSize = 50;
+static const int gbRESTAPIAccessTokenErrorCode = 190;
+static const int gbRESTAPIPermissionErrorCode = 200;
+static const int gbAPISessionNoLongerActiveErrorCode = 2500;
+static const NSTimeInterval gbDefaultTimeout = 180.0;
+static const int gbMaximumBatchSize = 50;
 
 typedef void (^KeyValueActionHandler)(NSString *key, id value);
 
@@ -148,7 +148,7 @@ typedef enum GBRequestConnectionState {
 
 - (id)init
 {
-    return [self initWithTimeout:kDefaultTimeout];
+    return [self initWithTimeout:gbDefaultTimeout];
 }
 
 // designated initializer
@@ -168,7 +168,7 @@ typedef enum GBRequestConnectionState {
 // ostensibly for the retry flow.
 - (id)initWithMetadata:(NSArray *)metadataArray
 {
-    if (self = [self initWithTimeout:kDefaultTimeout]) {
+    if (self = [self initWithTimeout:gbDefaultTimeout]) {
         self.requests = [[metadataArray mutableCopy] autorelease];
     }
     return self;
@@ -200,7 +200,7 @@ typedef enum GBRequestConnectionState {
  completionHandler:(GBRequestHandler)handler
     batchEntryName:(NSString *)name
 {
-    NSDictionary *batchParams = (name)? @{kBatchEntryName : name } : nil;
+    NSDictionary *batchParams = (name)? @{gbBatchEntryName : name } : nil;
     [self addRequest:request completionHandler:handler batchParameters:batchParams behavior:self.errorBehavior];
 }
 
@@ -587,7 +587,7 @@ typedef enum GBRequestConnectionState {
 
         [attachments release];
 
-        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[GBUtility buildFacebookUrlWithPre:kGraphURLPrefix]]
+        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[GBUtility buildFacebookUrlWithPre:gbGraphURLPrefix]]
                                           cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                       timeoutInterval:timeout];
         [request setHTTPMethod:@"POST"];
@@ -652,32 +652,32 @@ typedef enum GBRequestConnectionState {
 - (NSString *)urlStringForSingleRequest:(GBRequest *)request forBatch:(BOOL)forBatch
 {
     [request.parameters setValue:@"json" forKey:@"format"];
-    [request.parameters setValue:kSDK forKey:@"sdk"];
+    [request.parameters setValue:gbSDK forKey:@"sdk"];
     NSString *token = request.session.accessTokenData.accessToken;
     if (token) {
-        [request.parameters setValue:token forKey:kAccessTokenKey];
+        [request.parameters setValue:token forKey:gbAccessTokenKey];
         [self registerTokenToOmitFromLog:token];
     }
 
     NSString *baseURL;
     if (request.restMethod) {
         if (forBatch) {
-            baseURL = [kBatchRestMethodBaseURL stringByAppendingString:request.restMethod];
+            baseURL = [gbBatchRestMethodBaseURL stringByAppendingString:request.restMethod];
         } else {
-            baseURL = [[GBUtility buildFacebookUrlWithPre:kApiURLPrefix withPost:@"/method/"] stringByAppendingString:request.restMethod];
+            baseURL = [[GBUtility buildFacebookUrlWithPre:gbApiURLPrefix withPost:@"/method/"] stringByAppendingString:request.restMethod];
         }
     } else {
         if (forBatch) {
             baseURL = request.graphPath;
         } else {
-            NSString *prefix = kGraphURLPrefix;
+            NSString *prefix = gbGraphURLPrefix;
             // We special case a graph post to <id>/videos and send it to graph-video.facebook.com
             // We only do this for non batch post requests
             if ([[request.HTTPMethod uppercaseString] isEqualToString:@"POST"] &&
                 [[request.graphPath lowercaseString] hasSuffix:@"/videos"]) {
                 NSArray *components = [request.graphPath componentsSeparatedByString:@"/"];
                 if ([components count] == 2) {
-                    prefix = kGraphVideoURLPrefix;
+                    prefix = gbGraphVideoURLPrefix;
                 }
             }
             baseURL = [[GBUtility buildFacebookUrlWithPre:prefix withPost:@"/"] stringByAppendingString:request.graphPath];
@@ -727,7 +727,7 @@ typedef enum GBRequestConnectionState {
 
     [batch release];
 
-    [body appendWithKey:kBatchKey formValue:jsonBatch logger:logger];
+    [body appendWithKey:gbBatchKey formValue:jsonBatch logger:logger];
 }
 
 //
@@ -747,13 +747,13 @@ typedef enum GBRequestConnectionState {
 
     NSString *token = metadata.request.session.accessTokenData.accessToken;
     if (token) {
-        [metadata.request.parameters setObject:token forKey:kAccessTokenKey];
+        [metadata.request.parameters setObject:token forKey:gbAccessTokenKey];
         [self registerTokenToOmitFromLog:token];
     }
 
     NSString *urlString = [self urlStringForSingleRequest:metadata.request forBatch:YES];
-    [requestElement setObject:urlString forKey:kBatchRelativeURLKey];
-    [requestElement setObject:metadata.request.HTTPMethod forKey:kBatchMethodKey];
+    [requestElement setObject:urlString forKey:gbBatchRelativeURLKey];
+    [requestElement setObject:metadata.request.HTTPMethod forKey:gbBatchMethodKey];
 
     NSMutableString *attachmentNames = [NSMutableString string];
 
@@ -761,7 +761,7 @@ typedef enum GBRequestConnectionState {
         NSObject *value = [metadata.request.parameters objectForKey:key];
         if ([self isAttachment:value]) {
             NSString *name = [NSString stringWithFormat:@"%@%lu",
-                              kBatchFileNamePrefix,
+                              gbBatchFileNamePrefix,
                               (unsigned long)[attachments count]];
             if ([attachmentNames length]) {
                 [attachmentNames appendString:@","];
@@ -791,7 +791,7 @@ typedef enum GBRequestConnectionState {
     }
 
     if ([attachmentNames length]) {
-        [requestElement setObject:attachmentNames forKey:kBatchAttachmentKey];
+        [requestElement setObject:attachmentNames forKey:gbBatchAttachmentKey];
     }
 
     [batch addObject:requestElement];
@@ -1400,7 +1400,7 @@ typedef enum GBRequestConnectionState {
                                    index:index
                                     code:&code
                                  subcode:nil];
-    return code == kRESTAPIPermissionErrorCode;
+    return code == gbRESTAPIPermissionErrorCode;
 }
 
 - (BOOL)isInvalidSessionError:(NSError *)error
@@ -1466,7 +1466,7 @@ typedef enum GBRequestConnectionState {
     static NSString *agent = nil;
 
     if (!agent) {
-        agent = [[NSString stringWithFormat:@"%@.%@", kUserAgentBase, GB_IOS_SDK_VERSION_STRING] retain];
+        agent = [[NSString stringWithFormat:@"%@.%@", gbUserAgentBase, GB_IOS_SDK_VERSION_STRING] retain];
     }
 
     return agent;
@@ -1484,13 +1484,13 @@ typedef enum GBRequestConnectionState {
     }
 
     for (GBSession *session in sessions) {
-        if (self.requests.count >= kMaximumBatchSize) {
+        if (self.requests.count >= gbMaximumBatchSize) {
             break;
         }
         if ([session shouldExtendAccessToken]) {
             [GBRequestConnection addRequestToExtendTokenForSession:session connection:self];
         }
-        if (self.requests.count < kMaximumBatchSize && [session shouldRefreshPermissions]) {
+        if (self.requests.count < gbMaximumBatchSize && [session shouldRefreshPermissions]) {
             [GBRequestConnection addRequestToRefreshPermissionsSession:session connection:self];
         }
     }
@@ -1501,7 +1501,7 @@ typedef enum GBRequestConnectionState {
 + (void)addRequestToExtendTokenForSession:(GBSession*)session connection:(GBRequestConnection*)connection
 {
     GBRequest *request = [[GBRequest alloc] initWithSession:session
-                                                 restMethod:kExtendTokenRestMethod
+                                                 restMethod:gbExtendTokenRestMethod
                                                  parameters:nil
                                                  HTTPMethod:nil];
     [connection addRequest:request

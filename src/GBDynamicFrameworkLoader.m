@@ -132,7 +132,7 @@ int gbdfl_SecRandomCopyBytes(SecRandomRef rnd, size_t count, uint8_t *bytes) {
 }
 
 // SQLITE3 APIs
-void *loadSqliteSymbol(NSString *symbol) {
+void *gbLoadSqliteSymbol(NSString *symbol) {
     return loadSymbol([GBDynamicFrameworkLoader sqlitePath], symbol);
 }
 
@@ -152,71 +152,71 @@ typedef SQLITE_API int (*sqlite3_column_int_type)(sqlite3_stmt*, int);
 typedef SQLITE_API const unsigned char *(*sqlite3_column_text_type)(sqlite3_stmt*, int);
 
 SQLITE_API const char *gbdfl_sqlite3_errmsg(sqlite3 *db) {
-    sqlite3_errmsg_type f = (sqlite3_errmsg_type)loadSqliteSymbol(@"sqlite3_errmsg");
+    sqlite3_errmsg_type f = (sqlite3_errmsg_type)gbLoadSqliteSymbol(@"sqlite3_errmsg");
     return f(db);
 }
 
 SQLITE_API int gbdfl_sqlite3_prepare_v2(sqlite3 *db, const char *zSql, int nByte, sqlite3_stmt **ppStmt, const char **pzTail) {
-    sqlite3_prepare_v2_type f = (sqlite3_prepare_v2_type)loadSqliteSymbol(@"sqlite3_prepare_v2");
+    sqlite3_prepare_v2_type f = (sqlite3_prepare_v2_type)gbLoadSqliteSymbol(@"sqlite3_prepare_v2");
     return f(db, zSql, nByte, ppStmt, pzTail);
 }
 
 SQLITE_API int gbdfl_sqlite3_reset(sqlite3_stmt *pStmt) {
-    sqlite3_reset_type f = (sqlite3_reset_type)loadSqliteSymbol(@"sqlite3_reset");
+    sqlite3_reset_type f = (sqlite3_reset_type)gbLoadSqliteSymbol(@"sqlite3_reset");
     return f(pStmt);
 }
 
 SQLITE_API int gbdfl_sqlite3_finalize(sqlite3_stmt *pStmt) {
-    sqlite3_finalize_type f = (sqlite3_finalize_type)loadSqliteSymbol(@"sqlite3_finalize");
+    sqlite3_finalize_type f = (sqlite3_finalize_type)gbLoadSqliteSymbol(@"sqlite3_finalize");
     return f(pStmt);
 }
 
 SQLITE_API int gbdfl_sqlite3_open_v2(const char *filename, sqlite3 **ppDb, int flags, const char *zVfs) {
-    sqlite3_open_v2_type f = (sqlite3_open_v2_type)loadSqliteSymbol(@"sqlite3_open_v2");
+    sqlite3_open_v2_type f = (sqlite3_open_v2_type)gbLoadSqliteSymbol(@"sqlite3_open_v2");
     return f(filename, ppDb, flags, zVfs);
 }
 
 SQLITE_API int gbdfl_sqlite3_exec(sqlite3 *db, const char *sql, int (*callback)(void*,int,char**,char**), void * arg, char **errmsg) {
-    sqlite3_exec_type f = (sqlite3_exec_type)loadSqliteSymbol(@"sqlite3_exec");
+    sqlite3_exec_type f = (sqlite3_exec_type)gbLoadSqliteSymbol(@"sqlite3_exec");
     return f(db, sql, callback, arg, errmsg);
 }
 
 SQLITE_API int gbdfl_sqlite3_close(sqlite3 *db) {
-    sqlite3_close_type f = (sqlite3_close_type)loadSqliteSymbol(@"sqlite3_close");
+    sqlite3_close_type f = (sqlite3_close_type)gbLoadSqliteSymbol(@"sqlite3_close");
     return f(db);
 }
 
 SQLITE_API int gbdfl_sqlite3_bind_double(sqlite3_stmt *stmt, int index , double value) {
-    sqlite3_bind_double_type f = (sqlite3_bind_double_type)loadSqliteSymbol(@"sqlite3_bind_double");
+    sqlite3_bind_double_type f = (sqlite3_bind_double_type)gbLoadSqliteSymbol(@"sqlite3_bind_double");
     return f(stmt, index, value);
 }
 
 SQLITE_API int gbdfl_sqlite3_bind_int(sqlite3_stmt *stmt, int index, int value) {
-    sqlite3_bind_int_type f = (sqlite3_bind_int_type)loadSqliteSymbol(@"sqlite3_bind_int");
+    sqlite3_bind_int_type f = (sqlite3_bind_int_type)gbLoadSqliteSymbol(@"sqlite3_bind_int");
     return f(stmt, index, value);
 }
 
 SQLITE_API int gbdfl_sqlite3_bind_text(sqlite3_stmt *stmt, int index, const char* value, int n, void(*callback)(void*)) {
-    sqlite3_bind_text_type f = (sqlite3_bind_text_type)loadSqliteSymbol(@"sqlite3_bind_text");
+    sqlite3_bind_text_type f = (sqlite3_bind_text_type)gbLoadSqliteSymbol(@"sqlite3_bind_text");
     return f(stmt, index, value, n, callback);
 }
 
 SQLITE_API int gbdfl_sqlite3_step(sqlite3_stmt *stmt) {
-    sqlite3_step_type f = (sqlite3_step_type)loadSqliteSymbol(@"sqlite3_step");
+    sqlite3_step_type f = (sqlite3_step_type)gbLoadSqliteSymbol(@"sqlite3_step");
     return f(stmt);
 }
 
 SQLITE_API double gbdfl_sqlite3_column_double(sqlite3_stmt *stmt, int iCol) {
-    sqlite3_column_double_type f = (sqlite3_column_double_type)loadSqliteSymbol(@"sqlite3_column_double");
+    sqlite3_column_double_type f = (sqlite3_column_double_type)gbLoadSqliteSymbol(@"sqlite3_column_double");
     return f(stmt, iCol);
 }
 
 SQLITE_API int gbdfl_sqlite3_column_int(sqlite3_stmt *stmt, int iCol) {
-    sqlite3_column_int_type f = (sqlite3_column_int_type)loadSqliteSymbol(@"sqlite3_column_int");
+    sqlite3_column_int_type f = (sqlite3_column_int_type)gbLoadSqliteSymbol(@"sqlite3_column_int");
     return f(stmt, iCol);
 }
 
 SQLITE_API const unsigned char *gbdfl_sqlite3_column_text(sqlite3_stmt *stmt, int iCol) {
-    sqlite3_column_text_type f = (sqlite3_column_text_type)loadSqliteSymbol(@"sqlite3_column_text");
+    sqlite3_column_text_type f = (sqlite3_column_text_type)gbLoadSqliteSymbol(@"sqlite3_column_text");
     return f(stmt, iCol);
 }

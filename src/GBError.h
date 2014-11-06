@@ -25,7 +25,7 @@ extern NSString *const GbombSDKDomain;
  The NSError domain of all errors surfaced by the Facebook SDK that
  were returned by the Facebook Application
  */
-extern NSString *const FacebookNativeApplicationDomain;
+extern NSString *const GbombNativeApplicationDomain;
 
 /*!
  The key in the userInfo NSDictionary of NSError where you can find

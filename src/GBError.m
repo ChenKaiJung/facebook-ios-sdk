@@ -17,7 +17,7 @@
 #import "GBError.h"
 
 NSString *const GbombSDKDomain = @"com.gbombgames.sdk";
-NSString *const FacebookNativeApplicationDomain = @"com.gbombgames.Gbomb.platform";
+NSString *const GbombNativeApplicationDomain = @"com.gbombgames.Gbomb.platform";
 
 NSString *const GBErrorInnerErrorKey = @"com.gbombgames.sdk:ErrorInnerErrorKey";
 NSString *const GBErrorParsedJSONResponseKey = @"com.gbombgames.sdk:ParsedJSONResponseKey";
