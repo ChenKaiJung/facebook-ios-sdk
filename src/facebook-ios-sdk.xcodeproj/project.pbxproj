@@ -2390,7 +2390,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				74045AC01A0B15BF0084231F /* GBAppLinkData.m in Sources */,
-				74045ABF1A0A4D970084231F /* GBSession.m in Sources */,
 				745D49F71A07DE6F00EF00EE /* GBLoginViewButtonPressed.png in Sources */,
 				745D49F51A07DE6F00EF00EE /* GBLoginViewButton.png in Sources */,
 				745D49FA1A07DE6F00EF00EE /* GBProfilePictureViewBlankProfilePortrait.png in Sources */,
@@ -2425,6 +2424,7 @@
 				E29B4E67152631FB00D1BE21 /* FBRequestConnection.m in Sources */,
 				745D497B1A0321EB00EF00EE /* GBPlacePickerCacheDescriptor.m in Sources */,
 				E23E5A101521163C00A011A8 /* FBURLConnection.m in Sources */,
+				74045ABF1A0A4D970084231F /* GBSession.m in Sources */,
 				8446FDA6151BC5C2000BE007 /* FBSession.m in Sources */,
 				8446FDAE151CDB0B000BE007 /* FBSessionTokenCachingStrategy.m in Sources */,
 				745D49AE1A0321EB00EF00EE /* GBShareDialogParams.m in Sources */,
@@ -2438,6 +2438,7 @@
 				84AE5DA4152EA02500C4DE54 /* FBGraphObject.m in Sources */,
 				745D49BC1A0321EB00EF00EE /* GBUserSettingsViewController.m in Sources */,
 				84E0CA0B153619D500778DA4 /* Facebook.m in Sources */,
+				745D48A31A0293C200EF00EE /* Gbomb.m in Sources */,
 				843D2DD91547C33000873F7C /* FBUtility.m in Sources */,
 				745D48CB1A02A7AC00EF00EE /* GBDialogsParams.m in Sources */,
 				745D495F1A0321EB00EF00EE /* GBGraphObjectPagingLoader.m in Sources */,
@@ -2540,7 +2541,6 @@
 				9D5B916517BD379C009DBABB /* FBSessionSafariLoginStategy.m in Sources */,
 				9D5B916B17BD37A8009DBABB /* FBSessionInlineWebViewLoginStategy.m in Sources */,
 				745D49551A0321EB00EF00EE /* GBFrictionlessRequestSettings.m in Sources */,
-				745D48A31A0293C200EF00EE /* Gbomb.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
