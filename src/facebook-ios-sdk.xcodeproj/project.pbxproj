@@ -28,6 +28,7 @@
 		74045AC91A0B8CC20084231F /* NSError+GBError.h in Headers */ = {isa = PBXBuildFile; fileRef = 74045AC71A0B8CC20084231F /* NSError+GBError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		74045ACA1A0B8CC20084231F /* NSError+GBError.m in Sources */ = {isa = PBXBuildFile; fileRef = 74045AC81A0B8CC20084231F /* NSError+GBError.m */; };
 		74045ACB1A0B8DFC0084231F /* GBAppEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48941A02864100EF00EE /* GBAppEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		74045ACC1A0B926C0084231F /* GBCacheDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48B61A02A02D00EF00EE /* GBCacheDescriptor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D48861A02572100EF00EE /* GBSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48851A02572100EF00EE /* GBSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		745D48891A027F2200EF00EE /* GBSDKVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D48881A027F2200EF00EE /* GBSDKVersion.h */; };
 		745D488B1A027FB300EF00EE /* GBAccessTokenData+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 745D488A1A027FB300EF00EE /* GBAccessTokenData+Internal.h */; };
@@ -1823,6 +1824,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74045ACC1A0B926C0084231F /* GBCacheDescriptor.h in Headers */,
 				745D49C21A0321EB00EF00EE /* GBWebDialogs.h in Headers */,
 				745D48C91A02A77600EF00EE /* GBDialogsParams.h in Headers */,
 				745D48C31A02A5A000EF00EE /* GBDialogsData.h in Headers */,
