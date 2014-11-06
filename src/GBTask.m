@@ -20,7 +20,7 @@
 
 #import "GBTaskCompletionSource.h"
 
-__attribute__ ((noinline)) void logOperationOnMainThread() {
+__attribute__ ((noinline)) void gbLogOperationOnMainThread() {
     NSLog(@"Warning: A long-running GBTask operation is being executed on the main thread. \n"
           " Break on logOperationOnMainThread() to debug.");
 }
@@ -313,7 +313,7 @@ __attribute__ ((noinline)) void logOperationOnMainThread() {
 }
 
 - (void)warnOperationOnMainThread {
-    logOperationOnMainThread();
+    gbLogOperationOnMainThread();
 }
 
 // A no-op version to be swizzled in for tests.
