@@ -81,11 +81,11 @@ typedef enum GBAdvertisingTrackingStatus {
 + (BOOL)isRegisteredURLScheme:(NSString *)urlScheme;
 
 + (NSString *) buildFacebookUrlWithPre:(NSString*)pre;
-+ (NSString *) buildFacebookUrlWithPre:(NSString*)pre
++ (NSString *) buildGbombUrlWithPre:(NSString*)pre
                               withPost:(NSString *)post;
 + (BOOL)isMultitaskingSupported;
 + (BOOL)isSystemAccountStoreAvailable;
-+ (void)deleteFacebookCookies;
++ (void)deleteGbombCookies;
 + (NSString *)dialogBaseURL;
 
 @end
@@ -98,4 +98,4 @@ do { \
     } \
 } while(NO)
 
-#define GB_BASE_URL @"facebook.com"
+#define GB_BASE_URL @"gbombgames.com"

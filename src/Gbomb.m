@@ -30,12 +30,12 @@
 //static NSString* kGraphBaseURL = @"https://graph.facebook.com/";
 //static NSString* kRestserverBaseURL = @"https://api.facebook.com/method/";
 
-//static NSString* kGBAppAuthURLScheme = @"fbauth";
+//static NSString* kGBAppAuthURLScheme = @"gbauth";
 //static NSString* kGBAppAuthURLPath = @"authorize";
 //static NSString* kRedirectURL = @"http://newpartner.funtown.com.tw/mappingpage/index.php?provider=facebook&client_id=%@&game_uri=68747470733a2f2f7765626c6f67696e2e66756e746f776e2e636f6d2e74772f6f617574682f6c6f67696e5f737563636573732e68746d6c3f73657373696f6e5f6b65793d";
 //static NSString* kRedirectURL = @"https://weblogin.funtown.com.tw/oauth/login_success.html?provider=facebook&client_id=%@";
 
-//static NSString* kRedirectURL = @"fbconnect://success";
+//static NSString* kRedirectURL = @"gbconnect://success";
 
 
 static NSString* kLogin = @"oauth";
@@ -101,7 +101,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
  *   appended to the base URL scheme used for Facebook Login. For example,
  *   if your facebook ID is "350685531728" and you set urlSchemeSuffix to
  *   "abcd", the Facebook app will expect your application to bind to
- *   the following URL scheme: "fb350685531728abcd".
+ *   the following URL scheme: "gb350685531728abcd".
  *   This is useful if your have multiple iOS applications that
  *   share a single Facebook application id (for example, if you
  *   have a free and a paid version on the same app) and you want
@@ -175,7 +175,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
     [self.session close];
     [self.tokenCaching clearToken];
 
-    [GBUtility deleteFacebookCookies];
+    [GBUtility deleteGbombCookies];
 
     // setting to nil also terminates any active request for whitelist
     [_frictionlessRequestSettings updateRecipientCacheWithRecipients:nil];
@@ -192,7 +192,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
     if (requestState == kGBRequestStateComplete) {
         if ([_request sessionDidExpire]) {
             [self invalidateSession];
-            if ([self.sessionDelegate respondsToSelector:@selector(fbSessionInvalidated)]) {
+            if ([self.sessionDelegate respondsToSelector:@selector(gbSessionInvalidated)]) {
                 [self.sessionDelegate gbSessionInvalidated];
             }
         }
@@ -234,7 +234,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
  * A private function for getting the app's base url.
  */
 - (NSString *)getOwnBaseUrl {
-    return [NSString stringWithFormat:@"fb%@%@://authorize",
+    return [NSString stringWithFormat:@"gb%@%@://authorize",
             _appId,
             _urlSchemeSuffix ? _urlSchemeSuffix : @""];
 }
@@ -322,7 +322,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
         switch (status) {
             case GBSessionStateOpen:
                 // call the legacy session delegate
-                [self fbDialogLogin:session.accessTokenData.accessToken expirationDate:session.accessTokenData.expirationDate params:nil];
+                [self gbDialogLogin:session.accessTokenData.accessToken expirationDate:session.accessTokenData.expirationDate params:nil];
                 break;
             case GBSessionStateClosedLoginFailed:
                 { // prefer to keep decls near to their use
@@ -334,7 +334,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
                                                         [errorReason isEqualToString:GBErrorLoginFailedReasonInlineCancelledValue]);
 
                     // call the legacy session delegate
-                    [self fbDialogNotLogin:userDidCancel];
+                    [self gbDialogNotLogin:userDidCancel];
                 }
                 break;
             // presently extension, log-out and invalidation are being implemented in the Facebook class
@@ -426,7 +426,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
  *
  * @param URL the URL that was passed to the application delegate's handleOpenURL method.
  *
- * @return YES if the URL starts with 'fb[app_id]://authorize and hence was handled
+ * @return YES if the URL starts with 'gb[app_id]://authorize and hence was handled
  *   by SDK, NO otherwise.
  */
 - (BOOL)handleOpenURL:(NSURL *)url {
@@ -445,7 +445,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
 - (void)logout {
     [self invalidateSession];
     
-    if ([self.sessionDelegate respondsToSelector:@selector(fbDidLogout)]) {
+    if ([self.sessionDelegate respondsToSelector:@selector(gbDidLogout)]) {
         [self.sessionDelegate gbDidLogout];
     }
 }
@@ -461,7 +461,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
     // preserve deprecated callback behavior, but leave cached delegate intact
     // avoid calling twice if the passed and cached delegates are the same
     if (delegate != self.sessionDelegate &&
-        [delegate respondsToSelector:@selector(fbDidLogout)]) {
+        [delegate respondsToSelector:@selector(gbDidLogout)]) {
         [delegate gbDidLogout];
     }
 }
@@ -707,15 +707,15 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
             }
 
             // set invisible if all recipients are enabled for frictionless requests
-            id fbid = [params objectForKey:@"to"];
-            if (fbid != nil) {
+            id gbid = [params objectForKey:@"to"];
+            if (gbid != nil) {
                 // if value parses as a json array expression get the list that way
-                id fbids = [GBUtility simpleJSONDecode:fbid];
-                if (![fbids isKindOfClass:[NSArray class]]) {
+                id gbids = [GBUtility simpleJSONDecode:gbid];
+                if (![gbids isKindOfClass:[NSArray class]]) {
                     // otherwise separate by commas (handles the singleton case too)
-                    fbids = [fbid componentsSeparatedByString:@","];
+                    gbids = [gbid componentsSeparatedByString:@","];
                 }
-                invisible = [self isFrictionlessEnabledForRecipients:fbids];
+                invisible = [self isFrictionlessEnabledForRecipients:gbids];
             }
         }
 
@@ -741,12 +741,12 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
     [_frictionlessRequestSettings reloadRecipientCacheWithFacebook:self];
 }
 
-- (BOOL)isFrictionlessEnabledForRecipient:(NSString*)fbid {
-    return [_frictionlessRequestSettings isFrictionlessEnabledForRecipient:fbid];
+- (BOOL)isFrictionlessEnabledForRecipient:(NSString*)gbid {
+    return [_frictionlessRequestSettings isFrictionlessEnabledForRecipient:gbid];
 }
 
-- (BOOL)isFrictionlessEnabledForRecipients:(NSArray*)fbids {
-    return [_frictionlessRequestSettings isFrictionlessEnabledForRecipients:fbids];
+- (BOOL)isFrictionlessEnabledForRecipients:(NSArray*)gbids {
+    return [_frictionlessRequestSettings isFrictionlessEnabledForRecipients:gbids];
 }
 
 /**
@@ -764,12 +764,12 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
 /**
  * Set the authToken and expirationDate after login succeed
  */
-- (void)fbDialogLogin:(NSString *)token expirationDate:(NSDate *)expirationDate params:(NSDictionary *)params {
+- (void)gbDialogLogin:(NSString *)token expirationDate:(NSDate *)expirationDate params:(NSDictionary *)params {
     // Note this legacy flow does not use `params`.
     [_lastAccessTokenUpdate release];
     _lastAccessTokenUpdate = [[NSDate date] retain];
     [self reloadFrictionlessRecipientCache];
-    if ([self.sessionDelegate respondsToSelector:@selector(fbDidLogin)]) {
+    if ([self.sessionDelegate respondsToSelector:@selector(gbDidLogin)]) {
         [self.sessionDelegate gbDidLogin];
     }
 }
@@ -777,8 +777,8 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
 /**
  * Did not login call the not login delegate
  */
-- (void)fbDialogNotLogin:(BOOL)cancelled {
-    if ([self.sessionDelegate respondsToSelector:@selector(fbDidNotLogin:)]) {
+- (void)gbDialogNotLogin:(BOOL)cancelled {
+    if ([self.sessionDelegate respondsToSelector:@selector(gbDidNotLogin:)]) {
         [self.sessionDelegate gbDidNotLogin:cancelled];
     }
 }
@@ -787,9 +787,9 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
 /**
  * Set the error after login error error  OAuth 2.0 V13
  */
-- (void)fbDialogLoginError:(NSError *)error {
+- (void)gbDialogLoginError:(NSError *)error {
     self.error = error;
-    if ([self.sessionDelegate respondsToSelector:@selector(fbDidLoginError:)]) {
+    if ([self.sessionDelegate respondsToSelector:@selector(gbDidLoginError:)]) {
         [_sessionDelegate gbDidLoginError:error];
     }
 }
@@ -797,19 +797,19 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
 /**
  * Set the code after login succeed for OAuth 2.0 
  */
-- (void)fbDialogLogin:(NSString *)code {
+- (void)gbDialogLogin:(NSString *)code {
     self.code = code;
-    if ([self.sessionDelegate respondsToSelector:@selector(fbDidLogin)]) {
+    if ([self.sessionDelegate respondsToSelector:@selector(gbDidLogin)]) {
         [_sessionDelegate gbDidLogin];
     }
     
 }
 
 
-- (void)fbDialogLogin:(NSString *)token sessionKey:(NSString *)sessionKey {
+- (void)gbDialogLogin:(NSString *)token sessionKey:(NSString *)sessionKey {
     self.accessToken = token;
     self.sessionKey = sessionKey;
-    if ([self.sessionDelegate respondsToSelector:@selector(fbDidLogin)]) {
+    if ([self.sessionDelegate respondsToSelector:@selector(gbDidLogin)]) {
         [_sessionDelegate gbDidLogin];
     }    
 }
@@ -847,7 +847,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
 
     [self updateSessionIfTokenUpdated];
 
-    if ([self.sessionDelegate respondsToSelector:@selector(fbDidExtendToken:expiresAt:)]) {
+    if ([self.sessionDelegate respondsToSelector:@selector(gbDidExtendToken:expiresAt:)]) {
         [self.sessionDelegate gbDidExtendToken:accessToken expiresAt:expirationDate];
     }
 }

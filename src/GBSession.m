@@ -1068,7 +1068,7 @@ static GBSession *g_activeSession = nil;
     NSString *redirectURI =nil;
     
     if(!_redirectUri) {
-        redirectURI=[infoDict objectForKey:@"FacebookRedirectUri"];
+        redirectURI=[infoDict objectForKey:@"GbombRedirectUri"];
     }
     else {
         redirectURI=_redirectUri;
@@ -2322,7 +2322,7 @@ static GBSession *g_activeSession = nil;
     [[GBDataDiskCache sharedCache] removeDataForSession:self];
     [self.tokenCachingStrategy clearToken];
     
-    [GBUtility deleteFacebookCookies];
+    [GBUtility deleteGbombCookies];
     
     // If we are not already in a terminal state, go to Closed.
     if (!GB_ISSESSIONSTATETERMINAL(self.state)) {

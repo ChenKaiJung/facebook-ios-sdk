@@ -664,7 +664,7 @@ typedef enum GBRequestConnectionState {
         if (forBatch) {
             baseURL = [gbBatchRestMethodBaseURL stringByAppendingString:request.restMethod];
         } else {
-            baseURL = [[GBUtility buildFacebookUrlWithPre:gbApiURLPrefix withPost:@"/method/"] stringByAppendingString:request.restMethod];
+            baseURL = [[GBUtility buildGbombUrlWithPre:gbApiURLPrefix withPost:@"/method/"] stringByAppendingString:request.restMethod];
         }
     } else {
         if (forBatch) {
@@ -680,7 +680,7 @@ typedef enum GBRequestConnectionState {
                     prefix = gbGraphVideoURLPrefix;
                 }
             }
-            baseURL = [[GBUtility buildFacebookUrlWithPre:prefix withPost:@"/"] stringByAppendingString:request.graphPath];
+            baseURL = [[GBUtility buildGbombUrlWithPre:prefix withPost:@"/"] stringByAppendingString:request.graphPath];
         }
     }
 

@@ -479,10 +479,10 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
 }
 
 + (NSString *)buildFacebookUrlWithPre:(NSString *)pre {
-    return [GBUtility buildFacebookUrlWithPre:pre withPost:nil];
+    return [GBUtility buildGbombUrlWithPre:pre withPost:nil];
 }
 
-+ (NSString *)buildFacebookUrlWithPre:(NSString *)pre
++ (NSString *)buildGbombUrlWithPre:(NSString *)pre
                              withPost:(NSString *)post {
     NSString *domainPart = [GBSettings facebookDomainPart];
     NSString *domain = GB_BASE_URL;
@@ -505,7 +505,7 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
     (accountTypeGB = [accountStore accountTypeWithAccountTypeIdentifier:@"com.apple.facebook"]);
 }
 
-+ (void)deleteFacebookCookies {
++ (void)deleteGbombCookies {
     NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     NSArray* facebookCookies = [cookies cookiesForURL:
                                 [NSURL URLWithString:[GBUtility dialogBaseURL]]];
@@ -516,6 +516,6 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
 }
 
 + (NSString *)dialogBaseURL {
-    return [GBUtility buildFacebookUrlWithPre:@"https://m." withPost:@"/dialog/"];
+    return [GBUtility buildGbombUrlWithPre:@"https://oauth." withPost:@"/"];
 }
 @end
