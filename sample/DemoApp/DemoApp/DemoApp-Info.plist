@@ -22,10 +22,10 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>FuntownClientID</key>
+	<key>GbombClientID</key>
 	<string>105</string>
-	<key>FuntownRedirectUri</key>
-	<string>https://weblogin.funtown.com.tw/oauth/login_success.html</string>
+	<key>GbombRedirectUri</key>
+	<string>http://oauth.gbombgames.com/login_success.html</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIMainStoryboardFile</key>

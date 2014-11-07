@@ -7,21 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FTUUID.h"
-#import "Funtown.h"
+#import "Gbomb.h"
 
-@interface ViewController : UIViewController <FTUUIDDelegate,FTSessionDelegate> {
-    FTUUID * _ftUUID;
-    Funtown * _funtown;
+@interface ViewController : UIViewController <GBSessionDelegate> {
+    Gbomb * _gbomb;
     BOOL _isLogined;
 }
 
-@property(readonly) FTUUID *ftUUID;
-@property(readonly) Funtown *funtown;
+@property(readonly) Gbomb *gbomb;
 @property(nonatomic) BOOL isLogined;
 @property (strong, nonatomic) IBOutlet UILabel *MessageLabel;
 
-- (IBAction)generateUUID:(id)sender;
+- (IBAction)freeTrial:(id)sender;
 - (IBAction)loginLogout:(id)sender;
 
 @end

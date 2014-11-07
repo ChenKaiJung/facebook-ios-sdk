@@ -14,14 +14,13 @@
 
 @implementation ViewController
 
-@synthesize ftUUID = _ftUUID,funtown = _funtown;
+@synthesize gbomb = _gbomb;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    _ftUUID = [FTUUID getInstance:self];
-    _funtown = [[Funtown alloc] init:self];
+    _gbomb = [[Gbomb alloc] initWithAppId: @"129645243823370" andDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -31,26 +30,26 @@
 }
 
 
-- (IBAction)generateUUID:(id)sender
+- (IBAction)freeTrial:(id)sender
 {
-    [_ftUUID generateUUID];
+
 }
 
 - (IBAction)loginLogout:(id)sender
 {
     if (self.isLogined == FALSE)
     {
-        [_funtown authorize:nil];
+        [_gbomb authorize:nil];
     }
     else
     {
-        [_funtown logout:self];
+        [_gbomb logout:self];
     }
 }
 /**
  * Called when the UUID generated.
  */
-- (void)ftDidUUIDGenerate:(NSString*)uuid
+- (void)gbDidUUIDGenerate:(NSString*)uuid
 {
     self.MessageLabel.text = uuid;
 }
@@ -58,7 +57,7 @@
 /**
  * Called when the user successfully logged in.
  */
-- (void)ftDidLogin
+- (void)gbDidLogin
 {
     self.isLogined = TRUE;
     self.MessageLabel.text = @"Login OK";
@@ -67,7 +66,7 @@
 /**
  * Called when the user dismissed the dialog without logging in.
  */
-- (void)ftDidNotLogin:(BOOL)cancelled
+- (void)gbDidNotLogin:(BOOL)cancelled
 {
     self.isLogined = FALSE;
     self.MessageLabel.text = @"Login Cancelled";
@@ -76,7 +75,7 @@
 /**
  * Called when the user logged error.
  */
-- (void)ftDidLoginError:(NSError *)error
+- (void)gbDidLoginError:(NSError *)error
 {
     self.isLogined = FALSE;
     self.MessageLabel.text = [error localizedDescription];
@@ -85,7 +84,7 @@
 /**
  * Called when the user logged out.
  */
-- (void)ftDidLogout
+- (void)gbDidLogout
 {
     self.isLogined = FALSE;
     self.MessageLabel.text = @"Logout OK";
