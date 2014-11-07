@@ -587,7 +587,7 @@ typedef enum GBRequestConnectionState {
 
         [attachments release];
 
-        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[GBUtility buildFacebookUrlWithPre:gbGraphURLPrefix]]
+        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[GBUtility buildGbombUrlWithPre:gbGraphURLPrefix]]
                                           cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                       timeoutInterval:timeout];
         [request setHTTPMethod:@"POST"];

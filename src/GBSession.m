@@ -48,7 +48,7 @@
 static NSString *const GBAuthURLScheme = @"gbauth";
 static NSString *const GBAuthURLPath = @"authorize";
 //static NSString *const GBRedirectURL = @"gbconnect://success";
-static NSString *const GBLoginDialogMethod = @"oauth";
+static NSString *const GBLoginDialogMethod = @"authorize.php";
 static NSString *const GBLoginUXClientID = @"client_id";
 static NSString *const GBLoginUXRedirectURI = @"redirect_uri";
 static NSString *const GBLoginUXTouch = @"touch";
@@ -66,7 +66,7 @@ NSString *const GBLoginUXResponseType = @"response_type";
 
 // client state related strings
 NSString *const GBLoginUXClientState = @"state";
-NSString *const GBLoginUXClientStateIsClientState = @"com.facebook.sdk_client_state";
+NSString *const GBLoginUXClientStateIsClientState = @"com.gbombgames.sdk_client_state";
 NSString *const GBLoginUXClientStateIsOpenSession = @"is_open_session";
 NSString *const GBLoginUXClientStateIsActiveSession = @"is_active_session";
 

@@ -250,7 +250,7 @@ typedef enum : NSUInteger {
 
  @abstract Get the Facebook domain part
  */
-+ (NSString*)facebookDomainPart;
++ (NSString*)gbombDomainPart;
 
 /*!
  @method

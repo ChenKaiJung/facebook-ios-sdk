@@ -80,7 +80,7 @@ typedef enum GBAdvertisingTrackingStatus {
 + (NSString *)newUUIDString;
 + (BOOL)isRegisteredURLScheme:(NSString *)urlScheme;
 
-+ (NSString *) buildFacebookUrlWithPre:(NSString*)pre;
++ (NSString *) buildGbombUrlWithPre:(NSString*)pre;
 + (NSString *) buildGbombUrlWithPre:(NSString*)pre
                               withPost:(NSString *)post;
 + (BOOL)isMultitaskingSupported;

@@ -27,14 +27,14 @@
 #import "GbombSDK.h"
 
 // Keys to get App-specific info from mainBundle
-static NSString *const GBPLISTDisplayNameKey = @"FacebookDisplayName";
-static NSString *const GBPLISTAppIDKey = @"FacebookAppID";
-NSString *const GBPLISTUrlSchemeSuffixKey = @"FacebookUrlSchemeSuffix";
-static NSString *const GBPLISTBundleNameKey = @"FacebookBundleName";
+static NSString *const GBPLISTDisplayNameKey = @"GbombDisplayName";
+static NSString *const GBPLISTAppIDKey = @"GbombAppID";
+NSString *const GBPLISTUrlSchemeSuffixKey = @"GbombUrlSchemeSuffix";
+static NSString *const GBPLISTBundleNameKey = @"GbombBundleName";
 
 // const strings
-NSString *const GBLoggingBehaviorGBRequests = @"fb_requests";
-NSString *const GBLoggingBehaviorGBURLConnections = @"fburl_connections";
+NSString *const GBLoggingBehaviorGBRequests = @"gb_requests";
+NSString *const GBLoggingBehaviorGBURLConnections = @"gburl_connections";
 NSString *const GBLoggingBehaviorAccessTokens = @"include_access_tokens";
 NSString *const GBLoggingBehaviorSessionStateTransitions = @"state_transitions";
 NSString *const GBLoggingBehaviorPerformanceCharacteristics = @"perf_characteristics";
@@ -42,9 +42,9 @@ NSString *const GBLoggingBehaviorAppEvents = @"app_events";
 NSString *const GBLoggingBehaviorInformational = @"informational";
 NSString *const GBLoggingBehaviorDeveloperErrors = @"developer_errors";
 
-NSString *const GBLastAttributionPing = @"com.facebook.sdk:lastAttributionPing%@";
-NSString *const GBLastInstallResponse = @"com.facebook.sdk:lastInstallResponse%@";
-NSString *const GBSettingsLimitEventAndDataUsage = @"com.facebook.sdk:GBAppEventsLimitEventUsage";  // use "GBAppEvents" in string due to previous place this lived.
+NSString *const GBLastAttributionPing = @"com.gbombgames.sdk:lastAttributionPing%@";
+NSString *const GBLastInstallResponse = @"com.gbombgames.sdk:lastInstallResponse%@";
+NSString *const GBSettingsLimitEventAndDataUsage = @"com.gbombgames.sdk:GBAppEventsLimitEventUsage";  // use "GBAppEvents" in string due to previous place this lived.
 
 NSString *const GBPublishActivityPath = @"%@/activities";
 NSString *const GBMobileInstallEvent = @"MOBILE_APP_INSTALL";
@@ -165,7 +165,7 @@ static NSUInteger g_betaFeatures = 0;
     [oldValue release];
 }
 
-+ (NSString*)facebookDomainPart {
++ (NSString*)gbombDomainPart {
     return g_defaultFacebookDomainPart;
 }
 

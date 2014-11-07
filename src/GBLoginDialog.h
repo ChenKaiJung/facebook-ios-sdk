@@ -39,15 +39,15 @@
 
 @protocol GBLoginDialogDelegate <NSObject>
 
-- (void)fbDialogLogin:(NSString*)token expirationDate:(NSDate*)expirationDate params:(NSDictionary *)params;
+- (void)gbDialogLogin:(NSString*)token expirationDate:(NSDate*)expirationDate params:(NSDictionary *)params;
 
-- (void)fbDialogNotLogin:(BOOL)cancelled;
+- (void)gbDialogNotLogin:(BOOL)cancelled;
 
 //- (void)fbDialogLogin:(NSString*)code;
 
 //- (void)fbDialogLogin:(NSString *)token sessionKey:(NSString *)sessionKey;
 
-- (void)fbDialogLoginError:(NSError*)error;
+- (void)gbDialogLoginError:(NSError*)error;
 @end
 
 

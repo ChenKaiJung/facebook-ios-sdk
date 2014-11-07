@@ -171,7 +171,7 @@
 
         NSString *template = @"%@/%@/picture?%@";
         NSString *urlString = [NSString stringWithFormat:template,
-                               [GBUtility buildFacebookUrlWithPre:@"https://graph."],
+                               [GBUtility buildGbombUrlWithPre:@"https://graph."],
                                self.profileID,
                                newImageQueryParamString];
         NSURL *url = [NSURL URLWithString:urlString];

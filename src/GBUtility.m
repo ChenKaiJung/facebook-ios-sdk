@@ -478,13 +478,13 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
     return NO;
 }
 
-+ (NSString *)buildFacebookUrlWithPre:(NSString *)pre {
++ (NSString *)buildGbombUrlWithPre:(NSString *)pre {
     return [GBUtility buildGbombUrlWithPre:pre withPost:nil];
 }
 
 + (NSString *)buildGbombUrlWithPre:(NSString *)pre
                              withPost:(NSString *)post {
-    NSString *domainPart = [GBSettings facebookDomainPart];
+    NSString *domainPart = [GBSettings gbombDomainPart];
     NSString *domain = GB_BASE_URL;
     if (domainPart) {
         domain = [NSString stringWithFormat:@"%@.%@", domainPart, GB_BASE_URL];
@@ -502,7 +502,7 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
     id accountTypeGB = nil;
     
     return (accountStore = [[[NSClassFromString(@"ACAccountStore") alloc] init] autorelease]) &&
-    (accountTypeGB = [accountStore accountTypeWithAccountTypeIdentifier:@"com.apple.facebook"]);
+    (accountTypeGB = [accountStore accountTypeWithAccountTypeIdentifier:@"com.apple.gbombgames"]);
 }
 
 + (void)deleteGbombCookies {
@@ -516,6 +516,7 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
 }
 
 + (NSString *)dialogBaseURL {
-    return [GBUtility buildGbombUrlWithPre:@"https://oauth." withPost:@"/"];
+//    return [GBUtility buildGbombUrlWithPre:@"https://oauth." withPost:@"/"];
+    return [GBUtility buildGbombUrlWithPre:@"http://oauth." withPost:@"/"];    
 }
 @end

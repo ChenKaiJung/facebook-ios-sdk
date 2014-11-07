@@ -52,9 +52,6 @@
   NSString *token = [self getStringFromUrl:q needle:@"access_token="];
   NSString *expTime = [self getStringFromUrl:q needle:@"expires_in="];
   NSDate *expirationDate =nil;
-    
-  NSString * access_token = [self getStringFromUrl:[url absoluteString] needle:@"access_token="];
-  //NSString * session_key = [self getStringFromUrl:[url absoluteString] needle:@"session_key="];
   NSString *code = [self getStringFromUrl:q needle:@"code="];
     
 #ifdef DEBUG
@@ -70,21 +67,22 @@
     } 
   } 
   
-  if ((token == (NSString *) [NSNull null]) || (token.length == 0)) {
+  if (((code == (NSString *) [NSNull null]) || (code.length == 0))
+      && ((token == (NSString *) [NSNull null]) || (token.length == 0))) {
     [self dialogDidCancel:url];
     [self dismissWithSuccess:NO animated:YES];
   } else {
-      if ([_loginDelegate respondsToSelector:@selector(fbDialogLogin:expirationDate:params:)]) {
+      if ([_loginDelegate respondsToSelector:@selector(gbDialogLogin:expirationDate:params:)]) {
       //[_loginDelegate fbDialogLogin:token expirationDate:expirationDate];
         NSDictionary *params = [GBUtility queryParamsDictionaryFromGBURL:url];
         if ( code != (NSString *) [NSNull null] && code.length != 0) {
-            [_loginDelegate fbDialogLogin:access_token expirationDate:expirationDate params:params];
+            [_loginDelegate gbDialogLogin:token expirationDate:expirationDate params:params];
         }
 //        else if (session_key == (NSString *) [NSNull null]){
 //            [_loginDelegate fbDialogLogin:access_token expirationDate:expirationDate params:params];
 //        }
         else {
-            [_loginDelegate fbDialogLogin:access_token expirationDate:expirationDate params:params];
+            [_loginDelegate gbDialogLogin:token expirationDate:expirationDate params:params];
         }
         [self dismissWithSuccess:YES animated:YES];
     }
@@ -97,15 +95,15 @@
  */
 - (void)dialogDidCancel:(NSURL *)url {
     [self dismissWithSuccess:NO animated:YES];
-    if ([_loginDelegate respondsToSelector:@selector(fbDialogNotLogin:)]) {
-        [_loginDelegate fbDialogNotLogin:YES];
+    if ([_loginDelegate respondsToSelector:@selector(gbDialogNotLogin:)]) {
+        [_loginDelegate gbDialogNotLogin:YES];
     }
 }
 
 
 - (void)dismissWithError:(NSError*)error animated:(BOOL)animated {
-    if ([_loginDelegate respondsToSelector:@selector(fbDialogNotLogin:)]) {
-        [_loginDelegate fbDialogLoginError:error];
+    if ([_loginDelegate respondsToSelector:@selector(gbDialogNotLogin:)]) {
+        [_loginDelegate gbDialogLoginError:error];
     }
     
     [super dismissWithError:error animated:animated];
@@ -117,7 +115,7 @@
           ([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102))) {
         [super webView:webView didFailLoadWithError:error];
         if ([_loginDelegate respondsToSelector:@selector(fbDialogNotLogin:)]) {
-            [_loginDelegate fbDialogNotLogin:NO];
+            [_loginDelegate gbDialogNotLogin:NO];
         }
     }
 }
