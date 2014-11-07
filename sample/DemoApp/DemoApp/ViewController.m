@@ -46,13 +46,7 @@
         [_gbomb logout:self];
     }
 }
-/**
- * Called when the UUID generated.
- */
-- (void)gbDidUUIDGenerate:(NSString*)uuid
-{
-    self.MessageLabel.text = uuid;
-}
+
 
 /**
  * Called when the user successfully logged in.
