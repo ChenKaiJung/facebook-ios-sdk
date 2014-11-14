@@ -35,7 +35,7 @@
     self = [super init];
     if (self) {
         self.frictionlessSettings = [[[GBFrictionlessRequestSettings alloc] init] autorelease];
-        [self.frictionlessSettings enableWithFacebook:nil]; // sets the flag on
+        [self.frictionlessSettings enableWithGbomb:nil]; // sets the flag on
     }
     return self;
 }

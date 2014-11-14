@@ -734,7 +734,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
 }
 
 - (void)enableFrictionlessRequests {
-    [_frictionlessRequestSettings enableWithFacebook:self];
+    [_frictionlessRequestSettings enableWithGbomb:self];
 }
 
 - (void)reloadFrictionlessRecipientCache {

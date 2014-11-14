@@ -519,4 +519,9 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
 //    return [GBUtility buildGbombUrlWithPre:@"https://oauth." withPost:@"/"];
     return [GBUtility buildGbombUrlWithPre:@"http://oauth." withPost:@"/"];    
 }
+
++ (NSString *)sdkBaseURL {
+    //    return [GBUtility buildGbombUrlWithPre:@"https://oauth." withPost:@"/"];
+    return [GBUtility buildGbombUrlWithPre:@"http://sdk." withPost:@"/"];
+}
 @end

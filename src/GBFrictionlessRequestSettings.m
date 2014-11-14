@@ -45,7 +45,7 @@
     return self;
 }
 
-- (void)enableWithFacebook:(Gbomb*)gbomb {
+- (void)enableWithGbomb:(Gbomb*)gbomb {
     if (!_enabled) {
         _enabled = YES;
         if (gbomb) {
