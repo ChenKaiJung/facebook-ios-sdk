@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Gbomb.h"
+#import "FTSession.h"
 
 @interface ViewController : UIViewController <GBSessionDelegate> {
     Gbomb * _gbomb;
@@ -15,6 +16,7 @@
 }
 
 @property(readonly) Gbomb *gbomb;
+@property(readonly) FTSession *ftsession;
 @property(nonatomic) BOOL isLogined;
 @property (strong, nonatomic) IBOutlet UILabel *MessageLabel;
 

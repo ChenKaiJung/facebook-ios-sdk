@@ -15,12 +15,14 @@
 @implementation ViewController
 
 @synthesize gbomb = _gbomb;
+@synthesize ftsession = _ftseesion;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     _gbomb = [[Gbomb alloc] initWithAppId: @"129645243823370" andDelegate:self];
+    _ftseesion = [[FTSession alloc] init];
 }
 
 - (void)didReceiveMemoryWarning
@@ -32,7 +34,9 @@
 
 - (IBAction)freeTrial:(id)sender
 {
-
+    [_ftseesion openWithCompletionHandler:^(FTSession *session, FTSessionState status, NSError *error) {
+        self.MessageLabel.text=error.localizedDescription;
+    }];
 }
 
 - (IBAction)loginLogout:(id)sender
