@@ -459,35 +459,29 @@ params   = _params;
   NSLog(@"Query: %@", [url query]);
   NSLog(@"Fragment: %@", [url fragment]);
 #endif
-  if ([url.path isEqualToString:@"/login_success.html"]) {
-#ifdef DEBUG      
-      NSLog(@"url.path EqualToString : /login_success.html");
+  if ([url.path isEqualToString:@"/trial.html"]) {
+#ifdef DEBUG
+        NSLog(@"url.path EqualToString : /trial.html");
 #endif
-      NSString * error = [self getStringFromUrl:[url absoluteString] needle:@"error="];
-      NSString * errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];
-      NSString * errorDes = [self getStringFromUrl:[url absoluteString] needle:@"error_description="];
-      NSString * access_token = [self getStringFromUrl:[url absoluteString] needle:@"access_token="];
-      NSString * code = [self getStringFromUrl:[url absoluteString] needle:@"code="];
-      if (code) {
-          [self dialogDidSucceed:url];
-      }
-      if (access_token) {
-          [self dialogDidSucceed:url];
-      }
-      if ([[url.resourceSpecifier substringToIndex:8] isEqualToString:@"//cancel"]) {
-          [self dialogDidCancel:url];
-      }
-      if (error) {
-          NSDictionary * errorData = [NSDictionary dictionaryWithObject:errorDes forKey:@"error_description"];
-          NSError * errorStr = [NSError errorWithDomain:@"OAuthErrDomain"
-                                                   code:[errorCode intValue]
-                                               userInfo:errorData];
-          [self dismissWithError:errorStr animated:YES];
-      }
-      [self dismissWithSuccess:YES animated:YES];
-
-      return NO;
-      
+    NSString * error = [self getStringFromUrl:[url absoluteString] needle:@"error="];
+    NSString * errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];
+    NSString * errorDes = [self getStringFromUrl:[url absoluteString] needle:@"error_description="];
+    NSString * token = [self getStringFromUrl:[url absoluteString] needle:@"token="];
+        
+    if (token) {
+        [self dialogDidSucceed:url];
+    }
+    if ([[url.resourceSpecifier substringToIndex:8] isEqualToString:@"//cancel"]) {
+        [self dialogDidCancel:url];
+    }
+    if (error) {
+        NSDictionary * errorData = [NSDictionary dictionaryWithObject:errorDes forKey:@"error_description"];
+        NSError * errorStr = [NSError errorWithDomain:@"OAuthErrDomain"
+                                                     code:[errorCode intValue]
+                                                 userInfo:errorData];
+            [self dismissWithError:errorStr animated:YES];
+    }
+    return NO;
   } else if ([_loadingURL isEqual:url]) {
       
     //[self dismissWithSuccess:NO animated:YES];
