@@ -459,11 +459,18 @@ params   = _params;
     NSLog(@"Fragment: %@", [url fragment]);
 #endif
     if ([_loadingURL isEqual:url]) {
-        
-        //[self dismissWithSuccess:NO animated:YES];
-        return YES;
+        NSString * method = [self getStringFromUrl:[url absoluteString] needle:@"method="];
+        if ([method isEqualToString:@"trial"]) {
+            [self dialogDidSucceed:url];
+        }
+        else if([method isEqualToString:@"facebook"]) {
+            [self dialogDidSucceed:url];
+        }
+        else if([method isEqualToString:@"gbombgames"]) {
+            [self dialogDidSucceed:url];
+        }
+        return NO;
     } else {
-        //[self dismissWithSuccess:NO animated:YES];
         return YES;
     }
 }

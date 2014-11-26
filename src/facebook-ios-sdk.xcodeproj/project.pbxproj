@@ -192,7 +192,6 @@
 		745D49FB1A07DE6F00EF00EE /* GBProfilePictureViewBlankProfileSquare.png in Sources */ = {isa = PBXBuildFile; fileRef = 745D49F01A07D6C800EF00EE /* GBProfilePictureViewBlankProfileSquare.png */; };
 		748C816C1A0CE6F400D1D36A /* FTSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C816B1A0CE6F400D1D36A /* FTSession.m */; };
 		748C81701A0CEA8100D1D36A /* FTDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C816F1A0CEA8100D1D36A /* FTDialog.m */; };
-		748C81781A1204F700D1D36A /* GBClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C81771A1204F700D1D36A /* GBClient.m */; };
 		748C817B1A12062400D1D36A /* GDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C817A1A12062400D1D36A /* GDialog.m */; };
 		748C817E1A13546000D1D36A /* GBDeviceId.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C817D1A13546000D1D36A /* GBDeviceId.m */; };
 		74A8048B1A14B5020094747A /* FTDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 748C816E1A0CEA4200D1D36A /* FTDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -819,12 +818,10 @@
 		748C816D1A0CE72600D1D36A /* FTSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FTSession.h; sourceTree = "<group>"; };
 		748C816E1A0CEA4200D1D36A /* FTDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTDialog.h; sourceTree = "<group>"; };
 		748C816F1A0CEA8100D1D36A /* FTDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTDialog.m; sourceTree = "<group>"; };
-		748C81771A1204F700D1D36A /* GBClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBClient.m; sourceTree = "<group>"; };
 		748C81791A1205E900D1D36A /* GDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDialog.h; sourceTree = "<group>"; };
 		748C817A1A12062400D1D36A /* GDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDialog.m; sourceTree = "<group>"; };
 		748C817C1A13540300D1D36A /* GBDeviceId.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBDeviceId.h; sourceTree = "<group>"; };
 		748C817D1A13546000D1D36A /* GBDeviceId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBDeviceId.m; sourceTree = "<group>"; };
-		748C817F1A136C9600D1D36A /* GBClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBClient.h; sourceTree = "<group>"; };
 		74D15D2D1890ABFC00CB50B2 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		7EBC39BB171CF1E400574F4E /* FBSettingsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBSettingsTests.h; path = tests/FBSettingsTests.h; sourceTree = "<group>"; };
 		7EBC39BC171CF1E400574F4E /* FBSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBSettingsTests.m; path = tests/FBSettingsTests.m; sourceTree = "<group>"; };
@@ -1599,8 +1596,6 @@
 		748C81751A12048800D1D36A /* PlatformSDK */ = {
 			isa = PBXGroup;
 			children = (
-				748C817F1A136C9600D1D36A /* GBClient.h */,
-				748C81771A1204F700D1D36A /* GBClient.m */,
 				748C81791A1205E900D1D36A /* GDialog.h */,
 				748C817A1A12062400D1D36A /* GDialog.m */,
 				748C817C1A13540300D1D36A /* GBDeviceId.h */,
@@ -2587,7 +2582,6 @@
 				9D5B915917BD3784009DBABB /* FBSessionFacebookAppNativeLoginStategy.m in Sources */,
 				9D5B915F17BD3792009DBABB /* FBSessionFacebookAppWebLoginStategy.m in Sources */,
 				745D49C31A0321EB00EF00EE /* GBWebDialogs.m in Sources */,
-				748C81781A1204F700D1D36A /* GBClient.m in Sources */,
 				9D5B916517BD379C009DBABB /* FBSessionSafariLoginStategy.m in Sources */,
 				9D5B916B17BD37A8009DBABB /* FBSessionInlineWebViewLoginStategy.m in Sources */,
 				745D49551A0321EB00EF00EE /* GBFrictionlessRequestSettings.m in Sources */,
