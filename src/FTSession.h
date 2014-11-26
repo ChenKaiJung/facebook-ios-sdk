@@ -97,19 +97,15 @@ typedef void (^FTSessionStateHandler)(FTSession *session,
  */
 - (void)openWithCompletionHandler:(FTSessionStateHandler)handler;
 
+- (NSString *) getStringFromUrl: (NSString*) url needle:(NSString *) needle;
+
+/*! @abstract Detailed session state */
+@property (readonly) FTSessionState state;
 /*! @abstract The access token for the session object.
  @discussion Deprecated. Use the `accessTokenData` property. */
-@property(readonly, copy) NSString *accessToken;
-
-/*! @abstract The expiration date of the access token for the session object.
- @discussion Deprecated. Use the `accessTokenData` property. */
-@property(readonly, copy) NSDate *expirationDate;
-
-/*! @abstract The permissions granted to the access token during the authentication flow. */
-@property (readonly, copy) NSArray *permissions;
-
+@property(readonly, copy) NSString *token;
 /*! @abstract Gets the code for the session */
-@property (readonly, copy) NSString *code;
+@property (readonly, copy) NSString *uid;
 /*! @abstract Gets the parameter for the session */
 //@property (readonly, copy) NSString *sessionKey;
 @property (readonly, copy) NSDictionary *parameters;

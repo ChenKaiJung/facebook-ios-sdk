@@ -87,7 +87,9 @@ typedef enum GBAdvertisingTrackingStatus {
 + (BOOL)isSystemAccountStoreAvailable;
 + (void)deleteGbombCookies;
 + (NSString *)dialogBaseURL;
-
++ (NSString *)getSystemVersion;
++ (NSString *)getSystemName;
++ (NSString *)getSystemModel;
 @end
 
 #define GBConditionalLog(condition, desc, ...) \

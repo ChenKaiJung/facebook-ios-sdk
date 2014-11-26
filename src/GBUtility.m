@@ -524,4 +524,16 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
     //    return [GBUtility buildGbombUrlWithPre:@"https://oauth." withPost:@"/"];
     return [GBUtility buildGbombUrlWithPre:@"http://sdk." withPost:@"/"];
 }
+
++ (NSString *)getSystemVersion {
+    return [[UIDevice currentDevice] systemVersion];
+}
+
++ (NSString *)getSystemName {
+    return [[UIDevice currentDevice] systemName];
+}
+
++ (NSString *)getSystemModel {
+    return [[UIDevice currentDevice] model];
+}
 @end

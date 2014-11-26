@@ -194,7 +194,7 @@
 		748C81701A0CEA8100D1D36A /* FTDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C816F1A0CEA8100D1D36A /* FTDialog.m */; };
 		748C81781A1204F700D1D36A /* GBClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C81771A1204F700D1D36A /* GBClient.m */; };
 		748C817B1A12062400D1D36A /* GDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C817A1A12062400D1D36A /* GDialog.m */; };
-		748C817E1A13546000D1D36A /* GBUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C817D1A13546000D1D36A /* GBUUID.m */; };
+		748C817E1A13546000D1D36A /* GBDeviceId.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C817D1A13546000D1D36A /* GBDeviceId.m */; };
 		74A8048B1A14B5020094747A /* FTDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 748C816E1A0CEA4200D1D36A /* FTDialog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		74A8048C1A14B54C0094747A /* FTSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 748C816D1A0CE72600D1D36A /* FTSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7E2AFFE216E01720007367C1 /* FBShareDialogParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EE2A6E016DE7D15009C2BA4 /* FBShareDialogParams.m */; };
@@ -822,8 +822,8 @@
 		748C81771A1204F700D1D36A /* GBClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBClient.m; sourceTree = "<group>"; };
 		748C81791A1205E900D1D36A /* GDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDialog.h; sourceTree = "<group>"; };
 		748C817A1A12062400D1D36A /* GDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDialog.m; sourceTree = "<group>"; };
-		748C817C1A13540300D1D36A /* GBUUID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBUUID.h; sourceTree = "<group>"; };
-		748C817D1A13546000D1D36A /* GBUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBUUID.m; sourceTree = "<group>"; };
+		748C817C1A13540300D1D36A /* GBDeviceId.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBDeviceId.h; sourceTree = "<group>"; };
+		748C817D1A13546000D1D36A /* GBDeviceId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBDeviceId.m; sourceTree = "<group>"; };
 		748C817F1A136C9600D1D36A /* GBClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBClient.h; sourceTree = "<group>"; };
 		74D15D2D1890ABFC00CB50B2 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		7EBC39BB171CF1E400574F4E /* FBSettingsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBSettingsTests.h; path = tests/FBSettingsTests.h; sourceTree = "<group>"; };
@@ -1603,8 +1603,8 @@
 				748C81771A1204F700D1D36A /* GBClient.m */,
 				748C81791A1205E900D1D36A /* GDialog.h */,
 				748C817A1A12062400D1D36A /* GDialog.m */,
-				748C817C1A13540300D1D36A /* GBUUID.h */,
-				748C817D1A13546000D1D36A /* GBUUID.m */,
+				748C817C1A13540300D1D36A /* GBDeviceId.h */,
+				748C817D1A13546000D1D36A /* GBDeviceId.m */,
 			);
 			name = PlatformSDK;
 			sourceTree = "<group>";
@@ -2440,7 +2440,7 @@
 				745D49FA1A07DE6F00EF00EE /* GBProfilePictureViewBlankProfilePortrait.png in Sources */,
 				745D49FB1A07DE6F00EF00EE /* GBProfilePictureViewBlankProfileSquare.png in Sources */,
 				745D49F41A07DE6F00EF00EE /* GBFriendPickerViewDefault.png in Sources */,
-				748C817E1A13546000D1D36A /* GBUUID.m in Sources */,
+				748C817E1A13546000D1D36A /* GBDeviceId.m in Sources */,
 				745D49F91A07DE6F00EF00EE /* GBPlacePickerViewGenericPlace.png in Sources */,
 				745D49F31A07DE6F00EF00EE /* GBDialogClose.png in Sources */,
 				745D49651A0321EB00EF00EE /* GBGraphObjectTableSelection.m in Sources */,

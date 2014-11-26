@@ -1,30 +1,30 @@
 //
-//  FTUUID.m
+//  GBDeviceId.m
 //  facebook-ios-sdk
 //
 //  Created by kaijung on 2014/1/23.
 //
 //
 
-#import "GBUUID.h"
+#import "GBDeviceId.h"
 #include <sys/socket.h>
 #include <sys/sysctl.h>
 #include <net/if.h>
 #include <net/if_dl.h>
 
-@implementation GBUUID
+@implementation GBDeviceId
 
-@synthesize uuidDelegate = _uuidDelegate;
+@synthesize deviceIdDelegate = _deviceIdDelegate;
 
-+ (id)getInstance:(id<GBUUIDDelegate>)delegate {
++ (id)getInstance:(id<GBDeviceIdDelegate>)delegate {
     
-    static GBUUID *sharedGBUUID = nil;
+    static GBDeviceId *sharedGBDeviceId = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedGBUUID = [[self alloc] init];
+        sharedGBDeviceId = [[self alloc] init];
     });
-    sharedGBUUID.uuidDelegate = delegate;
-    return sharedGBUUID;
+    sharedGBDeviceId.deviceIdDelegate = delegate;
+    return sharedGBDeviceId;
 }
 
 - (NSString *)getMacAddress
@@ -94,7 +94,7 @@
     return macAddressString;
 }
 
-- (void)generateUUID {
+- (void)generateDeviceId {
     NSString *systemId = @"";
     if (([[[UIDevice currentDevice] systemVersion] floatValue] < 6.0f)) {
         systemId = [systemId stringByAppendingString:@"IOS_MAC-"];
@@ -105,12 +105,12 @@
         systemId = [systemId stringByAppendingString:[[[UIDevice currentDevice] identifierForVendor] UUIDString]];
     }
     
-    if ([self.uuidDelegate respondsToSelector:@selector(gbDidUUIDGenerate:)]) {
-        [_uuidDelegate gbDidUUIDGenerate:systemId];
+    if ([self.deviceIdDelegate respondsToSelector:@selector(gbDidDeviceIdGenerate:)]) {
+        [_deviceIdDelegate gbDidDeviceIdGenerate:systemId];
     }
 }
 
-- (NSString *)getUUID {
+- (NSString *)getDeviceId {
     NSString *systemId = @"";
     if (([[[UIDevice currentDevice] systemVersion] floatValue] < 6.0f)) {
         systemId = [systemId stringByAppendingString:@"IOS_MAC-"];

@@ -12,26 +12,26 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@protocol GBUUIDDelegate;
+@protocol GBDeviceIdDelegate;
 
-@interface GBUUID : NSObject {
-    id<GBUUIDDelegate> _uuidDelegate;
+@interface GBDeviceId : NSObject {
+    id<GBDeviceIdDelegate> _deviceIdDelegate;
 }
 
-@property(nonatomic, assign) id<GBUUIDDelegate> uuidDelegate;
+@property(nonatomic, assign) id<GBDeviceIdDelegate> deviceIdDelegate;
 
-+ (id)getInstance:(id<GBUUIDDelegate>)delegate;
++ (id)getInstance:(id<GBDeviceIdDelegate>)delegate;
 
-- (void)generateUUID;
-- (NSString *)getUUID;
+- (void)generateDeviceId;
+- (NSString *)getDeviceId;
 
 @end
 
 
-@protocol GBUUIDDelegate <NSObject>
+@protocol GBDeviceIdDelegate <NSObject>
 
 @optional
-- (void)gbDidUUIDGenerate:(NSString*)uuid;
+- (void)gbDidDeviceIdGenerate:(NSString*)deviceId;
 
 @end
 
