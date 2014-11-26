@@ -458,42 +458,12 @@ params   = _params;
     NSLog(@"Query: %@", [url query]);
     NSLog(@"Fragment: %@", [url fragment]);
 #endif
-    if ([url.path isEqualToString:@"/trial.html"]) {
-#ifdef DEBUG
-        NSLog(@"url.path EqualToString : /trial.html");
-#endif
-        NSString * error = [self getStringFromUrl:[url absoluteString] needle:@"error="];
-        NSString * errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];
-        NSString * errorDes = [self getStringFromUrl:[url absoluteString] needle:@"error_description="];
-        NSString * token = [self getStringFromUrl:[url absoluteString] needle:@"token="];
-
-        if (token) {
-            [self dialogDidSucceed:url];
-        }
-        if ([[url.resourceSpecifier substringToIndex:8] isEqualToString:@"//cancel"]) {
-            [self dialogDidCancel:url];
-        }
-        if (error) {
-            NSDictionary * errorData = [NSDictionary dictionaryWithObject:errorDes forKey:@"error_description"];
-            NSError * errorStr = [NSError errorWithDomain:@"OAuthErrDomain"
-                                                     code:[errorCode intValue]
-                                                 userInfo:errorData];
-            [self dismissWithError:errorStr animated:YES];
-        }
-        return NO;
+    if ([_loadingURL isEqual:url]) {
         
-    } else if ([_loadingURL isEqual:url]) {
+        //[self dismissWithSuccess:NO animated:YES];
         return YES;
-    } else if (navigationType == UIWebViewNavigationTypeLinkClicked) {
-        if ([_delegate respondsToSelector:@selector(dialog:shouldOpenURLInExternalBrowser:)]) {
-            if (![_delegate dialog:self shouldOpenURLInExternalBrowser:url]) {
-                return NO;
-            }
-        }
-        
-        [[UIApplication sharedApplication] openURL:request.URL];
-        return NO;
     } else {
+        //[self dismissWithSuccess:NO animated:YES];
         return YES;
     }
 }
