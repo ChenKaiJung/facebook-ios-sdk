@@ -98,10 +98,10 @@ mkdir -p $(dirname $FB_SDK_UNIVERSAL_BINARY)
 
 $LIPO \
   -create \
-    $FB_SDK_BUILD/${BUILDCONFIGURATION}-iphonesimulator/libfacebook_ios_sdk_funtown.a \
-    $FB_SDK_BUILD/${BUILDCONFIGURATION}-iphoneos/libfacebook_ios_sdk_funtown.a \
-    $FB_SDK_BUILD/${BUILDCONFIGURATION}64-iphonesimulator/libfacebook_ios_sdk_funtown.a \
-    $FB_SDK_BUILD/${BUILDCONFIGURATION}64-iphoneos/libfacebook_ios_sdk_funtown.a \
+    $FB_SDK_BUILD/${BUILDCONFIGURATION}-iphonesimulator/libfacebook_ios_sdk_gbomb.a \
+    $FB_SDK_BUILD/${BUILDCONFIGURATION}-iphoneos/libfacebook_ios_sdk_gbomb.a \
+    $FB_SDK_BUILD/${BUILDCONFIGURATION}64-iphonesimulator/libfacebook_ios_sdk_gbomb.a \
+    $FB_SDK_BUILD/${BUILDCONFIGURATION}64-iphoneos/libfacebook_ios_sdk_gbomb.a \
   -output $FB_SDK_UNIVERSAL_BINARY \
   || die "lipo failed - could not create universal static library"
 

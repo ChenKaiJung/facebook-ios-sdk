@@ -35,7 +35,10 @@
 - (IBAction)freeTrial:(id)sender
 {
     [_ftseesion openWithCompletionHandler:^(FTSession *session, FTSessionState status, NSError *error) {
-        self.MessageLabel.text=error.localizedDescription;
+        NSString *lab=@"token: ";
+        NSString *token=session.token;
+        NSString *uid=session.uid;
+        self.MessageLabel.text=[[[lab stringByAppendingString:token] stringByAppendingString:@" uid: "]stringByAppendingString:uid];
     }];
 }
 
