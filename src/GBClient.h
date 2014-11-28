@@ -5,6 +5,10 @@
 //  Created by kaijung on 2014/11/12.
 //
 //
+@class GBSession;
+@class FBSession;
+@class FTSession;
+
 @protocol GBClientDelegate;
 
 @interface GBClient : NSObject {
