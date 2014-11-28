@@ -191,7 +191,7 @@
 		745D49FA1A07DE6F00EF00EE /* GBProfilePictureViewBlankProfilePortrait.png in Sources */ = {isa = PBXBuildFile; fileRef = 745D49EF1A07D6C800EF00EE /* GBProfilePictureViewBlankProfilePortrait.png */; };
 		745D49FB1A07DE6F00EF00EE /* GBProfilePictureViewBlankProfileSquare.png in Sources */ = {isa = PBXBuildFile; fileRef = 745D49F01A07D6C800EF00EE /* GBProfilePictureViewBlankProfileSquare.png */; };
 		746463AF1A286E6E00CF148E /* GBClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 746463AD1A286E6E00CF148E /* GBClient.m */; };
-		746463B01A286E6E00CF148E /* GBClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 746463AE1A286E6E00CF148E /* GBClient.h */; };
+		746463B01A286E6E00CF148E /* GBClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 746463AE1A286E6E00CF148E /* GBClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		748C816C1A0CE6F400D1D36A /* FTSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C816B1A0CE6F400D1D36A /* FTSession.m */; };
 		748C81701A0CEA8100D1D36A /* FTDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C816F1A0CEA8100D1D36A /* FTDialog.m */; };
 		748C817B1A12062400D1D36A /* GDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C817A1A12062400D1D36A /* GDialog.m */; };
@@ -1869,6 +1869,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				746463B01A286E6E00CF148E /* GBClient.h in Headers */,
 				74E7C9771A2630E800CA9ED3 /* GDialog.h in Headers */,
 				74A8048C1A14B54C0094747A /* FTSession.h in Headers */,
 				74A8048B1A14B5020094747A /* FTDialog.h in Headers */,
@@ -2007,7 +2008,6 @@
 				B51484E316C622370041257D /* FBCrypto.h in Headers */,
 				745D49621A0321EB00EF00EE /* GBGraphObjectTableDataSource.h in Headers */,
 				745D498B1A0321EB00EF00EE /* GBRequestHandlerFactory.h in Headers */,
-				746463B01A286E6E00CF148E /* GBClient.h in Headers */,
 				B5E946E016D84FB700D55A25 /* FBAppBridgeTypeToJSONConverter.h in Headers */,
 				8582701716E02E6000795734 /* FBOpenGraphActionShareDialogParams.h in Headers */,
 				B5B4C19916F3C8B7006FF55B /* FBDialogs+Internal.h in Headers */,

@@ -5,7 +5,13 @@
 //  Created by kaijung on 2014/11/11.
 //
 //
-
+#import "GDialog.h"
+#import "GBSettings.h"
+#import "FBSettings.h"
+#import "GBSession.h"
+#import "GBUtility.h"
+#import "FBSession.h"
+#import "FTSession.h"
 #import <Foundation/Foundation.h>
 #import "GBClient.h"
 
@@ -16,6 +22,29 @@
 @synthesize delegate = _delegate;
 
 - (id)initWithGameId : (NSString*) gameId {
+    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *gclient = [infoDict objectForKey:@"GbombClientId"];
+    
+    NSArray *permissions =[NSArray arrayWithObjects:@"email", nil];
+    
+    NSString *urlSchemeSuffix = [GBSettings defaultUrlSchemeSuffix];
+    GBSessionTokenCachingStrategy *gbtokenCaching= [GBSessionTokenCachingStrategy defaultInstance];
+    
+    _gbsession=[[GBSession alloc] initWithAppID:gclient
+                                    permissions:permissions
+                                urlSchemeSuffix:urlSchemeSuffix
+                             tokenCacheStrategy:gbtokenCaching];
+    
+    
+    urlSchemeSuffix = [FBSettings defaultUrlSchemeSuffix];
+    FBSessionTokenCachingStrategy *fbtokenCaching= [FBSessionTokenCachingStrategy defaultInstance];
+    
+    _fbsession=[[FBSession alloc] initWithAppID:gclient
+                                    permissions:permissions
+                                urlSchemeSuffix:urlSchemeSuffix
+                             tokenCacheStrategy:fbtokenCaching];
+    
+    _ftsession=[FTSession init];
     
 }
 

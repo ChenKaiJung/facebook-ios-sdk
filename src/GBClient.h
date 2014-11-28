@@ -9,6 +9,9 @@
 
 @interface GBClient : NSObject {
     id<GBClientDelegate> _delegate;
+    GBSession * _gbsession;
+    FBSession * _fbsession;
+    FTSession * _ftsession;
 }
 
 @property (nonatomic, assign) id<GBClientDelegate> delegate;
