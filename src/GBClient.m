@@ -16,8 +16,11 @@
 #import "GBClient.h"
 #import "FBAccessTokenData.h"
 #import "GBAccessTokenData.h"
+#import "GBSessionTokenCachingStrategy.h"
+#import "FBSessionTokenCachingStrategy.h"
 
 static NSString *const GDialogMethod = @"index.php";
+static NSString *const CallServiceMethod = @"cc.php";
 static NSString* GB_API_SERVICE_URL   = @"http://api.gbombgames.com/";
 static const NSTimeInterval TIMEOUT = 180.0;
 static NSString* USER_AGENT = @"GBomb";
@@ -32,6 +35,9 @@ static NSURLResponse *_gbResponse;
 @synthesize delegate = _delegate;
 
 - (id)initWithGameId : (NSString*) gameId {
+    
+    self = [super init];
+    
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString *gclient = [infoDict objectForKey:@"GbombClientId"];
     
@@ -55,10 +61,10 @@ static NSURLResponse *_gbResponse;
                              tokenCacheStrategy:fbtokenCaching];
     
     _ftsession=[FTSession init];
-    
+    return self;
 }
 
-- (id)login {
+- (void)login {
     NSString *gDialogURL = [[GBUtility sdkBaseURL] stringByAppendingString:GDialogMethod];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     
@@ -69,22 +75,39 @@ static NSURLResponse *_gbResponse;
     [_gdialog show];
 }
 
-- (id)callService {
+- (void)callService  : (NSString*)characterProfile {
+    NSString *gDialogURL = [[GBUtility sdkBaseURL] stringByAppendingString:CallServiceMethod];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    NSArray *urlComponents = [characterProfile componentsSeparatedByString:@"&"];
+
+    for (NSString *keyValuePair in urlComponents)
+    {
+        NSArray *pairComponents = [keyValuePair componentsSeparatedByString:@"="];
+        NSString *key = [pairComponents objectAtIndex:0];
+        NSString *value = [pairComponents objectAtIndex:1];
+        
+        [params setObject:value forKey:key];
+    }
+    
+    // open an inline login dialog. This will require the user to enter his or her credentials.
+    _gdialog = [[[GDialog alloc]
+                 initWithURL:gDialogURL params:params isViewInvisible:NO delegate:self]
+                autorelease];
+    [_gdialog show];
+}
+
+- (void)getProductList : (NSString*)characterProfile {
     
 }
 
-- (id)getProductList {
-    
-}
-
-- (id)purchase : (NSString*) cid serverId :(NSString*) server
+- (void)purchase : (NSString*) cid serverId :(NSString*) server
         itemId : (NSString*) item onSalesId : (NSString*) onsalesId
      providerId : (NSString*) providerId characterProfile : (NSString*)characterProfile
           token : (NSString*) token {
     
 }
 
-- (id)subPush : (NSString*) regid {
+- (void)subPush : (NSString*) regid {
     
     NSString* api = @"sub.php";
     NSString* uri=[GB_API_SERVICE_URL
@@ -105,7 +128,7 @@ static NSURLResponse *_gbResponse;
     _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
-- (id)unsubPush : (NSString*) regid {
+- (void)unsubPush : (NSString*) regid {
     NSString* api = @"unsub.php";
     NSString* uri=[GB_API_SERVICE_URL
                    stringByAppendingString:api];
@@ -228,20 +251,65 @@ static NSURLResponse *_gbResponse;
     if ([method isEqualToString:@"trial"]) {
         [_ftsession openWithCompletionHandler:^(FTSession *session, FTSessionState status, NSError *error) {
             NSString* rstr= [NSString alloc];
-            [rstr stringByAppendingFormat: @"{ \"provider_id\": %s ,  \"token\": %s }","trial",[_ftsession.token UTF8String]];
+            switch (status) {
+                case FTSessionStateOpen:
+                    // call the legacy session delegate
+                    [rstr stringByAppendingFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","trial",[_ftsession.token UTF8String],[_ftsession.uid UTF8String]];
+                    [self GBClientDidComplete:100 result:rstr];
+                    break;
+                case FTSessionStateClosedLoginFailed:
+                    [rstr stringByAppendingFormat: @"{ \"code\": %d }", error.code];
+                    [self GBClientDidComplete:104 result:rstr];
+                   break;
+                default:
+                    [self GBClientDidComplete:115 result:rstr];                    
+                    break; // so we do nothing in response to those state transitions
+            }
+            [rstr release];
         }];
     }
     else if([method isEqualToString:@"facebook"]) {
         [_fbsession openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
             NSString* rstr= [NSString alloc];
-            [rstr stringByAppendingFormat: @"{ \"provider_id\": %s ,  \"token\": %s }","facebook",[_fbsession.accessTokenData.accessToken UTF8String]];
+            switch (status) {
+                case FBSessionStateOpen:
+                    // call the legacy session delegate
+                    [rstr stringByAppendingFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","facebook",[_fbsession.accessTokenData.accessToken UTF8String],[_fbsession.parameters[@"uid"] UTF8String]];
+                    [self GBClientDidComplete:100 result:rstr];
+                    break;
+                case FBSessionStateClosedLoginFailed:
+                    [rstr stringByAppendingFormat: @"{ \"code\": %d }", error.code];
+                    [self GBClientDidComplete:104 result:rstr];
+                    break;
+                default:
+                    [self GBClientDidComplete:115 result:rstr];
+                    break; // so we do nothing in response to those state transitions
+            }
+            [rstr release];
         }];
     }
     else if([method isEqualToString:@"gbombgames"]) {
         [_gbsession openWithCompletionHandler:^(GBSession *session, GBSessionState status, NSError *error) {
             NSString* rstr= [NSString alloc];
-            [rstr stringByAppendingFormat: @"{ \"provider_id\": %s ,  \"token\": %s }","gbombgames",[_gbsession.accessTokenData.accessToken UTF8String]];
+            switch (status) {
+                case GBSessionStateOpen:
+                    // call the legacy session delegate
+                    [rstr stringByAppendingFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","gbombgames",[_gbsession.accessTokenData.accessToken UTF8String],[_gbsession.parameters[@"uid"] UTF8String]];
+                    [self GBClientDidComplete:100 result:rstr];
+                    break;
+                case GBSessionStateClosedLoginFailed:
+                    [rstr stringByAppendingFormat: @"{ \"code\": %d }", error.code];
+                    [self GBClientDidComplete:104 result:rstr];
+                    break;
+                default:
+                    [self GBClientDidComplete:115 result:rstr];
+                    break; // so we do nothing in response to those state transitions
+            }
+            [rstr release];            
         }];
+    }
+    else {
+        
     }
 }
 
@@ -263,7 +331,9 @@ static NSURLResponse *_gbResponse;
  * Called when dialog failed to load due to an error.
  */
 - (void)dialog:(GDialog*)dialog didFailWithError:(NSError *)error {
-    
+    NSString* rstr= [NSString alloc];
+    [rstr stringByAppendingFormat: @"{ \"code\": %d }", error.code];
+    [self GBClientDidComplete:115 result:rstr];
 }
 
 /**

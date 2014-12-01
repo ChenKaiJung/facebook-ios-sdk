@@ -22,16 +22,16 @@
 @property (nonatomic, assign) id<GBClientDelegate> delegate;
 
 - (id)initWithGameId : (NSString*) gameId;
-- (id)login;
-- (id)callService : (NSString*)characterProfile;
-- (id)getProductList : (NSString*)characterProfile;
-- (id)purchase : (NSString*) cid serverId:(NSString*) server
+- (void)login;
+- (void)callService : (NSString*)characterProfile;
+- (void)getProductList : (NSString*)characterProfile;
+- (void)purchase : (NSString*) cid serverId:(NSString*) server
         itemId : (NSString*) item onSalesId: (NSString*) onsalesId
      providerId: (NSString*) providerId characterProfile: (NSString*)characterProfile
           token: (NSString*) token;
 
-- (id)subPush : (NSString*) regid;
-- (id)unsubPush : (NSString*) regid;
+- (void)subPush : (NSString*) regid;
+- (void)unsubPush : (NSString*) regid;
 
 - (NSString *) getStringFromUrl: (NSString*) url needle:(NSString *) needle;
 

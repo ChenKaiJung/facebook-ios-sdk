@@ -86,6 +86,7 @@ typedef enum GBAdvertisingTrackingStatus {
 + (BOOL)isMultitaskingSupported;
 + (BOOL)isSystemAccountStoreAvailable;
 + (void)deleteGbombCookies;
++ (NSString *)sdkBaseURL;
 + (NSString *)dialogBaseURL;
 + (NSString *)getSystemVersion;
 + (NSString *)getSystemName;
