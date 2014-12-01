@@ -11,11 +11,12 @@
 
 @protocol GBClientDelegate;
 
-@interface GBClient : NSObject <NSURLConnectionDelegate>  {
+@interface GBClient : NSObject <NSURLConnectionDelegate,GDialogDelegate>  {
     id<GBClientDelegate> _delegate;
     GBSession * _gbsession;
     FBSession * _fbsession;
     FTSession * _ftsession;
+    GDialog * _gdialog;
 }
 
 @property (nonatomic, assign) id<GBClientDelegate> delegate;
@@ -26,11 +27,13 @@
 - (id)getProductList : (NSString*)characterProfile;
 - (id)purchase : (NSString*) cid serverId:(NSString*) server
         itemId : (NSString*) item onSalesId: (NSString*) onsalesId
-     providerId: (NSString*) characterProfile : (NSString*)characterProfile
+     providerId: (NSString*) providerId characterProfile: (NSString*)characterProfile
           token: (NSString*) token;
 
 - (id)subPush : (NSString*) regid;
 - (id)unsubPush : (NSString*) regid;
+
+- (NSString *) getStringFromUrl: (NSString*) url needle:(NSString *) needle;
 
 - (void)GBClientDidComplete:(NSInteger) code result:(NSString *)json;
 - (void)GBClientDidNotComplete:(NSInteger) code result:(NSString *)json;
