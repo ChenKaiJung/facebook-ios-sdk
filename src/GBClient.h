@@ -11,7 +11,7 @@
 
 @protocol GBClientDelegate;
 
-@interface GBClient : NSObject {
+@interface GBClient : NSObject <NSURLConnectionDelegate>  {
     id<GBClientDelegate> _delegate;
     GBSession * _gbsession;
     FBSession * _fbsession;
@@ -22,11 +22,11 @@
 
 - (id)initWithGameId : (NSString*) gameId;
 - (id)login;
-- (id)callService;
-- (id)getProductList;
+- (id)callService : (NSString*)characterProfile;
+- (id)getProductList : (NSString*)characterProfile;
 - (id)purchase : (NSString*) cid serverId:(NSString*) server
-        itemID : (NSString*) item onSalesId: (NSString*) onsalesId
-     providerID: (NSString*) providerId
+        itemId : (NSString*) item onSalesId: (NSString*) onsalesId
+     providerId: (NSString*) characterProfile : (NSString*)characterProfile
           token: (NSString*) token;
 
 - (id)subPush : (NSString*) regid;

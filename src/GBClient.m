@@ -15,6 +15,14 @@
 #import <Foundation/Foundation.h>
 #import "GBClient.h"
 
+
+static NSString* GB_API_SERVICE_URL   = @"http://api.gbombgames.com/";
+static const NSTimeInterval TIMEOUT = 180.0;
+static NSString* USER_AGENT = @"GBomb";
+static NSURLConnection *_connection=nil;
+static NSMutableData *_gbResponseData;
+static NSURLResponse *_gbResponse;
+
 @implementation GBClient {
 
 }
@@ -61,18 +69,51 @@
 }
 
 - (id)purchase : (NSString*) cid serverId:(NSString*) server
-        itemID : (NSString*) item onSalesId: (NSString*) onsalesId
-     providerID: (NSString*) providerId
+        itemId : (NSString*) item onSalesId: (NSString*) onsalesId
+     providerId: (NSString*) providerId characterProfile : (NSString*)characterProfile
           token: (NSString*) token {
     
 }
 
 - (id)subPush : (NSString*) regid {
     
+    NSString* api = @"sub.php";
+    NSString* uri=[GB_API_SERVICE_URL
+                   stringByAppendingString:api];
+    
+    NSMutableURLRequest* request =
+    [NSMutableURLRequest requestWithURL:[NSURL URLWithString:uri]
+                            cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                        timeoutInterval:TIMEOUT];
+    
+    
+    [request setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
+    
+    
+    [request setHTTPMethod:@"GET"];
+    
+    
+    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
 - (id)unsubPush : (NSString*) regid {
+    NSString* api = @"unsub.php";
+    NSString* uri=[GB_API_SERVICE_URL
+                   stringByAppendingString:api];
     
+    NSMutableURLRequest* request =
+    [NSMutableURLRequest requestWithURL:[NSURL URLWithString:uri]
+                            cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                        timeoutInterval:TIMEOUT];
+    
+    
+    [request setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
+    
+    
+    [request setHTTPMethod:@"GET"];
+    
+    
+    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
 - (void)GBClientDidComplete:(NSInteger) code result:(NSString *)json {
@@ -104,5 +145,38 @@
         [me release];
     }
 }
+
+
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    _gbResponse=response;
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [_gbResponseData appendData:data];
+}
+
+- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
+                  willCacheResponse:(NSCachedURLResponse*)cachedResponse {
+    return nil;
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    
+    NSString* rstr= [[NSString alloc] initWithData:_gbResponseData   encoding:NSUTF8StringEncoding];
+    [self GBClientDidComplete:100 result:rstr];
+    
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    NSString* rstr= [NSString alloc];
+    
+    [rstr stringByAppendingFormat: @"{ \"code\": %d ,  \"status\": %d }",
+     error.code,
+     (NSInteger)[(NSHTTPURLResponse *)_gbResponse statusCode]];
+
+    [self GBClientDidNotComplete:115 result:rstr];
+}
+
 
 @end
