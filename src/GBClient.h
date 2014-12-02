@@ -8,8 +8,10 @@
 @class GBSession;
 @class FBSession;
 @class FTSession;
+@class GDialog;
 
 @protocol GBClientDelegate;
+@protocol GDialogDelegate;
 
 @interface GBClient : NSObject <NSURLConnectionDelegate,GDialogDelegate>  {
     id<GBClientDelegate> _delegate;

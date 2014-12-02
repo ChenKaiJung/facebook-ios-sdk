@@ -148,6 +148,10 @@ static NSURLResponse *_gbResponse;
     _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
+- (void)didFailWithError:(NSError *)error {
+    
+}
+
 /**
  * Find a specific parameter from the url
  */
@@ -203,7 +207,20 @@ static NSURLResponse *_gbResponse;
     }
 }
 
-
+- (void)GBClientDidFailWithError:(NSError *)error {
+    // retain self for the life of this method, in case we are released by a client
+    id me = [self retain];
+    
+    @try {
+        // call into client code
+        if ([_delegate respondsToSelector:@selector(didFailWithError:)]) {
+            [_delegate didFailWithError:error];
+        }
+        
+    } @finally {
+        [me release];
+    }
+}
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     _gbResponse=response;
@@ -222,7 +239,7 @@ static NSURLResponse *_gbResponse;
     
     NSString* rstr= [[NSString alloc] initWithData:_gbResponseData   encoding:NSUTF8StringEncoding];
     [self GBClientDidComplete:100 result:rstr];
-    
+    [rstr release];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -233,6 +250,7 @@ static NSURLResponse *_gbResponse;
      (NSInteger)[(NSHTTPURLResponse *)_gbResponse statusCode]];
 
     [self GBClientDidNotComplete:115 result:rstr];
+    [rstr release];
 }
 
 /**
@@ -334,6 +352,7 @@ static NSURLResponse *_gbResponse;
     NSString* rstr= [NSString alloc];
     [rstr stringByAppendingFormat: @"{ \"code\": %d }", error.code];
     [self GBClientDidComplete:115 result:rstr];
+    [rstr release];
 }
 
 /**
