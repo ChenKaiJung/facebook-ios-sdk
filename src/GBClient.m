@@ -40,6 +40,7 @@ static NSURLResponse *_gbResponse;
     
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString *gclient = [infoDict objectForKey:@"GbombClientId"];
+    NSString *fclient = [infoDict objectForKey:@"FacebookClientId"];
     
     NSArray *permissions =[NSArray arrayWithObjects:@"email", nil];
     
@@ -55,7 +56,7 @@ static NSURLResponse *_gbResponse;
     urlSchemeSuffix = [FBSettings defaultUrlSchemeSuffix];
     FBSessionTokenCachingStrategy *fbtokenCaching= [FBSessionTokenCachingStrategy defaultInstance];
     
-    _fbsession=[[FBSession alloc] initWithAppID:gclient
+    _fbsession=[[FBSession alloc] initWithAppID:fclient
                                     permissions:permissions
                                 urlSchemeSuffix:urlSchemeSuffix
                              tokenCacheStrategy:fbtokenCaching];
