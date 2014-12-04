@@ -459,20 +459,16 @@ params   = _params;
     NSLog(@"Fragment: %@", [url fragment]);
 #endif
     if ([_loadingURL isEqual:url]) {
-        NSString * method = [self getStringFromUrl:[url absoluteString] needle:@"method="];
-        if ([method isEqualToString:@"trial"]) {
-            [self dialogDidSucceed:url];
-            return NO;
-        }
-        else if([method isEqualToString:@"facebook"]) {
-            [self dialogDidSucceed:url];
-            return NO;
-        }
-        else if([method isEqualToString:@"gbombgames"]) {
-            [self dialogDidSucceed:url];
-            return NO;            
-        }
         return YES;
+    } else if ([url.path isEqualToString:@"/trial.html"]) {
+        [self dialogDidSucceed:url];
+         return NO;
+    } else if ([url.path isEqualToString:@"/facebook.html"]) {
+        [self dialogDidSucceed:url];
+        return NO;
+    } else if ([url.path isEqualToString:@"/gbombgames.html"]) {
+        [self dialogDidSucceed:url];
+        return NO;
     } else {
         return YES;
     }
