@@ -32,7 +32,11 @@ static NSURLResponse *_gbResponse;
 
 }
 
-@synthesize delegate = _delegate;
+@synthesize delegate = _delegate,
+            gbsession= _gbsession,
+            ftsession=_ftsession,
+            fbsession=_fbsession,
+            gdialog=_gdialog;
 
 - (id)initWithGameId : (NSString*) gameId {
     
@@ -68,8 +72,8 @@ static NSURLResponse *_gbResponse;
                                 urlSchemeSuffix:urlSchemeSuffix
                              tokenCacheStrategy:fbtokenCaching];
     
-    _ftsession=[FTSession alloc];
-    _ftsession=[_ftsession init];
+    _ftsession=[[FTSession alloc] init];
+
     return self;
 }
 
