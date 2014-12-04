@@ -68,7 +68,8 @@ static NSURLResponse *_gbResponse;
                                 urlSchemeSuffix:urlSchemeSuffix
                              tokenCacheStrategy:fbtokenCaching];
     
-    _ftsession=[[FTSession alloc] init];
+    _ftsession=[FTSession alloc];
+    _ftsession=[_ftsession init];
     return self;
 }
 
