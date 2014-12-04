@@ -462,14 +462,17 @@ params   = _params;
         NSString * method = [self getStringFromUrl:[url absoluteString] needle:@"method="];
         if ([method isEqualToString:@"trial"]) {
             [self dialogDidSucceed:url];
+            return NO;
         }
         else if([method isEqualToString:@"facebook"]) {
             [self dialogDidSucceed:url];
+            return NO;
         }
         else if([method isEqualToString:@"gbombgames"]) {
             [self dialogDidSucceed:url];
+            return NO;            
         }
-        return NO;
+        return YES;
     } else {
         return YES;
     }
