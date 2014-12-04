@@ -208,7 +208,8 @@ static NSURLResponse *_gbResponse;
         if ([_delegate respondsToSelector:@selector(didComplete:)]) {
             [_delegate didComplete:code result:json];
         }
-        
+    } @catch (NSException *exception) {
+        NSLog(@"Exception:%@",exception);
     } @finally {
         [me release];
     }
@@ -223,7 +224,8 @@ static NSURLResponse *_gbResponse;
         if ([_delegate respondsToSelector:@selector(didNotComplete:)]) {
             [_delegate didNotComplete:code result:json];
         }
-        
+    } @catch (NSException *exception) {
+        NSLog(@"Exception:%@",exception);
     } @finally {
         [me release];
     }
