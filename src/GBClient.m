@@ -286,7 +286,6 @@ static NSURLResponse *_gbResponse;
  * Called when the dialog succeeds with a returning url.
  */
 - (void)dialogCompleteWithUrl:(NSURL *)url {
-    
     if ([url.path isEqualToString:@"/trial.html"]) {
         [_ftsession openWithCompletionHandler:^(FTSession *session, FTSessionState status, NSError *error) {
             NSString* rstr= [NSString alloc];
