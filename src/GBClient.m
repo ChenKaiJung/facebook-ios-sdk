@@ -287,8 +287,7 @@ static NSURLResponse *_gbResponse;
  */
 - (void)dialogCompleteWithUrl:(NSURL *)url {
     
-    NSString * method = [self getStringFromUrl:[url absoluteString] needle:@"method="];
-    if ([method isEqualToString:@"trial"]) {
+    if ([url.path isEqualToString:@"/trial.html"]) {
         [_ftsession openWithCompletionHandler:^(FTSession *session, FTSessionState status, NSError *error) {
             NSString* rstr= [NSString alloc];
             switch (status) {
@@ -308,7 +307,7 @@ static NSURLResponse *_gbResponse;
             [rstr release];
         }];
     }
-    else if([method isEqualToString:@"facebook"]) {
+    else if([url.path isEqualToString:@"/facebook.html"]) {
         [_fbsession openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
             NSString* rstr= [NSString alloc];
             switch (status) {
@@ -328,7 +327,7 @@ static NSURLResponse *_gbResponse;
             [rstr release];
         }];
     }
-    else if([method isEqualToString:@"gbombgames"]) {
+    else if([url.path isEqualToString:@"/gbombgames.html"]) {
         [_gbsession openWithCompletionHandler:^(GBSession *session, GBSessionState status, NSError *error) {
             NSString* rstr= [NSString alloc];
             switch (status) {
