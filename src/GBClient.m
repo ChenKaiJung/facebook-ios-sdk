@@ -40,7 +40,14 @@ static NSURLResponse *_gbResponse;
     
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString *gclient = [infoDict objectForKey:@"GbombClientId"];
+
+    if (gclient == nil) {
+        gclient = @"1234567890";
+    }
     NSString *fclient = [infoDict objectForKey:@"FacebookClientId"];
+    if (fclient == nil) {
+        fclient = @"1234567890";
+    }
     
     NSArray *permissions =[NSArray arrayWithObjects:@"email", nil];
     
