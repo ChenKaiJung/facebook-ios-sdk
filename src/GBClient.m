@@ -170,9 +170,9 @@ static NSURLResponse *_gbResponse;
     _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
-- (void)didFailWithError:(NSError *)error {
+//- (void)didFailWithError:(NSError *)error {
     
-}
+//}
 
 /**
  * Find a specific parameter from the url
