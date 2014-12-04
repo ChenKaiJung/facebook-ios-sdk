@@ -292,11 +292,11 @@ static NSURLResponse *_gbResponse;
             switch (status) {
                 case FTSessionStateOpen:
                     // call the legacy session delegate
-                    [rstr stringByAppendingFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","trial",[_ftsession.token UTF8String],[_ftsession.uid UTF8String]];
+                    [rstr initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","trial",[_ftsession.token UTF8String],[_ftsession.uid UTF8String]];
                     [self GBClientDidComplete:100 result:rstr];
                     break;
                 case FTSessionStateClosedLoginFailed:
-                    [rstr stringByAppendingFormat: @"{ \"code\": %d }", error.code];
+                    [rstr initWithFormat: @"{ \"code\": %d }", error.code];
                     [self GBClientDidComplete:104 result:rstr];
                    break;
                 default:
@@ -312,11 +312,11 @@ static NSURLResponse *_gbResponse;
             switch (status) {
                 case FBSessionStateOpen:
                     // call the legacy session delegate
-                    [rstr stringByAppendingFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","facebook",[_fbsession.accessTokenData.accessToken UTF8String],[_fbsession.parameters[@"uid"] UTF8String]];
+                    [rstr initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","facebook",[_fbsession.accessTokenData.accessToken UTF8String],[_fbsession.parameters[@"uid"] UTF8String]];
                     [self GBClientDidComplete:100 result:rstr];
                     break;
                 case FBSessionStateClosedLoginFailed:
-                    [rstr stringByAppendingFormat: @"{ \"code\": %d }", error.code];
+                    [rstr initWithFormat: @"{ \"code\": %d }", error.code];
                     [self GBClientDidComplete:104 result:rstr];
                     break;
                 default:
@@ -332,11 +332,11 @@ static NSURLResponse *_gbResponse;
             switch (status) {
                 case GBSessionStateOpen:
                     // call the legacy session delegate
-                    [rstr stringByAppendingFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","gbombgames",[_gbsession.accessTokenData.accessToken UTF8String],[_gbsession.parameters[@"uid"] UTF8String]];
+                    [rstr initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","gbombgames",[_gbsession.accessTokenData.accessToken UTF8String],[_gbsession.parameters[@"uid"] UTF8String]];
                     [self GBClientDidComplete:100 result:rstr];
                     break;
                 case GBSessionStateClosedLoginFailed:
-                    [rstr stringByAppendingFormat: @"{ \"code\": %d }", error.code];
+                    [rstr initWithFormat: @"{ \"code\": %d }", error.code];
                     [self GBClientDidComplete:104 result:rstr];
                     break;
                 default:
