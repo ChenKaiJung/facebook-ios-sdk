@@ -51,7 +51,7 @@
 
 @protocol GBClientDelegate <NSObject>
 
-@optional
+@required
 
 /**
  * Called when the dialog succeeds and is about to be dismissed.
