@@ -54,12 +54,12 @@ static NSURLResponse *_gbResponse;
     self = [super init];
     
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
-    NSString *gclient = [infoDict objectForKey:@"GbombClientId"];
+    NSString *gclient = [infoDict objectForKey:@"GbombClientID"];
 
     if (gclient == nil) {
         gclient = @"1234567890";
     }
-    NSString *fclient = [infoDict objectForKey:@"FacebookClientId"];
+    NSString *fclient = [infoDict objectForKey:@"FacebookAppID"];
     if (fclient == nil) {
         fclient = @"1234567890";
     }
