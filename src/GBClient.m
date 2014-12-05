@@ -216,10 +216,9 @@ static NSURLResponse *_gbResponse;
     // retain self for the life of this method, in case we are released by a client
     
     @try {
-        // call into client code
-        //if ([_delegate respondsToSelector:@selector(didComplete:)]) {
-            [_delegate didComplete:code result:json];
-        //}
+        
+        [_delegate didComplete:code result:json];
+
     } @catch (NSException *exception) {
         NSLog(@"Exception:%@",exception);
     } @finally {
@@ -290,6 +289,32 @@ static NSURLResponse *_gbResponse;
     [rstr release];
 }
 
+- (void)getUserProfile:(NSString *) provider_id result:(NSString *)token {
+    
+    NSString* api = @"/v1/profile.php";
+    NSString* uri=[[[[[GB_API_SERVICE_URL
+                    stringByAppendingString:api]
+                    stringByAppendingString:@"?provider_id=" ]
+                    stringByAppendingString:provider_id]
+                    stringByAppendingString:@"&access_token="]
+                    stringByAppendingString:token];
+    
+    NSMutableURLRequest* request =
+    [NSMutableURLRequest requestWithURL:[NSURL URLWithString:uri]
+                            cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                        timeoutInterval:TIMEOUT];
+    
+    
+    [request setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
+    
+    
+    [request setHTTPMethod:@"GET"];
+    
+    
+    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+}
+
+
 /**
  * Called when the dialog succeeds and is about to be dismissed.
  */
@@ -306,8 +331,13 @@ static NSURLResponse *_gbResponse;
             NSString* rstr;
             switch (status) {
                 case FTSessionStateOpen:
+                    
+                    
+                    
                     // call the legacy session delegate
                     rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","trial",[_ftsession.token UTF8String],[_ftsession.uid UTF8String]];
+                    
+                    
                     [self gbClientDidComplete:100 result:rstr];
                     break;
                 case FTSessionStateClosedLoginFailed:

@@ -28,6 +28,8 @@
 - (void)subPush : (NSString*) regid;
 - (void)unsubPush : (NSString*) regid;
 
+- (void)getUserProfile:(NSString *) provider result:(NSString *)token;
+
 - (NSString *) getStringFromUrl: (NSString*) url needle:(NSString *) needle;
 
 - (void)gbClientDidComplete:(NSInteger) code result:(NSString *)json;
