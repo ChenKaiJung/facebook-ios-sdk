@@ -23,7 +23,7 @@
 }
 
 
-- (id)initWithGameId : (NSString*) gameId;
+- (id)initWithGameId : (NSString*) gameId delegate:  (id <GBClientDelegate>) delegate;
 - (void)login;
 - (void)callService : (NSString*)characterProfile;
 - (void)getProductList : (NSString*)characterProfile;

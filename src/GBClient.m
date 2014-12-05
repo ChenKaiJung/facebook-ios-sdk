@@ -38,7 +38,7 @@ static NSURLResponse *_gbResponse;
             fbsession=_fbsession,
             gdialog=_gdialog;
 
-- (id)initWithGameId : (NSString*) gameId {
+- (id)initWithGameId : (NSString*) gameId delegate:  (id <GBClientDelegate>) delegate {
     
     self = [super init];
     
@@ -73,7 +73,9 @@ static NSURLResponse *_gbResponse;
                              tokenCacheStrategy:fbtokenCaching];
     
     _ftsession=[[FTSession alloc] init];
-
+    
+    _delegate = delegate;
+    
     return self;
 }
 
