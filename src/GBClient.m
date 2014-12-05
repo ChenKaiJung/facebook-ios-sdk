@@ -217,9 +217,9 @@ static NSURLResponse *_gbResponse;
     
     @try {
         // call into client code
-        if ([_delegate respondsToSelector:@selector(didComplete:)]) {
+        //if ([_delegate respondsToSelector:@selector(didComplete:)]) {
             [_delegate didComplete:code result:json];
-        }
+        //}
     } @catch (NSException *exception) {
         NSLog(@"Exception:%@",exception);
     } @finally {
@@ -233,9 +233,9 @@ static NSURLResponse *_gbResponse;
     
     @try {
         // call into client code
-        if ([_delegate respondsToSelector:@selector(didNotComplete:)]) {
+        //if ([_delegate respondsToSelector:@selector(didNotComplete:)]) {
             [_delegate didNotComplete:code result:json];
-        }
+        //}
     } @catch (NSException *exception) {
         NSLog(@"Exception:%@",exception);
     } @finally {
@@ -250,9 +250,9 @@ static NSURLResponse *_gbResponse;
     
     @try {
         // call into client code
-        if ([_delegate respondsToSelector:@selector(didFailWithError:)]) {
+        //if ([_delegate respondsToSelector:@selector(didFailWithError:)]) {
             [_delegate didFailWithError:error];
-        }
+        //}
         
     } @finally {
         [me release];
