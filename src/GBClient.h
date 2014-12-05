@@ -16,7 +16,7 @@
 
 @interface GBClient : NSObject
 
-- (id)initWithGameId : (NSString*) gameId delegate:  (id <GBClientDelegate>) delegate;
+- (id)initWithGameId : (NSString*) gameId;
 - (void)login;
 - (void)callService : (NSString*)characterProfile;
 - (void)getProductList : (NSString*)characterProfile;

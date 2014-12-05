@@ -85,7 +85,7 @@ static NSURLResponse *_gbResponse;
     
     _ftsession=[[FTSession alloc] init];
     
-    _delegate = delegate;
+    //_delegate = delegate;
     
     return self;
 }
