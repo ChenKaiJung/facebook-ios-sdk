@@ -303,18 +303,19 @@ static NSURLResponse *_gbResponse;
 - (void)dialogCompleteWithUrl:(NSURL *)url {
     if ([url.path isEqualToString:@"/trial.html"]) {
         [_ftsession openWithCompletionHandler:^(FTSession *session, FTSessionState status, NSError *error) {
-            NSString* rstr= [NSString alloc];
+            NSString* rstr;
             switch (status) {
                 case FTSessionStateOpen:
                     // call the legacy session delegate
-                    [rstr initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","trial",[_ftsession.token UTF8String],[_ftsession.uid UTF8String]];
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","trial",[_ftsession.token UTF8String],[_ftsession.uid UTF8String]];
                     [self gbClientDidComplete:100 result:rstr];
                     break;
                 case FTSessionStateClosedLoginFailed:
-                    [rstr initWithFormat: @"{ \"code\": %d }", error.code];
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"code\": %d }", error.code];
                     [self gbClientDidComplete:104 result:rstr];
                    break;
                 default:
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"code\": 115 }"];
                     [self gbClientDidComplete:115 result:rstr];                    
                     break; // so we do nothing in response to those state transitions
             }
@@ -323,18 +324,19 @@ static NSURLResponse *_gbResponse;
     }
     else if([url.path isEqualToString:@"/facebook.html"]) {
         [_fbsession openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-            NSString* rstr= [NSString alloc];
+            NSString* rstr;
             switch (status) {
                 case FBSessionStateOpen:
                     // call the legacy session delegate
-                    [rstr initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","facebook",[_fbsession.accessTokenData.accessToken UTF8String],[_fbsession.parameters[@"uid"] UTF8String]];
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","facebook",[_fbsession.accessTokenData.accessToken UTF8String],[_fbsession.parameters[@"uid"] UTF8String]];
                     [self gbClientDidComplete:100 result:rstr];
                     break;
                 case FBSessionStateClosedLoginFailed:
-                    [rstr initWithFormat: @"{ \"code\": %d }", error.code];
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"code\": %d }", error.code];
                     [self gbClientDidComplete:104 result:rstr];
                     break;
                 default:
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"code\": 115 }"];
                     [self gbClientDidComplete:115 result:rstr];
                     break; // so we do nothing in response to those state transitions
             }
@@ -343,18 +345,19 @@ static NSURLResponse *_gbResponse;
     }
     else if([url.path isEqualToString:@"/gbombgames.html"]) {
         [_gbsession openWithCompletionHandler:^(GBSession *session, GBSessionState status, NSError *error) {
-            NSString* rstr= [NSString alloc];
+            NSString* rstr;
             switch (status) {
                 case GBSessionStateOpen:
                     // call the legacy session delegate
-                    [rstr initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","gbombgames",[_gbsession.accessTokenData.accessToken UTF8String],[_gbsession.parameters[@"uid"] UTF8String]];
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","gbombgames",[_gbsession.accessTokenData.accessToken UTF8String],[_gbsession.parameters[@"uid"] UTF8String]];
                     [self gbClientDidComplete:100 result:rstr];
                     break;
                 case GBSessionStateClosedLoginFailed:
-                    [rstr initWithFormat: @"{ \"code\": %d }", error.code];
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"code\": %d }", error.code];
                     [self gbClientDidComplete:104 result:rstr];
                     break;
                 default:
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"code\": 115 }"];                    
                     [self gbClientDidComplete:115 result:rstr];
                     break; // so we do nothing in response to those state transitions
             }
