@@ -214,7 +214,6 @@ static NSURLResponse *_gbResponse;
 
 - (void)gbClientDidComplete:(NSInteger) code result:(NSString *)json {
     // retain self for the life of this method, in case we are released by a client
-    id me = [self retain];
     
     @try {
         // call into client code
@@ -224,13 +223,13 @@ static NSURLResponse *_gbResponse;
     } @catch (NSException *exception) {
         NSLog(@"Exception:%@",exception);
     } @finally {
+        id me = [self retain];
         [me release];
     }
 }
 
 - (void)gbClientDidNotComplete:(NSInteger) code result:(NSString *)json {
     // retain self for the life of this method, in case we are released by a client
-    id me = [self retain];
     
     @try {
         // call into client code
@@ -240,6 +239,7 @@ static NSURLResponse *_gbResponse;
     } @catch (NSException *exception) {
         NSLog(@"Exception:%@",exception);
     } @finally {
+        id me = [self retain];
         [me release];
     }
 }
