@@ -273,9 +273,19 @@ static NSURLResponse *_gbResponse;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
-    NSString* rstr= [[NSString alloc] initWithData:_gbResponseData   encoding:NSUTF8StringEncoding];
-    [self gbClientDidComplete:100 result:rstr];
-    [rstr release];
+    if([_gbResponse.URL.path isEqualToString:@"/v1/profile.php"] ) {
+        NSString* rstr= [[NSString alloc] initWithData:_gbResponseData   encoding:NSUTF8StringEncoding];
+        [self gbClientDidComplete:100 result:rstr];
+        [rstr release];
+        
+    }
+    else  {
+        NSString* rstr= [[NSString alloc] initWithData:_gbResponseData   encoding:NSUTF8StringEncoding];
+        [self gbClientDidComplete:100 result:rstr];
+        [rstr release];
+    }
+
+
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -332,7 +342,7 @@ static NSURLResponse *_gbResponse;
             switch (status) {
                 case FTSessionStateOpen:
                     
-                    [self getUserProfile:[_ftsession.token UTF8String] ];
+                    [self getUserProfile:@"trial" token:_ftsession.token];
                     
                     // call the legacy session delegate
                     rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","trial",[_ftsession.token UTF8String],[_ftsession.uid UTF8String]];
@@ -357,7 +367,8 @@ static NSURLResponse *_gbResponse;
             NSString* rstr;
             switch (status) {
                 case FBSessionStateOpen:
-                    // call the legacy session delegate
+                    [self getUserProfile:@"facebook" token:_ftsession.token];
+                    
                     rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","facebook",[_fbsession.accessTokenData.accessToken UTF8String],[_fbsession.parameters[@"uid"] UTF8String]];
                     [self gbClientDidComplete:100 result:rstr];
                     break;
@@ -378,6 +389,7 @@ static NSURLResponse *_gbResponse;
             NSString* rstr;
             switch (status) {
                 case GBSessionStateOpen:
+                    [self getUserProfile:@"gbombgames" token:_ftsession.token];
                     // call the legacy session delegate
                     rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","gbombgames",[_gbsession.accessTokenData.accessToken UTF8String],[_gbsession.parameters[@"uid"] UTF8String]];
                     [self gbClientDidComplete:100 result:rstr];
