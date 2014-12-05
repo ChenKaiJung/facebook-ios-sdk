@@ -13,17 +13,8 @@
 @class GDialog;
 
 @protocol GBClientDelegate;
-@protocol GDialogDelegate;
 
-@interface GBClient : NSObject <NSURLConnectionDelegate,GDialogDelegate>  {
-    id<GBClientDelegate> _delegate;
-    GBSession* _gbsession;
-    FTSession* _ftsession;
-    FBSession* _fbsession;
-    GDialog * _gdialog;
-    
-}
-
+@interface GBClient : NSObject
 
 - (id)initWithGameId : (NSString*) gameId delegate:  (id <GBClientDelegate>) delegate;
 - (void)login;
@@ -39,9 +30,9 @@
 
 - (NSString *) getStringFromUrl: (NSString*) url needle:(NSString *) needle;
 
-- (void)GBClientDidComplete:(NSInteger) code result:(NSString *)json;
-- (void)GBClientDidNotComplete:(NSInteger) code result:(NSString *)json;
-- (void)GBClientDidFailWithError:(NSError *)error;
+- (void)gbClientDidComplete:(NSInteger) code result:(NSString *)json;
+- (void)gbClientDidNotComplete:(NSInteger) code result:(NSString *)json;
+- (void)gbClientDidFailWithError:(NSError *)error;
 
 @property (nonatomic, assign) id<GBClientDelegate> delegate;
 @property(readonly) FTSession *ftsession;

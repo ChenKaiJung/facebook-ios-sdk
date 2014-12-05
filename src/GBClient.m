@@ -28,6 +28,17 @@ static NSURLConnection *_connection=nil;
 static NSMutableData *_gbResponseData;
 static NSURLResponse *_gbResponse;
 
+
+@interface GBClient () <NSURLConnectionDelegate,GDialogDelegate> {
+    id<GBClientDelegate> _delegate;
+    GBSession* _gbsession;
+    FTSession* _ftsession;
+    FBSession* _fbsession;
+    GDialog * _gdialog;
+    
+}
+@end
+
 @implementation GBClient {
 
 }
@@ -201,7 +212,7 @@ static NSURLResponse *_gbResponse;
 }
 
 
-- (void)GBClientDidComplete:(NSInteger) code result:(NSString *)json {
+- (void)gbClientDidComplete:(NSInteger) code result:(NSString *)json {
     // retain self for the life of this method, in case we are released by a client
     id me = [self retain];
     
@@ -217,7 +228,7 @@ static NSURLResponse *_gbResponse;
     }
 }
 
-- (void)GBClientDidNotComplete:(NSInteger) code result:(NSString *)json {
+- (void)gbClientDidNotComplete:(NSInteger) code result:(NSString *)json {
     // retain self for the life of this method, in case we are released by a client
     id me = [self retain];
     
@@ -233,7 +244,7 @@ static NSURLResponse *_gbResponse;
     }
 }
 
-- (void)GBClientDidFailWithError:(NSError *)error {
+- (void)gbClientDidFailWithError:(NSError *)error {
     // retain self for the life of this method, in case we are released by a client
     id me = [self retain];
     
@@ -264,7 +275,7 @@ static NSURLResponse *_gbResponse;
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
     NSString* rstr= [[NSString alloc] initWithData:_gbResponseData   encoding:NSUTF8StringEncoding];
-    [self GBClientDidComplete:100 result:rstr];
+    [self gbClientDidComplete:100 result:rstr];
     [rstr release];
 }
 
@@ -275,7 +286,7 @@ static NSURLResponse *_gbResponse;
      error.code,
      (NSInteger)[(NSHTTPURLResponse *)_gbResponse statusCode]];
 
-    [self GBClientDidNotComplete:115 result:rstr];
+    [self gbClientDidNotComplete:115 result:rstr];
     [rstr release];
 }
 
@@ -297,14 +308,14 @@ static NSURLResponse *_gbResponse;
                 case FTSessionStateOpen:
                     // call the legacy session delegate
                     [rstr initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","trial",[_ftsession.token UTF8String],[_ftsession.uid UTF8String]];
-                    [self GBClientDidComplete:100 result:rstr];
+                    [self gbClientDidComplete:100 result:rstr];
                     break;
                 case FTSessionStateClosedLoginFailed:
                     [rstr initWithFormat: @"{ \"code\": %d }", error.code];
-                    [self GBClientDidComplete:104 result:rstr];
+                    [self gbClientDidComplete:104 result:rstr];
                    break;
                 default:
-                    [self GBClientDidComplete:115 result:rstr];                    
+                    [self gbClientDidComplete:115 result:rstr];                    
                     break; // so we do nothing in response to those state transitions
             }
             [rstr release];
@@ -317,14 +328,14 @@ static NSURLResponse *_gbResponse;
                 case FBSessionStateOpen:
                     // call the legacy session delegate
                     [rstr initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","facebook",[_fbsession.accessTokenData.accessToken UTF8String],[_fbsession.parameters[@"uid"] UTF8String]];
-                    [self GBClientDidComplete:100 result:rstr];
+                    [self gbClientDidComplete:100 result:rstr];
                     break;
                 case FBSessionStateClosedLoginFailed:
                     [rstr initWithFormat: @"{ \"code\": %d }", error.code];
-                    [self GBClientDidComplete:104 result:rstr];
+                    [self gbClientDidComplete:104 result:rstr];
                     break;
                 default:
-                    [self GBClientDidComplete:115 result:rstr];
+                    [self gbClientDidComplete:115 result:rstr];
                     break; // so we do nothing in response to those state transitions
             }
             [rstr release];
@@ -337,14 +348,14 @@ static NSURLResponse *_gbResponse;
                 case GBSessionStateOpen:
                     // call the legacy session delegate
                     [rstr initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","gbombgames",[_gbsession.accessTokenData.accessToken UTF8String],[_gbsession.parameters[@"uid"] UTF8String]];
-                    [self GBClientDidComplete:100 result:rstr];
+                    [self gbClientDidComplete:100 result:rstr];
                     break;
                 case GBSessionStateClosedLoginFailed:
                     [rstr initWithFormat: @"{ \"code\": %d }", error.code];
-                    [self GBClientDidComplete:104 result:rstr];
+                    [self gbClientDidComplete:104 result:rstr];
                     break;
                 default:
-                    [self GBClientDidComplete:115 result:rstr];
+                    [self gbClientDidComplete:115 result:rstr];
                     break; // so we do nothing in response to those state transitions
             }
             [rstr release];            
@@ -375,7 +386,7 @@ static NSURLResponse *_gbResponse;
 - (void)dialog:(GDialog*)dialog didFailWithError:(NSError *)error {
     NSString* rstr= [NSString alloc];
     [rstr stringByAppendingFormat: @"{ \"code\": %d }", error.code];
-    [self GBClientDidComplete:115 result:rstr];
+    [self gbClientDidComplete:115 result:rstr];
     [rstr release];
 }
 
