@@ -357,7 +357,7 @@ static NSURLResponse *_gbResponse;
                     [self gbClientDidComplete:104 result:rstr];
                     break;
                 default:
-                    rstr=[[NSString alloc] initWithFormat: @"{ \"code\": 115 }"];                    
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"code\": 115 }"];
                     [self gbClientDidComplete:115 result:rstr];
                     break; // so we do nothing in response to those state transitions
             }
