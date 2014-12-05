@@ -5,6 +5,8 @@
 //  Created by kaijung on 2014/11/12.
 //
 //
+#import <Foundation/Foundation.h>
+
 @class GBSession;
 @class FBSession;
 @class FTSession;
