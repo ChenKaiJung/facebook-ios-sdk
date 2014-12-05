@@ -289,7 +289,7 @@ static NSURLResponse *_gbResponse;
     [rstr release];
 }
 
-- (void)getUserProfile:(NSString *) provider_id result:(NSString *)token {
+- (void)getUserProfile:(NSString *) provider_id token:(NSString *)token {
     
     NSString* api = @"/v1/profile.php";
     NSString* uri=[[[[[GB_API_SERVICE_URL
@@ -332,7 +332,7 @@ static NSURLResponse *_gbResponse;
             switch (status) {
                 case FTSessionStateOpen:
                     
-                    
+                    [self getUserProfile:[_ftsession.token UTF8String] ];
                     
                     // call the legacy session delegate
                     rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","trial",[_ftsession.token UTF8String],[_ftsession.uid UTF8String]];

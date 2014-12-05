@@ -28,7 +28,7 @@
 - (void)subPush : (NSString*) regid;
 - (void)unsubPush : (NSString*) regid;
 
-- (void)getUserProfile:(NSString *) provider result:(NSString *)token;
+- (void)getUserProfile:(NSString *) provider_id token:(NSString *)token ;
 
 - (NSString *) getStringFromUrl: (NSString*) url needle:(NSString *) needle;
 
