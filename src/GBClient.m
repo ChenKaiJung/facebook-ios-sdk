@@ -49,7 +49,7 @@ static NSURLResponse *_gbResponse;
             fbsession=_fbsession,
             gdialog=_gdialog;
 
-- (id)initWithGameId : (NSString*) gameId delegate:  (id <GBClientDelegate>) delegate {
+- (id)initWithGameId : (NSString*) gameId {
     
     self = [super init];
     
