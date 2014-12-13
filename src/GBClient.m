@@ -18,6 +18,7 @@
 #import "GBAccessTokenData.h"
 #import "GBSessionTokenCachingStrategy.h"
 #import "FBSessionTokenCachingStrategy.h"
+#import "GBDeviceId.h"
 
 static NSString *const GDialogMethod = @"index.php";
 static NSString *const CallServiceMethod = @"cc.php";
@@ -102,6 +103,17 @@ static NSURLResponse *_gbResponse;
 - (void)login {
     NSString *gDialogURL = [[GBUtility sdkBaseURL] stringByAppendingString:GDialogMethod];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+    GBDeviceId *gdid=[GBDeviceId getInstance:self];
+    NSString *gdidstr=[gdid getDeviceId];
+    NSString *systemVer=[GBUtility getSystemVersion];
+    NSString *systemName=[GBUtility getSystemName];
+    NSString *systemModel=[GBUtility getSystemModel];
+    [params setObject:@"trial" forKey:@"provider_id"];
+    [params setObject:gdidstr forKey:@"device_id"];
+    [params setObject:systemVer forKey:@"os_sdk_version"];
+    [params setObject:systemName forKey:@"os"];
+    [params setObject:systemModel forKey:@"device_model"];
     
     // open an inline login dialog. This will require the user to enter his or her credentials.
     _gdialog = [[[GDialog alloc]
