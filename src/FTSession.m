@@ -144,6 +144,7 @@ static NSString *const GBFreeTrialDialogMethod = @"create.php";
         self.handler(self,
                      self.state,
                      nil);
+        return;
     }
     
     NSString *q = [url absoluteString];
