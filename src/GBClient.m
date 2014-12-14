@@ -124,7 +124,9 @@ static NSURLResponse *_gbResponse;
 
 - (void)callService  : (NSString*)characterProfile {
     NSString *gDialogURL = [[GBUtility sdkBaseURL] stringByAppendingString:CallServiceMethod];
+    
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    /*
     NSArray *urlComponents = [characterProfile componentsSeparatedByString:@"&"];
 
     for (NSString *keyValuePair in urlComponents)
@@ -135,7 +137,7 @@ static NSURLResponse *_gbResponse;
         
         [params setObject:value forKey:key];
     }
-    
+    */
     // open an inline login dialog. This will require the user to enter his or her credentials.
     _gdialog = [[[GDialog alloc]
                  initWithURL:gDialogURL params:params isViewInvisible:NO delegate:self]
