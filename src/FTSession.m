@@ -139,8 +139,7 @@ static NSString *const GBFreeTrialDialogMethod = @"create.php";
  */
 - (void)dialogDidNotCompleteWithUrl:(NSURL *)url
 {
-    if(url)
-    {
+    if(url == nil) {
         _state=FTSessionStateClosedLoginFailed;        
         self.handler(self,
                      self.state,
