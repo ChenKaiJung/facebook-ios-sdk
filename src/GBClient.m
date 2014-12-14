@@ -396,7 +396,7 @@ static NSURLResponse *_gbResponse;
             [rstr release];
         }];
     }
-    else if([url.path isEqualToString:@"/gbombgames.html"]) {
+    else if([url.path isEqualToString:@"/gbomb.html"]) {
         [_gbsession openWithCompletionHandler:^(GBSession *session, GBSessionState status, NSError *error) {
             NSString* rstr;
             switch (status) {

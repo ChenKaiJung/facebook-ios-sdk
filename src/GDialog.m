@@ -466,7 +466,7 @@ params   = _params;
     } else if ([url.path isEqualToString:@"/facebook.html"]) {
         [self dialogDidSucceed:url];
         return NO;
-    } else if ([url.path isEqualToString:@"/gbombgames.html"]) {
+    } else if ([url.path isEqualToString:@"/gbomb.html"]) {
         [self dialogDidSucceed:url];
         return NO;
     } else {
