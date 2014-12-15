@@ -287,7 +287,7 @@ static NSURLResponse *_gbResponse;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
-    if([_gbResponse.URL.path isEqualToString:@"/v1/profile.php"] ) {
+    if([_gbResponse.URL.path isEqualToString:@"v1/profile.php"] ) {
         NSString* rstr= [[NSString alloc] initWithData:_gbResponseData   encoding:NSUTF8StringEncoding];
         [self gbClientDidComplete:100 result:rstr];
         [rstr release];
@@ -315,7 +315,7 @@ static NSURLResponse *_gbResponse;
 
 - (void)getUserProfile:(NSString *) provider_id token:(NSString *)token {
     
-    NSString* api = @"/v1/profile.php";
+    NSString* api = @"v1/profile.php";
     NSString* uri=[[[[[GB_API_SERVICE_URL
                     stringByAppendingString:api]
                     stringByAppendingString:@"?provider_id=" ]
