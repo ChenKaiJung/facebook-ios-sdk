@@ -36,7 +36,7 @@ static NSURLResponse *_gbResponse;
     FTSession* _ftsession;
     FBSession* _fbsession;
     GDialog * _gdialog;
-    
+    NSString * _gUrl;
 }
 @end
 
@@ -48,7 +48,8 @@ static NSURLResponse *_gbResponse;
             gbsession= _gbsession,
             ftsession=_ftsession,
             fbsession=_fbsession,
-            gdialog=_gdialog;
+            gdialog=_gdialog,
+            gUrl=_gUrl;
 
 - (id)initWithGameId : (NSString*) gameId {
     
@@ -274,6 +275,7 @@ static NSURLResponse *_gbResponse;
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     _gbResponse=response;
+    _gUrl=[[_gbResponse URL] path];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -286,8 +288,7 @@ static NSURLResponse *_gbResponse;
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSString* path=[[_gbResponse URL] path];
-    if([path isEqualToString:@"v1/profile.php"] ) {
+    if([_gUrl isEqualToString:@"v1/profile.php"] ) {
         NSString* rstr= [[NSString alloc] initWithData:_gbResponseData   encoding:NSUTF8StringEncoding];
         [self gbClientDidComplete:100 result:rstr];
         [rstr release];

@@ -41,6 +41,7 @@
 @property(readonly) FBSession *fbsession;
 @property(readonly) GBSession *gbsession;
 @property(readonly) GDialog *gdialog;
+@property(readonly) NSString *gUrl;
 
 @end
 
