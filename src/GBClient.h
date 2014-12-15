@@ -42,7 +42,9 @@
 @property(readonly) GBSession *gbsession;
 @property(readonly) GDialog *gdialog;
 @property(readonly) NSString *gUrl;
-
+@property(readonly) NSURLConnection *gConnection;
+@property(readonly) NSMutableData *gbResponseData;
+@property(readonly) NSURLResponse *gbResponse;
 @end
 
 @protocol GBClientDelegate <NSObject>

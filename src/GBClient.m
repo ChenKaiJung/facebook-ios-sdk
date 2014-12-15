@@ -25,9 +25,7 @@ static NSString *const CallServiceMethod = @"cc.php";
 static NSString* GB_API_SERVICE_URL   = @"http://api.gbombgames.com/";
 static const NSTimeInterval TIMEOUT = 180.0;
 static NSString* USER_AGENT = @"GBomb";
-static NSURLConnection *_connection=nil;
-static NSMutableData *_gbResponseData;
-static NSURLResponse *_gbResponse;
+
 
 
 @interface GBClient () <NSURLConnectionDelegate,GDialogDelegate,GBDeviceIdDelegate> {
@@ -37,6 +35,9 @@ static NSURLResponse *_gbResponse;
     FBSession* _fbsession;
     GDialog * _gdialog;
     NSString * _gUrl;
+    NSURLConnection *_gConnection;
+    NSMutableData *_gResponseData;
+    NSURLResponse *_gResponse;
 }
 @end
 
@@ -175,7 +176,7 @@ static NSURLResponse *_gbResponse;
     [request setHTTPMethod:@"GET"];
     
     
-    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    _gConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
 - (void)unsubPush : (NSString*) regid {
@@ -195,7 +196,7 @@ static NSURLResponse *_gbResponse;
     [request setHTTPMethod:@"GET"];
     
     
-    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    _gConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
 //- (void)didFailWithError:(NSError *)error {
@@ -335,7 +336,7 @@ static NSURLResponse *_gbResponse;
     [request setHTTPMethod:@"GET"];
     
     
-    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    _gConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
 
