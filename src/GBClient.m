@@ -30,7 +30,7 @@ static NSMutableData *_gbResponseData;
 static NSURLResponse *_gbResponse;
 
 
-@interface GBClient () <NSURLConnectionDelegate,GDialogDelegate> {
+@interface GBClient () <NSURLConnectionDelegate,GDialogDelegate,GBDeviceIdDelegate> {
     id<GBClientDelegate> _delegate;
     GBSession* _gbsession;
     FTSession* _ftsession;
@@ -460,7 +460,7 @@ static NSURLResponse *_gbResponse;
  * using [[UIApplication sharedApplication] openURL:].
  */
 - (BOOL)dialog:(GDialog*)dialog shouldOpenURLInExternalBrowser:(NSURL *)url {
-    
+    return FALSE;
 }
 
 
