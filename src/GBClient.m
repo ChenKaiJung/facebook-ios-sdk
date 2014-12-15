@@ -286,12 +286,11 @@ static NSURLResponse *_gbResponse;
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    
-    if([_gbResponse.URL.path isEqualToString:@"v1/profile.php"] ) {
+    NSString* path=[[_gbResponse URL] path];
+    if([path isEqualToString:@"v1/profile.php"] ) {
         NSString* rstr= [[NSString alloc] initWithData:_gbResponseData   encoding:NSUTF8StringEncoding];
         [self gbClientDidComplete:100 result:rstr];
         [rstr release];
-        
     }
     else  {
         NSString* rstr= [[NSString alloc] initWithData:_gbResponseData   encoding:NSUTF8StringEncoding];
