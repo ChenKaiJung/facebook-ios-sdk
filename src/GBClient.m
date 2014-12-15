@@ -352,7 +352,7 @@ static NSURLResponse *_gbResponse;
 - (void)dialogCompleteWithUrl:(NSURL *)url {
     if ([url.path isEqualToString:@"/trial.html"]) {
         [_ftsession openWithCompletionHandler:^(FTSession *session, FTSessionState status, NSError *error) {
-            NSString* rstr;
+            NSString* rstr = nil;
             switch (status) {
                 case FTSessionStateOpen:
                     
@@ -373,7 +373,7 @@ static NSURLResponse *_gbResponse;
                     [self gbClientDidComplete:115 result:rstr];                    
                     break; // so we do nothing in response to those state transitions
             }
-            [rstr release];
+            if(rstr != nil) [rstr release];
         }];
     }
     else if([url.path isEqualToString:@"/facebook.html"]) {
@@ -395,7 +395,7 @@ static NSURLResponse *_gbResponse;
                     [self gbClientDidComplete:115 result:rstr];
                     break; // so we do nothing in response to those state transitions
             }
-            [rstr release];
+            if(rstr != nil) [rstr release];
         }];
     }
     else if([url.path isEqualToString:@"/gbomb.html"]) {
@@ -417,7 +417,7 @@ static NSURLResponse *_gbResponse;
                     [self gbClientDidComplete:115 result:rstr];
                     break; // so we do nothing in response to those state transitions
             }
-            [rstr release];            
+            if(rstr != nil) [rstr release];
         }];
     }
     else {
