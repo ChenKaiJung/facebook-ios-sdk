@@ -34,7 +34,6 @@ static NSString* USER_AGENT = @"GBomb";
     FTSession* _ftsession;
     FBSession* _fbsession;
     GDialog * _gdialog;
-    NSString * _gUrl;
     NSURLConnection *_gConnection;
     NSMutableData *_gResponseData;
     NSURLResponse *_gResponse;
@@ -50,7 +49,9 @@ static NSString* USER_AGENT = @"GBomb";
             ftsession=_ftsession,
             fbsession=_fbsession,
             gdialog=_gdialog,
-            gUrl=_gUrl;
+            gConnection=_gConnection,
+            gResponseData=_gResponseData,
+            gResponse=_gResponse;
 
 - (id)initWithGameId : (NSString*) gameId {
     
@@ -275,12 +276,11 @@ static NSString* USER_AGENT = @"GBomb";
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    _gbResponse=response;
-    _gUrl=[[_gbResponse URL] path];
+    _gResponse=response;
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    [_gbResponseData appendData:data];
+    [_gResponseData appendData:data];
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection
@@ -289,18 +289,17 @@ static NSString* USER_AGENT = @"GBomb";
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    if([_gUrl isEqualToString:@"/v1/profile.php"] ) {
-        NSString* rstr= [[NSString alloc] initWithData:_gbResponseData   encoding:NSUTF8StringEncoding];
+    NSString* path=[connection.originalRequest.URL path];
+    if([path isEqualToString:@"/v1/profile.php"] ) {
+        NSString* rstr= [[NSString alloc] initWithData:_gResponseData   encoding:NSUTF8StringEncoding];
         [self gbClientDidComplete:100 result:rstr];
         [rstr release];
     }
     else  {
-        NSString* rstr= [[NSString alloc] initWithData:_gbResponseData   encoding:NSUTF8StringEncoding];
+        NSString* rstr= [[NSString alloc] initWithData:_gResponseData   encoding:NSUTF8StringEncoding];
         [self gbClientDidComplete:100 result:rstr];
         [rstr release];
     }
-
-
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -308,7 +307,7 @@ static NSString* USER_AGENT = @"GBomb";
     
     [rstr stringByAppendingFormat: @"{ \"code\": %d ,  \"status\": %d }",
      error.code,
-     (NSInteger)[(NSHTTPURLResponse *)_gbResponse statusCode]];
+     (NSInteger)[(NSHTTPURLResponse *)_gResponse statusCode]];
 
     [self gbClientDidNotComplete:115 result:rstr];
     [rstr release];

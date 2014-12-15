@@ -41,10 +41,10 @@
 @property(readonly) FBSession *fbsession;
 @property(readonly) GBSession *gbsession;
 @property(readonly) GDialog *gdialog;
-@property(readonly) NSString *gUrl;
+//@property(readonly) NSString *gUrl;
 @property(readonly) NSURLConnection *gConnection;
-@property(readonly) NSMutableData *gbResponseData;
-@property(readonly) NSURLResponse *gbResponse;
+@property(readonly) NSMutableData *gResponseData;
+@property(readonly) NSURLResponse *gResponse;
 @end
 
 @protocol GBClientDelegate <NSObject>
