@@ -289,7 +289,7 @@ static NSString* USER_AGENT = @"GBomb";
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSString* path=[connection.originalRequest.URL path];
+    NSString* path=[[[connection originalRequest] URL] path];
     if([path isEqualToString:@"/v1/profile.php"] ) {
         NSString* rstr= [[NSString alloc] initWithData:_gResponseData   encoding:NSUTF8StringEncoding];
         [self gbClientDidComplete:100 result:rstr];
