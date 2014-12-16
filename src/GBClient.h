@@ -42,9 +42,9 @@
 @property(readonly) GBSession *gbsession;
 @property(readonly) GDialog *gdialog;
 //@property(readonly) NSString *gUrl;
-@property(readonly) NSURLConnection *gConnection;
-@property(readonly) NSMutableData *gResponseData;
-@property(readonly) NSURLResponse *gResponse;
+@property(readonly) NSURLConnection *connection;
+@property(readonly) NSMutableData *responseData;
+@property(readonly) NSURLResponse *response;
 @property(readonly) NSInteger statusCode;
 @end
 

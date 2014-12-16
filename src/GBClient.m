@@ -34,9 +34,9 @@ static NSString* USER_AGENT = @"GBomb";
     FTSession* _ftsession;
     FBSession* _fbsession;
     GDialog * _gdialog;
-    NSURLConnection *_gConnection;
-    NSMutableData *_gResponseData;
-    NSURLResponse *_gResponse;
+    NSURLConnection *_connection;
+    NSMutableData *_responseData;
+    NSURLResponse *_response;
 }
 @end
 
@@ -49,9 +49,9 @@ static NSString* USER_AGENT = @"GBomb";
             ftsession=_ftsession,
             fbsession=_fbsession,
             gdialog=_gdialog,
-            gConnection=_gConnection,
-            gResponseData=_gResponseData,
-            gResponse=_gResponse,
+            connection=_connection,
+            responseData=_responseData,
+            response=_response,
             statusCode=_statusCode;
 
 - (id)initWithGameId : (NSString*) gameId {
@@ -179,7 +179,7 @@ static NSString* USER_AGENT = @"GBomb";
     [request setHTTPMethod:@"GET"];
     
     
-    _gConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
 - (void)unsubPush : (NSString*) regid {
@@ -199,7 +199,7 @@ static NSString* USER_AGENT = @"GBomb";
     [request setHTTPMethod:@"GET"];
     
     
-    _gConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
 //- (void)didFailWithError:(NSError *)error {
@@ -278,12 +278,13 @@ static NSString* USER_AGENT = @"GBomb";
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    _gResponse=response;
-    _statusCode=(NSInteger)[(NSHTTPURLResponse *)_gResponse statusCode];
+    _response=response;
+    _statusCode=(NSInteger)[(NSHTTPURLResponse *)_response statusCode];
+    [_responseData setLength:0];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    [_gResponseData appendData:data];
+    [_responseData appendData:data];
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection
@@ -295,18 +296,18 @@ static NSString* USER_AGENT = @"GBomb";
     NSString* path=[[[connection originalRequest] URL] path];
 
     if( _statusCode != 200) {
-        NSString* rstr= [[NSString alloc] stringByAppendingFormat: @"{ \"status\": %d }",[(NSHTTPURLResponse *)_gResponse statusCode]];
+        NSString* rstr= [[NSString alloc] stringByAppendingFormat: @"{ \"status\": %d }",[(NSHTTPURLResponse *)_response statusCode]];
         [self gbClientDidComplete:115 result:rstr];
         [rstr release];
     }
     
     if([path isEqualToString:@"/v1/profile.php"] ) {
-        NSString* rstr= [[NSString alloc] initWithData:_gResponseData   encoding:NSUTF8StringEncoding];
+        NSString* rstr= [[NSString alloc] initWithData:_responseData   encoding:NSUTF8StringEncoding];
         [self gbClientDidComplete:100 result:rstr];
         [rstr release];
     }
     else  {
-        NSString* rstr= [[NSString alloc] initWithData:_gResponseData   encoding:NSUTF8StringEncoding];
+        NSString* rstr= [[NSString alloc] initWithData:_responseData   encoding:NSUTF8StringEncoding];
         [self gbClientDidComplete:100 result:rstr];
         [rstr release];
     }
@@ -317,7 +318,7 @@ static NSString* USER_AGENT = @"GBomb";
     
     [rstr stringByAppendingFormat: @"{ \"code\": %d ,  \"status\": %d }",
      error.code,
-     (NSInteger)[(NSHTTPURLResponse *)_gResponse statusCode]];
+     (NSInteger)[(NSHTTPURLResponse *)_response statusCode]];
 
     [self gbClientDidNotComplete:115 result:rstr];
     [rstr release];
@@ -337,6 +338,7 @@ static NSString* USER_AGENT = @"GBomb";
     [NSMutableURLRequest requestWithURL:[NSURL URLWithString:uri]
                             cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                         timeoutInterval:TIMEOUT];
+    _responseData = [NSMutableData dataWithCapacity: 0];
     
     
     [request setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
@@ -345,7 +347,7 @@ static NSString* USER_AGENT = @"GBomb";
     [request setHTTPMethod:@"GET"];
     
     
-    _gConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
 
