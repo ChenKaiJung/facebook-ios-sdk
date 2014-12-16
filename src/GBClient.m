@@ -290,9 +290,13 @@ static NSString* USER_AGENT = @"GBomb";
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSString* path=[[[connection originalRequest] URL] path];
-    if(_gResponse) {
-        
+
+    if((NSInteger)[(NSHTTPURLResponse *)_gResponse statusCode] != 200) {
+        NSString* rstr= [[NSString alloc] stringByAppendingFormat: @"{ \"status\": %d }",[(NSHTTPURLResponse *)_gResponse statusCode]];
+        [self gbClientDidComplete:115 result:rstr];
+        [rstr release];
     }
+    
     if([path isEqualToString:@"/v1/profile.php"] ) {
         NSString* rstr= [[NSString alloc] initWithData:_gResponseData   encoding:NSUTF8StringEncoding];
         [self gbClientDidComplete:100 result:rstr];
