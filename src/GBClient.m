@@ -311,8 +311,8 @@ static NSString* USER_AGENT = @"GBomb";
             rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"error\", \"data\": { \"status_code\": %d } }"
                   ,[(NSHTTPURLResponse *)_response statusCode]];
         }
-        rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": %@, \"token\": %@ } }"
-              ,[dict objectForKey:@"uid"], [dict objectForKey:@"token"] ];
+        rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%@\", \"token\": \"%@\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%@\" } }"
+              ,[dict objectForKey:@"uid"], [dict objectForKey:@"token"], [dict objectForKey:@"provider_id"] ];
         [self gbClientDidComplete:100 result:rstr];
         [rstr release];
     }
