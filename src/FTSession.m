@@ -62,6 +62,7 @@ static NSString *const GBFreeTrialDialogMethod = @"create.php";
     [params setObject:systemVer forKey:@"os_version"];
     [params setObject:systemName forKey:@"os"];
     [params setObject:systemModel forKey:@"device_model"];
+    [params setObject:@"mobile" forKey:@"view"];
     
     if (handler != nil) {
         self.handler = handler;

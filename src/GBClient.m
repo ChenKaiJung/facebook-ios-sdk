@@ -117,6 +117,7 @@ static NSString* USER_AGENT = @"GBomb";
     [params setObject:systemVer forKey:@"os_version"];
     [params setObject:systemName forKey:@"os"];
     [params setObject:systemModel forKey:@"device_model"];
+    [params setObject:@"mobile" forKey:@"view"];
     
     // open an inline login dialog. This will require the user to enter his or her credentials.
     _gdialog = [[[GDialog alloc]
