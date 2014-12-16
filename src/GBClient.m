@@ -303,25 +303,45 @@ static NSString* USER_AGENT = @"GBomb";
     
     if([path isEqualToString:@"/v1/profile.php"] ) {
         
-        NSString* rstr= [[NSString alloc] initWithData:_responseData   encoding:NSUTF8StringEncoding];
+        NSString* jstr= [[NSString alloc] initWithData:_responseData   encoding:NSUTF8StringEncoding];
+        NSDictionary *dict = [GBUtility simpleJSONDecode:jstr];
+        [jstr release];
         
-        NSDictionary *dict = [GBUtility simpleJSONDecode:rstr];
-        
+        NSString* rstr;
         if (![dict isKindOfClass:[NSDictionary class]]) {
             rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"error\", \"data\": { \"status_code\": %d } }"
                   ,[(NSHTTPURLResponse *)_response statusCode]];
+            [self gbClientDidComplete:115 result:rstr];
+            [rstr release];            
+            [connection release];
+            return;
         }
-        rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%@\", \"token\": \"%@\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%@\" } }"
-              ,[dict objectForKey:@"uid"], [dict objectForKey:@"token"], [dict objectForKey:@"provider_id"] ];
+        if([(NSString *)[dict objectForKey:@"provider_id"] isEqualToString: @"FreeTrial"]) {
+            
+            rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%@\", \"token\": \"%@\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%@\" } }"
+                  ,[dict objectForKey:@"uid"], self.ftsession.token, [dict objectForKey:@"provider_id"] ];
+        }
+        else if([(NSString *)[dict objectForKey:@"provider_id"] isEqualToString: @"Facebook"]) {
+            rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%@\", \"token\": \"%@\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%@\" } }"
+                  ,[dict objectForKey:@"uid"], self.fbsession.accessTokenData.accessToken, [dict objectForKey:@"provider_id"] ];
+        }
+        else if([(NSString *)[dict objectForKey:@"provider_id"] isEqualToString: @"Gbomb"]) {
+            rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%@\", \"token\": \"%@\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%@\" } }"
+                  ,[dict objectForKey:@"uid"], self.gbsession.accessTokenData.accessToken, [dict objectForKey:@"provider_id"] ];
+        }
+        else {
+            rstr=@"{ \"status\": \"error\", \"data\": { \"status_code\": 115 } }";
+        }
         [self gbClientDidComplete:100 result:rstr];
         [rstr release];
+        [connection release];
     }
     else  {
         NSString* rstr= [[NSString alloc] initWithData:_responseData   encoding:NSUTF8StringEncoding];
         [self gbClientDidComplete:100 result:rstr];
         [rstr release];
+        [connection release];
     }
-    [connection release];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
