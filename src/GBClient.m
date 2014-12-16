@@ -309,7 +309,7 @@ static NSString* USER_AGENT = @"GBomb";
         
         NSString* rstr;
         if (![dict isKindOfClass:[NSDictionary class]]) {
-            rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"error\", \"data\": { \"status_code\": %d } }"
+            rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"error\", \"data\": { \"status_code\": %d } }"
                   ,[(NSHTTPURLResponse *)_response statusCode]];
             [self gbClientDidComplete:115 result:rstr];
             [rstr release];
@@ -321,7 +321,7 @@ static NSString* USER_AGENT = @"GBomb";
             NSString* token=self.ftsession.token;
             NSString* provider_id=[dict objectForKey:@"provider_id"];
             
-            rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%s\", \"token\": \"%s\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%s\" } }"
+            rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%s\", \"token\": \"%s\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%s\" } }"
                   ,[uid UTF8String], [token UTF8String], [provider_id UTF8String] ];
             [self gbClientDidComplete:100 result:rstr];
         }
@@ -330,7 +330,7 @@ static NSString* USER_AGENT = @"GBomb";
             NSString* token=self.fbsession.accessTokenData.accessToken;
             NSString* provider_id=[dict objectForKey:@"provider_id"];
             
-            rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%s\", \"token\": \"%s\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%s\" } }"
+            rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%s\", \"token\": \"%s\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%s\" } }"
                   ,[uid UTF8String], [token UTF8String], [provider_id UTF8String] ];
            [self gbClientDidComplete:100 result:rstr];
         }
@@ -339,7 +339,7 @@ static NSString* USER_AGENT = @"GBomb";
             NSString* token=self.fbsession.accessTokenData.accessToken;
             NSString* provider_id=[dict objectForKey:@"provider_id"];
             
-            rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%s\", \"token\": \"%s\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%s\" } }"
+            rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%s\", \"token\": \"%s\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%s\" } }"
                   ,[uid UTF8String], [token UTF8String], [provider_id UTF8String] ];
             [self gbClientDidComplete:100 result:rstr];
         }
@@ -361,7 +361,7 @@ static NSString* USER_AGENT = @"GBomb";
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     NSString* rstr= [NSString alloc];
     
-    [rstr stringByAppendingFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\":%d , \"status_code\": %d } }",
+    [rstr initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\":%d , \"status_code\": %d } }",
      error.code,
      (NSInteger)[(NSHTTPURLResponse *)_response statusCode]];
 
