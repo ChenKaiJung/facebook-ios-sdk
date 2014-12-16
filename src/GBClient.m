@@ -311,6 +311,7 @@ static NSString* USER_AGENT = @"GBomb";
         [self gbClientDidComplete:100 result:rstr];
         [rstr release];
     }
+    [connection release];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
@@ -338,7 +339,8 @@ static NSString* USER_AGENT = @"GBomb";
     [NSMutableURLRequest requestWithURL:[NSURL URLWithString:uri]
                             cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                         timeoutInterval:TIMEOUT];
-    _responseData = [NSMutableData dataWithCapacity: 0];
+    
+    _responseData = [[NSMutableData data] retain];
     
     
     [request setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
