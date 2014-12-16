@@ -468,7 +468,7 @@ static NSString* USER_AGENT = @"GBomb";
  */
 - (void)dialog:(GDialog*)dialog didFailWithError:(NSError *)error {
     NSString* rstr= [NSString alloc];
-    [rstr stringByAppendingFormat: @"{ \"code\": %d }", error.code];
+    [rstr stringByAppendingFormat:  @"{ \"status\": \"error\", \"data\": { \"error_code\": %d } }", error.code];
     [self gbClientDidComplete:115 result:rstr];
     [rstr release];
 }
