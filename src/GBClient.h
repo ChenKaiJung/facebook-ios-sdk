@@ -45,6 +45,7 @@
 @property(readonly) NSURLConnection *gConnection;
 @property(readonly) NSMutableData *gResponseData;
 @property(readonly) NSURLResponse *gResponse;
+@property(readonly) NSInteger statusCode;
 @end
 
 @protocol GBClientDelegate <NSObject>

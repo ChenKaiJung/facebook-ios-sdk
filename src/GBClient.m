@@ -51,7 +51,8 @@ static NSString* USER_AGENT = @"GBomb";
             gdialog=_gdialog,
             gConnection=_gConnection,
             gResponseData=_gResponseData,
-            gResponse=_gResponse;
+            gResponse=_gResponse,
+            statusCode=_statusCode;
 
 - (id)initWithGameId : (NSString*) gameId {
     
@@ -278,6 +279,7 @@ static NSString* USER_AGENT = @"GBomb";
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     _gResponse=response;
+    _statusCode=(NSInteger)[(NSHTTPURLResponse *)_gResponse statusCode];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -292,7 +294,7 @@ static NSString* USER_AGENT = @"GBomb";
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSString* path=[[[connection originalRequest] URL] path];
 
-    if((NSInteger)[(NSHTTPURLResponse *)_gResponse statusCode] != 200) {
+    if( _statusCode != 200) {
         NSString* rstr= [[NSString alloc] stringByAppendingFormat: @"{ \"status\": %d }",[(NSHTTPURLResponse *)_gResponse statusCode]];
         [self gbClientDidComplete:115 result:rstr];
         [rstr release];
