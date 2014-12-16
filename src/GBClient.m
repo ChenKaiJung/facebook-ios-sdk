@@ -317,22 +317,36 @@ static NSString* USER_AGENT = @"GBomb";
             return;
         }
         if([(NSString *)[dict objectForKey:@"provider_id"] isEqualToString: @"FreeTrial"]) {
+            NSString* uid=[dict objectForKey:@"uid"];
+            NSString* token=self.ftsession.token;
+            NSString* provider_id=[dict objectForKey:@"provider_id"];
             
             rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%s\", \"token\": \"%s\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%s\" } }"
-                  ,[[dict objectForKey:@"uid"] UTF8String], [self.ftsession.token UTF8String], [[dict objectForKey:@"provider_id"] UTF8String]];
+                  ,[uid UTF8String], [token UTF8String], [provider_id UTF8String] ];
+            [self gbClientDidComplete:100 result:rstr];
         }
         else if([(NSString *)[dict objectForKey:@"provider_id"] isEqualToString: @"Facebook"]) {
+            NSString* uid=[dict objectForKey:@"uid"];
+            NSString* token=self.fbsession.accessTokenData.accessToken;
+            NSString* provider_id=[dict objectForKey:@"provider_id"];
+            
             rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%s\", \"token\": \"%s\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%s\" } }"
-                  ,[[dict objectForKey:@"uid"] UTF8String], [self.fbsession.accessTokenData.accessToken UTF8String], [[dict objectForKey:@"provider_id"]UTF8String] ];
+                  ,[uid UTF8String], [token UTF8String], [provider_id UTF8String] ];
+           [self gbClientDidComplete:100 result:rstr];
         }
         else if([(NSString *)[dict objectForKey:@"provider_id"] isEqualToString: @"Gbomb"]) {
+            NSString* uid=[dict objectForKey:@"uid"];
+            NSString* token=self.fbsession.accessTokenData.accessToken;
+            NSString* provider_id=[dict objectForKey:@"provider_id"];
+            
             rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%s\", \"token\": \"%s\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%s\" } }"
-                  ,[[dict objectForKey:@"uid"] UTF8String], [self.gbsession.accessTokenData.accessToken UTF8String], [[dict objectForKey:@"provider_id"] UTF8String] ];
+                  ,[uid UTF8String], [token UTF8String], [provider_id UTF8String] ];
+            [self gbClientDidComplete:100 result:rstr];
         }
         else {
             rstr=@"{ \"status\": \"error\", \"data\": { \"status_code\": 115 } }";
+            [self gbClientDidComplete:115 result:rstr];
         }
-        [self gbClientDidComplete:100 result:rstr];
         [rstr release];
         [connection release];
     }
