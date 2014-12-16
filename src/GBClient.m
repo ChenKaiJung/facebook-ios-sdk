@@ -290,6 +290,9 @@ static NSString* USER_AGENT = @"GBomb";
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSString* path=[[[connection originalRequest] URL] path];
+    if(_gResponse) {
+        
+    }
     if([path isEqualToString:@"/v1/profile.php"] ) {
         NSString* rstr= [[NSString alloc] initWithData:_gResponseData   encoding:NSUTF8StringEncoding];
         [self gbClientDidComplete:100 result:rstr];
@@ -356,7 +359,7 @@ static NSString* USER_AGENT = @"GBomb";
             switch (status) {
                 case FTSessionStateOpen:
                     
-                    [self getUserProfile:@"trial" token:_ftsession.token];
+                    [self getUserProfile:@"FreeTrial" token:_ftsession.token];
                     
                     // call the legacy session delegate
                     //rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","trial",[_ftsession.token UTF8String],[_ftsession.uid UTF8String]];
@@ -381,7 +384,7 @@ static NSString* USER_AGENT = @"GBomb";
             NSString* rstr;
             switch (status) {
                 case FBSessionStateOpen:
-                    [self getUserProfile:@"facebook" token:_ftsession.token];
+                    [self getUserProfile:@"Facebook" token:_ftsession.token];
                     
                     //rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","facebook",[_fbsession.accessTokenData.accessToken UTF8String],[_fbsession.parameters[@"uid"] UTF8String]];
                     //[self gbClientDidComplete:100 result:rstr];
@@ -403,7 +406,7 @@ static NSString* USER_AGENT = @"GBomb";
             NSString* rstr;
             switch (status) {
                 case GBSessionStateOpen:
-                    [self getUserProfile:@"gbombgames" token:_ftsession.token];
+                    [self getUserProfile:@"Gbomb" token:_ftsession.token];
                     // call the legacy session delegate
                     //rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","gbombgames",[_gbsession.accessTokenData.accessToken UTF8String],[_gbsession.parameters[@"uid"] UTF8String]];
                     //[self gbClientDidComplete:100 result:rstr];
