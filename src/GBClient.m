@@ -296,13 +296,23 @@ static NSString* USER_AGENT = @"GBomb";
     NSString* path=[[[connection originalRequest] URL] path];
 
     if( _statusCode != 200) {
-        NSString* rstr= [[NSString alloc] stringByAppendingFormat: @"{ \"status\": %d }",[(NSHTTPURLResponse *)_response statusCode]];
+        NSString* rstr= [[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"error\", \"data\": { \"status_code\": %d } }",[(NSHTTPURLResponse *)_response statusCode]];
         [self gbClientDidComplete:115 result:rstr];
         [rstr release];
     }
     
     if([path isEqualToString:@"/v1/profile.php"] ) {
+        
         NSString* rstr= [[NSString alloc] initWithData:_responseData   encoding:NSUTF8StringEncoding];
+        
+        NSDictionary *dict = [GBUtility simpleJSONDecode:rstr];
+        
+        if (![dict isKindOfClass:[NSDictionary class]]) {
+            rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"error\", \"data\": { \"status_code\": %d } }"
+                  ,[(NSHTTPURLResponse *)_response statusCode]];
+        }
+        rstr=[[NSString alloc] stringByAppendingFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": %@, \"token\": %@ } }"
+              ,[dict objectForKey:@"uid"], [dict objectForKey:@"token"] ];
         [self gbClientDidComplete:100 result:rstr];
         [rstr release];
     }
@@ -317,7 +327,7 @@ static NSString* USER_AGENT = @"GBomb";
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     NSString* rstr= [NSString alloc];
     
-    [rstr stringByAppendingFormat: @"{ \"code\": %d ,  \"status\": %d }",
+    [rstr stringByAppendingFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\":%d , \"status_code\": %d } }",
      error.code,
      (NSInteger)[(NSHTTPURLResponse *)_response statusCode]];
 
@@ -379,11 +389,11 @@ static NSString* USER_AGENT = @"GBomb";
                     //[self gbClientDidComplete:100 result:rstr];
                     break;
                 case FTSessionStateClosedLoginFailed:
-                    rstr=[[NSString alloc] initWithFormat: @"{ \"code\": %d }", error.code];
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\": %d } }", error.code];
                     [self gbClientDidComplete:104 result:rstr];
                    break;
                 default:
-                    rstr=[[NSString alloc] initWithFormat: @"{ \"code\": 115 }"];
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\": 115 } }"];
                     [self gbClientDidComplete:115 result:rstr];                    
                     break; // so we do nothing in response to those state transitions
             }
@@ -401,11 +411,11 @@ static NSString* USER_AGENT = @"GBomb";
                     //[self gbClientDidComplete:100 result:rstr];
                     break;
                 case FBSessionStateClosedLoginFailed:
-                    rstr=[[NSString alloc] initWithFormat: @"{ \"code\": %d }", error.code];
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\": %d } }", error.code];
                     [self gbClientDidComplete:104 result:rstr];
                     break;
                 default:
-                    rstr=[[NSString alloc] initWithFormat: @"{ \"code\": 115 }"];
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\": 115 } }"];
                     [self gbClientDidComplete:115 result:rstr];
                     break; // so we do nothing in response to those state transitions
             }
@@ -423,11 +433,11 @@ static NSString* USER_AGENT = @"GBomb";
                     //[self gbClientDidComplete:100 result:rstr];
                     break;
                 case GBSessionStateClosedLoginFailed:
-                    rstr=[[NSString alloc] initWithFormat: @"{ \"code\": %d }", error.code];
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\": %d } }", error.code];
                     [self gbClientDidComplete:104 result:rstr];
                     break;
                 default:
-                    rstr=[[NSString alloc] initWithFormat: @"{ \"code\": 115 }"];
+                    rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\": 115 } }"];
                     [self gbClientDidComplete:115 result:rstr];
                     break; // so we do nothing in response to those state transitions
             }
