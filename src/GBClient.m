@@ -21,7 +21,7 @@
 #import "GBDeviceId.h"
 
 static NSString *const GDialogMethod = @"index.php";
-static NSString *const CallServiceMethod = @"cc.php";
+static NSString *const CallServiceMethod = @"call_service.php";
 static NSString* GB_API_SERVICE_URL   = @"http://api.gbombgames.com/";
 static const NSTimeInterval TIMEOUT = 180.0;
 static NSString* USER_AGENT = @"GBomb";
