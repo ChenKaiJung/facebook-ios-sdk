@@ -411,8 +411,8 @@ static NSString* USER_AGENT = @"GBomb";
  */
 - (void)dialogCompleteWithUrl:(NSURL *)url {
     if ([url.path isEqualToString:@"/trial.html"]) {
-        if (_ftsession.state == FTSessionStateCreated ||
-              _ftsession.state == FTSessionStateCreatedTokenLoaded) {
+        if (!(_ftsession.state == FTSessionStateCreated ||
+              _ftsession.state == FTSessionStateCreatedTokenLoaded)) {
             [self getUserProfile:@"FreeTrial" token:_ftsession.token];
             return;
         }
@@ -436,8 +436,8 @@ static NSString* USER_AGENT = @"GBomb";
         }];
     }
     else if([url.path isEqualToString:@"/facebook.html"]) {
-        if (_fbsession.state == FBSessionStateCreated ||
-            _fbsession.state == FBSessionStateCreatedTokenLoaded) {
+        if (!(_fbsession.state == FBSessionStateCreated ||
+            _fbsession.state == FBSessionStateCreatedTokenLoaded)) {
             [self getUserProfile:@"Facebook" token:_fbsession.accessTokenData.accessToken];
             return;
         }
@@ -460,8 +460,8 @@ static NSString* USER_AGENT = @"GBomb";
         }];
     }
     else if([url.path isEqualToString:@"/gbomb.html"]) {
-        if (_gbsession.state == GBSessionStateCreated ||
-            _gbsession.state == GBSessionStateCreatedTokenLoaded) {
+        if (!(_gbsession.state == GBSessionStateCreated ||
+            _gbsession.state == GBSessionStateCreatedTokenLoaded)) {
             [self getUserProfile:@"Gbomb" token:_gbsession.accessTokenData.accessToken];
             return;
         }
