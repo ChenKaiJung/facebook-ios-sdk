@@ -439,7 +439,7 @@ static NSString* USER_AGENT = @"GBomb";
             NSString* rstr;
             switch (status) {
                 case FBSessionStateOpen:
-                    [self getUserProfile:@"Facebook" token:_ftsession.token];
+                    [self getUserProfile:@"Facebook" token:_fbsession.accessTokenData.accessToken];
                     
                     //rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","facebook",[_fbsession.accessTokenData.accessToken UTF8String],[_fbsession.parameters[@"uid"] UTF8String]];
                     //[self gbClientDidComplete:100 result:rstr];
@@ -461,7 +461,7 @@ static NSString* USER_AGENT = @"GBomb";
             NSString* rstr;
             switch (status) {
                 case GBSessionStateOpen:
-                    [self getUserProfile:@"Gbomb" token:_ftsession.token];
+                    [self getUserProfile:@"Gbomb" token:_gbsession.accessTokenData.accessToken];
                     // call the legacy session delegate
                     //rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","gbombgames",[_gbsession.accessTokenData.accessToken UTF8String],[_gbsession.parameters[@"uid"] UTF8String]];
                     //[self gbClientDidComplete:100 result:rstr];
