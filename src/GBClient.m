@@ -436,7 +436,7 @@ static NSString* USER_AGENT = @"GBomb";
     }
     else if([url.path isEqualToString:@"/facebook.html"]) {
         [_fbsession openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-            NSString* rstr;
+            NSString* rstr=nil;
             switch (status) {
                 case FBSessionStateOpen:
                     [self getUserProfile:@"Facebook" token:_fbsession.accessTokenData.accessToken];
@@ -458,7 +458,7 @@ static NSString* USER_AGENT = @"GBomb";
     }
     else if([url.path isEqualToString:@"/gbomb.html"]) {
         [_gbsession openWithCompletionHandler:^(GBSession *session, GBSessionState status, NSError *error) {
-            NSString* rstr;
+            NSString* rstr=nil;
             switch (status) {
                 case GBSessionStateOpen:
                     [self getUserProfile:@"Gbomb" token:_gbsession.accessTokenData.accessToken];
