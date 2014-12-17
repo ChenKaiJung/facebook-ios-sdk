@@ -481,9 +481,9 @@ params   = _params;
     }
     return NO;
   
-  }else if ([url.path isEqualToString:@"/oauth/login_success.html"]) {
+  }else if ([url.path isEqualToString:@"/login_success.html"]) {
 #ifdef DEBUG      
-      NSLog(@"url.path EqualToString : /oauth/login_success.html");
+      NSLog(@"url.path EqualToString : /login_success.html");
 #endif
       NSString * error = [self getStringFromUrl:[url absoluteString] needle:@"error="];
       NSString * errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];
