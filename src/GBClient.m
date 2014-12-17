@@ -329,18 +329,20 @@ static NSString* USER_AGENT = @"GBomb";
             NSString* uid=[dict objectForKey:@"uid"];
             NSString* token=self.fbsession.accessTokenData.accessToken;
             NSString* provider_id=[dict objectForKey:@"provider_id"];
+            NSString* user_id=[dict objectForKey:@"id"];
             
-            rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%s\", \"token\": \"%s\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%s\" } }"
-                  ,[uid UTF8String], [token UTF8String], [provider_id UTF8String] ];
+            rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%s\", \"token\": \"%s\" , \"user_id\":\"%s\",\"expires\":\"100000000\",\"provider_id\":\"%s\" } }"
+                  ,[uid UTF8String], [token UTF8String], [user_id UTF8String], [provider_id UTF8String] ];
            [self gbClientDidComplete:100 result:rstr];
         }
         else if([(NSString *)[dict objectForKey:@"provider_id"] isEqualToString: @"Gbomb"]) {
             NSString* uid=[dict objectForKey:@"uid"];
             NSString* token=self.fbsession.accessTokenData.accessToken;
             NSString* provider_id=[dict objectForKey:@"provider_id"];
+            NSString* user_id=[dict objectForKey:@"id"];
             
-            rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%s\", \"token\": \"%s\" , \"user_id\":null,\"expires\":\"100000000\",\"provider_id\":\"%s\" } }"
-                  ,[uid UTF8String], [token UTF8String], [provider_id UTF8String] ];
+            rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"success\", \"data\": { \"uid\": \"%s\", \"token\": \"%s\" , \"user_id\":\"%s\",\"expires\":\"100000000\",\"provider_id\":\"%s\" } }"
+                  ,[uid UTF8String], [token UTF8String],  [user_id UTF8String],  [provider_id UTF8String] ];
             [self gbClientDidComplete:100 result:rstr];
         }
         else {
