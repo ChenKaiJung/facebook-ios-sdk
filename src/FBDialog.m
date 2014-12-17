@@ -501,7 +501,7 @@ params   = _params;
                                                userInfo:errorData];
           [self dismissWithError:errorStr animated:YES];
       } else {
-          [self dialogDidCancel:url];
+          [self dialogDidSucceed:url];
       }
       return NO;
       
