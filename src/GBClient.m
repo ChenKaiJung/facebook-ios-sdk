@@ -411,18 +411,17 @@ static NSString* USER_AGENT = @"GBomb";
  */
 - (void)dialogCompleteWithUrl:(NSURL *)url {
     if ([url.path isEqualToString:@"/trial.html"]) {
+        if (_ftsession.state == FTSessionStateCreated ||
+              _ftsession.state == FTSessionStateCreatedTokenLoaded) {
+            [self getUserProfile:@"FreeTrial" token:_ftsession.token];
+            return;
+        }
         [_ftsession openWithCompletionHandler:^(FTSession *session, FTSessionState status, NSError *error) {
             NSString* rstr = nil;
             switch (status) {
                 case FTSessionStateOpen:
                     
                     [self getUserProfile:@"FreeTrial" token:_ftsession.token];
-                    
-                    // call the legacy session delegate
-                    //rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","trial",[_ftsession.token UTF8String],[_ftsession.uid UTF8String]];
-                    
-                    
-                    //[self gbClientDidComplete:100 result:rstr];
                     break;
                 case FTSessionStateClosedLoginFailed:
                     rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\": %d } }", error.code];
@@ -437,14 +436,16 @@ static NSString* USER_AGENT = @"GBomb";
         }];
     }
     else if([url.path isEqualToString:@"/facebook.html"]) {
+        if (_fbsession.state == FBSessionStateCreated ||
+            _fbsession.state == FBSessionStateCreatedTokenLoaded) {
+            [self getUserProfile:@"Facebook" token:_fbsession.accessTokenData.accessToken];
+            return;
+        }
         [_fbsession openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
             NSString* rstr=nil;
             switch (status) {
                 case FBSessionStateOpen:
                     [self getUserProfile:@"Facebook" token:_fbsession.accessTokenData.accessToken];
-                    
-                    //rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","facebook",[_fbsession.accessTokenData.accessToken UTF8String],[_fbsession.parameters[@"uid"] UTF8String]];
-                    //[self gbClientDidComplete:100 result:rstr];
                     break;
                 case FBSessionStateClosedLoginFailed:
                     rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\": %d } }", error.code];
@@ -459,14 +460,16 @@ static NSString* USER_AGENT = @"GBomb";
         }];
     }
     else if([url.path isEqualToString:@"/gbomb.html"]) {
+        if (_gbsession.state == GBSessionStateCreated ||
+            _gbsession.state == GBSessionStateCreatedTokenLoaded) {
+            [self getUserProfile:@"Gbomb" token:_gbsession.accessTokenData.accessToken];
+            return;
+        }
         [_gbsession openWithCompletionHandler:^(GBSession *session, GBSessionState status, NSError *error) {
             NSString* rstr=nil;
             switch (status) {
                 case GBSessionStateOpen:
                     [self getUserProfile:@"Gbomb" token:_gbsession.accessTokenData.accessToken];
-                    // call the legacy session delegate
-                    //rstr=[[NSString alloc] initWithFormat: @"{ \"provider_id\": \"%s\" ,  \"token\": \"%s\", \"uuid\": \"%s\" }","gbombgames",[_gbsession.accessTokenData.accessToken UTF8String],[_gbsession.parameters[@"uid"] UTF8String]];
-                    //[self gbClientDidComplete:100 result:rstr];
                     break;
                 case GBSessionStateClosedLoginFailed:
                     rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\": %d } }", error.code];
