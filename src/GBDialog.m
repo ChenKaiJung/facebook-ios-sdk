@@ -508,7 +508,7 @@ params   = _params;
       }
       return NO;
   }else if ([url.path isEqualToString:@"/register.php"]) {
-      return NO;
+      return YES;
   } else if ([_loadingURL isEqual:url]) {
     return YES;
   } else if (navigationType == UIWebViewNavigationTypeLinkClicked) {
