@@ -48,7 +48,7 @@
 static NSString *const GBAuthURLScheme = @"gbauth";
 static NSString *const GBAuthURLPath = @"authorize";
 //static NSString *const GBRedirectURL = @"gbconnect://success";
-static NSString *const GBLoginDialogMethod = @"authorize.php";
+static NSString *const GBLoginDialogMethod = @"login.php";
 static NSString *const GBLoginUXClientID = @"client_id";
 static NSString *const GBLoginUXRedirectURI = @"redirect_uri";
 static NSString *const GBLoginUXTouch = @"touch";
