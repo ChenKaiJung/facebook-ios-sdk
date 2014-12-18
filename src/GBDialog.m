@@ -507,7 +507,8 @@ params   = _params;
           [self dismissWithError:errorStr animated:YES];
       }
       return NO;
-      
+  }else if ([url.path isEqualToString:@"/register.php"]) {
+      return NO;
   } else if ([_loadingURL isEqual:url]) {
     return YES;
   } else if (navigationType == UIWebViewNavigationTypeLinkClicked) {
