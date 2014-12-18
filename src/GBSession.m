@@ -1464,6 +1464,7 @@ static GBSession *g_activeSession = nil;
 - (void)authorizeUsingLoginDialog:(NSMutableDictionary *)params {
     // add a timestamp for tracking GDP e2e time
     //[GBSessionUtility addWebLoginStartTimeToParams:params];
+    [params setValue:@"mobile" forKey:@"view"];
 
     NSString *loginDialogURL = [[GBUtility dialogBaseURL] stringByAppendingString:GBLoginDialogMethod];
 
