@@ -351,6 +351,9 @@ static NSString* USER_AGENT = @"GBomb";
         [rstr release];
         [connection release];
     }
+    else if ([path isEqualToString:@"/v1/tracking_installed.php"] ) {
+        [connection release];
+    }
     else  {
         NSString* rstr= [[NSString alloc] initWithData:_responseData   encoding:NSUTF8StringEncoding];
         [self gbClientDidComplete:100 result:rstr];
@@ -364,6 +367,7 @@ static NSString* USER_AGENT = @"GBomb";
     NSString* path=[[[connection originalRequest] URL] path];
     
     if([path isEqualToString:@"/v1/tracking_installed.php"] ) {
+       [connection release];        
        [rstr release];
         return;
     }
@@ -373,6 +377,7 @@ static NSString* USER_AGENT = @"GBomb";
          (NSInteger)[(NSHTTPURLResponse *)_response statusCode]];
 
     [self gbClientDidNotComplete:115 result:rstr];
+    [connection release];
     [rstr release];
 }
 
