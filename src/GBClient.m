@@ -380,7 +380,7 @@ static NSString* USER_AGENT = @"GBomb";
                        stringByAppendingString:systemName]
                       stringByAppendingString:@"&version="]
                      stringByAppendingString:systemVer]
-                    stringByAppendingString:@"package_name"]
+                    stringByAppendingString:@"&package_name="]
                    stringByAppendingString:bundle];
     
     
