@@ -89,8 +89,7 @@ static NSString* USER_AGENT = @"GBomb";
                              tokenCacheStrategy:fbtokenCaching];
     
     _ftsession=[[FTSession alloc] init];
-    
-    //_delegate = delegate;
+    [self trackingInstalled];
     
     return self;
 }
@@ -369,6 +368,37 @@ static NSString* USER_AGENT = @"GBomb";
 
     [self gbClientDidNotComplete:115 result:rstr];
     [rstr release];
+}
+
+
+- (void)trackingInstalled  {
+    
+    NSString * bundle=[[NSBundle mainBundle] bundleIdentifier];
+    NSString *systemName=[GBUtility getSystemName];
+    NSString *systemVer=[GBUtility getSystemVersion];
+    NSString* uri=[[[[[[GB_API_SERVICE_URL stringByAppendingString:@"v1/tracking_installed.php?os="]
+                       stringByAppendingString:systemName]
+                      stringByAppendingString:@"&version="]
+                     stringByAppendingString:systemVer]
+                    stringByAppendingString:@"package_name"]
+                   stringByAppendingString:bundle];
+    
+    
+    NSMutableURLRequest* request =
+    [NSMutableURLRequest requestWithURL:[NSURL URLWithString:uri]
+                            cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                        timeoutInterval:TIMEOUT];
+    
+    _responseData = [[NSMutableData data] retain];
+    
+    
+    [request setValue:USER_AGENT forHTTPHeaderField:@"User-Agent"];
+    
+    
+    [request setHTTPMethod:@"GET"];
+    
+    
+    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
 - (void)getUserProfile:(NSString *) provider_id token:(NSString *)token {

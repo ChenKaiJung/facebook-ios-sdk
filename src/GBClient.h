@@ -31,10 +31,12 @@
 - (void)getUserProfile:(NSString *) provider_id token:(NSString *)token ;
 
 - (NSString *) getStringFromUrl: (NSString*) url needle:(NSString *) needle;
+- (void)trackingInstalled;
 
 - (void)gbClientDidComplete:(NSInteger) code result:(NSString *)json;
 - (void)gbClientDidNotComplete:(NSInteger) code result:(NSString *)json;
 - (void)gbClientDidFailWithError:(NSError *)error;
+
 
 @property (nonatomic, assign) id<GBClientDelegate> delegate;
 @property(readonly) FTSession *ftsession;
