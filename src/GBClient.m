@@ -367,7 +367,7 @@ static NSString* USER_AGENT = @"GBomb";
     NSString* path=[[[connection originalRequest] URL] path];
     
     if([path isEqualToString:@"/v1/tracking_installed.php"] ) {
-       [connection release];        
+       [connection release];
        [rstr release];
         return;
     }
