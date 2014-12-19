@@ -373,9 +373,9 @@ static NSString* USER_AGENT = @"GBomb";
 
 - (void)trackingInstalled  {
     
-    NSString * bundle=[[NSBundle mainBundle] bundleIdentifier];
-    NSString *systemName=[GBUtility getSystemName];
-    NSString *systemVer=[GBUtility getSystemVersion];
+    NSString *bundle=[GBUtility stringByURLEncodingString:[[NSBundle mainBundle] bundleIdentifier]];
+    NSString *systemName=[GBUtility stringByURLEncodingString:[GBUtility getSystemName]];
+    NSString *systemVer=[GBUtility stringByURLEncodingString:[GBUtility getSystemVersion]];
     NSString* uri=[[[[[[GB_API_SERVICE_URL stringByAppendingString:@"v1/tracking_installed.php?os="]
                        stringByAppendingString:systemName]
                       stringByAppendingString:@"&version="]
