@@ -10,6 +10,7 @@
 #import "FBSettings.h"
 #import "GBSession.h"
 #import "GBUtility.h"
+#import "FBUtility.h"
 #import "FBSession.h"
 #import "FTSession.h"
 #import <Foundation/Foundation.h>
@@ -523,6 +524,10 @@ static NSString* USER_AGENT = @"GBomb";
             }
             if(rstr != nil) [rstr release];
         }];
+    }
+    else if([url.path isEqualToString:@"/logout.php"]) {
+        [GBUtility deleteGbombCookies];
+        [FBUtility deleteFacebookCookies];
     }
     else {
         

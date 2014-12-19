@@ -505,7 +505,22 @@ params   = _params;
       }
       return NO;
       
-  } else if ([_loadingURL isEqual:url]) {
+  }
+  else if ([url.path isEqualToString:@"/login_fail.html"]) {
+    NSString * errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];
+    NSDictionary * errorData = [NSDictionary dictionaryWithObject:@"login fail" forKey:@"error_description"];
+    if(errorCode == nil) {
+        errorCode=@"Unhandle Exception: login fail";
+    }
+    NSError * errorStr = [NSError errorWithDomain:@"OAuthErrDomain"
+                                             code:[errorCode intValue]
+                                         userInfo:errorData];
+    [self dismissWithError:errorStr animated:YES];
+    return NO;
+  }else if ([url.path isEqualToString:@"/logout.php"]) {
+    [self dialogDidSucceed:url];
+    return NO;
+  }else if ([_loadingURL isEqual:url]) {
     return YES;
   } else if (navigationType == UIWebViewNavigationTypeLinkClicked) {
       if ([_delegate respondsToSelector:@selector(dialog:shouldOpenURLInExternalBrowser:)]) {
