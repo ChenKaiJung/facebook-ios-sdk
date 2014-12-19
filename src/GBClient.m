@@ -361,10 +361,16 @@ static NSString* USER_AGENT = @"GBomb";
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     NSString* rstr= [NSString alloc];
+    NSString* path=[[[connection originalRequest] URL] path];
     
-    [rstr initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\":%d , \"status_code\": %d } }",
+    if([path isEqualToString:@"/v1/tracking_installed.php"] ) {
+       [rstr release];
+        return;
+    }
+    
+        [rstr initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\":%d , \"status_code\": %d } }",
      error.code,
-     (NSInteger)[(NSHTTPURLResponse *)_response statusCode]];
+         (NSInteger)[(NSHTTPURLResponse *)_response statusCode]];
 
     [self gbClientDidNotComplete:115 result:rstr];
     [rstr release];
