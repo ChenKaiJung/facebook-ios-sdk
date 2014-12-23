@@ -57,7 +57,7 @@ static NSString *const GBFreeTrialDialogMethod = @"create.php";
     NSString *systemVer=[GBUtility getSystemVersion];
     NSString *systemName=[GBUtility getSystemName];
     NSString *systemModel=[GBUtility getSystemModel];
-    //[params setObject:@"FreeTrial" forKey:@"provider_id"];
+    [params setObject:@"FreeTrial" forKey:@"provider_id"];
     [params setObject:gdidstr forKey:@"device_id"];
     [params setObject:systemVer forKey:@"os_version"];
     [params setObject:systemName forKey:@"os"];
