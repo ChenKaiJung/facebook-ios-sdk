@@ -48,6 +48,7 @@
 @property(readonly) NSMutableData *responseData;
 @property(readonly) NSURLResponse *response;
 @property(readonly) NSInteger statusCode;
+@property(readonly) NSString *gameId;
 @end
 
 @protocol GBClientDelegate <NSObject>

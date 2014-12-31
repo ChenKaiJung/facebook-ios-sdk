@@ -38,6 +38,7 @@ static NSString* USER_AGENT = @"GBomb";
     NSURLConnection *_connection;
     NSMutableData *_responseData;
     NSURLResponse *_response;
+    NSString *_gameId;
 }
 @end
 
@@ -53,7 +54,8 @@ static NSString* USER_AGENT = @"GBomb";
             connection=_connection,
             responseData=_responseData,
             response=_response,
-            statusCode=_statusCode;
+            statusCode=_statusCode,
+            gameId=_gameId;
 
 - (id)initWithGameId : (NSString*) gameId {
     
@@ -62,13 +64,13 @@ static NSString* USER_AGENT = @"GBomb";
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString *gclient = [infoDict objectForKey:@"GbombClientID"];
 
-    if (gclient == nil) {
-        gclient = @"1234567890";
-    }
+//    if (gclient == nil) {
+//        gclient = @"1234567890";
+//    }
     NSString *fclient = [infoDict objectForKey:@"FacebookAppID"];
-    if (fclient == nil) {
-        fclient = @"1234567890";
-    }
+//    if (fclient == nil) {
+//        fclient = @"1234567890";
+//    }
     
     NSArray *permissions =[NSArray arrayWithObjects:@"email", nil];
     
@@ -91,6 +93,8 @@ static NSString* USER_AGENT = @"GBomb";
     
     _ftsession=[[FTSession alloc] init];
     [self trackingInstalled];
+    
+    _gameId = [gameId copy];
     
     return self;
 }
@@ -118,6 +122,7 @@ static NSString* USER_AGENT = @"GBomb";
     [params setObject:systemVer forKey:@"os_version"];
     [params setObject:systemName forKey:@"os"];
     [params setObject:systemModel forKey:@"device_model"];
+    [params setObject:_gameId forKeyedSubscript:@"game_id"];
     [params setObject:@"mobile" forKey:@"view"];
     
     // open an inline login dialog. This will require the user to enter his or her credentials.
@@ -131,6 +136,7 @@ static NSString* USER_AGENT = @"GBomb";
     NSString *gDialogURL = [[GBUtility sdkBaseURL] stringByAppendingString:CallServiceMethod];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:@"mobile" forKey:@"view"];
 
     NSArray *urlComponents = [characterProfile componentsSeparatedByString:@"&"];
 
