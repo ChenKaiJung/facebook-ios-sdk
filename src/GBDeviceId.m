@@ -7,6 +7,7 @@
 //
 
 #import "GBDeviceId.h"
+#import "GBUtility.h"
 #include <sys/socket.h>
 #include <sys/sysctl.h>
 #include <net/if.h>
@@ -117,8 +118,10 @@
         systemId= [systemId stringByAppendingString:[self getMacAddress]];
     }
     else {
-        systemId = [systemId stringByAppendingString:@"VENDOR-"];
-        systemId = [systemId stringByAppendingString:[[[UIDevice currentDevice] identifierForVendor] UUIDString]];
+        //systemId = [systemId stringByAppendingString:@"VENDOR-"];
+        //systemId = [systemId stringByAppendingString:[[[UIDevice currentDevice] identifierForVendor] UUIDString]];
+        systemId = [systemId stringByAppendingString:@"ADVERTISER-"];
+        systemId = [systemId stringByAppendingString:[GBUtility advertiserID]];
     }
     
     return systemId;
