@@ -104,6 +104,7 @@ static NSString* USER_AGENT = @"GBomb";
     [_ftsession release];
     [_fbsession release];
     [_gbsession release];
+    [_gameId release];
 
     [super dealloc];
 }
@@ -429,14 +430,20 @@ static NSString* USER_AGENT = @"GBomb";
 }
 
 - (void)getUserProfile:(NSString *) provider_id token:(NSString *)token {
-    
+    [self getUserProfile:provider_id token:token gameId:_gameId];
+}
+
+
+- (void)getUserProfile:(NSString *) provider_id token:(NSString *)token gameId:(NSString *)game_id {
     NSString* api = @"v1/profile.php";
-    NSString* uri=[[[[[GB_API_SERVICE_URL
+    NSString* uri=[[[[[[[GB_API_SERVICE_URL
                     stringByAppendingString:api]
                     stringByAppendingString:@"?provider_id=" ]
                     stringByAppendingString:provider_id]
                     stringByAppendingString:@"&access_token="]
-                    stringByAppendingString:token];
+                    stringByAppendingString:token]
+                    stringByAppendingString:@"&game_id="]
+                    stringByAppendingString:game_id];
     
     NSMutableURLRequest* request =
     [NSMutableURLRequest requestWithURL:[NSURL URLWithString:uri]
