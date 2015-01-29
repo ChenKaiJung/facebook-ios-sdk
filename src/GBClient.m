@@ -394,13 +394,22 @@ static NSString* USER_AGENT = @"GBomb";
     NSString *bundle=[GBUtility stringByURLEncodingString:[[NSBundle mainBundle] bundleIdentifier]];
     NSString *systemName=[GBUtility stringByURLEncodingString:[GBUtility getSystemName]];
     NSString *systemVer=[GBUtility stringByURLEncodingString:[GBUtility getSystemVersion]];
-    NSString* uri=[[[[[[GB_API_SERVICE_URL stringByAppendingString:@"v1/tracking_installed.php?os="]
-                       stringByAppendingString:systemName]
-                      stringByAppendingString:@"&version="]
-                     stringByAppendingString:systemVer]
+    NSString *systemModel=[GBUtility stringByURLEncodingString:[GBUtility getSystemModel]];
+    NSString *advertiserID=[GBUtility stringByURLEncodingString:[GBUtility advertiserID]];
+
+    NSString* uri=[[[[[[[[GB_API_SERVICE_URL stringByAppendingString:@"v1/tracking_installed.php?os="]
+                         stringByAppendingString:systemName]
+                        stringByAppendingString:@"&version="]
+                       stringByAppendingString:systemVer]
+                      stringByAppendingString:@"&device_model="]
+                     stringByAppendingString:systemModel]
                     stringByAppendingString:@"&package_name="]
-                   stringByAppendingString:bundle];
-    
+                    stringByAppendingString:bundle];
+ 
+    if (advertiserID) {
+        uri=[[uri stringByAppendingString:@"&advertiser_id="]
+             stringByAppendingString:advertiserID];
+    }
     
     NSMutableURLRequest* request =
     [NSMutableURLRequest requestWithURL:[NSURL URLWithString:uri]
