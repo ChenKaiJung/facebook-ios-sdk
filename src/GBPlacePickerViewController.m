@@ -33,8 +33,8 @@
 NSString *const GBPlacePickerCacheIdentity = @"GBPlacePicker";
 
 static const NSInteger searchTextChangedTimerInterval = 2;
-const NSInteger defaultResultsLimit = 100;
-const NSInteger defaultRadius = 1000; // 1km
+const NSInteger gbDefaultResultsLimit = 100;
+const NSInteger gbDefaultRadius = 1000; // 1km
 
 @interface GBPlacePickerViewController () <GBGraphObjectSelectionChangedDelegate,
                                             GBGraphObjectViewControllerDelegate,
@@ -139,8 +139,8 @@ const NSInteger defaultRadius = 1000; // 1km
     self.delegate = nil;
     self.selectionManager = selectionManager;
     self.selectionManager.allowsMultipleSelection = NO;
-    self.resultsLimit = defaultResultsLimit;
-    self.radiusInMeters = defaultRadius;
+    self.resultsLimit = gbDefaultResultsLimit;
+    self.radiusInMeters = gbDefaultRadius;
     self.itemPicturesEnabled = YES;
     self.trackActiveSession = YES;
 }
