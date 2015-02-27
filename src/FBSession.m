@@ -47,7 +47,7 @@
 
 static NSString *const FBAuthURLScheme = @"fbauth";
 static NSString *const FBAuthURLPath = @"authorize";
-//static NSString *const FBRedirectURL = @"fbconnect://success";
+static NSString *const FBRedirectURL = @"fbconnect://success";
 static NSString *const FBLoginDialogMethod = @"oauth";
 static NSString *const FBLoginUXClientID = @"client_id";
 static NSString *const FBLoginUXRedirectURI = @"redirect_uri";
@@ -60,7 +60,8 @@ static NSString *const FBLoginUXSDK = @"sdk";
 static NSString *const FBLoginParamsExpiresIn = @"expires_in";
 static NSString *const FBLoginParamsPermissions = @"permissions";
 static NSString *const FBLoginParamsGrantedscopes = @"granted_scopes";
-NSString *const FBLoginUXResponseTypeToken = @"code";
+//NSString *const FBLoginUXResponseTypeToken = @"code";
+NSString *const FBLoginUXResponseTypeToken = @"token";
 NSString *const FBLoginUXResponseType = @"response_type";
 
 
@@ -320,8 +321,8 @@ static FBSession *g_activeSession = nil;
 }
 
 - (void)openWithCompletionHandler:(FBSessionStateHandler)handler {
-    //[self openWithBehavior:FBSessionLoginBehaviorWithFallbackToWebView completionHandler:handler];
-    [self openWithBehavior:FBSessionLoginBehaviorForcingWebView completionHandler:handler];
+    [self openWithBehavior:FBSessionLoginBehaviorWithFallbackToWebView completionHandler:handler];
+    //[self openWithBehavior:FBSessionLoginBehaviorForcingWebView completionHandler:handler];
 }
 
 - (void)openWithBehavior:(FBSessionLoginBehavior)behavior
@@ -1064,15 +1065,7 @@ static FBSession *g_activeSession = nil;
                             isReauthorize:(BOOL)isReauthorize
                       canFetchAppSettings:(BOOL)canFetchAppSettings {
     
-    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
-    NSString *redirectURI =nil;
-    
-    if(!_redirectUri) {
-        redirectURI=[infoDict objectForKey:@"FacebookRedirectUri"];
-    }
-    else {
-        redirectURI=_redirectUri;
-    }
+
     
     // setup parameters for either the safari or inline login
     //NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -1086,7 +1079,8 @@ static FBSession *g_activeSession = nil;
     NSMutableDictionary* params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    self.appID, FBLoginUXClientID,
                                    FBLoginUXResponseTypeToken, FBLoginUXResponseType,
-                                   redirectURI, FBLoginUXRedirectURI,
+                                   //redirectURI, FBLoginUXRedirectURI,
+                                   FBRedirectURL, FBLoginUXRedirectURI,
                                    FBLoginUXTouch, FBLoginUXDisplay,
                                    FBLoginUXIOS, FBLoginUXSDK,
                                    nil];
@@ -1464,7 +1458,17 @@ static FBSession *g_activeSession = nil;
 - (void)authorizeUsingLoginDialog:(NSMutableDictionary *)params {
     // add a timestamp for tracking GDP e2e time
     //[FBSessionUtility addWebLoginStartTimeToParams:params];
-
+    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *redirectURI =nil;
+    
+    if(!_redirectUri) {
+        redirectURI=[infoDict objectForKey:@"FacebookRedirectUri"];
+    }
+    else {
+        redirectURI=_redirectUri;
+    }
+    params[FBLoginUXRedirectURI] =redirectURI;
+    
     NSString *loginDialogURL = [[FBUtility dialogBaseURL] stringByAppendingString:FBLoginDialogMethod];
 
     // open an inline login dialog. This will require the user to enter his or her credentials.
