@@ -22,8 +22,9 @@
 #import "GBDeviceId.h"
 
 static NSString *const GDialogMethod = @"index.php";
+static NSString *const AppCallBackMethod = @"app_callback.php";
 static NSString *const CallServiceMethod = @"call_service.php";
-static NSString* GB_API_SERVICE_URL   = @"http://api.gbombgames.com/";
+static NSString* GB_API_SERVICE_URL   = @"http://apiv2.gbombgames.com/";
 static const NSTimeInterval TIMEOUT = 180.0;
 static NSString* USER_AGENT = @"GBomb";
 
@@ -511,7 +512,7 @@ static NSString* USER_AGENT = @"GBomb";
                 case FBSessionStateOpen:
                 {
                     //[self getUserProfile:@"Facebook" token:_fbsession.accessTokenData.accessToken];
-                    NSString *gDialogURL = [[GBUtility sdkBaseURL] stringByAppendingString:GDialogMethod];
+                    NSString *gDialogURL = [[GBUtility sdkBaseURL] stringByAppendingString:AppCallBackMethod];
                     NSMutableDictionary *params = [NSMutableDictionary dictionary];
                     
                     [params setObject:@"Facebook" forKey:@"provider_id"];

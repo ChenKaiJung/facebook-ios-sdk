@@ -517,12 +517,12 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
 
 + (NSString *)dialogBaseURL {
 //    return [GBUtility buildGbombUrlWithPre:@"https://oauth." withPost:@"/"];
-    return [GBUtility buildGbombUrlWithPre:@"http://oauth." withPost:@"/"];    
+    return [GBUtility buildGbombUrlWithPre:@"http://oauthv2." withPost:@"/"];    
 }
 
 + (NSString *)sdkBaseURL {
     //    return [GBUtility buildGbombUrlWithPre:@"https://oauth." withPost:@"/"];
-    return [GBUtility buildGbombUrlWithPre:@"http://sdk." withPost:@"/"];
+    return [GBUtility buildGbombUrlWithPre:@"http://sdkv2." withPost:@"/"];
 }
 
 + (NSString *)getSystemVersion {
