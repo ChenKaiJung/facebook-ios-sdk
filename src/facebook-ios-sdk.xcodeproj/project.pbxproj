@@ -192,6 +192,7 @@
 		745D49FB1A07DE6F00EF00EE /* GBProfilePictureViewBlankProfileSquare.png in Sources */ = {isa = PBXBuildFile; fileRef = 745D49F01A07D6C800EF00EE /* GBProfilePictureViewBlankProfileSquare.png */; };
 		746463AF1A286E6E00CF148E /* GBClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 746463AD1A286E6E00CF148E /* GBClient.m */; };
 		746463B01A286E6E00CF148E /* GBClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 746463AE1A286E6E00CF148E /* GBClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7489FB281A9C64060020753B /* GBCacheDescriptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 745D48B71A02A0E700EF00EE /* GBCacheDescriptor.m */; };
 		748C816C1A0CE6F400D1D36A /* FTSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C816B1A0CE6F400D1D36A /* FTSession.m */; };
 		748C81701A0CEA8100D1D36A /* FTDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C816F1A0CEA8100D1D36A /* FTDialog.m */; };
 		748C817B1A12062400D1D36A /* GDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 748C817A1A12062400D1D36A /* GDialog.m */; };
@@ -2438,6 +2439,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7489FB281A9C64060020753B /* GBCacheDescriptor.m in Sources */,
 				74045AC01A0B15BF0084231F /* GBAppLinkData.m in Sources */,
 				745D49F71A07DE6F00EF00EE /* GBLoginViewButtonPressed.png in Sources */,
 				745D49F51A07DE6F00EF00EE /* GBLoginViewButton.png in Sources */,

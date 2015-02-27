@@ -509,8 +509,23 @@ static NSString* USER_AGENT = @"GBomb";
             NSString* rstr=nil;
             switch (status) {
                 case FBSessionStateOpen:
-                    [self getUserProfile:@"Facebook" token:_fbsession.accessTokenData.accessToken];
-                    break;
+                {
+                    //[self getUserProfile:@"Facebook" token:_fbsession.accessTokenData.accessToken];
+                    NSString *gDialogURL = [[GBUtility sdkBaseURL] stringByAppendingString:GDialogMethod];
+                    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+                    
+                    [params setObject:@"Facebook" forKey:@"provider_id"];
+                    [params setObject:_gameId forKeyedSubscript:@"game_id"];
+                    [params setObject:@"mobile" forKey:@"view"];
+                    
+                    // open an inline login dialog. This will require the user to enter his or her credentials.
+                    _gdialog = [[[GDialog alloc]
+                                 initWithURL:gDialogURL params:params isViewInvisible:NO delegate:self]
+                                autorelease];
+                    [_gdialog show];
+                    
+                }
+                break;
                 case FBSessionStateClosedLoginFailed:
                     rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\": %d } }", error.code];
                     [self gbClientDidComplete:104 result:rstr];
@@ -546,6 +561,21 @@ static NSString* USER_AGENT = @"GBomb";
             }
             if(rstr != nil) [rstr release];
         }];
+    }
+    else if([url.path isEqualToString:@"/login_success.html"]) {
+        NSString* rstr=nil;
+        switch (_fbsession.state) {
+            case FBSessionStateCreated:
+            case FBSessionStateCreatedTokenLoaded:
+            case FBSessionStateOpen:
+                [self getUserProfile:@"Facebook" token:_fbsession.accessTokenData.accessToken];
+                break;
+            default:
+                rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\": 115 } }"];
+                [self gbClientDidComplete:115 result:rstr];
+                break; // so we do nothing in response to those state transitions
+        }
+        if(rstr != nil) [rstr release];
     }
     else if([url.path isEqualToString:@"/logout.php"]) {
         [GBUtility deleteGbombCookies];
