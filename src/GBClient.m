@@ -518,7 +518,7 @@ static NSString* USER_AGENT = @"GBomb";
                     [params setObject:@"Facebook" forKey:@"provider_id"];
                     [params setObject:_gameId forKeyedSubscript:@"game_id"];
                     [params setObject:@"mobile" forKey:@"view"];
-                    [params setObject:@"access_token" forKey:_fbsession.accessTokenData.accessToken];
+                    [params setObject:_fbsession.accessTokenData.accessToken forKeyedSubscript:@"access_token"];
                     
                     // open an inline login dialog. This will require the user to enter his or her credentials.
                     _gdialog = [[[GDialog alloc]
