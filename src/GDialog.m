@@ -469,6 +469,9 @@ params   = _params;
     } else if ([url.path isEqualToString:@"/gbomb.html"]) {
         [self dialogDidSucceed:url];
         return NO;
+    } else if ([url.path isEqualToString:@"/app_callback_success.html"]) {
+        [self dialogDidSucceed:url];
+        return NO;
     } else {
         return YES;
     }
