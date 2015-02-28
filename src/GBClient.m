@@ -20,6 +20,7 @@
 #import "GBSessionTokenCachingStrategy.h"
 #import "FBSessionTokenCachingStrategy.h"
 #import "GBDeviceId.h"
+#import "FBAppCall.h"
 
 static NSString *const GDialogMethod = @"index.php";
 static NSString *const AppCallBackMethod = @"app_callback.php";
@@ -208,6 +209,14 @@ static NSString* USER_AGENT = @"GBomb";
     
     
     _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+}
+
+
+- (BOOL)handleOpenUrl : (NSURL*) url  sourceApplication : (NSString *)sourceApplication {
+    
+    return [FBAppCall handleOpenURL:url
+                  sourceApplication:sourceApplication
+                        withSession:self.fbsession];
 }
 
 //- (void)didFailWithError:(NSError *)error {

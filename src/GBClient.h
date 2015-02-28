@@ -28,6 +28,8 @@
 - (void)subPush : (NSString*) regid;
 - (void)unsubPush : (NSString*) regid;
 
+- (BOOL)handleOpenUrl : (NSURL*) url  sourceApplication : (NSString *)sourceApplication;
+
 - (void)getUserProfile:(NSString *) provider_id token:(NSString *)token ;
 
 - (NSString *) getStringFromUrl: (NSString*) url needle:(NSString *) needle;
