@@ -573,7 +573,7 @@ static NSString* USER_AGENT = @"GBomb";
             if(rstr != nil) [rstr release];
         }];
     }
-    else if([url.path isEqualToString:@"/app_callback_success.html"]) {
+    else if([url.path isEqualToString:@"/login_success.html"]) {
         NSString* rstr=nil;
         switch (_fbsession.state) {
             case FBSessionStateCreated:
