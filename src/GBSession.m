@@ -199,7 +199,7 @@ static GBSession *g_activeSession = nil;
             [[NSException exceptionWithName:GBInvalidOperationException
                                      reason:@"GBSession: No AppID provided; either pass an "
                                             @"AppID to init, or add a string valued key with the "
-                                            @"appropriate id named FacebookAppID to the bundle *.plist"
+                                            @"appropriate id named GbombAppID to the bundle *.plist"
                                    userInfo:nil]
              raise];
         }

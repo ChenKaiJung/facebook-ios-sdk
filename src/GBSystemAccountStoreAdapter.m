@@ -179,7 +179,7 @@ static GBSystemAccountStoreAdapter* _singletonInstance = nil;
 
     // construct access options
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
-                             appID, [GBDynamicFrameworkLoader loadStringConstant:@"ACFacebookAppIdKey" withFramework:@"Accounts"],
+                             appID, [GBDynamicFrameworkLoader loadStringConstant:@"ACGbombAppIdKey" withFramework:@"Accounts"],
                              permissionsToUse, [GBDynamicFrameworkLoader loadStringConstant:@"ACFacebookPermissionsKey" withFramework:@"Accounts"],
                              audience, [GBDynamicFrameworkLoader loadStringConstant:@"ACFacebookAudienceKey" withFramework:@"Accounts"], // must end on this key/value due to audience possibly being nil
                              nil];

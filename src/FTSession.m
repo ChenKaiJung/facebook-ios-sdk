@@ -28,16 +28,18 @@ static NSString *const GBFreeTrialDialogMethod = @"create.php";
 @property (readwrite, copy) NSDictionary *parameters;
 @property (readwrite, copy) NSString *redirectUri;
 @property (readwrite, copy) FTSessionStateHandler handler;
+@property (readwrite) NSString *gameId;
 @end
 
 @implementation FTSession : NSObject
 
 
 
-- (id)init {
+- (id)initWithGameId:(NSString*)gameId {
     self = [super init];
     
     _state = FTSessionStateCreated;
+    _gameId = gameId;
     return self;
 }
 
@@ -63,6 +65,7 @@ static NSString *const GBFreeTrialDialogMethod = @"create.php";
     [params setObject:systemName forKey:@"os"];
     [params setObject:systemModel forKey:@"device_model"];
     [params setObject:@"mobile" forKey:@"view"];
+    [params setObject:_gameId forKey:@"game_id"];
     
     if (handler != nil) {
         self.handler = handler;

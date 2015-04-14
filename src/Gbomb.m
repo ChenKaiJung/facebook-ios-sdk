@@ -674,7 +674,7 @@ static NSString *const GBexpirationDatePropertyName = @"expirationDate";
     [_gbDialog release];
 
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
-    NSString *redirectURI = [infoDict objectForKey:@"FacebookRedirectUri"];
+    NSString *redirectURI = [infoDict objectForKey:@"GbombRedirectUri"];
         
     NSString *dialogURL = [[GBUtility dialogBaseURL] stringByAppendingString:action];
     [params setObject:@"touch" forKey:@"display"];

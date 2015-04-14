@@ -150,7 +150,7 @@ static GBAppBridge *g_sharedInstance;
         if (!self.appID) {
             [[NSException exceptionWithName:GBInvalidOperationException
                                      reason:@"GBAppBridge: AppID not found; Add a string valued key with the "
-              @"appropriate id named FacebookAppID to the bundle *.plist"
+              @"appropriate id named GbombAppID to the bundle *.plist"
                                    userInfo:nil]
              raise];
         }

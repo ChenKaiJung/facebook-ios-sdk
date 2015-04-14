@@ -63,8 +63,10 @@ static NSString* USER_AGENT = @"GBomb";
     
     self = [super init];
     
+    _gameId = [gameId copy];
+    
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
-    NSString *gclient = [infoDict objectForKey:@"GbombClientID"];
+    NSString *gclient = [infoDict objectForKey:@"GbombAppID"];
 
 //    if (gclient == nil) {
 //        gclient = @"1234567890";
@@ -93,10 +95,8 @@ static NSString* USER_AGENT = @"GBomb";
                                 urlSchemeSuffix:urlSchemeSuffix
                              tokenCacheStrategy:fbtokenCaching];
     
-    _ftsession=[[FTSession alloc] init];
+    _ftsession=[[FTSession alloc] initWithGameId:_gameId];
     [self trackingInstalled];
-    
-    _gameId = [gameId copy];
     
     return self;
 }

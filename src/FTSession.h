@@ -73,7 +73,7 @@ typedef void (^FTSessionStateHandler)(FTSession *session,
  Returns a newly initialized Facebook session with default values for the parameters
  to <initWithAppID:permissions:urlSchemeSuffix:tokenCacheStrategy:>.
  */
-- (id)init;
+- (id)initWithGameId:(NSString*)gameId;
 
 
 /*!
@@ -111,5 +111,7 @@ typedef void (^FTSessionStateHandler)(FTSession *session,
 @property (readonly, copy) NSDictionary *parameters;
 /*! @abstract Gets the redirectUri for the session */
 @property (readonly, copy) NSString *redirectUri;
+
+@property (readonly) NSString *gameId;
 
 @end
