@@ -38,7 +38,8 @@
 - (void)gbClientDidComplete:(NSInteger) code result:(NSString *)json;
 - (void)gbClientDidNotComplete:(NSInteger) code result:(NSString *)json;
 - (void)gbClientDidFailWithError:(NSError *)error;
-
++ (BOOL)handleOpenURL:(NSURL*)url
+    sourceApplication:(NSString *)sourceApplication;
 
 @property (nonatomic, assign) id<GBClientDelegate> delegate;
 @property(readonly) FTSession *ftsession;

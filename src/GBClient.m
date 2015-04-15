@@ -59,6 +59,11 @@ static NSString* USER_AGENT = @"GBomb";
             statusCode=_statusCode,
             gameId=_gameId;
 
++ (BOOL)handleOpenURL:(NSURL*)url
+    sourceApplication:(NSString *)sourceApplication {
+    return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication withSession:[FBSession activeSession]];
+}
+
 - (id)initWithGameId : (NSString*) gameId {
     
     self = [super init];
@@ -521,6 +526,7 @@ static NSString* USER_AGENT = @"GBomb";
         }
         [_fbsession closeAndClearTokenInformation];
         [self createFbSession];
+        [FBSession setActiveSession:_fbsession];
         [_fbsession openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
             NSString* rstr=nil;
             switch (status) {
@@ -548,8 +554,8 @@ static NSString* USER_AGENT = @"GBomb";
                     [self gbClientDidComplete:104 result:rstr];
                     break;
                 default:
-                    rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\": 115 } }"];
-                    [self gbClientDidComplete:115 result:rstr];
+//                    rstr=[[NSString alloc] initWithFormat: @"{ \"status\": \"error\", \"data\": { \"error_code\": 115 } }"];
+//                    [self gbClientDidComplete:115 result:rstr];
                     break; // so we do nothing in response to those state transitions
             }
             if(rstr != nil) [rstr release];

@@ -1107,6 +1107,10 @@ static FBSession *g_activeSession = nil;
     authorizeParams.defaultAudience = defaultAudience;
     authorizeParams.permissions = permissions;
     authorizeParams.canFetchAppSettings = canFetchAppSettings;
+    // force to use token response_type for app
+    if (tryFBAppAuth) {
+        [params setObject:@"token" forKey:FBLoginUXResponseType];
+    }
     authorizeParams.webParams = params;
 
     // Note ordering is significant here.
