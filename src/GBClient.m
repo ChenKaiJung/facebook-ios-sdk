@@ -65,25 +65,13 @@ static NSString* USER_AGENT = @"GBomb";
     
     _gameId = [gameId copy];
     
-    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
-    NSString *gclient = [infoDict objectForKey:@"GbombAppID"];
-
 //    if (gclient == nil) {
 //        gclient = @"1234567890";
 //    }
 //    if (fclient == nil) {
 //        fclient = @"1234567890";
 //    }
-    
-    NSArray *permissions =[NSArray arrayWithObjects:@"email", nil];
-    
-    NSString *urlSchemeSuffix = [GBSettings defaultUrlSchemeSuffix];
-    GBSessionTokenCachingStrategy *gbtokenCaching= [GBSessionTokenCachingStrategy defaultInstance];
-    
-    _gbsession=[[GBSession alloc] initWithAppID:gclient
-                                    permissions:permissions
-                                urlSchemeSuffix:urlSchemeSuffix
-                             tokenCacheStrategy:gbtokenCaching];
+    [self createGbSession];
     [self createFbSession];
     
     _ftsession=[[FTSession alloc] initWithGameId:_gameId];
@@ -92,13 +80,24 @@ static NSString* USER_AGENT = @"GBomb";
     return self;
 }
 
+- (void)createGbSession {
+    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *gclient = [infoDict objectForKey:@"GbombAppID"];
+    NSArray *permissions =[NSArray arrayWithObjects:@"email", nil];
+    NSString *urlSchemeSuffix = [GBSettings defaultUrlSchemeSuffix];
+    GBSessionTokenCachingStrategy *gbtokenCaching= [GBSessionTokenCachingStrategy defaultInstance];
+    _gbsession=[[GBSession alloc] initWithAppID:gclient
+                                    permissions:permissions
+                                urlSchemeSuffix:urlSchemeSuffix
+                             tokenCacheStrategy:gbtokenCaching];
+}
+
 - (void)createFbSession {
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString *fclient = [infoDict objectForKey:@"FacebookAppID"];
     NSString *urlSchemeSuffix = [FBSettings defaultUrlSchemeSuffix];
     NSArray *permissions =[NSArray arrayWithObjects:@"email", nil];
     FBSessionTokenCachingStrategy *fbtokenCaching= [FBSessionTokenCachingStrategy defaultInstance];
-    
     _fbsession=[[FBSession alloc] initWithAppID:fclient
                                     permissions:permissions
                                 urlSchemeSuffix:urlSchemeSuffix
@@ -358,7 +357,7 @@ static NSString* USER_AGENT = @"GBomb";
         }
         else if([(NSString *)[dict objectForKey:@"provider_id"] isEqualToString: @"Gbomb"]) {
             NSString* uid=[dict objectForKey:@"uid"];
-            NSString* token=self.fbsession.accessTokenData.accessToken;
+            NSString* token=self.gbsession.accessTokenData.accessToken;
             NSString* provider_id=[dict objectForKey:@"provider_id"];
             NSString* user_id=[dict objectForKey:@"id"];
             
@@ -557,11 +556,12 @@ static NSString* USER_AGENT = @"GBomb";
         }];
     }
     else if([url.path isEqualToString:@"/gbomb.html"]) {
-        if (!(_gbsession.state == GBSessionStateCreated ||
-            _gbsession.state == GBSessionStateCreatedTokenLoaded)) {
+        if (_gbsession.state == 2) {
             [self getUserProfile:@"Gbomb" token:_gbsession.accessTokenData.accessToken];
             return;
         }
+        [_gbsession closeAndClearTokenInformation];
+        [self createGbSession];
         [_gbsession openWithCompletionHandler:^(GBSession *session, GBSessionState status, NSError *error) {
             NSString* rstr=nil;
             switch (status) {
