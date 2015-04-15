@@ -60,8 +60,8 @@ static NSString *const FBLoginUXSDK = @"sdk";
 static NSString *const FBLoginParamsExpiresIn = @"expires_in";
 static NSString *const FBLoginParamsPermissions = @"permissions";
 static NSString *const FBLoginParamsGrantedscopes = @"granted_scopes";
-//NSString *const FBLoginUXResponseTypeToken = @"code";
-NSString *const FBLoginUXResponseTypeToken = @"token";
+NSString *const FBLoginUXResponseTypeToken = @"code";
+//NSString *const FBLoginUXResponseTypeToken = @"token";
 NSString *const FBLoginUXResponseType = @"response_type";
 
 

@@ -158,6 +158,19 @@ params   = _params;
     }
 }
 
+- (CGAffineTransform)WebviewTransformForOrientation {
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if (orientation == UIInterfaceOrientationLandscapeLeft) {
+        return CGAffineTransformMakeRotation(M_PI_2);
+    } else if (orientation == UIInterfaceOrientationLandscapeRight) {
+        return CGAffineTransformMakeRotation(M_PI*1.5);
+    } else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        return CGAffineTransformMakeRotation(-M_PI);
+    } else {
+        return CGAffineTransformIdentity;
+    }
+}
+
 - (void)sizeToFitOrientation:(BOOL)transform {
     if (transform) {
         self.transform = CGAffineTransformIdentity;
@@ -336,6 +349,7 @@ params   = _params;
         _webView = [[UIWebView alloc] initWithFrame:CGRectMake(kPadding, kPadding, 480, 480)];
         _webView.delegate = self;
         _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        _webView.transform = [self WebviewTransformForOrientation];
         [self addSubview:_webView];
 
         UIImage* closeImage = [FBDialogClosePNG image];

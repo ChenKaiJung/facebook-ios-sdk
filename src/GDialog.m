@@ -150,7 +150,20 @@ params   = _params;
     if (orientation == UIInterfaceOrientationLandscapeLeft) {
         return CGAffineTransformMakeRotation(M_PI*1.5);
     } else if (orientation == UIInterfaceOrientationLandscapeRight) {
-        return CGAffineTransformMakeRotation(M_PI/2);
+        return CGAffineTransformMakeRotation(M_PI_2);
+    } else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        return CGAffineTransformMakeRotation(-M_PI);
+    } else {
+        return CGAffineTransformIdentity;
+    }
+}
+
+- (CGAffineTransform)webViewTransformForOrientation {
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if (orientation == UIInterfaceOrientationLandscapeLeft) {
+        return CGAffineTransformMakeRotation(M_PI_2);
+    } else if (orientation == UIInterfaceOrientationLandscapeRight) {
+        return CGAffineTransformMakeRotation(M_PI*1.5);
     } else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
         return CGAffineTransformMakeRotation(-M_PI);
     } else {
@@ -335,6 +348,7 @@ params   = _params;
         
         _webView = [[UIWebView alloc] initWithFrame:CGRectMake(kPadding, kPadding, 480, 480)];
         _webView.delegate = self;
+        _webView.transform = [self webViewTransformForOrientation];
         _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self addSubview:_webView];
         
@@ -470,6 +484,9 @@ params   = _params;
         [self dialogDidSucceed:url];
         return NO;
     } else if ([url.path isEqualToString:@"/login_success.html"]) {
+        [self dialogDidSucceed:url];
+        return NO;
+    } else if ([url.path isEqualToString:@"/logout.html"]) {
         [self dialogDidSucceed:url];
         return NO;
     } else {

@@ -71,7 +71,6 @@ static NSString* USER_AGENT = @"GBomb";
 //    if (gclient == nil) {
 //        gclient = @"1234567890";
 //    }
-    NSString *fclient = [infoDict objectForKey:@"FacebookAppID"];
 //    if (fclient == nil) {
 //        fclient = @"1234567890";
 //    }
@@ -85,20 +84,25 @@ static NSString* USER_AGENT = @"GBomb";
                                     permissions:permissions
                                 urlSchemeSuffix:urlSchemeSuffix
                              tokenCacheStrategy:gbtokenCaching];
+    [self createFbSession];
     
+    _ftsession=[[FTSession alloc] initWithGameId:_gameId];
+    [self trackingInstalled];
     
-    urlSchemeSuffix = [FBSettings defaultUrlSchemeSuffix];
+    return self;
+}
+
+- (void)createFbSession {
+    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString *fclient = [infoDict objectForKey:@"FacebookAppID"];
+    NSString *urlSchemeSuffix = [FBSettings defaultUrlSchemeSuffix];
+    NSArray *permissions =[NSArray arrayWithObjects:@"email", nil];
     FBSessionTokenCachingStrategy *fbtokenCaching= [FBSessionTokenCachingStrategy defaultInstance];
     
     _fbsession=[[FBSession alloc] initWithAppID:fclient
                                     permissions:permissions
                                 urlSchemeSuffix:urlSchemeSuffix
                              tokenCacheStrategy:fbtokenCaching];
-    
-    _ftsession=[[FTSession alloc] initWithGameId:_gameId];
-    [self trackingInstalled];
-    
-    return self;
 }
 
 - (void)dealloc {
@@ -510,11 +514,14 @@ static NSString* USER_AGENT = @"GBomb";
         }];
     }
     else if([url.path isEqualToString:@"/facebook.html"]) {
-        if (!(_fbsession.state == FBSessionStateCreated ||
-            _fbsession.state == FBSessionStateCreatedTokenLoaded)) {
+//        if (!(_fbsession.state == FBSessionStateCreated ||
+//            _fbsession.state == FBSessionStateCreatedTokenLoaded)) {
+        if (_fbsession.state == 2) {
             [self getUserProfile:@"Facebook" token:_fbsession.accessTokenData.accessToken];
             return;
         }
+        [_fbsession closeAndClearTokenInformation];
+        [self createFbSession];
         [_fbsession openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
             NSString* rstr=nil;
             switch (status) {
@@ -588,7 +595,7 @@ static NSString* USER_AGENT = @"GBomb";
         }
         if(rstr != nil) [rstr release];
     }
-    else if([url.path isEqualToString:@"/logout.php"]) {
+    else if([url.path isEqualToString:@"/logout.html"]) {
         [GBUtility deleteGbombCookies];
         [FBUtility deleteFacebookCookies];
     }
