@@ -66,9 +66,12 @@ static NSString* USER_AGENT = @"GBomb";
 
 - (id)initWithGameId : (NSString*) gameId {
     
+
     self = [super init];
+
     
     _gameId = [gameId copy];
+    NSLog(@"initWithGameId : %@", _gameId);
     
 //    if (gclient == nil) {
 //        gclient = @"1234567890";
@@ -120,6 +123,7 @@ static NSString* USER_AGENT = @"GBomb";
 }
 
 - (void)login {
+    NSLog(@"login : %@", _gameId);
     NSString *gDialogURL = [[GBUtility sdkBaseURL] stringByAppendingString:GDialogMethod];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     
