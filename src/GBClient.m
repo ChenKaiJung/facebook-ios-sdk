@@ -626,8 +626,7 @@ static NSString* USER_AGENT = @"GBomb";
  * Called when dialog failed to load due to an error.
  */
 - (void)dialog:(GDialog*)dialog didFailWithError:(NSError *)error {
-    NSString* rstr= [NSString alloc];
-    [rstr stringByAppendingFormat:  @"{ \"status\": \"error\", \"data\": { \"error_code\": %d } }", error.code];
+    NSString* rstr= [[NSString alloc] initWithFormat:  @"{ \"status\": \"error\", \"data\": { \"error_code\": %d } }", error.code];
     [self gbClientDidComplete:115 result:rstr];
     [rstr release];
 }
