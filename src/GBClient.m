@@ -524,7 +524,6 @@ static NSString* USER_AGENT = @"GBomb";
             [self getUserProfile:@"Facebook" token:_fbsession.accessTokenData.accessToken];
             return;
         }
-        [_fbsession closeAndClearTokenInformation];
         [self createFbSession];
         [FBSession setActiveSession:_fbsession];
         [_fbsession openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
@@ -566,7 +565,6 @@ static NSString* USER_AGENT = @"GBomb";
             [self getUserProfile:@"Gbomb" token:_gbsession.accessTokenData.accessToken];
             return;
         }
-        [_gbsession closeAndClearTokenInformation];
         [self createGbSession];
         [_gbsession openWithCompletionHandler:^(GBSession *session, GBSessionState status, NSError *error) {
             NSString* rstr=nil;
